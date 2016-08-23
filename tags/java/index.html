@@ -5,6 +5,7 @@
   
 
 
+
 <html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
@@ -74,6 +75,8 @@
 
 
 
+  <link rel="alternate" href="/atom.xml" title="行走的轮子" type="application/atom+xml" />
+
 
 
 
@@ -86,7 +89,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/tags/Java/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/java/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
@@ -96,6 +99,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
+    root: '/',
     scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
@@ -103,6 +107,13 @@
     duoshuo: {
       userId: 0,
       author: '博主'
+    },
+    algolia: {
+          applicationID: 'TQAF9AT4MZ',
+          apiKey: '91f27cce56682c2525b0f9fbb867111a',
+          indexName: 'hexoblog',
+          hits: {"per_page":10},
+          labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
     }
   };
 </script>
@@ -110,9 +121,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Java/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/java/"/>
 
-  <title> 标签: Java | 行走的轮子 </title>
+  <title> 标签: java | 行走的轮子 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -196,9 +207,43 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+    </div>
   
 </nav>
 
@@ -214,7 +259,7 @@
   <div id="posts" class="posts-collapse">
     <div class="collection-title">
       <h2 >
-        Java
+        java
         <small>标签</small>
       </h2>
     </div>
@@ -227,9 +272,9 @@
 
       <h1 class="post-title">
         
-            <a class="post-title-link" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="url">
+            <a class="post-title-link" href="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/" itemprop="url">
               
-                <span itemprop="name">Spring 使用简单Demo进行源码调试（二）</span>
+                <span itemprop="name">[转]如何处理异常? catch Exception OR catch Throwable</span>
               
             </a>
         
@@ -237,9 +282,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2015-05-09T10:22:48+08:00"
-              content="2015-05-09" >
-          05-09
+              datetime="2016-05-11T03:52:20+08:00"
+              content="2016-05-11" >
+          05-11
         </time>
       </div>
 
@@ -255,9 +300,9 @@
 
       <h1 class="post-title">
         
-            <a class="post-title-link" href="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" itemprop="url">
+            <a class="post-title-link" href="/2015/11/25/Java8中Lambda表达式的10个例子/" itemprop="url">
               
-                <span itemprop="name">spring4.1.x源码GroovyDynamicElementReader报错问题解决</span>
+                <span itemprop="name">Java8中Lambda表达式的10个例子</span>
               
             </a>
         
@@ -265,9 +310,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2015-04-05T12:12:56+08:00"
-              content="2015-04-05" >
-          04-05
+              datetime="2015-11-25T14:46:18+08:00"
+              content="2015-11-25" >
+          11-25
         </time>
       </div>
 
@@ -283,9 +328,9 @@
 
       <h1 class="post-title">
         
-            <a class="post-title-link" href="/2015/02/12/Mac编译OpenJDK/" itemprop="url">
+            <a class="post-title-link" href="/2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="url">
               
-                <span itemprop="name">Mac编译OpenJDK</span>
+                <span itemprop="name">Spring MVC 之 View，ViewResolver</span>
               
             </a>
         
@@ -293,9 +338,205 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2015-02-12T09:26:03+08:00"
-              content="2015-02-12" >
-          02-12
+              datetime="2015-06-06T11:35:14+08:00"
+              content="2015-06-06" >
+          06-06
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="url">
+              
+                <span itemprop="name">Spring MVC 之 @RequestMapping（2）</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-06-04T09:03:25+08:00"
+              content="2015-06-04" >
+          06-04
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/06/02/Spring MVC 之 RequestMapping（1）/" itemprop="url">
+              
+                <span itemprop="name">Spring MVC 之 @RequestMapping（1）</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-06-02T13:04:16+08:00"
+              content="2015-06-02" >
+          06-02
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/05/28/Spring MVC 之 contextannotation-driven/" itemprop="url">
+              
+                <span itemprop="name">Spring MVC 之 &lt;context:annotation-driven/></span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-05-28T13:03:12+08:00"
+              content="2015-05-28" >
+          05-28
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/05/21/Spring MVC 之 @Autowired/" itemprop="url">
+              
+                <span itemprop="name">Spring MVC 之 @Autowired</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-05-21T07:29:52+08:00"
+              content="2015-05-21" >
+          05-21
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/05/19/Spring MVC 之 contextcomponent-scan/" itemprop="url">
+              
+                <span itemprop="name">Spring MVC 之 &lt;context:component-scan/></span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-05-19T10:04:40+08:00"
+              content="2015-05-19" >
+          05-19
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/05/18/Spring 使用简单Demo进行源码调试（七）/" itemprop="url">
+              
+                <span itemprop="name">Spring 使用简单Demo进行源码调试（七）</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-05-18T07:53:08+08:00"
+              content="2015-05-18" >
+          05-18
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2015/05/15/Spring 使用简单Demo进行源码调试（六）/" itemprop="url">
+              
+                <span itemprop="name">Spring 使用简单Demo进行源码调试（六）</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-05-15T08:34:58+08:00"
+              content="2015-05-15" >
+          05-15
         </time>
       </div>
 
@@ -307,249 +548,8 @@
   </div>
 
   
-
-
-          </div>
-          
-
-
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Jerky Lu" />
-          <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">312</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">35</span>
-                <span class="site-state-item-name">分类</span>
-              
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">48</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/luzheqi198" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                  GitHub
-                </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http:/weibo.com/jerkybible" target="_blank" title="Weibo">
-                  
-                    <i class="fa fa-fw fa-weibo"></i>
-                  
-                  Weibo
-                </a>
-              </span>
-            
-          
-        </div>
-
-        
-        
-
-        
-        
-
-      </section>
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"jerkybible"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
-t" rel="next" href="/tags/java/page/2/"><i class="fa fa-angle-right"></i></a>
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/tags/java/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/tags/java/page/21/">21</a><a class="extend next" rel="next" href="/tags/java/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -616,6 +616,13 @@ t" rel="next" href="/tags/java/page/2/"><i class="fa fa-angle-right"></i></a>
         </nav>
 
         
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
 
         <div class="links-of-author motion-element">
           
@@ -789,6 +796,25 @@ t" rel="next" href="/tags/java/page/2/"><i class="fa fa-angle-right"></i></a>
   
 
   
+
+  
+  
+  
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="/vendors/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>
+
+
 
   
 
