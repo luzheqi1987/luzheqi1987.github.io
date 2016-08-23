@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、从头开始
+   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。123456789101112131415161718192021222324protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &amp;#123;        HttpServ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC 之 @RequestMapping（2）">
+<meta property="og:url" content="http://yoursite.com/2015/06/04/Spring MVC 之 RequestMapping（2）/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="一、从头开始
+   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。123456789101112131415161718192021222324protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &amp;#123;        HttpServ">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring MVC 之 @RequestMapping（2）">
+<meta name="twitter:description" content="一、从头开始
+   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。123456789101112131415161718192021222324protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &amp;#123;        HttpServ">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/06/04/Spring MVC 之 RequestMapping（2）/"/>
+
+  <title> Spring MVC 之 @RequestMapping（2） | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring MVC 之 @RequestMapping（2）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-04T09:03:25+08:00" content="2015-06-04">
+              2015-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、从头开始</p>
+<p>   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">        HttpServletRequest processedRequest = request;</div><div class="line">        HandlerExecutionChain mappedHandler = null;</div><div class="line">        AsyncExecutionChain asyncChain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        try &#123;</div><div class="line">            ModelAndView mv = null;</div><div class="line">            Exception dispatchException = null;</div><div class="line">            try &#123;</div><div class="line">                processedRequest = checkMultipart(request);</div><div class="line">                // 确定当前请求的处理器（HandlerExecutionChain 包含Handler和Interceptor列表）</div><div class="line">                mappedHandler = getHandler(processedRequest, false);</div><div class="line">                if (mappedHandler == null || mappedHandler.getHandler() == null) &#123;</div><div class="line">                    noHandlerFound(processedRequest, response);//404异常</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                // 确定当前请求的处理器适配器</div><div class="line">                HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());</div><div class="line">                //......省略诸多代码......</div><div class="line">                // 调用处理处理器方法，返回ModelAndView对象</div><div class="line">                mv = ha.handle(processedRequest, response, mappedHandler.getHandler());</div><div class="line">            &#125;//处理返回结果</div><div class="line">        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>  下面展开getHandler是怎么做的：<a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> HandlerExecutionChain <span class="title">getHandler</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//这里有一个handlerMappings实例变量，如果你看过&amp;lt;mvc:annotation-driven/&amp;gt;那篇文章，相信你就知道这</span></div><div class="line">        <span class="comment">//个handlerMappings都包括哪些HandlerMapping实例了？</span></div><div class="line">        <span class="keyword">for</span> (HandlerMapping hm : <span class="keyword">this</span>.handlerMappings) &#123;</div><div class="line">            HandlerExecutionChain handler = hm.getHandler(request);</div><div class="line">            <span class="keyword">if</span> (handler != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span> handler;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   <mvc:annotation-driven>这篇博客中说明了在启用该标签时Spring会默认注册RequestMappingHandlerMapping实例在处理@RequestMapping注解，而@RequestMapping (1) 这篇博客说明了该HandlerMapping是如何处理@RequestMapping注解，以及怎么保存请求映射关系的。下面我们就看RequestMappingHandlerMapping的getHandler方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//.....</span></div><div class="line"><span class="comment">//AbstractHandlerMapping</span></div><div class="line"><span class="comment">//.....</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> HandlerExecutionChain <span class="title">getHandler</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Object handler = getHandlerInternal(request);<span class="comment">//调用下面的方法</span></div><div class="line">        <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</div><div class="line">            handler = getDefaultHandler();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (handler == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Bean name or resolved handler?</span></div><div class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> String) &#123;</div><div class="line">            String handlerName = (String) handler;</div><div class="line">            handler = getApplicationContext().getBean(handlerName);</div><div class="line">        &#125;<span class="comment">//返回该请求对应的HandlerExecutionChain（包括处理器方法和拦截器）</span></div><div class="line">        <span class="keyword">return</span> getHandlerExecutionChain(handler, request);</div><div class="line">    &#125;</div><div class="line"><span class="comment">//.....</span></div><div class="line"><span class="comment">//AbstractHandlerMethodMapping(RequestMappingHandlerMapping 的祖先类)</span></div><div class="line"><span class="comment">//返回值是HandlerMethod</span></div><div class="line"><span class="comment">//.....</span></div><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> HandlerMethod <span class="title">getHandlerInternal</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        String lookupPath = getUrlPathHelper().getLookupPathForRequest(request);</div><div class="line">        <span class="comment">///查找请求路径对应的HandlerMethod实例</span></div><div class="line">        HandlerMethod handlerMethod = lookupHandlerMethod(lookupPath, request);</div><div class="line">        <span class="comment">//确保HandlerMethod中的handler是处理器实例而不是处理器名字</span></div><div class="line">        <span class="keyword">return</span> (handlerMethod != <span class="keyword">null</span>) ? handlerMethod.createWithResolvedBean() : <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></mvc:annotation-driven></p>
+<p>以上两个方法都是RequestMappingHandlerMapping的祖先类，逻辑很简单，先获取当前请求的路径，然后查找该路径对应的HandlerMethod实例。@RequestMapping (1)<br>这篇博客最后讲到了，RequestMappingHandlerMapping中的两个映射表实例，urlMap和handlerMethods，第一个是路径与RequestMappingInfo的映射，第二个是RequestMappingInfo和HandlerMethod的映射，lookupHandlerMethod方法负责检索这两个变量了:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> HandlerMethod <span class="title">lookupHandlerMethod</span><span class="params">(String lookupPath, HttpServletRequest request)</span></span>&#123;</div><div class="line">        List&amp;lt;Match&amp;gt; matches = <span class="keyword">new</span> ArrayList&amp;lt;Match&amp;gt;();</div><div class="line">        <span class="comment">//查找urlMap，获取直接匹配的RequestMappingInfo列表。如</span></div><div class="line">        <span class="comment">//URL 是/work/produce/2， @RequestMapping（&amp;quot;/work/produce/2&amp;quot;)直接匹配</span></div><div class="line">        List&amp;lt;T&amp;gt; directPathMatches = <span class="keyword">this</span>.urlMap.get(lookupPath);</div><div class="line">        <span class="keyword">if</span> (directPathMatches != <span class="keyword">null</span>) &#123;</div><div class="line">            addMatchingMappings(directPathMatches, matches, request);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (matches.isEmpty()) &#123;<span class="comment">//如果没有找到直接匹配项，遍历所有的注册的RequestMappingInfo来查找</span></div><div class="line">            <span class="comment">//遍历所有可能的RequestMappingInfo，找到完全匹配的RequestMappingInfo实例，并生成Match对象</span></div><div class="line">            <span class="comment">//添加到Match列表中，Match是RequestMappingInfo和HandlerMethod的临时映射表。</span></div><div class="line">            <span class="comment">//举个例子：请求URL可能是GET:/work/produce/2,</span></div><div class="line">            <span class="comment">//而@RequestMapping(&amp;quot;/work/produce/&#123;no&#125;&amp;quot; &amp;quot;GET&amp;quot;)此时需要匹配是否是GET请求，以及模式是否匹配</span></div><div class="line">            addMatchingMappings(<span class="keyword">this</span>.handlerMethods.keySet(), matches, request);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!matches.isEmpty()) &#123;<span class="comment">//排序，找出最佳匹配</span></div><div class="line">            Comparator&amp;lt;Match&amp;gt; comparator = <span class="keyword">new</span> MatchComparator(getMappingComparator(request));</div><div class="line">            Collections.sort(matches, comparator);</div><div class="line">            Match bestMatch = matches.get(<span class="number">0</span>);</div><div class="line">            <span class="keyword">if</span> (matches.size() &amp;gt; <span class="number">1</span>) &#123;<span class="comment">//如果可能的方法多余一个</span></div><div class="line">                Match secondBestMatch = matches.get(<span class="number">1</span>);<span class="comment">//并且两个方法的@RequestMapping内容相同</span></div><div class="line">                <span class="keyword">if</span> (comparator.compare(bestMatch, secondBestMatch) == <span class="number">0</span>) &#123;<span class="comment">//抛出异常</span></div><div class="line">                    Method m1 = bestMatch.handlerMethod.getMethod();</div><div class="line">                    Method m2 = secondBestMatch.handlerMethod.getMethod();</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</div><div class="line">                            &amp;quot;Ambiguous handler methods mapped <span class="keyword">for</span> HTTP path&amp;quot;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//这里是处理请求路径中的变量，如果/work/produce/&#123;no&#125;匹配的/work/produce/2中将no=2</span></div><div class="line">            <span class="comment">//添加到Request的属性表中，以便后面@PathVarible参数的处理</span></div><div class="line">            handleMatch(bestMatch.mapping, lookupPath, request);</div><div class="line">            <span class="keyword">return</span> bestMatch.handlerMethod;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> handleNoMatch(handlerMethods.keySet(), lookupPath, request);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   在进行URL匹配中，Spring会先查找是否存在直接匹配的RequestMappingInfo实例，即@RequestMapping中的value，method属性完全匹配请求的，如果没有找到通常是存在PathVariable的，如果/{no}和/222的情况等也是匹配的,  找到匹配项后，需要找出最优解，然后将路径中的变量存入Request的变量表中，我们分别详细的了解下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">addMatchingMappings</span><span class="params">(Collection&amp;lt;T&amp;gt; mappings, List&amp;lt;Match&amp;gt; matches, </span></span></div><div class="line">                                                                HttpServletRequest request) &#123;</div><div class="line">        <span class="keyword">for</span> (T mapping : mappings) &#123;<span class="comment">//遍历所有的RequestMappingInfo列表</span></div><div class="line">            T match = getMatchingMapping(mapping, request);<span class="comment">//获取匹配的RequestMappingInfo实例</span></div><div class="line">            <span class="keyword">if</span> (match != <span class="keyword">null</span>) &#123;<span class="comment">//并生成匹配的RequestMappingInfo实例和对应HandlerMethod的Match实例</span></div><div class="line">                matches.add(<span class="keyword">new</span> Match(match, handlerMethods.get(mapping)));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   继续看getMatchingMapping的实现：</div><div class="line">```<span class="function">java</span></div><div class="line"><span class="keyword">public</span> RequestMappingInfo <span class="title">getMatchingCondition</span><span class="params">(HttpServletRequest request)</span> &#123;</div><div class="line">        <span class="comment">//查看RequestMappingInfo的所有属性是否匹配</span></div><div class="line">        RequestMethodsRequestCondition methods = methodsCondition.getMatchingCondition(request);</div><div class="line">        ParamsRequestCondition params = paramsCondition.getMatchingCondition(request);</div><div class="line">        HeadersRequestCondition headers = headersCondition.getMatchingCondition(request);</div><div class="line">        ConsumesRequestCondition consumes = consumesCondition.getMatchingCondition(request);</div><div class="line">        ProducesRequestCondition produces = producesCondition.getMatchingCondition(request);</div><div class="line">        <span class="keyword">if</span> (methods == <span class="keyword">null</span> || params == <span class="keyword">null</span> || headers == <span class="keyword">null</span> </div><div class="line">                                                    || consumes == <span class="keyword">null</span> || produces == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;<span class="comment">//我们重点看这个，路径是否匹配</span></div><div class="line">        PatternsRequestCondition patterns = patternsCondition.getMatchingCondition(request);</div><div class="line">        <span class="keyword">if</span> (patterns == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        RequestConditionHolder custom = customConditionHolder.getMatchingCondition(request);</div><div class="line">        <span class="keyword">if</span> (custom == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RequestMappingInfo(patterns, methods, params, headers, </div><div class="line">                                                        produces, custom.getCondition());</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   我们知道RequestMappingInfo就是@RequestMapping注解的抽象，它包含@RequestMapping中的所有属性，因此在查找匹配项时，需要查看所有这些属性是否与请求匹配。我们这里只看路径模式是否匹配，都很简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> PatternsRequestCondition <span class="title">getMatchingCondition</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.patterns.isEmpty()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;<span class="comment">//获取请求路径如/work/produce/2</span></div><div class="line">        String lookupPath = <span class="keyword">this</span>.urlPathHelper.getLookupPathForRequest(request);</div><div class="line">        List&amp;lt;String&amp;gt; matches = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;();</div><div class="line">        <span class="comment">//遍历@RequestMapping中的所有模式</span></div><div class="line">        <span class="keyword">for</span> (String pattern : patterns) &#123;</div><div class="line">            <span class="comment">//找出与请求路径匹配的模式，如/work/produce/&#123;no&#125;</span></div><div class="line">            String match = getMatchingPattern(pattern, lookupPath);</div><div class="line">            <span class="keyword">if</span> (match != <span class="keyword">null</span>) &#123;</div><div class="line">                matches.add(match);</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="comment">//排序</span></div><div class="line">        Collections.sort(matches, <span class="keyword">this</span>.pathMatcher.getPatternComparator(lookupPath));</div><div class="line">        <span class="comment">//返回匹配的请求模式实例</span></div><div class="line">        <span class="keyword">return</span> matches.isEmpty() ? <span class="keyword">null</span> : </div><div class="line">            <span class="keyword">new</span> PatternsRequestCondition(matches, <span class="keyword">this</span>.urlPathHelper, <span class="keyword">this</span>.pathMatcher, </div><div class="line">                                       <span class="keyword">this</span>.useSuffixPatternMatch, <span class="keyword">this</span>.useTrailingSlashMatch);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getMatchingPattern</span><span class="params">(String pattern, String lookupPath)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (pattern.equals(lookupPath)) &#123;</div><div class="line">            <span class="keyword">return</span> pattern;<span class="comment">//直接匹配</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.useSuffixPatternMatch) &#123;<span class="comment">//是否使用后缀模式，/abc/de匹配/abc</span></div><div class="line">            <span class="keyword">boolean</span> hasSuffix = pattern.indexOf(<span class="string">'.'</span>) != -<span class="number">1</span>;</div><div class="line">            <span class="keyword">if</span> (!hasSuffix &amp;amp;&amp;amp; <span class="keyword">this</span>.pathMatcher.match(pattern + &amp;quot;.*&amp;quot;, lookupPath)) &#123;</div><div class="line">                <span class="keyword">return</span> pattern + &amp;quot;.*&amp;quot;;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="comment">//匹配/work/produce/&#123;no&#125; 和/work/produce/2</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.pathMatcher.match(pattern, lookupPath)) &#123;</div><div class="line">            <span class="keyword">return</span> pattern;</div><div class="line">        &#125;<span class="comment">//是否使用结尾的斜线匹配</span></div><div class="line">        <span class="keyword">boolean</span> endsWithSlash = pattern.endsWith(&amp;quot;/&amp;quot;);</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.useTrailingSlashMatch) &#123;</div><div class="line">            <span class="keyword">if</span> (!endsWithSlash &amp;amp;&amp;amp; <span class="keyword">this</span>.pathMatcher.match(pattern + &amp;quot;/&amp;quot;, lookupPath)) &#123;</div><div class="line">                <span class="keyword">return</span> pattern +&amp;quot;/&amp;quot;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   至于上面的pathMatcher.match方法这里就不分析了，可以自己看看，匹配算法还是比较复杂的，主要是尽可能的全面，除了进行匹配外，还会将路径中的变量保存起来以便@PathVariable参数使用。</p>
+<pre><code>以上便是整个的匹配过程，好麻烦，或许你会说这会不会降低Spring的性能？实话说，在处理首次请求时，效率是很差，但是Spring使用了各种缓存策略，一旦程序进入正轨，效率就非常高了。
+</code></pre><p>二、处理器方法的调用</p>
+<pre><code>现在我们已经查找到了对应请求的处理器方法，下面我们就看Spring是如何在运行时动态地调用处理器方法的，并传递正确的参数。在doDispatch方法中，我们看到，确定了处理器（方法）后，Spring接着获取了该处理器方法的适配器（HandlerAdapter概念讲解中说到过，用来调用处理器方法的）
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> HandlerAdapter <span class="title">getHandlerAdapter</span><span class="params">(Object handler)</span> <span class="keyword">throws</span> ServletException </span>&#123;</div><div class="line">        <span class="comment">//这个handlerAdapters跟handlerMappings一样，启用&amp;lt;mvc:annoation-driven/&amp;gt;后默认注册</span></div><div class="line">        <span class="comment">//RequestMappingHandlerAdapter（since3.1）</span></div><div class="line">        <span class="keyword">for</span> (HandlerAdapter ha : <span class="keyword">this</span>.handlerAdapters) &#123;</div><div class="line">            <span class="keyword">if</span> (ha.supports(handler)) &#123;</div><div class="line">                <span class="keyword">return</span> ha;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(&amp;quot;No adapter <span class="keyword">for</span> handler [&amp;quot; + handler +</div><div class="line">                &amp;quot;]: Does your handler implement a supported <span class="class"><span class="keyword">interface</span> <span class="title">like</span> <span class="title">Controller</span>?&amp;<span class="title">quot</span></span>;);</div><div class="line">    &#125;</div><div class="line"><span class="comment">//是否支持当前处理器，其实就是看看处理器是不是HandlerMethod实例</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Object handler)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> handler <span class="keyword">instanceof</span> HandlerMethod &amp;amp;&amp;amp; supportsInternal((HandlerMethod) handler);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>   获取了HandlerAdapter后，Spring就会调用handlerAdapter实例的handle方法，并返回ModelAndView实例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> ModelAndView <span class="title">handleInternal</span><span class="params">(HttpServletRequest request,</span></span></div><div class="line">            HttpServletResponse response, HandlerMethod handlerMethod) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//如果HandlerMethod所属的处理器被@SessionAttribute注解标记了</span></div><div class="line">        <span class="keyword">if</span> (getSessionAttributesHandler(handlerMethod).hasSessionAttributes()) &#123;</div><div class="line">         <span class="comment">//设置响应头信息，防止缓存以便Session属性的管理</span></div><div class="line">         checkAndPrepare(request, response, <span class="keyword">this</span>.cacheSecondsForSessionAttributeHandlers, <span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">//设置响应头，缓存默认时间</span></div><div class="line">            checkAndPrepare(request, response, <span class="keyword">true</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//要求在Session级别上进行同步，即同一个客户端的多个请求需要阻塞调用该处理器方法</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.synchronizeOnSession) &#123;</div><div class="line">            HttpSession session = request.getSession(<span class="keyword">false</span>);</div><div class="line">            <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</div><div class="line">                Object mutex = WebUtils.getSessionMutex(session);</div><div class="line">                <span class="keyword">synchronized</span> (mutex) &#123;<span class="comment">//调用</span></div><div class="line">                    <span class="keyword">return</span> invokeHandleMethod(request, response, handlerMethod);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="comment">//调用</span></div><div class="line">        <span class="keyword">return</span> invokeHandleMethod(request, response, handlerMethod);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   我们接着看invokeHandlerMethod方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> ModelAndView <span class="title">invokeHandleMethod</span><span class="params">(HttpServletRequest request,</span></span></div><div class="line">            HttpServletResponse response, HandlerMethod handlerMethod) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//包装请求和响应对象</span></div><div class="line">        ServletWebRequest webRequest = <span class="keyword">new</span> ServletWebRequest(request, response);</div><div class="line">        <span class="comment">//获取与HandlerMethod对应的DataBinderFactory。</span></div><div class="line">        WebDataBinderFactory binderFactory = getDataBinderFactory(handlerMethod);</div><div class="line">        <span class="comment">//获取处理器方法所属处理器中被@ModelAttribute标记，但是没有被@RequestMapping标记的方法</span></div><div class="line">        ModelFactory modelFactory = getModelFactory(handlerMethod, binderFactory);</div><div class="line">        <span class="comment">//创建请求映射方法，并将HandlerAdapter中的参数解析器列表和返回值处理器列表传递给它。</span></div><div class="line">        ServletInvocableHandlerMethod requestMappingMethod = </div><div class="line">                                      createRequestMappingMethod(handlerMethod, binderFactory);</div><div class="line">        <span class="comment">//创建ModelAndViewContainer</span></div><div class="line">        ModelAndViewContainer mavContainer = <span class="keyword">new</span> ModelAndViewContainer();</div><div class="line">        mavContainer.addAllAttributes(RequestContextUtils.getInputFlashMap(request));</div><div class="line">        modelFactory.initModel(webRequest, mavContainer, requestMappingMethod);</div><div class="line">        mavContainer.setIgnoreDefaultModelOnRedirect(<span class="keyword">this</span>.ignoreDefaultModelOnRedirect);</div><div class="line">        <span class="comment">//获取并设置当前请求的异步调用链实例</span></div><div class="line">        AsyncExecutionChain chain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        chain.addDelegatingCallable(getAsyncCallable(mavContainer, modelFactory, webRequest));</div><div class="line">        chain.setAsyncWebRequest(createAsyncWebRequest(request, response));</div><div class="line">        chain.setTaskExecutor(<span class="keyword">this</span>.taskExecutor);</div><div class="line">        <span class="comment">//调用该处理器方法。</span></div><div class="line">        requestMappingMethod.invokeAndHandle(webRequest, mavContainer);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (chain.isAsyncStarted()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//获取并返回ModelAndView</span></div><div class="line">        <span class="keyword">return</span> getModelAndView(mavContainer, modelFactory, webRequest);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   关于异步调用链那块我们暂不关心，。从上面代码可以看到，在调用方法前，分别检查了处理器中存在的@InitBinder注解的方法和@ModelAttribute注解的方法，InitBinder方法用于类型转化，如将String转化为Date类型等，可以通过@InitBinder方法实现，感兴趣可以自己看看，不在详细分析。至于@ModelAttribute注解的方法，其返回值会被放入Model对象中供视图使用。下面我们看invokeAndHandle方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">invokeAndHandle</span><span class="params">(ServletWebRequest webRequest,</span></span></div><div class="line">            ModelAndViewContainer mavContainer, Object... providedArgs) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//....省略异步调用方法，暂不考虑</span></div><div class="line">        Object returnValue = invokeForRequest(webRequest, mavContainer, providedArgs);</div><div class="line">        <span class="comment">//....省略几行代码，暂不考虑</span></div><div class="line">        <span class="keyword">try</span> &#123;<span class="comment">//处理返回结果</span></div><div class="line">            <span class="keyword">this</span>.returnValueHandlers.handleReturnValue(returnValue, </div><div class="line">                                    getReturnValueType(returnValue), mavContainer, webRequest);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   接着我们看下invokeForRequest方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">invokeForRequest</span><span class="params">(NativeWebRequest request,</span></span></div><div class="line">                                         ModelAndViewContainer mavContainer,</div><div class="line">                                         Object... providedArgs) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//获取方法参数值。</span></div><div class="line">        Object[] args = getMethodArgumentValues(request, mavContainer, providedArgs);</div><div class="line">        <span class="comment">//传递参数值，调用，返回返回值</span></div><div class="line">        Object returnValue = invoke(args);</div><div class="line">        <span class="keyword">return</span> returnValue;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   啊哈上面的代码貌似很简单，实则不是，重点就在getMethodArgumentValues方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Object[] getMethodArgumentValues(</div><div class="line">            NativeWebRequest request, ModelAndViewContainer mavContainer,</div><div class="line">            Object... providedArgs) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//获取处理器方法的MethodParameter数组，就是方法的“参数定义”列表。</span></div><div class="line">        MethodParameter[] parameters = getMethodParameters();</div><div class="line">        Object[] args = <span class="keyword">new</span> Object[parameters.length];</div><div class="line">        <span class="comment">//遍历所有方法参数</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; parameters.length; i++) &#123;</div><div class="line">            MethodParameter parameter = parameters[i];</div><div class="line">            parameter.initParameterNameDiscovery(parameterNameDiscoverer);</div><div class="line">            <span class="comment">//确定泛型参数的类型</span></div><div class="line">            GenericTypeResolver.resolveParameterType(parameter, getBean().getClass());</div><div class="line">            <span class="comment">//根据提供的参数值，解析当前参数的值</span></div><div class="line">            args[i] = resolveProvidedArgument(parameter, providedArgs);</div><div class="line">            <span class="keyword">if</span> (args[i] != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//根据内置的参数解析器，来解析当前的参数值</span></div><div class="line">            <span class="keyword">if</span> (argumentResolvers.supportsParameter(parameter)) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    args[i] = argumentResolvers.resolveArgument(parameter, mavContainer,</div><div class="line">                                                                 request, dataBinderFactory);</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//如果参数值依旧为空，抛出异常。</span></div><div class="line">            <span class="keyword">if</span> (args[i] == <span class="keyword">null</span>) &#123;</div><div class="line">         String msg = getArgumentResolutionErrorMessage(&amp;quot;No suitable resolver <span class="keyword">for</span> argument&amp;quot;, i);</div><div class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> args;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   该方法是HandlerMethod中的方法，因此可以调用getMethodParameters()方法获取参数列表，然后遍历这些参数，分别用参数解析器来解析当前参数值，其中，argumentResolvers是HandlerMethodArgumentResolverComposite，它包含了所有的参数解析器的列表，以及参数类型和解析器的映射表，我们不妨看看到底什么怎么回事：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//是的，这个方法是HandlerAdapter中的方法，上一篇文章我们介绍了这是InitializingBean接口中的方法，</span></div><div class="line"><span class="comment">//会被自动调用</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.argumentResolvers == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">//调用下面的方法，获取所有某人参数解析器。</span></div><div class="line">            List&amp;lt;HandlerMethodArgumentResolver&amp;gt; resolvers = getDefaultArgumentResolvers();</div><div class="line">            <span class="comment">//这个是HandlerAdapterComposite实例。</span></div><div class="line">            <span class="keyword">this</span>.argumentResolvers = <span class="keyword">new</span> HandlerMethodArgumentResolverComposite()</div><div class="line">                                                            .addResolvers(resolvers);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.initBinderArgumentResolvers == <span class="keyword">null</span>) &#123;</div><div class="line">            List&amp;lt;HandlerMethodArgumentResolver&amp;gt; resolvers = </div><div class="line">                                                    getDefaultInitBinderArgumentResolvers();</div><div class="line">            <span class="keyword">this</span>.initBinderArgumentResolvers = <span class="keyword">new</span> HandlerMethodArgumentResolverComposite()</div><div class="line">                                                                    .addResolvers(resolvers);</div><div class="line">        &#125;<span class="comment">//注册默认返回值处理器</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.returnValueHandlers == <span class="keyword">null</span>) &#123;</div><div class="line">            List&amp;lt;HandlerMethodReturnValueHandler&amp;gt; handlers = getDefaultReturnValueHandlers();</div><div class="line">            <span class="keyword">this</span>.returnValueHandlers = <span class="keyword">new</span> HandlerMethodReturnValueHandlerComposite()</div><div class="line">                                                                    .addHandlers(handlers);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * Return the list of argument resolvers to use including built-in resolvers</div><div class="line">     * and custom resolvers provided via &#123;<span class="doctag">@link</span> #setCustomArgumentResolvers&#125;.</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> List&amp;lt;HandlerMethodArgumentResolver&amp;gt; getDefaultArgumentResolvers() &#123;</div><div class="line">        List&amp;lt;HandlerMethodArgumentResolver&amp;gt; resolvers </div><div class="line">                                            = <span class="keyword">new</span> ArrayList&amp;lt;HandlerMethodArgumentResolver&amp;gt;();</div><div class="line"></div><div class="line">        <span class="comment">// Annotation-based argument resolution</span></div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestParamMethodArgumentResolver(getBeanFactory(), <span class="keyword">false</span>));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestParamMapMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> PathVariableMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> PathVariableMapMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> ServletModelAttributeMethodProcessor(<span class="keyword">false</span>));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestResponseBodyMethodProcessor(getMessageConverters()));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestPartMethodArgumentResolver(getMessageConverters()));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestHeaderMethodArgumentResolver(getBeanFactory()));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestHeaderMapMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> ServletCookieValueMethodArgumentResolver(getBeanFactory()));</div><div class="line">        resolvers.add(<span class="keyword">new</span> ExpressionValueMethodArgumentResolver(getBeanFactory()));</div><div class="line"></div><div class="line">        <span class="comment">// Type-based argument resolution</span></div><div class="line">        resolvers.add(<span class="keyword">new</span> ServletRequestMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> ServletResponseMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> HttpEntityMethodProcessor(getMessageConverters()));</div><div class="line">        resolvers.add(<span class="keyword">new</span> RedirectAttributesMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> ModelMethodProcessor());</div><div class="line">        resolvers.add(<span class="keyword">new</span> MapMethodProcessor());</div><div class="line">        resolvers.add(<span class="keyword">new</span> ErrorsMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> SessionStatusMethodArgumentResolver());</div><div class="line">        resolvers.add(<span class="keyword">new</span> UriComponentsBuilderMethodArgumentResolver());</div><div class="line"></div><div class="line">        <span class="comment">// Custom arguments</span></div><div class="line">        <span class="keyword">if</span> (getCustomArgumentResolvers() != <span class="keyword">null</span>) &#123;</div><div class="line">            resolvers.addAll(getCustomArgumentResolvers());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Catch-all</span></div><div class="line">        resolvers.add(<span class="keyword">new</span> RequestParamMethodArgumentResolver(getBeanFactory(), <span class="keyword">true</span>));</div><div class="line">        resolvers.add(<span class="keyword">new</span> ServletModelAttributeMethodProcessor(<span class="keyword">true</span>));</div><div class="line"></div><div class="line">        <span class="keyword">return</span> resolvers;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   这下清晰了吧，RequestMappingHandlerAdapter实现了InitializingBean接口，因此Spring启动是会调用它的afterPropertySet方法，进行上述参数解析器的注册。然后在处理器方法调用过程中会遍历这些解析器找到支持当前参数的解析器并解析参数。Perfect。我们再回到之前的resolveArgument方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">resolveArgument</span><span class="params">(</span></span></div><div class="line">            MethodParameter parameter, ModelAndViewContainer mavContainer,</div><div class="line">            NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//调用下面的方法回去支持当前参数类型的解析器。</span></div><div class="line">        HandlerMethodArgumentResolver resolver = getArgumentResolver(parameter);</div><div class="line">        <span class="comment">//调用该解析器的解析方法进行解析。</span></div><div class="line">        <span class="keyword">return</span> resolver.resolveArgument(parameter, mavContainer, webRequest, binderFactory);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//前面说过了，HandlerAdapterComposite会维护一个MethodParameter到解析器的映射关系。没错吧</span></div><div class="line">    <span class="function"><span class="keyword">private</span> HandlerMethodArgumentResolver <span class="title">getArgumentResolver</span><span class="params">(MethodParameter parameter)</span> </span>&#123;</div><div class="line">        HandlerMethodArgumentResolver result = <span class="keyword">this</span>.argumentResolverCache.get(parameter);</div><div class="line">        <span class="keyword">if</span> (result == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (HandlerMethodArgumentResolver methodArgumentResolver : argumentResolvers) &#123;</div><div class="line">                <span class="comment">//判断解析器是否支持当前参数类型</span></div><div class="line">                <span class="keyword">if</span> (methodArgumentResolver.supportsParameter(parameter)) &#123;</div><div class="line">                    result = methodArgumentResolver;</div><div class="line">                    <span class="keyword">this</span>.argumentResolverCache.put(parameter, result);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   再往下就到某个解析器怎样解析具体参数了，有大约一二十个解析器，我们不可能全部分析，这里我们只分析其中常见的一个：@PathVariable注解的解析器。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supportsParameter</span><span class="params">(MethodParameter parameter)</span> </span>&#123;</div><div class="line">        <span class="comment">//如果该参数没有被@PathVariable注解标记，则返回false，不支持</span></div><div class="line">        <span class="keyword">if</span> (!parameter.hasParameterAnnotation(PathVariable.class)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果该参数是Map类型的。则判断@PathVariable是否设置了value属性</span></div><div class="line">        <span class="keyword">if</span> (Map.class.isAssignableFrom(parameter.getParameterType())) &#123;</div><div class="line">            String paramName = parameter.getParameterAnnotation(PathVariable.class).value();</div><div class="line">            <span class="keyword">return</span> StringUtils.hasText(paramName);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   从上面代码我们知道PathVariableMethodArgumentResolver支持被@PathVariable注解的参数。下面我们看它怎样解析参数值得：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">resolveArgument</span><span class="params">(</span></span></div><div class="line">            MethodParameter parameter, ModelAndViewContainer mavContainer,</div><div class="line">            NativeWebRequest webRequest, WebDataBinderFactory binderFactory)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//获取参数类型</span></div><div class="line">        Class&amp;lt;?&amp;gt; paramType = parameter.getParameterType();</div><div class="line">        <span class="comment">//获取参数的名-值信息，如@PathVariable(&amp;quot;NO&amp;quot;) 则NO为名称，值为请求路径中对应</span></div><div class="line">        <span class="comment">//@RequestMapping(&amp;quot;/work/produce/NO&amp;quot;)中NO的值。</span></div><div class="line">        NamedValueInfo namedValueInfo = getNamedValueInfo(parameter);</div><div class="line">        <span class="comment">//解析请求路径中对应名称的值。上例中NO对应的值。</span></div><div class="line">        Object arg = resolveName(namedValueInfo.name, parameter, webRequest);</div><div class="line">        <span class="keyword">if</span> (arg == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (namedValueInfo.defaultValue != <span class="keyword">null</span>) &#123;</div><div class="line">                arg = resolveDefaultValue(namedValueInfo.defaultValue);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (namedValueInfo.required) &#123;</div><div class="line">                handleMissingValue(namedValueInfo.name, parameter);</div><div class="line">            &#125;</div><div class="line">            arg = handleNullValue(namedValueInfo.name, arg, paramType);</div><div class="line">        &#125;<span class="comment">//DataBinder，后续讲解。</span></div><div class="line">        <span class="keyword">if</span> (binderFactory != <span class="keyword">null</span>) &#123;</div><div class="line">            WebDataBinder binder = binderFactory.createBinder(webRequest, <span class="keyword">null</span>, </div><div class="line">                                                                    namedValueInfo.name);</div><div class="line">            arg = binder.convertIfNecessary(arg, paramType, parameter);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//将上面解析到的名称和值放到Request的属性表中。</span></div><div class="line">        handleResolvedValue(arg, namedValueInfo.name, parameter, mavContainer, webRequest);</div><div class="line">        <span class="keyword">return</span> arg;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   上面代码首先获取参数的@PathVariable的value属性值，如果value是空，则将参数的名称作为NameValueInfo的name值，然后用这个name值匹配请求路径中的变量值，作为NameValueInfo的value值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">resolveName</span><span class="params">(String name, MethodParameter parameter, NativeWebRequest request)</span></span>&#123;</div><div class="line">        Map&amp;lt;String, String&amp;gt; uriTemplateVars =<span class="comment">//从请求的属性表中获取值</span></div><div class="line">            (Map&amp;lt;String, String&amp;gt;) request.getAttribute(</div><div class="line">             HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);</div><div class="line">        <span class="keyword">return</span> (uriTemplateVars != <span class="keyword">null</span>) ? uriTemplateVars.get(name) : <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>   上面再lookupHandlerMethod方法中，调用了handleMatch方法，我们说了它会将解析到的路径变量放到request的变量表中，这不，这里就用到了，这样我们就获取到了@PathVariable对应参数的值了。到此为止，@PathVariable参数的解析就算完成了，其他类型的参数解析思路一样不同的就是resolveArgument方法中的逻辑了，大家可以自行了解。</p>
+<pre><code>注：这里Spring用到了多种设计模式，包括组合模式，策略模式，适配器模式等。其实这些实现都是3.1v的，之前的版本，参数解析这块相当乱，几乎完全在一个方法内实现的，拓展性，维护性相当差，3.1后我们可以很轻松的实现自己的参数解析器等，真的很棒。
+</code></pre><p>三、返回值的处理</p>
+<pre><code>上一节我们分析了参数的解析，及方法的调用，下面我们再来看返回值的处理，回到HandlerMethod的invokeAndHandle方法来，该方法的最后调用了returnValueHandlers.handleReturenValue方法，其中returnValueHandlers是HandlerMethodReturnValueHandlerComposite实例，就像HandlermethodArgumentResolverComposite一样，它包含了所有HandlerMethodReturnValueHandler的列表，并在Spring启动时完成注册。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleReturnValue</span><span class="params">(</span></span></div><div class="line">            Object returnValue, MethodParameter returnType,</div><div class="line">            ModelAndViewContainer mavContainer, NativeWebRequest webRequest)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        HandlerMethodReturnValueHandler handler = getReturnValueHandler(returnType);</div><div class="line">        handler.handleReturnValue(returnValue, returnType, mavContainer, webRequest);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> HandlerMethodReturnValueHandler <span class="title">getReturnValueHandler</span><span class="params">(MethodParameter returnType)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (HandlerMethodReturnValueHandler returnValueHandler : returnValueHandlers) &#123;</div><div class="line">            <span class="keyword">if</span> (returnValueHandler.supportsReturnType(returnType)) &#123;</div><div class="line">                <span class="keyword">return</span> returnValueHandler;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//这个是处理String类型的返回值，即将返回值解析为视图名</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleReturnValue</span><span class="params">(</span></span></div><div class="line">            Object returnValue, MethodParameter returnType,</div><div class="line">            ModelAndViewContainer mavContainer, NativeWebRequest webRequest)</div><div class="line">            <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="keyword">if</span> (returnValue == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (returnValue <span class="keyword">instanceof</span> String) &#123;</div><div class="line">            String viewName = (String) returnValue;</div><div class="line">            <span class="comment">//将返回值存储为视图名</span></div><div class="line">            mavContainer.setViewName(viewName);</div><div class="line">            <span class="keyword">if</span> (isRedirectViewName(viewName)) &#123;</div><div class="line">                mavContainer.setRedirectModelScenario(<span class="keyword">true</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException(&amp;quot;Unexpected <span class="keyword">return</span> type: &amp;quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>   返回值的处理思路与参数的处理几乎一样了，根据不同的返回值类型，查找匹配的处理器，然后进行处理(主要就是设置Model和View了，如上面的代码将返回值解析为视图名)，这里就不多说了。返回值处理完了，剩下的就是将返回值响应给客户端了，再往下就是视图的解析了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/02/Spring MVC 之 RequestMapping（1）/" rel="next" title="Spring MVC 之 @RequestMapping（1）">
+                <i class="fa fa-chevron-left"></i> Spring MVC 之 @RequestMapping（1）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/06/Spring MVC 之 View，ViewResolver/" rel="prev" title="Spring MVC 之 View，ViewResolver">
+                Spring MVC 之 View，ViewResolver <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/06/04/Spring MVC 之 RequestMapping（2）/"
+     data-title="Spring MVC 之 @RequestMapping（2）"
+     data-content=""
+     data-url="http://yoursite.com/2015/06/04/Spring MVC 之 RequestMapping（2）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/06/04/Spring MVC 之 RequestMapping（2）/"
+           data-title="Spring MVC 之 @RequestMapping（2）" data-url="http://yoursite.com/2015/06/04/Spring MVC 之 RequestMapping（2）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

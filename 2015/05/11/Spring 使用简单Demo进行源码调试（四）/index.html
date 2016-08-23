@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（三）继续。
+第一步展开loadBeanDefinitions(resources)。这个代码比较简单，是对每一个资源进行加载。12345678public int loadBeanDefinitions(Resource... resources) throws BeanDefinitionStoreExcep">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 使用简单Demo进行源码调试（四）">
+<meta property="og:url" content="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（四）/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（三）继续。
+第一步展开loadBeanDefinitions(resources)。这个代码比较简单，是对每一个资源进行加载。12345678public int loadBeanDefinitions(Resource... resources) throws BeanDefinitionStoreExcep">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 使用简单Demo进行源码调试（四）">
+<meta name="twitter:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（三）继续。
+第一步展开loadBeanDefinitions(resources)。这个代码比较简单，是对每一个资源进行加载。12345678public int loadBeanDefinitions(Resource... resources) throws BeanDefinitionStoreExcep">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（四）/"/>
+
+  <title> Spring 使用简单Demo进行源码调试（四） | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 使用简单Demo进行源码调试（四）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-11T07:24:09+08:00" content="2015-05-11">
+              2015-05-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（四）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
+<p>接上篇日志<a href="http://www.bugpointer.com/archives/508.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（三）</a>继续。</p>
+<p>第一步<br>展开loadBeanDefinitions(resources)。这个代码比较简单，是对每一个资源进行加载。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(Resource... resources)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">	Assert.notNull(resources, &amp;quot;Resource array must not be <span class="keyword">null</span>&amp;quot;);</div><div class="line">	<span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (Resource resource : resources) &#123;</div><div class="line">		counter += loadBeanDefinitions(resource);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> counter;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>展开loadBeanDefinitions(resource)。这一步为从特定的XML文件中加载bean factory，使用EncodedResource包装传来的resource，然后进一步加载。EncodedResource结合特定编码的资源描述符或特定字符集用于阅读资源，这里的资源描述符和特定字符集都为。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 从特定的XML文件中加载bean factory</div><div class="line">	public int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException &#123;</div><div class="line">		return loadBeanDefinitions(new EncodedResource(resource));</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第二步<br>展开 loadBeanDefinitions(new EncodedResource(resource));。这一步从encodedResource获取读入流，然后设置编码，最后通过doLoadBeanDefinitions(inputSource, encodedResource.getResource())进一步解析。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 从特定的XML文件中加载bean factory</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(EncodedResource encodedResource)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">		Assert.notNull(encodedResource, &amp;quot;EncodedResource must not be <span class="keyword">null</span>&amp;quot;);</div><div class="line">		<span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">			logger.info(&amp;quot;Loading XML bean definitions from &amp;quot; + encodedResource.getResource());</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		Set&amp;lt;EncodedResource&amp;gt; currentResources = <span class="keyword">this</span>.resourcesCurrentlyBeingLoaded.get();</div><div class="line">		<span class="keyword">if</span> (currentResources == <span class="keyword">null</span>) &#123;</div><div class="line">			currentResources = <span class="keyword">new</span> HashSet&amp;lt;EncodedResource&amp;gt;(<span class="number">4</span>);</div><div class="line">			<span class="keyword">this</span>.resourcesCurrentlyBeingLoaded.set(currentResources);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!currentResources.add(encodedResource)) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">					&amp;quot;Detected cyclic loading of &amp;quot; + encodedResource + &amp;quot; - check your <span class="keyword">import</span> definitions!&amp;quot;);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			InputStream inputStream = encodedResource.getResource().getInputStream();</div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				InputSource inputSource = <span class="keyword">new</span> InputSource(inputStream);</div><div class="line">				<span class="keyword">if</span> (encodedResource.getEncoding() != <span class="keyword">null</span>) &#123;</div><div class="line">					inputSource.setEncoding(encodedResource.getEncoding());</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">return</span> doLoadBeanDefinitions(inputSource, encodedResource.getResource());</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">finally</span> &#123;</div><div class="line">				inputStream.close();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">					&amp;quot;IOException parsing XML document from &amp;quot; + encodedResource.getResource(), ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">finally</span> &#123;</div><div class="line">			currentResources.remove(encodedResource);</div><div class="line">			<span class="keyword">if</span> (currentResources.isEmpty()) &#123;</div><div class="line">				<span class="keyword">this</span>.resourcesCurrentlyBeingLoaded.remove();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>第三步<br>展开doLoadBeanDefinitions(inputSource, encodedResource.getResource())。这一步初始化Document实例，然后通过registerBeanDefinitions(doc, resource)注册bean定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 实际的从特定的XML文件中加载bean factory</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">doLoadBeanDefinitions</span><span class="params">(InputSource inputSource, Resource resource)</span></span></div><div class="line">			<span class="keyword">throws</span> BeanDefinitionStoreException &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="keyword">int</span> validationMode = getValidationModeForResource(resource);</div><div class="line">			Document doc = <span class="keyword">this</span>.documentLoader.loadDocument(</div><div class="line">					inputSource, getEntityResolver(), <span class="keyword">this</span>.errorHandler, validationMode, isNamespaceAware());</div><div class="line">			<span class="keyword">return</span> registerBeanDefinitions(doc, resource);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (BeanDefinitionStoreException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> ex;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (SAXParseException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</div><div class="line">					&amp;quot;Line &amp;quot; + ex.getLineNumber() + &amp;quot; in XML document from &amp;quot; + resource + &amp;quot; is invalid&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (SAXException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</div><div class="line">					&amp;quot;XML document from &amp;quot; + resource + &amp;quot; is invalid&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (ParserConfigurationException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</div><div class="line">					&amp;quot;Parser configuration exception parsing XML from &amp;quot; + resource, ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</div><div class="line">					&amp;quot;IOException parsing XML document from &amp;quot; + resource, ex);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</div><div class="line">					&amp;quot;Unexpected exception parsing XML document from &amp;quot; + resource, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第四步<br>展开registerBeanDefinitions(doc, resource)。这一步比较好理解，直接看documentReader.registerBeanDefinitions(doc, createReaderContext(resource))。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用DOM document注册bean定义.</div><div class="line">	 */</div><div class="line">	<span class="meta">@SuppressWarnings</span>(&amp;quot;deprecation&amp;quot;)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">registerBeanDefinitions</span><span class="params">(Document doc, Resource resource)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();</div><div class="line">		documentReader.setEnvironment(getEnvironment());</div><div class="line">		<span class="keyword">int</span> countBefore = getRegistry().getBeanDefinitionCount();</div><div class="line">		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));</div><div class="line">		<span class="keyword">return</span> getRegistry().getBeanDefinitionCount() - countBefore;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第五步<br>展开documentReader.registerBeanDefinitions(doc, createReaderContext(resource))。还是比较简单，哎，看doRegisterBeanDefinitions(root)这一步吧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用&amp;quot;spring-beans&amp;quot; XSD 或者 DTD 解析bean定义</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(Document doc, XmlReaderContext readerContext)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.readerContext = readerContext;</div><div class="line">		logger.debug(&amp;quot;Loading bean definitions&amp;quot;);</div><div class="line">		Element root = doc.getDocumentElement();</div><div class="line">		doRegisterBeanDefinitions(root);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第六步<br>展开doRegisterBeanDefinitions(root)。这一步使用Doc里的root元素注册每一个bean定义。使用createDelegate的原因是任何嵌套的&lt; bean&gt;元素将导致该方法递归。为了传播和保存<bean> default-*属性正确,跟踪当前的(parent)delegate,这可能是null。为了后退创建一个引用到父delegate新的(child)delegate,最终重置delegate改回到原来（parent）引用。这种行为模拟一堆delegate，并不需要专门得类完成。最后通过预处理xml、解析bean定义和后处理xml完成注册bean定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Register each bean definition within the given root &#123;<span class="doctag">@code</span> &amp;lt;beans/&amp;gt;&#125; element.</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doRegisterBeanDefinitions</span><span class="params">(Element root)</span> </span>&#123;</div><div class="line">		String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);</div><div class="line">		<span class="keyword">if</span> (StringUtils.hasText(profileSpec)) &#123;</div><div class="line">			String[] specifiedProfiles = StringUtils.tokenizeToStringArray(</div><div class="line">					profileSpec, BeanDefinitionParserDelegate.MULTI_VALUE_ATTRIBUTE_DELIMITERS);</div><div class="line">			<span class="keyword">if</span> (!getEnvironment().acceptsProfiles(specifiedProfiles)) &#123;</div><div class="line">				<span class="keyword">return</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		BeanDefinitionParserDelegate parent = <span class="keyword">this</span>.delegate;</div><div class="line">		<span class="keyword">this</span>.delegate = createDelegate(<span class="keyword">this</span>.readerContext, root, parent);</div><div class="line"></div><div class="line">		preProcessXml(root);</div><div class="line">		parseBeanDefinitions(root, <span class="keyword">this</span>.delegate);</div><div class="line">		postProcessXml(root);</div><div class="line"></div><div class="line">		<span class="keyword">this</span>.delegate = parent;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></bean></p>
+<p>第七步<br>展开parseBeanDefinitions(root, this.delegate)。这一步从文档的根元素解析文档。delegate.isDefaultNamespace(ele)这一步判断ele是不是默认命名域，这里的默认命名域为”<a href="http://www.springframework.org/schema/beans&quot;。如果ele是默认命名域则解析ele，即parseDefaultElement(ele" target="_blank" rel="external">http://www.springframework.org/schema/beans&quot;。如果ele是默认命名域则解析ele，即parseDefaultElement(ele</a>, delegate)。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 从文档的根元素解析文档</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">parseBeanDefinitions</span><span class="params">(Element root, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (delegate.isDefaultNamespace(root)) &#123;</div><div class="line">			NodeList nl = root.getChildNodes();</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; nl.getLength(); i++) &#123;</div><div class="line">				Node node = nl.item(i);</div><div class="line">				<span class="keyword">if</span> (node <span class="keyword">instanceof</span> Element) &#123;</div><div class="line">					Element ele = (Element) node;</div><div class="line">					<span class="keyword">if</span> (delegate.isDefaultNamespace(ele)) &#123;</div><div class="line">						parseDefaultElement(ele, delegate);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">else</span> &#123;</div><div class="line">						delegate.parseCustomElement(ele);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			delegate.parseCustomElement(root);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第八步<br>展开parseDefaultElement(ele, delegate)。可以看到，我们是BEAN_ELEMENT，所以走processBeanDefinition(ele, delegate);这一步。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">parseDefaultElement</span><span class="params">(Element ele, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (delegate.nodeNameEquals(ele, IMPORT_ELEMENT)) &#123;</div><div class="line">			importBeanDefinitionResource(ele);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, ALIAS_ELEMENT)) &#123;</div><div class="line">			processAliasRegistration(ele);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) &#123;</div><div class="line">                        <span class="comment">//走这一步</span></div><div class="line">			processBeanDefinition(ele, delegate);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (delegate.nodeNameEquals(ele, NESTED_BEANS_ELEMENT)) &#123;</div><div class="line">			<span class="comment">// recurse</span></div><div class="line">			doRegisterBeanDefinitions(ele);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第九步<br>展开processBeanDefinition(ele, delegate)。这一步首先使用bean元素定义了BeanDefinitionHolder实例bdHolder，目前不详细解析了，BeanDefinitionHolder包含BeanDefinition名和别名，可以注册为一个内部bean的占位符。然后如果需要则修饰Bean定义。最后通过BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry())注册bean定义，BeanDefinitionReaderUtils类包含了bean定义阅读接口实现时有用的工具方法。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">	 * 处理bean元素,解析bean定义并注册</div><div class="line">	 */ </div><div class="line">	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) &#123;</div><div class="line">		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);</div><div class="line">		if (bdHolder != null) &#123;</div><div class="line">			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);</div><div class="line">			try &#123;</div><div class="line">				// Register the final decorated instance.</div><div class="line">				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());</div><div class="line">			&#125;</div><div class="line">			catch (BeanDefinitionStoreException ex) &#123;</div><div class="line">				getReaderContext().error(&amp;quot;Failed to register bean definition with name '&amp;quot; +</div><div class="line">						bdHolder.getBeanName() + &amp;quot;'&amp;quot;, ele, ex);</div><div class="line">			&#125;</div><div class="line">			// Send registration event.</div><div class="line">			getReaderContext().fireComponentRegistered(new BeanComponentDefinition(bdHolder));</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第十步<br>展开BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry())。首先获取bean名称；然后通过registry注册bean定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用最初的bean factory注册bean定义</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">registerBeanDefinition</span><span class="params">(</span></span></div><div class="line">			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)</div><div class="line">			<span class="keyword">throws</span> BeanDefinitionStoreException &#123;</div><div class="line"></div><div class="line">		<span class="comment">// Register bean definition under primary name.</span></div><div class="line">		String beanName = definitionHolder.getBeanName();</div><div class="line">		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());</div><div class="line"></div><div class="line">		<span class="comment">// Register aliases for bean name, if any.</span></div><div class="line">		String[] aliases = definitionHolder.getAliases();</div><div class="line">		<span class="keyword">if</span> (aliases != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">for</span> (String aliase : aliases) &#123;</div><div class="line">				registry.registerAlias(beanName, aliase);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>第十一步<br>展开registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition())。可以看到，这一步主要完成的工作有，bean定义校验、有旧定义是否可覆盖、添加新的bean定义。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)</div><div class="line">		throws BeanDefinitionStoreException &#123;</div><div class="line"></div><div class="line">	Assert.hasText(beanName, &amp;quot;Bean name must not be empty&amp;quot;);</div><div class="line">	Assert.notNull(beanDefinition, &amp;quot;BeanDefinition must not be null&amp;quot;);</div><div class="line"></div><div class="line">	if (beanDefinition instanceof AbstractBeanDefinition) &#123;</div><div class="line">		try &#123;</div><div class="line">			((AbstractBeanDefinition) beanDefinition).validate();</div><div class="line">		&#125;</div><div class="line">		catch (BeanDefinitionValidationException ex) &#123;</div><div class="line">			throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">					&amp;quot;Validation of bean definition failed&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	BeanDefinition oldBeanDefinition;</div><div class="line"></div><div class="line">	synchronized (this.beanDefinitionMap) &#123;</div><div class="line">		oldBeanDefinition = this.beanDefinitionMap.get(beanName);</div><div class="line">		if (oldBeanDefinition != null) &#123;</div><div class="line">			if (!this.allowBeanDefinitionOverriding) &#123;</div><div class="line">				throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">						&amp;quot;Cannot register bean definition [&amp;quot; + beanDefinition + &amp;quot;] for bean '&amp;quot; + beanName +</div><div class="line">						&amp;quot;': There is already [&amp;quot; + oldBeanDefinition + &amp;quot;] bound.&amp;quot;);</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				if (this.logger.isInfoEnabled()) &#123;</div><div class="line">					this.logger.info(&amp;quot;Overriding bean definition for bean '&amp;quot; + beanName +</div><div class="line">							&amp;quot;': replacing [&amp;quot; + oldBeanDefinition + &amp;quot;] with [&amp;quot; + beanDefinition + &amp;quot;]&amp;quot;);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		else &#123;</div><div class="line">			this.beanDefinitionNames.add(beanName);</div><div class="line">			this.frozenBeanDefinitionNames = null;</div><div class="line">		&#125;</div><div class="line">		this.beanDefinitionMap.put(beanName, beanDefinition);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if (oldBeanDefinition != null || containsSingleton(beanName)) &#123;</div><div class="line">		resetBeanDefinition(beanName);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>到此为止bean定义的加载已经完成。但是由于代码过于复杂，没有分析很多细节以及异常，仅仅是将主要的一条线理了出来，还是远远不够的。有机会在进行深入解析。接下来会继续分析我们的demo运行。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" rel="next" title="Spring 使用简单Demo进行源码调试（三）">
+                <i class="fa fa-chevron-left"></i> Spring 使用简单Demo进行源码调试（三）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/12/Spring 使用简单Demo进行源码调试（五）/" rel="prev" title="Spring 使用简单Demo进行源码调试（五）">
+                Spring 使用简单Demo进行源码调试（五） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（四）/"
+     data-title="Spring 使用简单Demo进行源码调试（四）"
+     data-content=""
+     data-url="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（四）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（四）/"
+           data-title="Spring 使用简单Demo进行源码调试（四）" data-url="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（四）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

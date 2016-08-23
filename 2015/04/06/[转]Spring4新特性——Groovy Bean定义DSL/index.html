@@ -1,0 +1,907 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1991830
+Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]Spring4新特性——Groovy Bean定义DSL">
+<meta property="og:url" content="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1991830
+Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]Spring4新特性——Groovy Bean定义DSL">
+<meta name="twitter:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1991830
+Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"/>
+
+  <title> [转]Spring4新特性——Groovy Bean定义DSL | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]Spring4新特性——Groovy Bean定义DSL
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:06:56+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1991830" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1991830</a></p>
+<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p>Spring4支持使用Groovy DSL来进行Bean定义配置，其类似于XML，不过因为是Groovy DSL，可以实现任何复杂的语法配置，但是对于配置，我们需要那么复杂吗？本着学习的态度试用了下其Groovy DSL定义Bean，其主要缺点：<br>1、DSL语法规则不足，需要其后续维护；<br>2、编辑器的代码补全需要跟进，否则没有代码补全，写这个很痛苦；<br>3、出错提示不友好，排错难；<br>4、当前对于一些配置还是需要XML的支持，所以还不是100%的纯Groovy DSL；<br>5、目前对整个Spring生态支持还是不够的，比如Web，需要观望。</p>
+<p>其优点就是其本质是Groovy脚本，所以可以做非常复杂的配置，如果以上问题能够解决，其也是一个不错的选择。在Groovy中的话使用这种配置感觉不会有什么问题，但是在纯Java开发环境下也是有它，给我的感觉是这个功能其目的是去推广它的groovy。比较怀疑它的动机。</p>
+<p>接下来我们来看看Spring配置的发展：<br>Spring 2时代是XML风格配置  可以参考《跟我学Spring3》的前几章<br>Spring 3时代引入注解风格配置  可以参考《跟我学Spring3》的第12章<br>Spring 4时代引入Groovy DSL风格来配置 后续讲解</p>
+<p>一、对比<br>对于我来说，没有哪个好/坏，只有适用不适用；开发方便不方便。接下来我们来看一下各种类型的配置吧：<br>XML风格配置<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.validation.beanvalidation.MethodValidationPostProcessor&quot;&gt;<br>    &lt;property name=&quot;validator&quot; ref=&quot;validator&quot;/&gt;<br>&lt;/bean&gt;<br>&lt;mvc:annotation-driven validator=&quot;validator&quot;/&gt;  </p>
+<p>&lt;bean id=&quot;validator&quot; class=&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;&gt;<br>    &lt;property name=&quot;providerClass&quot; value=&quot;org.hibernate.validator.HibernateValidator&quot;/&gt;<br>    &lt;property name=&quot;validationMessageSource&quot; ref=&quot;messageSource&quot;/&gt;<br>&lt;/bean&gt;<br>[/java]<br>注解风格配置<br>[java]<br>@Configuration<br>@EnableWebMvc<br>@ComponentScan(basePackages = &quot;com.sishuok.spring4&quot;)<br>public class MvcConfiguration extends WebMvcConfigurationSupport {<br>    @Override<br>    protected Validator getValidator() {<br>        LocalValidatorFactoryBean localValidatorFactoryBean =<br>                new LocalValidatorFactoryBean();<br>        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);<br>        localValidatorFactoryBean.setValidationMessageSource(messageSource());<br>        return localValidatorFactoryBean;<br>    }<br>}<br>[/java]<br>Groovy DSL风格配置<br>[java]<br>import org.hibernate.validator.HibernateValidator<br>import org.springframework.context.support.ReloadableResourceBundleMessageSource<br>import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean  </p>
+<p>beans {<br>    xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;<br>    xmlns mvc: &quot;<a href="http://www.springframework.org/schema/mvc&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/mvc&amp;quot</a>;  </p>
+<pre><code>context.&apos;component-scan&apos;(&apos;base-package&apos;: &amp;quot;com,sishuok.spring4&amp;quot;)  
+mvc.&apos;annotation-driven&apos;(&apos;validator&apos;: &amp;quot;validator&amp;quot;)  
+
+validator(LocalValidatorFactoryBean) {  
+    providerClass = HibernateValidator.class  
+    validationMessageSource = ref(&amp;quot;messageSource&amp;quot;)  
+}  
+</code></pre><p>}<br>[/java]<br>因为Spring4 webmvc没有提供用于Web环境的Groovy DSL实现的WebApplicationContext，所以为了在web环境使用，单独写了一个WebGenricGroovyApplicationContext，可以到源码中查找。</p>
+<p>可以看到，它们之前差别不是特别大；以上只提取了部分配置，完整的配置可以参考我的github：spring4-showcase</p>
+<p>对于注解风格的配置，如果在Servlet3容器中使用的话，可以借助WebApplicationInitializer实现无配置：<br>[java]<br>public class AppInitializer implements WebApplicationInitializer {  </p>
+<pre><code>@Override  
+public void onStartup(javax.servlet.ServletContext sc) throws ServletException {  
+</code></pre><p>//        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();<br>//        rootContext.register(AppConfig.class);<br>//        sc.addListener(new ContextLoaderListener(rootContext));  </p>
+<pre><code>    //2、springmvc上下文  
+    AnnotationConfigWebApplicationContext springMvcContext = new AnnotationConfigWebApplicationContext();  
+    springMvcContext.register(MvcConfiguration.class);  
+
+    //3、DispatcherServlet  
+    DispatcherServlet dispatcherServlet = new DispatcherServlet(springMvcContext);  
+    ServletRegistration.Dynamic dynamic = sc.addServlet(&amp;quot;dispatcherServlet&amp;quot;, dispatcherServlet);  
+    dynamic.setLoadOnStartup(1);  
+    dynamic.addMapping(&amp;quot;/&amp;quot;);  
+
+    //4、CharacterEncodingFilter  
+    FilterRegistration filterRegistration =  
+            sc.addFilter(&amp;quot;characterEncodingFilter&amp;quot;, CharacterEncodingFilter.class);  
+    filterRegistration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, &amp;quot;/*&amp;quot;);  
+
+}  
+</code></pre><p>}<br>[/java]<br>到底好还是不好，需要根据自己项目大小等一些因素来衡量。对于Servlet3可以参考我github的示例：servlet3-showcase  </p>
+<p>对于Groovy风格配置，如果语法足够丰富、Spring内部支持完善，且编辑器支持也非常好的话，也是不错的选择。</p>
+<p>二、Groovy Bean定义<br>接下来我们来看下groovy DSL的具体使用吧：<br>1、安装环境<br>[java]<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;<br>    &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;<br>    &lt;version&gt;${groovy.version}&lt;/version&gt;<br>&lt;/dependency&gt;<br>[/java]<br>我使用的groovy版本是2.2.1</p>
+<p>2、相关组件类<br>此处使用Spring Framework官网的hello world，可以前往<a href="http://projects.spring.io/spring-framework/" target="_blank" rel="external">http://projects.spring.io/spring-framework/</a> 主页查看 </p>
+<p>3、Groovy Bean定义配置文件<br>[java]<br>import com.sishuok.spring4.xml.MessageServiceImpl<br>import com.sishuok.spring4.xml.MessagePrinter  </p>
+<p>beans {<br>    messageService(MessageServiceImpl) {//名字(类型)<br>        message = &quot;hello&quot;  //注入的属性<br>    }  </p>
+<pre><code>messagePrinter(MessagePrinter, messageService) //名字（类型，构造器参数列表）  
+</code></pre><p>}<br>[/java]<br>从此处可以看到 如果仅仅是简单的Bean定义，确实比XML简洁。</p>
+<p>4、测试<br>如果不测试环境可以这样测试：<br>[java]<br>public class XmlGroovyBeanDefinitionTest1 {<br>    @Test<br>    public void test() {<br>        ApplicationContext ctx = new GenericGroovyApplicationContext(&quot;classpath:spring-config-xml.groovy&quot;);<br>        MessagePrinter messagePrinter = (MessagePrinter) ctx.getBean(&quot;messagePrinter&quot;);<br>        messagePrinter.printMessage();<br>    }<br>}<br>[/java]<br>使用GenericGroovyApplicationContext加载groovy配置文件。 </p>
+<p>如果想集成到Spring Test中，可以这样：<br>[java]<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations = &quot;classpath:spring-config-xml.groovy&quot;, loader = GenericGroovyContextLoader.class)<br>public class XmlGroovyBeanDefinitionTest2 {  </p>
+<pre><code>@Autowired  
+private MessagePrinter messagePrinter;  
+
+@Test  
+public void test() {  
+    messagePrinter.printMessage();  
+}  
+</code></pre><p>}<br>[/java]<br>此处需要定义我们自己的bean loader，即从groovy配置文件加载：<br>[java]<br>public class GenericGroovyContextLoader extends AbstractGenericContextLoader {  </p>
+<pre><code>@Override  
+protected String getResourceSuffix() {  
+    throw new UnsupportedOperationException(  
+            &amp;quot;GenericGroovyContextLoader does not support the getResourceSuffix() method&amp;quot;);  
+}  
+@Override  
+protected BeanDefinitionReader createBeanDefinitionReader(GenericApplicationContext context) {  
+    return new GroovyBeanDefinitionReader(context);  
+}  
+</code></pre><p>}<br>[/java]<br>使用GroovyBeanDefinitionReader来加载groovy配置文件。  </p>
+<p>到此基本的使用就结束了，还算是比较简洁，但是我们已经注意到了，在纯Java环境做测试还是比较麻烦的。 比如没有给我们写好相关的测试支撑类。另外大家可以前往Spring的github看看在groovy中的单元测试：GroovyBeanDefinitionReaderTests.groovy</p>
+<p>再看一下我们使用注解方式呢：<br>[java]<br>@Component<br>public class MessageServiceImpl implements MessageService {<br>    @Autowired<br>    @Qualifier(&quot;message&quot;)<br>    private String message;<br>    ……<br>}<br>[/java]<br>[java]<br>@Component<br>public class MessagePrinter {<br>    private MessageService messageService;<br>    @Autowired<br>    public MessagePrinter(MessageService messageService) {<br>        this.messageService = messageService;<br>    }<br>……<br>}<br>[/java]<br>此处省略无关代码，需要的话直接去github查看 。点击前往 </p>
+<p>Groovy配置文件：</p>
+<p>[java]<br>beans {<br>    xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;    //导入命名空间  </p>
+<pre><code>context.&apos;component-scan&apos;(&apos;base-package&apos;: &amp;quot;com.sishuok.spring4&amp;quot;) {  
+    &apos;exclude-filter&apos;(&apos;type&apos;: &amp;quot;aspectj&amp;quot;, &apos;expression&apos;: &amp;quot;com.sishuok.spring4.xml.*&amp;quot;)  
+}  
+
+message(String, &amp;quot;hello&amp;quot;) {}  
+</code></pre><p>}<br>[/java]<br>在该配置文件中支持导入xml命名空间， 其中context.’component-scan’部分等价于XML中的：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;&gt;<br>    &lt;context:exclude-filter type=&quot;aspectj&quot; expression=&quot;com.sishuok.spring4.xml.*&quot;/&gt;<br>&lt;/context:component-scan&gt; [/java]<br> 从这里可以看出，其还没能完全从XML风格配置中走出来，不是纯Groovy DSL。</p>
+<p>测试方式和之前的一样就不重复了，可以查看XmlGroovyBeanDefinitionTest2.java。</p>
+<p>三、Groovy Bean定义 DSL语法</p>
+<p>到目前为止，基本的helloworld就搞定了；接下来看看Groovy DSL都支持哪些配置吧：<br>创建Bean</p>
+<p>构造器<br>[java]<br>validator(LocalValidatorFactoryBean) { //名字（类型）<br>    providerClass = HibernateValidator.class  //属性=值<br>    validationMessageSource = ref(&quot;messageSource&quot;) //属性 = 引用，当然也支持如 validationMessageSource=messageSource 但是这种方式缺点是messageSource必须在validator之前声明<br>}[/java]<br>静态工厂方法<br>[java]<br>def bean = factory(StaticFactory) {<br>    prop = 1<br>}<br>bean.factoryMethod = &quot;getInstance&quot;  [/java]<br>或者<br>[java]<br>bean(StaticFactory) { bean -&gt;<br>    bean.factoryMethod = &quot;getInstance&quot;<br>    prop = 1<br>}  [/java]</p>
+<p>实例工厂方法<br>[java]<br>beanFactory(Factory)<br>bean(beanFactory : &quot;newInstance&quot;, &quot;args&quot;) {<br>    prop = 1<br>} [/java]<br>或者<br>[java]<br>beanFactory(Factory)<br>bean(&quot;bean&quot;){bean -&gt;<br>    bean.factoryBean=&quot;beanFactory&quot;<br>    bean.factoryMethod=&quot;newInstance&quot;<br>    prop = 1<br>}[/java]  </p>
+<p>依赖注入</p>
+<p>属性注入<br>[java]<br>beanName(BeanClass) { //名字（类型）<br>    str = &quot;123&quot; // 常量直接注入<br>    bean = ref(&quot;bean&quot;) //属性 = 引用 ref(&quot;bean&quot;, true) 这样的话是引用父容器的<br>    beans = [bean1, bean2] //数组/集合<br>    props = [key1:&quot;value1&quot;, key2:&quot;value2&quot;] // Properties / Map<br>}  [/java]</p>
+<p>构造器注入<br>[java]<br>bean(Bean, &quot;args1&quot;, &quot;args2&quot;)<br>[/java]<br>静态工厂注入/实例工厂注入，请参考创建bean部分</p>
+<p>匿名内部Bean<br>[java]<br>outer(OuterBean) {<br>   prop = 1<br>   inner =  { InnerBean bean -&gt;  //匿名内部Bean<br>                          prop =2<br>            }<br>}[/java]<br>[java]<br>outer(OuterBean) {<br>   prop = 1<br>   inner =  { bean -&gt;  //匿名内部Bean 通过实例工厂方法创建<br>                          bean.factoryBean = &quot;innerBean&quot;<br>                          bean.factoryMethod = &quot;create&quot;<br>                          prop = 2<br>            }<br>} [/java]<br>单例/非单例/作用域<br>[java]<br>singletonBean(Bean1) { bean -&gt;<br>    bean.singleton = true<br>}<br>nonSingletonBean(Bean1) { bean -&gt;<br>    bean.singleton = false<br>}<br>prototypeBean(Bean1) { bean -&gt;<br>    bean.scope = &quot;prototype&quot;<br>}<br>[/java]<br>其中bean可以理解为xml中的<bean> 标签，即bean定义。</bean></p>
+<p>父子Bean<br>[java]<br>parent(Bean1){ bean -&gt;<br>    bean.’abstract’ = true //抽象的<br>    prop = 123<br>}<br>child { bean -&gt;<br>    bean.parent = parent //指定父bean<br>}<br>[/java] </p>
+<p>命名空间<br>[java]<br>xmlns aop:&quot;<a href="http://www.springframework.org/schema/aop&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/aop&amp;quot</a>;<br>myAspect(MyAspect)<br>aop {<br>    config(&quot;proxy-target-class&quot;:true) {<br>        aspect( id:&quot;test&quot;,ref:&quot;myAspect&quot; ) {<br>            before method:&quot;before&quot;, pointcut: &quot;execution(void com.sishuok.spring4..<em>.</em>(..))&quot;<br>        }<br>    }<br>} [/java]<br>以上是AOP的，可以自己推到其他相关的配置； </p>
+<p>[java]<br>xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;<br>context.’component-scan’(‘base-package’: &quot;com.sishuok.spring4&quot;) {<br>    ‘exclude-filter’(‘type’: &quot;aspectj&quot;, ‘expression’: &quot;com.sishuok.spring4.xml.*&quot;)<br>} [/java]<br>以上是component-scan，之前介绍过了。</p>
+<p>[java]<br>xmlns aop:&quot;<a href="http://www.springframework.org/schema/aop&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/aop&amp;quot</a>;<br>scopedList(ArrayList) { bean -&gt;<br>    bean.scope = &quot;haha&quot;<br>    aop.’scoped-proxy’()<br>} [/java]<br> 等价于<br>[java]<br>&lt;bean id=&quot;scopedList&quot; class=&quot;java.util.ArrayList&quot; scope=&quot;haha&quot;&gt;<br>    &lt;aop:scoped-proxy/&gt;<br>&lt;/bean&gt;  [/java]</p>
+<p>[java]<br>xmlns util:&quot;<a href="http://www.springframework.org/schema/util&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/util&amp;quot</a>;<br>util.list(id : ‘list’) {<br>    value 1<br>    value 2<br>}  [/java]<br>等价于XML：<br>[java]<br>&lt;util:list id=&quot;list&quot;&gt;<br>    &lt;value&gt;1&lt;/value&gt;<br>    &lt;value&gt;2&lt;/value&gt;<br>&lt;/util:list&gt;<br> [/java]<br>[java]<br>xmlns util:&quot;<a href="http://www.springframework.org/schema/util&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/util&amp;quot</a>;<br>util.map(id : ‘map’) {<br>    entry(key : 1, value :1)<br>    entry(‘key-ref’ : &quot;messageService&quot;, ‘value-ref’ : &quot;messageService&quot;)<br>}[/java]<br> 等价于<br>[java]<br>&lt;util:map id=&quot;map&quot;&gt;<br>    &lt;entry key=&quot;1&quot; value=&quot;1&quot;/&gt;<br>    &lt;entry key-ref=&quot;messageService&quot; value-ref=&quot;messageService&quot;/&gt;<br>&lt;/util:map&gt;<br>[/java]<br>引入其他配置文件<br>[java]<br>importBeans &quot;classpath:org/springframework/context/groovy/test.xml&quot;<br>[/java]<br>当然也能引入XML的。 </p>
+<p>对于DSL新的更新大家可以关注：GroovyBeanDefinitionReaderTests.groovy，本文也是根据其编写的。</p>
+<p>再来看看groovy bean定义的另一个好处：<br>我们可以直接在groovy bean定义文件中声明类，然后使用<br>[java]<br>@Controller<br>def class GroovyController {<br>    @RequestMapping(&quot;/groovy&quot;)<br>    @ResponseBody<br>    public String hello() {<br>        return &quot;hello&quot;;<br>    }<br>}  </p>
+<p>beans {  </p>
+<pre><code>groovyController(GroovyController)  
+</code></pre><p>}<br>[/java]<br> 另一种Spring很早就支持的方式是引入外部groovy文件，如：<br>[java]<br>xmlns lang: &quot;<a href="http://www.springframework.org/schema/lang&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/lang&amp;quot</a>;<br>lang.’groovy’(id: ‘groovyController2’, ‘script-source’: ‘classpath:com/sishuok/spring4/controller/GroovyController2.groovy’)<br>[/java]<br>使用其lang命名空间引入外部脚本文件。 </p>
+<p>到此，Groovy Bean定义DSL就介绍完了，其没有什么特别之处，只是换了种写法而已，我认为目前试试即可，还不能用到真实环境。</p>
+<p>示例代码：<br><a href="https://github.com/zhangkaitao/spring4-showcase" target="_blank" rel="external">https://github.com/zhangkaitao/spring4-showcase</a><br><a href="https://github.com/zhangkaitao/servlet3-showcase" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" rel="next" title="[转]Spring4新特性——Web开发的增强">
+                <i class="fa fa-chevron-left"></i> [转]Spring4新特性——Web开发的增强
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/" rel="prev" title="[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进">
+                [转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"
+     data-title="[转]Spring4新特性——Groovy Bean定义DSL"
+     data-content=""
+     data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"
+           data-title="[转]Spring4新特性——Groovy Bean定义DSL" data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

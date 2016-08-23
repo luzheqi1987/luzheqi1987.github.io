@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wordpress," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="做一个wordpress留言板很简单，我们知道一般可以用新建一个主题名字叫“留言板”的页面，让访客以评论留言的方式来实现。但是这种方式建立的留言板，其实是一个一般主题(post)或页面(page)，因此缺乏进一步定制的功能，而且提示文字也全部是“评论”要做一个可定制的留言板其实很简单，只需要5步，那就让我们开始吧:)
+如果你满足下列要求，请继续，
+你有主机文件存储权限(一般博客服务提供商可能没有提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]wordpress 添加基本留言板">
+<meta property="og:url" content="http://yoursite.com/2012/08/08/[转]wordpress 添加基本留言板/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="做一个wordpress留言板很简单，我们知道一般可以用新建一个主题名字叫“留言板”的页面，让访客以评论留言的方式来实现。但是这种方式建立的留言板，其实是一个一般主题(post)或页面(page)，因此缺乏进一步定制的功能，而且提示文字也全部是“评论”要做一个可定制的留言板其实很简单，只需要5步，那就让我们开始吧:)
+如果你满足下列要求，请继续，
+你有主机文件存储权限(一般博客服务提供商可能没有提">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]wordpress 添加基本留言板">
+<meta name="twitter:description" content="做一个wordpress留言板很简单，我们知道一般可以用新建一个主题名字叫“留言板”的页面，让访客以评论留言的方式来实现。但是这种方式建立的留言板，其实是一个一般主题(post)或页面(page)，因此缺乏进一步定制的功能，而且提示文字也全部是“评论”要做一个可定制的留言板其实很简单，只需要5步，那就让我们开始吧:)
+如果你满足下列要求，请继续，
+你有主机文件存储权限(一般博客服务提供商可能没有提">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2012/08/08/[转]wordpress 添加基本留言板/"/>
+
+  <title> [转]wordpress 添加基本留言板 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]wordpress 添加基本留言板
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-08T23:01:22+08:00" content="2012-08-08">
+              2012-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/08/[转]wordpress 添加基本留言板/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/08/[转]wordpress 添加基本留言板/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>做一个wordpress留言板很简单，我们知道一般可以用新建一个主题名字叫“留言板”的页面，让访客以评论留言的方式来实现。但是这种方式建立的留言板，其实是一个一般主题(post)或页面(page)，因此缺乏进一步定制的功能，而且提示文字也全部是“评论”<br>要做一个可定制的留言板其实很简单，只需要5步，那就让我们开始吧:)</p>
+<p>如果你满足下列要求，请继续，</p>
+<p>你有主机文件存储权限(一般博客服务提供商可能没有提供此权限).<br>你可以以admin权限登录后台(一般都有吧)<br>你大概知道点HTML和PHP文本形式的差别(定制部分需要修修改改，当然不难，只要认得出什么是html文本，什么是php文本就及格).</p>
+<h3 id="一：制作留言板模板："><a href="#一：制作留言板模板：" class="headerlink" title="一：制作留言板模板："></a>一：制作留言板模板：</h3><p>1）找到你博客模板目录中的single.php文件（一般你的模板目录是在/wp-content/themes/博客模板名称/）；复制 single.php并重命名为guestbook.php,这样做的目的是我们希望留言板能保持博客的基本布局如：页面头部，页脚和侧边栏。因此最好的方式就是复制用来显示单篇主题的页面模板文件single.php</p>
+<p>2）用一款合适的文本编辑器（如：editplus，ultraedit，notepad2，之所以没说windows自带的notepad是因为它对UTF-8的编码方式支持不好）；打开guestbook.php 在文件头部找到如下php代码：</p>
+<p>&lt;?php get_header(); ?&gt;</p>
+<p>在此语句前加一段仅带注释语句的模板标识，这里我们将页面模板名字(Template Name)定义为Guestbook，这个名字在下面会有用到。</p>
+<p>&lt;?php<br>/<em><br>Template Name: Guestbook
+</em>/<br>?&gt;</p>
+<p>OK，简单吧，留言板的页面模板文件就做好了。</p>
+<p>3）将修改后的guestbook.php上传到博客模板目录(/wp-content/themes/博客模板名称/)下</p>
+<h3 id="二：在后台创建留言板"><a href="#二：在后台创建留言板" class="headerlink" title="二：在后台创建留言板"></a>二：在后台创建留言板</h3><p>4）以具有admin权限的帐号登录，新建一个页面，在主题名称处输入“留言板”，在内容处像往常写博客主题一样输入些内容，如：请留下宝贵意见和建议等等</p>
+<p>5）很重要的一步：在右侧页面模板(page template)处，选择刚才创建的guestbook页面模板，发布(publish)，完成。</p>
+<p>去自己的博客主页看看，根据博客模板的不同，留言板会以Tab方式或者侧栏链接的方式显示。</p>
+<h3 id="三：把留言板做的更完美"><a href="#三：把留言板做的更完美" class="headerlink" title="三：把留言板做的更完美"></a>三：把留言板做的更完美</h3><p>通过上面的5步，你已经拥有一个留言板了，但是这和新建主题/页面生成的留言板没什么区别。别急，因为我们的留言板是根据自建的guestbook页面模板生成的，所以做适当的修修改改就可以了，而且这并不会影响到其他一般主题或页面的显示</p>
+<p>1）去掉发布日期：<br>如果你不希望你的留言板主题显示如一般主题那样的发布日期，那么在guestbook.php中找到如下代码并删除。</p>
+<p>&lt;?php the_time(‘Y/m/d’) ?&gt;<br>//根据不同模板不同可能有点不同，比如可能是<br>&lt;?php the_time(‘M’) ?&gt;</p>
+<p>2）自定义“留言”样式的提示文本<br>因为其他主题或页面的评论都是用到comments.php来显示和输入评论的，不能把那些地方的“评论”也改成“留言”了。<br>因此复制一份comments.php并命名为guestcomments.php，就在guestcomments.php上修修改改吧</p>
+<p>把所有“X comments”(xxx条评论)改成“X guestbook entries”(xxx条留言)<br>把“Post Comment”(发布评论)按钮的提示改成“Sign Guestbook”(发布留言)</p>
+<p>3）最新留言显示在顶部<br>按照评论方式的留言，总是最新的留言排在最下面，如果我们希望最新的留言显示在最上面，可以这么做</p>
+<p>在guestcomments.php中找到如下代码：</p>
+<p>foreach ($comments as $comment)</p>
+<p>替换成</p>
+<p>foreach (array_reverse($comments) as $comment)</p>
+<p>好啦，自定义的留言文本和显示方式据改好了，最后别忘了把guestcomments.php上传到你的博客模板目(/wp-content/themes/博客模板名称/)下</p>
+<p>4）仅仅修改上面的2),3)；原来的guestbook.php并不知道你想启用新的留言和显示方式，所以我们还是要回到guestbook.php(不会那么快忘记这个文件吧:) )<br>找到如下代码：</p>
+<p>&lt;?php comments_template(); ?&gt;</p>
+<p>替换成</p>
+<p>&lt;?php comments_template(‘/guestcomments.php’); ?&gt;</p>
+<h3 id="四：还有什么花样吗"><a href="#四：还有什么花样吗" class="headerlink" title="四：还有什么花样吗?"></a>四：还有什么花样吗?</h3><p>因为我们用的是guestbook.php作为留言板的页面模板，相比一般主题/页面生成的留言板, 通过修改guestbook.php, 我们能获得更多的功能和提示，因为我们能在此文件中加入php语句，可以是自编的，也可以是其他插件中引用过来的函数。</p>
+<p>这也给了我们一个启示，就是通过自定义页面模板的方式，我们可以定义一个全新页面，可以保留侧栏(sidebar)，页脚(foot)，也可以不保留，然后在内容(content)部分加入自己的php代码。比如，我将Popularity Contest(主题流行程度)插件的输出函数放在自定义的页面模板中，做成一个类似于抓虾的热文(top rank)页面,由访客的浏览行为自动排序出该博客内的热门主题榜单。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wordpress/" rel="tag">#wordpress</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" rel="next" title="OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法">
+                <i class="fa fa-chevron-left"></i> OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/08/20/OpenCV 级联分类器训练（1）/" rel="prev" title="OpenCV 级联分类器训练（1）">
+                OpenCV 级联分类器训练（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2012/08/08/[转]wordpress 添加基本留言板/"
+     data-title="[转]wordpress 添加基本留言板"
+     data-content=""
+     data-url="http://yoursite.com/2012/08/08/[转]wordpress 添加基本留言板/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2012/08/08/[转]wordpress 添加基本留言板/"
+           data-title="[转]wordpress 添加基本留言板" data-url="http://yoursite.com/2012/08/08/[转]wordpress 添加基本留言板/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一：制作留言板模板："><span class="nav-number">1.</span> <span class="nav-text">一：制作留言板模板：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二：在后台创建留言板"><span class="nav-number">2.</span> <span class="nav-text">二：在后台创建留言板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三：把留言板做的更完美"><span class="nav-number">3.</span> <span class="nav-text">三：把留言板做的更完美</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四：还有什么花样吗"><span class="nav-number">4.</span> <span class="nav-text">四：还有什么花样吗?</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

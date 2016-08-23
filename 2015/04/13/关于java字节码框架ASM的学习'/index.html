@@ -1,0 +1,894 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、什么是ASM　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于java字节码框架ASM的学习">
+<meta property="og:url" content="http://yoursite.com/2015/04/13/关于java字节码框架ASM的学习'/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="一、什么是ASM　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于java字节码框架ASM的学习">
+<meta name="twitter:description" content="一、什么是ASM　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/13/关于java字节码框架ASM的学习'/"/>
+
+  <title> 关于java字节码框架ASM的学习 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                关于java字节码框架ASM的学习
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-13T10:29:17+08:00" content="2015-04-13">
+              2015-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/13/关于java字节码框架ASM的学习'/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/关于java字节码框架ASM的学习'/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、什么是ASM<br>　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变类行为，分析类信息，甚至能够根据用户要求生成新类。</p>
+<p>　　使用ASM框架需要导入asm的jar包，下载链接：<a href="http://files.cnblogs.com/liuling/asm-3.2.rar" target="_blank" rel="external">asm-3.2.jar</a>。<br>　　二、如何使用ASM<br>　　ASM框架中的核心类有以下几个：<br>　　①  ClassReader:该类用来解析编译过的class字节码文件。<br>　　②  ClassWriter:该类用来重新构建编译后的类，比如说修改类名、属性以及方法，甚至可以生成新的类的字节码文件。<br>　　③  ClassAdapter:该类也实现了ClassVisitor接口，它将对它的方法调用委托给另一个ClassVisitor对象。<br>　　示例1.通过asm生成类的字节码<br>[java]<br>package com.asm3;</p>
+<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
+<p>import org.objectweb.asm.ClassWriter;<br>import org.objectweb.asm.Opcodes;</p>
+<p>/**</p>
+<ul>
+<li>通过asm生成类的字节码</li>
+<li><p>@author Administrator<br><em>
+</em>/<br>public class GeneratorClass {</p>
+<p> public static void main(String[] args) throws IOException {</p>
+<pre><code>//生成一个类只需要ClassWriter组件即可
+ClassWriter cw = new ClassWriter(0);
+//通过visit方法确定类的头部信息
+cw.visit(Opcodes.V1_5, Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT+Opcodes.ACC_INTERFACE,
+        &amp;quot;com/asm3/Comparable&amp;quot;, null, &amp;quot;java/lang/Object&amp;quot;, new String[]{&amp;quot;com/asm3/Mesurable&amp;quot;});
+//定义类的属性
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;LESS&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(-1)).visitEnd();
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;EQUAL&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(0)).visitEnd();
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;GREATER&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(1)).visitEnd();
+//定义类的方法
+cw.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT, &amp;quot;compareTo&amp;quot;,
+        &amp;quot;(Ljava/lang/Object;)I&amp;quot;, null, null).visitEnd();
+cw.visitEnd(); //使cw类已经完成
+//将cw转换成字节数组写到文件里面去
+byte[] data = cw.toByteArray();
+File file = new File(&amp;quot;D://Comparable.class&amp;quot;);
+FileOutputStream fout = new FileOutputStream(file);
+fout.write(data);
+fout.close();
+</code></pre><p> }<br>}<br>[/java]</p>
+</li>
+</ul>
+<p>　生成一个类的字节码文件只需要用到ClassWriter类即可，生成Comparable.class后用javap指令对其进行反编译：javap -c Comparable.class &gt;test.txt  ,编译后的结果如下<br>[java]<br>public interface com.asm3.Comparable extends com.asm3.Mesurable {<br>  public static final int LESS;</p>
+<p>  public static final int EQUAL;</p>
+<p>  public static final int GREATER;</p>
+<p>  public abstract int compareTo(java.lang.Object);<br>}<br>[/java]</p>
+<p>　　示例2.修改类的字节码文件<br>[java]<br>package com.asm5;</p>
+<p>public class C {<br>    public void m() throws InterruptedException{<br>        Thread.sleep(100);<br>    }<br>}<br>[/java]<br>将C.java类的内容改为如下：<br>[java]<br>package com.asm5;</p>
+<p>public class C {<br>    public static long timer;<br>    public void m() throws InterruptedException{<br>        timer -= System.currentTimeMillis();<br>        Thread.sleep(100);<br>        timer += System.currentTimeMillis();<br>    }<br>}<br>[/java]<br>　为了弄清楚ASM是如何实现的，我们先编译这两个类，然后比对它们的TraceClassVisitor的输出，我们可以发现如下的不同（粗体表示）</p>
+<p><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LSUB<br>PUTSTATIC C.timer : J</strong><br>LDC 100<br>INVOKESTATIC java/lang/Thread.sleep(J)V<br><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LADD<br>PUTSTATIC C.timer : J</strong><br>RETURN<br>MAXSTACK=4<br>MAXLOCALS=1</p>
+<p>　　通过比对上面的指令，我们可以发现必须在m()方法的最前面增加四条指令，在RETURN指令前也增加四条指令，同时这四条必须位于xRETURN和ATHROW之前，因为这些指令都会结束方法的执行。</p>
+<p>具体代码如下：</p>
+<p>AddTimeClassAdapter.java<br>[java]<br>package com.asm5;</p>
+<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassVisitor;<br>import org.objectweb.asm.FieldVisitor;<br>import org.objectweb.asm.MethodAdapter;<br>import org.objectweb.asm.MethodVisitor;<br>import org.objectweb.asm.Opcodes;</p>
+<p>public class AddTimeClassAdapter extends ClassAdapter {<br>    private String owner;<br>    private boolean isInterface;<br>    public AddTimeClassAdapter(ClassVisitor cv) {<br>        super(cv);<br>    }<br>    @Override<br>    public void visit(int version, int access, String name, String signature,<br>            String superName, String[] interfaces) {<br>        cv.visit(version, access, name, signature, superName, interfaces);<br>        owner = name;<br>        isInterface = (access &amp; Opcodes.ACC_INTERFACE) != 0;<br>    }<br>    @Override<br>    public MethodVisitor visitMethod(int access, String name, String desc,<br>            String signature, String[] exceptions) {<br>        MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);<br>        if(!name.equals(&quot;&lt;init&gt;&quot;) &amp;&amp; !isInterface &amp;&amp; mv!=null){<br>            //为方法添加计时功能<br>            mv = new AddTimeMethodAdapter(mv);<br>        }<br>        return mv;<br>    }<br>    @Override<br>    public void visitEnd() {<br>        //添加字段<br>        if(!isInterface){<br>            FieldVisitor fv = cv.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC, &quot;timer&quot;, &quot;J&quot;, null, null);<br>            if(fv!=null){<br>                fv.visitEnd();<br>            }<br>        }<br>        cv.visitEnd();<br>    }</p>
+<pre><code>class AddTimeMethodAdapter extends MethodAdapter{
+    public AddTimeMethodAdapter(MethodVisitor mv) {
+        super(mv);
+    }
+    @Override
+    public void visitCode() {
+        mv.visitCode();
+        mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
+        mv.visitInsn(Opcodes.LSUB);
+        mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+    }
+    @Override
+    public void visitInsn(int opcode) {
+        if((opcode&amp;gt;=Opcodes.IRETURN &amp;amp;&amp;amp; opcode&amp;lt;=Opcodes.RETURN) || opcode==Opcodes.ATHROW){
+            mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
+            mv.visitInsn(Opcodes.LADD);
+            mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+        }
+        mv.visitInsn(opcode);
+    }
+    @Override
+    public void visitMaxs(int maxStack, int maxLocal) {
+        mv.visitMaxs(maxStack+4, maxLocal);
+    }
+}
+</code></pre><p>}<br>[/java]<br>Generator.java<br>[java]<br>package com.asm5;</p>
+<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
+<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassReader;<br>import org.objectweb.asm.ClassWriter;</p>
+<p>public class Generator {</p>
+<pre><code>public static void main(String[] args){
+    try {
+        ClassReader cr = new ClassReader(&amp;quot;com/asm5/C&amp;quot;);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        ClassAdapter classAdapter = new AddTimeClassAdapter(cw);
+        //使给定的访问者访问Java类的ClassReader
+        cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
+        byte[] data = cw.toByteArray();
+        File file = new File(System.getProperty(&amp;quot;user.dir&amp;quot;) + &amp;quot;\\WebRoot\\WEB-INF\\classes\\com\\asm5\\C.class&amp;quot;);
+        FileOutputStream fout = new FileOutputStream(file);
+        fout.write(data);
+        fout.close();
+        System.out.println(&amp;quot;success!&amp;quot;);
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}<br>[/java]<br>下面是一个测试类：<br>[java]<br>package com.asm5;</p>
+<p>public class Test {<br>    public static void main(String[] args) throws InterruptedException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {<br>        C c = new C();<br>        c.m();<br>        Class cc = c.getClass();<br>        System.out.println(cc.getField(&quot;timer&quot;).get(c));<br>    }<br>}<br>[/java]<br>输出结果为：100</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/" rel="next" title="[转]Spring MVC源码分析——初始化过程">
+                <i class="fa fa-chevron-left"></i> [转]Spring MVC源码分析——初始化过程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" rel="prev" title="RAID0、RAID1、RAID0+1、RAID5原理介绍">
+                RAID0、RAID1、RAID0+1、RAID5原理介绍 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/04/13/关于java字节码框架ASM的学习'/"
+     data-title="关于java字节码框架ASM的学习"
+     data-content=""
+     data-url="http://yoursite.com/2015/04/13/关于java字节码框架ASM的学习'/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/13/关于java字节码框架ASM的学习'/"
+           data-title="关于java字节码框架ASM的学习" data-url="http://yoursite.com/2015/04/13/关于java字节码框架ASM的学习'/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

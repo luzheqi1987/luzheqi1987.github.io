@@ -1,0 +1,905 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="出处：点击打开链接看到大家在讨论github的使用，我用的也不多，偶尔clone一些好的源代码而已。我用的是Eclipse的插件EGit，全部操作直接在eclispe里就可以完成了，哈哈，我比较懒，官网上教的那些git clone 什么的高深操作我也不会，感觉egit还是比较好用的，所以上网搜了一个关于egit的详细操作的帖子，现在搬过来和大家一起分享一下。我找到的这个帖子的地址是：http://">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse上GIT插件EGIT使用手册">
+<meta property="og:url" content="http://yoursite.com/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="出处：点击打开链接看到大家在讨论github的使用，我用的也不多，偶尔clone一些好的源代码而已。我用的是Eclipse的插件EGit，全部操作直接在eclispe里就可以完成了，哈哈，我比较懒，官网上教的那些git clone 什么的高深操作我也不会，感觉egit还是比较好用的，所以上网搜了一个关于egit的详细操作的帖子，现在搬过来和大家一起分享一下。我找到的这个帖子的地址是：http://">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344248HjHt.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344253yaRI.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283442576Ec3.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344261vRzT.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344607u7A0.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344609GteE.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344740rZ6x.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283447436zT0.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344746mW1B.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283447519N4x.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283447532Ch2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345023y9I9.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345081Q6Um.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345029oJez.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345033V0N7.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345036arNV.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283450392Ce4.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_132834520400aX.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345219G49D.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_132834523653s5.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345291m6W7.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345425WsGl.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345430z69s.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345433N8y8.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345466MXXm.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345738oZG2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_132834574166VH.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345743Am6m.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345746zgGL.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345753jstN.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345757hzNO.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345760JTc4.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328345767S3tK.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283463456NBm.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283463843Sj2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346386xH9s.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346393Y2zN.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346684zy27.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346687u0mm.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346689MxZZ.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346692XCnN.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346695vKlr.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346699BBna.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346702761R.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346705MmV1.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346708rY2R.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346711cX96.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328346871dn4e.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347200wAN9.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347229mZIA.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347244tBs2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347282wDpE.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347200wAN9.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347229mZIA.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347473ffN2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347508mYnn.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347536tbiO.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347473ffN2.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347857efEw.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347889tV99.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328347928l3Lf.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348110dNdd.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348113edl4.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348146FPEJ.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283481777q4z.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348180baAS.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348227l3Ko.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348246iu76.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348259x81C.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348295Y7x7.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283483169XQS.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_132834831814IS.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328348321Tzcz.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353367e252.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353373LRmv.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353376daF8.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353379ku86.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353382A6PP.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353385ZAM5.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283533909Xou.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_1328353392So7T.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/4/0_13283533956366.gif">
+<meta property="og:image" content="http://www.eoeandroid.com/data/attachment/forum/201304/28/111242opyci2xnopmya6c6.jpg">
+<meta property="og:image" content="http://www.eoeandroid.com/data/attachment/forum/201304/28/111804jto7g0qa9g8aqvgh.jpg">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eclipse上GIT插件EGIT使用手册">
+<meta name="twitter:description" content="出处：点击打开链接看到大家在讨论github的使用，我用的也不多，偶尔clone一些好的源代码而已。我用的是Eclipse的插件EGit，全部操作直接在eclispe里就可以完成了，哈哈，我比较懒，官网上教的那些git clone 什么的高深操作我也不会，感觉egit还是比较好用的，所以上网搜了一个关于egit的详细操作的帖子，现在搬过来和大家一起分享一下。我找到的这个帖子的地址是：http://">
+<meta name="twitter:image" content="http://hi.csdn.net/attachment/201202/4/0_1328344248HjHt.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/"/>
+
+  <title> Eclipse上GIT插件EGIT使用手册 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Eclipse上GIT插件EGIT使用手册
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-22T21:26:00+08:00" content="2013-12-22">
+              2013-12-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>出处：<a href="http://www.eoeandroid.com/thread-273360-1-1.html" target="_blank" rel="external">点击打开链接</a><br>看到大家在讨论github的使用，我用的也不多，偶尔clone一些好的源代码而已。我用的是Eclipse的插件EGit，全部操作直接在eclispe里就可以完成了，哈哈，我比较懒，官网上教的那些git clone 什么的高深操作我也不会，感觉egit还是比较好用的，所以上网搜了一个关于egit的详细操作的帖子，现在搬过来和大家一起分享一下。我找到的这个帖子的地址是：<a href="http://blog.csdn.net/luckarecs/article/details/7427605" target="_blank" rel="external">http://blog.csdn.net/luckarecs/article/details/7427605</a>。虽然这篇帖子也写的是转载，我没找到最原始的出处，（PS:有人反馈说原始出处是这：<a href="http://blog.csdn.net/laizhenhai88/article/details/7234974" target="_blank" rel="external">http://blog.csdn.net/laizhenhai88/article/details/7234974</a>，我不敢确定，不过还是把这个链接放上来吧，谢谢<a href="http://my.eoe.cn/uter" target="_blank" rel="external">@ter</a> 的反馈），不过如果大家转载的话，还是要把这个链接加上，这也算是保护知识产权了吧，哈哈，好了，费话不多说了，以下是详细内容：</p>
+<p>一_安装EGIT插件</p>
+<p><img src="http://hi.csdn.net/attachment/201202/4/0_1328344248HjHt.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344253yaRI.gif" alt=""></p>
+<p><a href="http://download.eclipse.org/egit/updates/" target="_blank" rel="external">http://download.eclipse.org/egit/updates/</a><br>或者使用Eclipse Marketplace，搜索EGit<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283442576Ec3.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344261vRzT.gif" alt=""></p>
+<p>二_使用EGIT前的配置</p>
+<p>配置个人信息，最重要的是user.name和user.email<br>l  Preferences &gt; Team &gt; Git &gt; Configuration<br>l  New Entry<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344607u7A0.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344609GteE.gif" alt=""></p>
+<p>三_新建GIT仓库</p>
+<p>新建NC module project<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344740rZ6x.gif" alt=""><br>l  File &gt; Team &gt; Share Project 选择GIT<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283447436zT0.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328344746mW1B.gif" alt=""><br>创建仓库后，在$workspace\demo目录下的.git文件夹，就是git的仓库地址。和CVS、SVN不同，GIT不会在每一个目录下建立版本控制文件夹，仅在根目录下建立仓库<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283447519N4x.gif" alt=""><br>同时，eclipse中的project也建立git版本控制，此时未创建分支，处于NO-HEAD状态<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283447532Ch2.gif" alt=""><br>文件夹中的符号”?”表示此文件夹处于untracked状态，这样就成功创建GIT仓库。<br>四_配置.gitignore</p>
+<p>此时我们尝试做一次提交<br>l  Team -&gt; Commit…<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345023y9I9.gif" alt=""><br>如上图所示，Author和Committer会默认为Git配置的用户信息。下面的Files窗口中可以看到此次提交的文件，其中有非常多带有NC_HOME的文件，此时可以猜测出，在我们的project中链接的NC_HOME也被GIT默认到版本控制中了，如下图：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345081Q6Um.gif" alt=""><br>显然NC_HOME和out是不需要进行版本控制的，我们可以通过配置.gitignore来排除这两个文件夹<br>打开Navigator窗口，在project根目录中添加.gitignore文件，将需要排除控制的目录写入.gitignore文件中<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345029oJez.gif" alt=""><br>再次尝试commit，需要提交的文件已经被过滤<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345033V0N7.gif" alt=""><br>首次提交后，会自动生成master分支<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345036arNV.gif" alt=""><br>然后在public中新建一个文件，可以看到图标依然是问号，处于untracked状态，即git没有对此文件进行监控<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283450392Ce4.gif" alt=""><br>通过Team -&gt; Add to index可以将文件加入git索引，进行版本监控<br><img src="http://hi.csdn.net/attachment/201202/4/0_132834520400aX.gif" alt=""><br>可以看到图标显示也有了变化（EGIT中只要Commit就可以默认将untracked的文件添加到索引再提交更新，不需要分开操作）<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345219G49D.gif" alt=""><br>也可以通过Team -&gt; Untrack将文件从索引控制中排除。<br>将此次新增的文件commit到仓库中，文件将处于unmodified状态，或者说，这就是一种staged状态<br><img src="http://hi.csdn.net/attachment/201202/4/0_132834523653s5.gif" alt=""><br>然后修改文件的内容，文件将处于modified状态<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345291m6W7.gif" alt=""></p>
+<p>五_查看历史记录Team<br> -&gt; Show in history可以查看版本历史提交记录<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345425WsGl.gif" alt=""></p>
+<p><img src="http://hi.csdn.net/attachment/201202/4/0_1328345430z69s.gif" alt=""><br>可以选择对比模式<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345433N8y8.gif" alt=""></p>
+<p><img src="http://hi.csdn.net/attachment/201202/4/0_1328345466MXXm.gif" alt=""></p>
+<p>六_远程GIT仓库此小结的前提是已经搭建GIT服务器，并通过SSH协议连接，可参看文档《RHEL下搭建GIT服务器》《WindowsXP下搭建GIT服务器》《GIT服务器使用基础》。本文使用RHEL5.5系统下的GIT-2012-01-11，用户root/password，GIT仓库统一存放在/app/gitspace目录下。<br>首先通过shell工具连接到服务器，建立空仓库gitdemo，此时的ssh访问地址如下,分别由协议名称、用户名、IP、端口、git仓库目录组成。<br>ssh://root@192.168.1.101:22/app/gitspace/gitdemo<br>打开GIT资源库窗口，选择克隆资源库<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345738oZG2.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_132834574166VH.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345743Am6m.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345746zgGL.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345753jstN.gif" alt=""><br>现在已经把远程的GIT仓库克隆到本地，接下来需要将仓库检出为NC模块项目。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345757hzNO.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345760JTc4.gif" alt=""><br>最后得到gitdemo模块项目，分支是mirror<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328345767S3tK.gif" alt=""></p>
+<p>七_推送远程仓库</p>
+<p>克隆服务器端仓库后，会在本地建立一个一样的仓库，称本地仓库。在本地进行commit操作将把更新提交到本地仓库，然后可以将服务器端的更新pull到本地仓库进行合并，最后将合并好的本地仓库push到服务器端，这样就进行了一次远程提交。<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283463456NBm.gif" alt=""><br>先提交一次到本地仓库<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283463843Sj2.gif" alt=""><br>然后push到服务器端的mirror分支，Team -&gt; remote -&gt; Push<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346386xH9s.gif" alt=""><br>完成推送后，可以在服务器端mirror镜像的log中查看到此次记录<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346393Y2zN.gif" alt=""></p>
+<p>八_解决推送冲突</p>
+<p>多人协作开发的情况下，往服务器推送更新时难免出现冲突，所以推送之前需要解决服务器端的最新版本和本地仓库的冲突。Pull操作就是把服务器端的更新拉拢到本地仓库进行合并，解决好合并冲突后，就可以顺利push到服务器分支了。<br>假设现在Mairo兄弟在用GIT协作开发NewSuperMairoBro游戏，目前服务器端的mushroom.java文件的内容如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346684zy27.gif" alt=""><br>MairoBro克隆出代码后，Mairo哥哥做了如下修改<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346687u0mm.gif" alt=""><br>Mairo弟弟做了如下修改<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346689MxZZ.gif" alt=""><br>然后Mairo弟弟先push代码，Mairo哥哥使用pull来合并本地仓库和远程仓库，将发行文件出现冲突，此时GIT会自动合并冲突的文件，如下图所示：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346692XCnN.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346695vKlr.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346699BBna.gif" alt=""><br>很明显自动合并的冲突文件不能直接使用，我们可以手动调整，右键发生冲突的文件，选择Team -&gt; Merge Tool<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346702761R.gif" alt=""><br>第一项是将GIT自动合并过的文件和服务器端文件进行对比<br>第二项是用本地最新版本的文件和服务器端文件进行对比，建议用此项<br>接下来就是熟悉的对比界面<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346705MmV1.gif" alt=""><br>Mairo哥哥将冲突文件修改如下<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346708rY2R.gif" alt=""><br>然后右键点击此冲突文件，选择Team -&gt; Add to index再次将文件加入索引控制，此时文件已经不是冲突状态，并且可以进行提交并push到服务器端<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346711cX96.gif" alt=""><br>解决合并冲突后，Mairo弟弟只需要将服务器中合并后的版本pull到本地，就完成了一次协作开发的代码合并。从历史记录中可以看到，从mushroom开始历史进入分支，先是mushroomA的记录，然后是mushroomB的记录，最后历史分支合并。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328346871dn4e.gif" alt=""></p>
+<p>九_Rebase和Merge的区别<br>Rebase和Merge操作最终的结果是一样的，但是实现原理不一样。<br>从上面的MairoBro例子可以知道pull大概对历史记录进行了怎样的合并操作，其实默认pull的操作就是一个分支的merge操作，如下图重现一下：<br>Mairo弟弟的提交记录如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347200wAN9.gif" alt=""><br>Mairo哥哥的提交记录如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347229mZIA.gif" alt=""><br>首先是Mairo弟弟把更新push到服务器，这样服务器端的记录就和Mairo弟弟本地的记录是一样的，接着Mairo哥哥执行pull操作，现在分析下pull是如何操作的。<br>l  pull默认就是先把服务器端的最新记录更新到本地的Remote Tracking中对应的mirror分支<br>l  接着对Local的mirror分支和Remote Tracking的mirror分支进行merge操作<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347244tBs2.gif" alt=""><br>Merge操作后的结果就是会新增加一个merge记录节点，如下所示：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347282wDpE.gif" alt=""><br>从上图可以看出，mushroomA是在mushroomB之前的，这个时间关系不取决于谁先执行push，而取决于本地仓库中谁先执行commit。所以merge会按照时间顺序严格的记录每一次commit。<br>接下来看看rebase，其实rebase也是把两个分支进行合并的操作，当Mairo弟弟push更新后，服务器端的mirror分支的历史如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347200wAN9.gif" alt=""><br>Mairo哥哥本地的历史如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347229mZIA.gif" alt=""><br>现在Mairo哥哥不是执行merge操作，而是执行rebase操作，最后结果如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347473ffN2.gif" alt=""><br>很明显的区别是没有出现分支的记录，而且注意到mushroomA<em>，请注意这个记录和mushroomA不是同一个记录，我们先分析下rebase操作下，Mairo哥哥的历史记录都做了哪些变化：<br>l  先将当前分支的更新部分保存到临时区域，而当前分支重置到上一次pull的记录<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347508mYnn.gif" alt=""><br>l  然后将服务器端的更新添加到当前分支，此时当前分支和服务器端分支是一样的<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347536tbiO.gif" alt=""><br>l  最后将原分支的更新部分mushroomA提交到当前分支的后面，就是要在mushroomB的后面添加mushroomA的更新，当然此时更新记录已经不是之前的mushroomA了，如果出现冲突则使用对比工具解决冲突，最后记录变成mushroomA</em>。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347473ffN2.gif" alt=""><br>如果Mairo哥哥提交过mushroomA1、mushroomA2、mushroomA3，那么执行rebase后会对mushroomA1、mushroomA2、mushroomA3分别顺序执行上图所示的合并，最后记录为mushroomA1<em>、mushroomA2</em>、mushroomA3*。很显然rebase操作更复杂，冲突的概率也更高，并且不是按照时间顺序记录。</p>
+<p>十_Rebase和Merge如何选择的简单解析</p>
+<p>此小结为什么说是简单解析呢，因为rebase和merge的选择问题讨论比较激烈，笔者也没有一个定论，而且git也处于研究发展阶段，很多理论还没有完全的纯熟。<br>对于一个多人开发团队频繁提交更新的情况，如果使用merge会使得历史线图非常复杂，并且merge一次就会新增一个记录点，如果使用rebase就是完全的线性开发。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347857efEw.gif" alt=""><br>上图所示是Merge和Rebase的两个结果，显然你不想要merge的混乱结果吧，你能告诉我merge图中那条线是master分支吗？<br>所以给出如下建议，如果同一文件反复修改或提交次数比较多，预期会出现很多的conflict，那么可以使用merge合并，仅需要解决一次冲突即可（不过，大范围主题式的修改，是不是应该事先就新开一个分支呢？）；如果修改范围小，预期conflict少，则建议使用rebase。<br>EGIT中默认的pull操作是Fetch+Merge，如果要用rebase，可以分开操作。先执行Fetch更新remote tracking，再执行rebase进行合并（下一小节将介绍rebase操作）。或者修改pull的默认操作，在.git/config文件中配置：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347889tV99.gif" alt=""><br>上述配置只对mirror分支有效，也可做全局配置，在$HOME/.gitconfig中配置，windows系统如果没有配置HOME变量的话就默认在$documents and settings/ USER目录下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328347928l3Lf.gif" alt=""></p>
+<p>十一_Fetch和Rebase</p>
+<p>MairoBro来做fetch和rebase的测试，首先Mairo弟弟在client中添加文件OPQ分别提交，并push到服务器，如图：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348110dNdd.gif" alt=""><img src="http://hi.csdn.net/attachment/201202/4/0_1328348113edl4.gif" alt=""><br>此时服务器端的历史已经被更新，但是Mairo哥哥的remote tracking中mirror分支并没有更新到最新的记录，如图：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348146FPEJ.gif" alt=""><br>所以需要更新remote tracking中的分支，使得它与服务器端的分支同步，右键点击资源库选择Fetch<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283481777q4z.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348180baAS.gif" alt=""><br>这样就更新了本地的remote tracking中的分支，使得它和服务器端分支同步。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348227l3Ko.gif" alt=""><br>然后Mairo哥哥在本地的private中添加文件ABC，并分别提交到本地仓库中。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348246iu76.gif" alt=""><img src="http://hi.csdn.net/attachment/201202/4/0_1328348259x81C.gif" alt=""><br>然后将本地mirror分支和remote tracking中的mirror分支进行rebase，先checkout本地mirror分支 ，然后右键点击选择Rebase<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348295Y7x7.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_13283483169XQS.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_132834831814IS.gif" alt=""><br><img src="http://hi.csdn.net/attachment/201202/4/0_1328348321Tzcz.gif" alt=""><br>如上图可以看到历史记录的顺序是OPQABC，已经rebase成功，接着push到服务器即可。</p>
+<p>十二_重置功能</p>
+<p>GIT中有三种重置功能，分别是soft、mixed、hard，区别如下：<br>l  Soft - 当前分支重置到指定commit记录位置，索引和工作树不变；<br>l  Mixed - 当前分支重置到指定commit记录位置，索引被更新，工作树不变；<br>l  Hard - 当前分支重置到指定commit记录位置，索引和工作树都更新。<br>貌似不好理解，首先要理解GIT的三个区域（工作树、索引区、仓库），可以参考文档《GIT简介》。<br>先做soft的测试，新建Soft.java文件，可以看到此文件未添加到索引控制<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353367e252.gif" alt=""><br>先进行一次提交，提交后在History窗口中重置此次提交，如图：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353373LRmv.gif" alt=""><br>重置后查看工作树，如图<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353376daF8.gif" alt=""><br>从上图可以看出，soft文件还存在，说明重置没有改变工作树，而且soft文件不是“问号”图标，说明已经添加到索引，说明索引也没有变。唯一重置的是历史记录。<br>然后新建Mixed.java文件，此时Mixed.java也没有添加到索引控制，然后提交。<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353379ku86.gif" alt=""><br>在History窗口中重置<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353382A6PP.gif" alt=""><br>重置后查看工作树结果如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353385ZAM5.gif" alt=""><br>从上图可以看出，Mixed.java文件还存在，说明工作树没有改变，但是文件状态是untracked，说明索引被更新，此时文件没有添加索引控制。<br>最后来看hard重置，新建Hard.java文件，此时文件没有添加索引，然后提交。<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283533909Xou.gif" alt=""><br>在History界面重置此次提交，如图：<br><img src="http://hi.csdn.net/attachment/201202/4/0_1328353392So7T.gif" alt=""><br>重置后再查看工作树，结果如下：<br><img src="http://hi.csdn.net/attachment/201202/4/0_13283533956366.gif" alt=""><br>可以看到Hard.java文件已经不存在了，说明索引和工作树都被更新。</p>
+<p>PS：这里对第六点远程GIT仓库稍微做个补充，我们一般情况下从github官网上clone代码的时候，这个远程仓库就是github了，首先我们在github上找到自己想要的源代码，这里以eoe客户端的源代码为例，如图：<br><img src="http://www.eoeandroid.com/data/attachment/forum/201304/28/111242opyci2xnopmya6c6.jpg" alt=""><br>在网页的顶部我们可以找到地址，有https,ssh,和git only三个，我一般都是选的ssh,然后把这个地址copy出来，再回到eclipse中，点击打开clone a git repository,在URI中把刚才复制的地址粘贴进去，然后在protocol中选择ssh就行了，其它信息会自动补全<br><img src="http://www.eoeandroid.com/data/attachment/forum/201304/28/111804jto7g0qa9g8aqvgh.jpg" alt=""> 未命名.jpg (55.7 KB, 下载次数: 0)<br><a href="http://www.eoeandroid.com/forum.php?mod=attachment&amp;aid=OTM3NjF8MGFmZTIyOTh8MTM4NzcxNjAxMXw5Nzk2NDh8MjczMzYw&amp;nothumb=yes" target="_blank" rel="external">下载附件</a>  <a href="">保存到相册</a><br>2013-4-28 11:18 上传</p>
+<p>接着点next就行了，往后的操作就和文章中介绍的一样了</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag">#git</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/" rel="next" title="[转] 编写你的第一个垃圾收集器">
+                <i class="fa fa-chevron-left"></i> [转] 编写你的第一个垃圾收集器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/12/23/2013-12-23-Android滑动菜单特效实现/" rel="prev" title="[转]Android滑动菜单特效实现">
+                [转]Android滑动菜单特效实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/"
+     data-title="Eclipse上GIT插件EGIT使用手册"
+     data-content=""
+     data-url="http://yoursite.com/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/"
+           data-title="Eclipse上GIT插件EGIT使用手册" data-url="http://yoursite.com/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

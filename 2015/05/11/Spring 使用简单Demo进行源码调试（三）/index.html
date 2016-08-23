@@ -1,0 +1,825 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（二）继续。
+上篇提到了主要的初始化函数refresh，函数源码如下：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354public void refresh() t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 使用简单Demo进行源码调试（三）">
+<meta property="og:url" content="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（二）继续。
+上篇提到了主要的初始化函数refresh，函数源码如下：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354public void refresh() t">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 使用简单Demo进行源码调试（三）">
+<meta name="twitter:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（二）继续。
+上篇提到了主要的初始化函数refresh，函数源码如下：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354public void refresh() t">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/"/>
+
+  <title> Spring 使用简单Demo进行源码调试（三） | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 使用简单Demo进行源码调试（三）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-11T02:45:38+08:00" content="2015-05-11">
+              2015-05-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
+<p>接上篇日志<a href="http://www.bugpointer.com/archives/505.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（二）</a>继续。</p>
+<p>上篇提到了主要的初始化函数refresh，函数源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">            <span class="comment">// 为了刷新准备上下文</span></div><div class="line">            prepareRefresh();</div><div class="line"></div><div class="line">            <span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">            <span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">            prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">                postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">                invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">                registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中消息源</span></div><div class="line">                initMessageSource();</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">                initApplicationEventMulticaster();</div><div class="line"></div><div class="line">                <span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">                onRefresh();</div><div class="line"></div><div class="line">                <span class="comment">// 检查监听器bean并注册 </span></div><div class="line">                registerListeners();</div><div class="line"></div><div class="line">                <span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">                finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 发布相应的事件</span></div><div class="line">                finishRefresh();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">                logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">                <span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">                destroyBeans();</div><div class="line"></div><div class="line">                <span class="comment">// Reset 'active' flag.</span></div><div class="line">                cancelRefresh(ex);</div><div class="line"></div><div class="line">                <span class="comment">// Propagate exception to caller.</span></div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>先把prepareRefresh的代码贴出来。这段代码主要功能是初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Prepare this context for refreshing, setting its startup date and</div><div class="line">	 * active flag as well as performing any initialization of property sources.</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">prepareRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.startupDate = System.currentTimeMillis();</div><div class="line"></div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.activeMonitor) &#123;</div><div class="line">			<span class="keyword">this</span>.active = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">			logger.info(&amp;quot;Refreshing &amp;quot; + <span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Initialize any placeholder property sources in the context environment</span></div><div class="line">		initPropertySources();</div><div class="line"></div><div class="line">		<span class="comment">// Validate that all properties marked as required are resolvable</span></div><div class="line">		<span class="comment">// see ConfigurablePropertyResolver#setRequiredProperties</span></div><div class="line">		getEnvironment().validateRequiredProperties();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>这块基本是数据准备功能， 目前这一块没有实际用到。<br>接着我们看比较重要的一步<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div></pre></td></tr></table></figure></p>
+<p>先展开obtainFreshBeanFactory函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Tell the subclass to refresh the internal bean factory.</div><div class="line">         * 使用子类完成内部bean factory</div><div class="line">	 * <span class="doctag">@return</span> the fresh BeanFactory instance</div><div class="line">	 * <span class="doctag">@see</span> #refreshBeanFactory()</div><div class="line">	 * <span class="doctag">@see</span> #getBeanFactory()</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> ConfigurableListableBeanFactory <span class="title">obtainFreshBeanFactory</span><span class="params">()</span> </span>&#123;</div><div class="line">		refreshBeanFactory();</div><div class="line">		ConfigurableListableBeanFactory beanFactory = getBeanFactory();</div><div class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			logger.debug(&amp;quot;Bean factory <span class="keyword">for</span> &amp;quot; + getDisplayName() + &amp;quot;: &amp;quot; + beanFactory);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> beanFactory;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>我们主要看refreshBeanFactory()这一步,分为以下步骤：<br>1. 如果有bean factory，删除之；<br>2. 新建一个bean factory；<br>3. 设置一个序列化Id；<br>4. 使用的上下文自定义内部bean factory；<br>5. 加载bean 定义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * This implementation performs an actual refresh of this context's underlying</div><div class="line">	 * bean factory, shutting down the previous bean factory (if any) and</div><div class="line">	 * initializing a fresh bean factory for the next phase of the context's lifecycle.</div><div class="line">	 */</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">refreshBeanFactory</span><span class="params">()</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		<span class="keyword">if</span> (hasBeanFactory()) &#123;</div><div class="line">			destroyBeans();</div><div class="line">			closeBeanFactory();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			DefaultListableBeanFactory beanFactory = createBeanFactory();</div><div class="line">			beanFactory.setSerializationId(getId());</div><div class="line">			customizeBeanFactory(beanFactory);</div><div class="line">			loadBeanDefinitions(beanFactory);</div><div class="line">			<span class="keyword">synchronized</span> (<span class="keyword">this</span>.beanFactoryMonitor) &#123;</div><div class="line">				<span class="keyword">this</span>.beanFactory = beanFactory;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(&amp;quot;I/O error parsing bean definition source <span class="keyword">for</span> &amp;quot; + getDisplayName(), ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>现在看一下第5步，加载bean定义，其实现如下。可以看到，这一步将beanFactory传入XmlBeanDefinitionReader的构造函数，新建一个XmlBeanDefinitionReader对象，然后对其环境进行设置。其中Environment表示当前应用程序运行的环境接口；ResourceLoader表示加载资源策略接口；EntityResolver表示实体解析接口。最后初始化XmlBeanDefinitionReader对象，然后使用这个对象加载bean 定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Loads the bean definitions via an XmlBeanDefinitionReader.</div><div class="line">	 * <span class="doctag">@see</span> org.springframework.beans.factory.xml.XmlBeanDefinitionReader</div><div class="line">	 * <span class="doctag">@see</span> #initBeanDefinitionReader</div><div class="line">	 * <span class="doctag">@see</span> #loadBeanDefinitions</div><div class="line">	 */</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadBeanDefinitions</span><span class="params">(DefaultListableBeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException, IOException </span>&#123;</div><div class="line">		<span class="comment">// Create a new XmlBeanDefinitionReader for the given BeanFactory.</span></div><div class="line">		XmlBeanDefinitionReader beanDefinitionReader = <span class="keyword">new</span> XmlBeanDefinitionReader(beanFactory);</div><div class="line"></div><div class="line">		<span class="comment">// Configure the bean definition reader with this context's</span></div><div class="line">		<span class="comment">// resource loading environment.</span></div><div class="line">		beanDefinitionReader.setEnvironment(<span class="keyword">this</span>.getEnvironment());</div><div class="line">		beanDefinitionReader.setResourceLoader(<span class="keyword">this</span>);</div><div class="line">		beanDefinitionReader.setEntityResolver(<span class="keyword">new</span> ResourceEntityResolver(<span class="keyword">this</span>));</div><div class="line"></div><div class="line">		<span class="comment">// Allow a subclass to provide custom initialization of the reader,</span></div><div class="line">		<span class="comment">// then proceed with actually loading the bean definitions.</span></div><div class="line">		initBeanDefinitionReader(beanDefinitionReader);</div><div class="line">		loadBeanDefinitions(beanDefinitionReader);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>再看下一步，这个方法比较好理解，就是使用已有的配置资源或者配置文件进行加载，当前没有配置资源，所以只使用配置文件进行加载。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用XmlBeanDefinitionReader实例加载bean定义</div><div class="line">	 * <span class="doctag">@param</span> reader the XmlBeanDefinitionReader to use</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadBeanDefinitions</span><span class="params">(XmlBeanDefinitionReader reader)</span> <span class="keyword">throws</span> BeansException, IOException </span>&#123;</div><div class="line">		Resource[] configResources = getConfigResources();</div><div class="line">		<span class="keyword">if</span> (configResources != <span class="keyword">null</span>) &#123;</div><div class="line">			reader.loadBeanDefinitions(configResources);</div><div class="line">		&#125;</div><div class="line">		String[] configLocations = getConfigLocations();</div><div class="line">		<span class="keyword">if</span> (configLocations != <span class="keyword">null</span>) &#123;</div><div class="line">			reader.loadBeanDefinitions(configLocations);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>来看reader.loadBeanDefinitions(configLocations);这一步。这一步看起来很复杂，但最主要的还是loadBeanDefinitions(resources)这一步。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用配置文件加载bean定义	</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(String location, Set&amp;lt;Resource&amp;gt; actualResources)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">		ResourceLoader resourceLoader = getResourceLoader();</div><div class="line">		<span class="keyword">if</span> (resourceLoader == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">					&amp;quot;Cannot <span class="keyword">import</span> bean definitions from location [&amp;quot; + location + &amp;quot;]: no ResourceLoader available&amp;quot;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (resourceLoader <span class="keyword">instanceof</span> ResourcePatternResolver) &#123;</div><div class="line">			<span class="comment">// Resource pattern matching available.</span></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				Resource[] resources = ((ResourcePatternResolver) resourceLoader).getResources(location);</div><div class="line">				<span class="keyword">int</span> loadCount = loadBeanDefinitions(resources);</div><div class="line">				<span class="keyword">if</span> (actualResources != <span class="keyword">null</span>) &#123;</div><div class="line">					<span class="keyword">for</span> (Resource resource : resources) &#123;</div><div class="line">						actualResources.add(resource);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">					logger.debug(&amp;quot;Loaded &amp;quot; + loadCount + &amp;quot; bean definitions from location pattern [&amp;quot; + location + &amp;quot;]&amp;quot;);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">return</span> loadCount;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">						&amp;quot;Could not resolve bean definition resource pattern [&amp;quot; + location + &amp;quot;]&amp;quot;, ex);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="comment">// Can only load single resources by absolute URL.</span></div><div class="line">			Resource resource = resourceLoader.getResource(location);</div><div class="line">			<span class="keyword">int</span> loadCount = loadBeanDefinitions(resource);</div><div class="line">			<span class="keyword">if</span> (actualResources != <span class="keyword">null</span>) &#123;</div><div class="line">				actualResources.add(resource);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">				logger.debug(&amp;quot;Loaded &amp;quot; + loadCount + &amp;quot; bean definitions from location [&amp;quot; + location + &amp;quot;]&amp;quot;);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> loadCount;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>下一回展开loadBeanDefinitions(resources)。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" rel="next" title="Spring 使用简单Demo进行源码调试（二）">
+                <i class="fa fa-chevron-left"></i> Spring 使用简单Demo进行源码调试（二）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/" rel="prev" title="Spring 使用简单Demo进行源码调试（四）">
+                Spring 使用简单Demo进行源码调试（四） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（三）/"
+     data-title="Spring 使用简单Demo进行源码调试（三）"
+     data-content=""
+     data-url="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（三）/"
+           data-title="Spring 使用简单Demo进行源码调试（三）" data-url="http://yoursite.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

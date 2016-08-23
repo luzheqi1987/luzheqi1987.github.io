@@ -1,0 +1,824 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（五）继续。
+接上一篇转日志的第十一步，这一步主要完成单例的初始化。直接进入这一步中的beanFactory.preInstantiateSingletons();这一步的功能主要在对每一个bean进行getBean(beanName);操作。12345678910111213141516171819202122">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 使用简单Demo进行源码调试（六）">
+<meta property="og:url" content="http://yoursite.com/2015/05/15/Spring 使用简单Demo进行源码调试（六）/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（五）继续。
+接上一篇转日志的第十一步，这一步主要完成单例的初始化。直接进入这一步中的beanFactory.preInstantiateSingletons();这一步的功能主要在对每一个bean进行getBean(beanName);操作。12345678910111213141516171819202122">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 使用简单Demo进行源码调试（六）">
+<meta name="twitter:description" content="手码不易，转载请注明：BUG指南
+接上篇日志Spring 使用简单Demo进行源码调试（五）继续。
+接上一篇转日志的第十一步，这一步主要完成单例的初始化。直接进入这一步中的beanFactory.preInstantiateSingletons();这一步的功能主要在对每一个bean进行getBean(beanName);操作。12345678910111213141516171819202122">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/05/15/Spring 使用简单Demo进行源码调试（六）/"/>
+
+  <title> Spring 使用简单Demo进行源码调试（六） | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 使用简单Demo进行源码调试（六）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-15T08:34:58+08:00" content="2015-05-15">
+              2015-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/15/Spring 使用简单Demo进行源码调试（六）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/15/Spring 使用简单Demo进行源码调试（六）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
+<p>接上篇日志<a href="http://www.bugpointer.com/archives/517.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（五）</a>继续。</p>
+<p>接上一篇转日志的第十一步，这一步主要完成单例的初始化。直接进入这一步中的beanFactory.preInstantiateSingletons();这一步的功能主要在对每一个bean进行getBean(beanName);操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preInstantiateSingletons</span><span class="params">()</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">this</span>.logger.isInfoEnabled()) &#123;</div><div class="line">			<span class="keyword">this</span>.logger.info(&amp;quot;Pre-instantiating singletons in &amp;quot; + <span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		List&amp;lt;String&amp;gt; beanNames;</div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.beanDefinitionMap) &#123;</div><div class="line">			<span class="comment">// Iterate over a copy to allow for init methods which in turn register new bean definitions.</span></div><div class="line">			<span class="comment">// While this may not be part of the regular factory bootstrap, it does otherwise work fine.</span></div><div class="line">			beanNames = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;(<span class="keyword">this</span>.beanDefinitionNames);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Trigger initialization of all non-lazy singleton beans...</span></div><div class="line">		<span class="keyword">for</span> (String beanName : beanNames) &#123;</div><div class="line">			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);</div><div class="line">			<span class="keyword">if</span> (!bd.isAbstract() &amp;amp;&amp;amp; bd.isSingleton() &amp;amp;&amp;amp; !bd.isLazyInit()) &#123;</div><div class="line">				<span class="keyword">if</span> (isFactoryBean(beanName)) &#123;</div><div class="line">					<span class="keyword">final</span> FactoryBean&amp;lt;?&amp;gt; factory = (FactoryBean&amp;lt;?&amp;gt;) getBean(FACTORY_BEAN_PREFIX + beanName);</div><div class="line">					<span class="keyword">boolean</span> isEagerInit;</div><div class="line">					<span class="keyword">if</span> (System.getSecurityManager() != <span class="keyword">null</span> &amp;amp;&amp;amp; factory <span class="keyword">instanceof</span> SmartFactoryBean) &#123;</div><div class="line">						isEagerInit = AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&amp;lt;Boolean&amp;gt;() &#123;</div><div class="line">							<span class="function"><span class="keyword">public</span> Boolean <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">								<span class="keyword">return</span> ((SmartFactoryBean&amp;lt;?&amp;gt;) factory).isEagerInit();</div><div class="line">							&#125;</div><div class="line">						&#125;, getAccessControlContext());</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">else</span> &#123;</div><div class="line">						isEagerInit = (factory <span class="keyword">instanceof</span> SmartFactoryBean &amp;amp;&amp;amp;</div><div class="line">								((SmartFactoryBean&amp;lt;?&amp;gt;) factory).isEagerInit());</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">if</span> (isEagerInit) &#123;</div><div class="line">						getBean(beanName);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					getBean(beanName);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>展开getBean(beanName);，再展开其中的doGetBean方法，首先检查单例缓存中是否存在这个单例，是则返回这个实例。否则创建这个实例，详见return createBean(beanName, mbd, args);这一句。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 返回实例</div><div class="line"> */</div><div class="line">@SuppressWarnings(&amp;quot;unchecked&amp;quot;)</div><div class="line">protected &amp;lt;T&amp;gt; T doGetBean(</div><div class="line">		final String name, final Class&amp;lt;T&amp;gt; requiredType, final Object[] args, boolean typeCheckOnly)</div><div class="line">		throws BeansException &#123;</div><div class="line"></div><div class="line">	final String beanName = transformedBeanName(name);</div><div class="line">	Object bean;</div><div class="line"></div><div class="line">	// 为了手动注册的单例，检查单例缓存.</div><div class="line">	Object sharedInstance = getSingleton(beanName);</div><div class="line">	if (sharedInstance != null &amp;amp;&amp;amp; args == null) &#123;</div><div class="line">		if (logger.isDebugEnabled()) &#123;</div><div class="line">			if (isSingletonCurrentlyInCreation(beanName)) &#123;</div><div class="line">				logger.debug(&amp;quot;Returning eagerly cached instance of singleton bean '&amp;quot; + beanName +</div><div class="line">						&amp;quot;' that is not fully initialized yet - a consequence of a circular reference&amp;quot;);</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				logger.debug(&amp;quot;Returning cached instance of singleton bean '&amp;quot; + beanName + &amp;quot;'&amp;quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	else &#123;</div><div class="line">		// Fail if we're already creating this bean instance:</div><div class="line">		// We're assumably within a circular reference.</div><div class="line">		if (isPrototypeCurrentlyInCreation(beanName)) &#123;</div><div class="line">			throw new BeanCurrentlyInCreationException(beanName);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Check if bean definition exists in this factory.</div><div class="line">		BeanFactory parentBeanFactory = getParentBeanFactory();</div><div class="line">		if (parentBeanFactory != null &amp;amp;&amp;amp; !containsBeanDefinition(beanName)) &#123;</div><div class="line">			// Not found -&amp;gt; check parent.</div><div class="line">			String nameToLookup = originalBeanName(name);</div><div class="line">			if (args != null) &#123;</div><div class="line">				// Delegation to parent with explicit args.</div><div class="line">				return (T) parentBeanFactory.getBean(nameToLookup, args);</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				// No args -&amp;gt; delegate to standard getBean method.</div><div class="line">				return parentBeanFactory.getBean(nameToLookup, requiredType);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		if (!typeCheckOnly) &#123;</div><div class="line">			markBeanAsCreated(beanName);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		try &#123;</div><div class="line">			final RootBeanDefinition mbd = getMergedLocalBeanDefinition(beanName);</div><div class="line">			checkMergedBeanDefinition(mbd, beanName, args);</div><div class="line"></div><div class="line">			// Guarantee initialization of beans that the current bean depends on.</div><div class="line">			String[] dependsOn = mbd.getDependsOn();</div><div class="line">			if (dependsOn != null) &#123;</div><div class="line">				for (String dependsOnBean : dependsOn) &#123;</div><div class="line">					getBean(dependsOnBean);</div><div class="line">					registerDependentBean(dependsOnBean, beanName);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			// Create bean instance.</div><div class="line">			if (mbd.isSingleton()) &#123;</div><div class="line">				sharedInstance = getSingleton(beanName, new ObjectFactory&amp;lt;Object&amp;gt;() &#123;</div><div class="line">					public Object getObject() throws BeansException &#123;</div><div class="line">						try &#123;</div><div class="line">							return createBean(beanName, mbd, args);</div><div class="line">						&#125;</div><div class="line">						catch (BeansException ex) &#123;</div><div class="line">							// Explicitly remove instance from singleton cache: It might have been put there</div><div class="line">							// eagerly by the creation process, to allow for circular reference resolution.</div><div class="line">							// Also remove any beans that received a temporary reference to the bean.</div><div class="line">							destroySingleton(beanName);</div><div class="line">							throw ex;</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">				&#125;);</div><div class="line">				bean = getObjectForBeanInstance(sharedInstance, name, beanName, mbd);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			else if (mbd.isPrototype()) &#123;</div><div class="line">				// It's a prototype -&amp;gt; create a new instance.</div><div class="line">				Object prototypeInstance = null;</div><div class="line">				try &#123;</div><div class="line">					beforePrototypeCreation(beanName);</div><div class="line">					prototypeInstance = createBean(beanName, mbd, args);</div><div class="line">				&#125;</div><div class="line">				finally &#123;</div><div class="line">					afterPrototypeCreation(beanName);</div><div class="line">				&#125;</div><div class="line">				bean = getObjectForBeanInstance(prototypeInstance, name, beanName, mbd);</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			else &#123;</div><div class="line">				String scopeName = mbd.getScope();</div><div class="line">				final Scope scope = this.scopes.get(scopeName);</div><div class="line">				if (scope == null) &#123;</div><div class="line">					throw new IllegalStateException(&amp;quot;No Scope registered for scope '&amp;quot; + scopeName + &amp;quot;'&amp;quot;);</div><div class="line">				&#125;</div><div class="line">				try &#123;</div><div class="line">					Object scopedInstance = scope.get(beanName, new ObjectFactory&amp;lt;Object&amp;gt;() &#123;</div><div class="line">						public Object getObject() throws BeansException &#123;</div><div class="line">							beforePrototypeCreation(beanName);</div><div class="line">							try &#123;</div><div class="line">								return createBean(beanName, mbd, args);</div><div class="line">							&#125;</div><div class="line">							finally &#123;</div><div class="line">								afterPrototypeCreation(beanName);</div><div class="line">							&#125;</div><div class="line">						&#125;</div><div class="line">					&#125;);</div><div class="line">					bean = getObjectForBeanInstance(scopedInstance, name, beanName, mbd);</div><div class="line">				&#125;</div><div class="line">				catch (IllegalStateException ex) &#123;</div><div class="line">					throw new BeanCreationException(beanName,</div><div class="line">							&amp;quot;Scope '&amp;quot; + scopeName + &amp;quot;' is not active for the current thread; &amp;quot; +</div><div class="line">							&amp;quot;consider defining a scoped proxy for this bean if you intend to refer to it from a singleton&amp;quot;,</div><div class="line">							ex);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		catch (BeansException ex) &#123;</div><div class="line">			cleanupAfterBeanCreationFailure(beanName);</div><div class="line">			throw ex;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	// Check if required type matches the type of the actual bean instance.</div><div class="line">	if (requiredType != null &amp;amp;&amp;amp; bean != null &amp;amp;&amp;amp; !requiredType.isAssignableFrom(bean.getClass())) &#123;</div><div class="line">		try &#123;</div><div class="line">			return getTypeConverter().convertIfNecessary(bean, requiredType);</div><div class="line">		&#125;</div><div class="line">		catch (TypeMismatchException ex) &#123;</div><div class="line">			if (logger.isDebugEnabled()) &#123;</div><div class="line">				logger.debug(&amp;quot;Failed to convert bean '&amp;quot; + name + &amp;quot;' to required type [&amp;quot; +</div><div class="line">						ClassUtils.getQualifiedName(requiredType) + &amp;quot;]&amp;quot;, ex);</div><div class="line">			&#125;</div><div class="line">			throw new BeanNotOfRequiredTypeException(name, requiredType, bean.getClass());</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return (T) bean;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>展开return createBean(beanName, mbd, args);辗转反侧，我们进入AbstractAutowireCapableBeanFactory类中的doCreateBean方法，展开这个方法，这个方法是实际用来创建bean。这个方法还是很复杂，就不一步步的进行分析了，大概来看就是首先对bean definition进行后处理，然后检查cache避免循环初始化，填充Bean，最后bean注册为一次性。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">	 */</div><div class="line">	protected Object doCreateBean(final String beanName, final RootBeanDefinition mbd, final Object[] args) &#123;</div><div class="line">		// Instantiate the bean.</div><div class="line">		BeanWrapper instanceWrapper = null;</div><div class="line">		if (mbd.isSingleton()) &#123;</div><div class="line">			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);</div><div class="line">		&#125;</div><div class="line">		if (instanceWrapper == null) &#123;</div><div class="line">			instanceWrapper = createBeanInstance(beanName, mbd, args);</div><div class="line">		&#125;</div><div class="line">		final Object bean = (instanceWrapper != null ? instanceWrapper.getWrappedInstance() : null);</div><div class="line">		Class&amp;lt;?&amp;gt; beanType = (instanceWrapper != null ? instanceWrapper.getWrappedClass() : null);</div><div class="line"></div><div class="line">		// Allow post-processors to modify the merged bean definition.</div><div class="line">		synchronized (mbd.postProcessingLock) &#123;</div><div class="line">			if (!mbd.postProcessed) &#123;</div><div class="line">				applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);</div><div class="line">				mbd.postProcessed = true;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Eagerly cache singletons to be able to resolve circular references</div><div class="line">		// even when triggered by lifecycle interfaces like BeanFactoryAware.</div><div class="line">		boolean earlySingletonExposure = (mbd.isSingleton() &amp;amp;&amp;amp; this.allowCircularReferences &amp;amp;&amp;amp;</div><div class="line">				isSingletonCurrentlyInCreation(beanName));</div><div class="line">		if (earlySingletonExposure) &#123;</div><div class="line">			if (logger.isDebugEnabled()) &#123;</div><div class="line">				logger.debug(&amp;quot;Eagerly caching bean '&amp;quot; + beanName +</div><div class="line">						&amp;quot;' to allow for resolving potential circular references&amp;quot;);</div><div class="line">			&#125;</div><div class="line">			addSingletonFactory(beanName, new ObjectFactory&amp;lt;Object&amp;gt;() &#123;</div><div class="line">				public Object getObject() throws BeansException &#123;</div><div class="line">					return getEarlyBeanReference(beanName, mbd, bean);</div><div class="line">				&#125;</div><div class="line">			&#125;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Initialize the bean instance.</div><div class="line">		Object exposedObject = bean;</div><div class="line">		try &#123;</div><div class="line">			populateBean(beanName, mbd, instanceWrapper);</div><div class="line">			if (exposedObject != null) &#123;</div><div class="line">				exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		catch (Throwable ex) &#123;</div><div class="line">			if (ex instanceof BeanCreationException &amp;amp;&amp;amp; beanName.equals(((BeanCreationException) ex).getBeanName())) &#123;</div><div class="line">				throw (BeanCreationException) ex;</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				throw new BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Initialization of bean failed&amp;quot;, ex);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		if (earlySingletonExposure) &#123;</div><div class="line">			Object earlySingletonReference = getSingleton(beanName, false);</div><div class="line">			if (earlySingletonReference != null) &#123;</div><div class="line">				if (exposedObject == bean) &#123;</div><div class="line">					exposedObject = earlySingletonReference;</div><div class="line">				&#125;</div><div class="line">				else if (!this.allowRawInjectionDespiteWrapping &amp;amp;&amp;amp; hasDependentBean(beanName)) &#123;</div><div class="line">					String[] dependentBeans = getDependentBeans(beanName);</div><div class="line">					Set&amp;lt;String&amp;gt; actualDependentBeans = new LinkedHashSet&amp;lt;String&amp;gt;(dependentBeans.length);</div><div class="line">					for (String dependentBean : dependentBeans) &#123;</div><div class="line">						if (!removeSingletonIfCreatedForTypeCheckOnly(dependentBean)) &#123;</div><div class="line">							actualDependentBeans.add(dependentBean);</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">					if (!actualDependentBeans.isEmpty()) &#123;</div><div class="line">						throw new BeanCurrentlyInCreationException(beanName,</div><div class="line">								&amp;quot;Bean with name '&amp;quot; + beanName + &amp;quot;' has been injected into other beans [&amp;quot; +</div><div class="line">								StringUtils.collectionToCommaDelimitedString(actualDependentBeans) +</div><div class="line">								&amp;quot;] in its raw version as part of a circular reference, but has eventually been &amp;quot; +</div><div class="line">								&amp;quot;wrapped. This means that said other beans do not use the final version of the &amp;quot; +</div><div class="line">								&amp;quot;bean. This is often the result of over-eager type matching - consider using &amp;quot; +</div><div class="line">								&amp;quot;'getBeanNamesOfType' with the 'allowEagerInit' flag turned off, for example.&amp;quot;);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		// Register bean as disposable.</div><div class="line">		try &#123;</div><div class="line">			registerDisposableBeanIfNecessary(beanName, bean, mbd);</div><div class="line">		&#125;</div><div class="line">		catch (BeanDefinitionValidationException ex) &#123;</div><div class="line">			throw new BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Invalid destruction signature&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return exposedObject;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>接着我们一直走，走到applyPropertyValues方法，该方法给予bean指定的属性。这个方法首先从pvs中获取所有的属性信息，对每一个属性信息获取对应的属性值，这里的属性值是通过一系列转换得到的。最后通过包装类的setPropertyValues方法设置属性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 给予bean指定的属性</div><div class="line">	 * <span class="doctag">@param</span> beanName bean 名称</div><div class="line">	 * <span class="doctag">@param</span> mbd bean定义</div><div class="line">	 * <span class="doctag">@param</span> bw 目标对象的包装类</div><div class="line">	 * <span class="doctag">@param</span> pvs 属性</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">applyPropertyValues</span><span class="params">(String beanName, BeanDefinition mbd, BeanWrapper bw, PropertyValues pvs)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (pvs == <span class="keyword">null</span> || pvs.isEmpty()) &#123;</div><div class="line">			<span class="keyword">return</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		MutablePropertyValues mpvs = <span class="keyword">null</span>;</div><div class="line">		List&amp;lt;PropertyValue&amp;gt; original;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (System.getSecurityManager() != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (bw <span class="keyword">instanceof</span> BeanWrapperImpl) &#123;</div><div class="line">				((BeanWrapperImpl) bw).setSecurityContext(getAccessControlContext());</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (pvs <span class="keyword">instanceof</span> MutablePropertyValues) &#123;</div><div class="line">			mpvs = (MutablePropertyValues) pvs;</div><div class="line">			<span class="keyword">if</span> (mpvs.isConverted()) &#123;</div><div class="line">				<span class="comment">// Shortcut: use the pre-converted values as-is.</span></div><div class="line">				<span class="keyword">try</span> &#123;</div><div class="line">					bw.setPropertyValues(mpvs);</div><div class="line">					<span class="keyword">return</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(</div><div class="line">							mbd.getResourceDescription(), beanName, &amp;quot;Error setting property values&amp;quot;, ex);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			original = mpvs.getPropertyValueList();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			original = Arrays.asList(pvs.getPropertyValues());</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		TypeConverter converter = getCustomTypeConverter();</div><div class="line">		<span class="keyword">if</span> (converter == <span class="keyword">null</span>) &#123;</div><div class="line">			converter = bw;</div><div class="line">		&#125;</div><div class="line">		BeanDefinitionValueResolver valueResolver = <span class="keyword">new</span> BeanDefinitionValueResolver(<span class="keyword">this</span>, beanName, mbd, converter);</div><div class="line"></div><div class="line">		<span class="comment">// Create a deep copy, resolving any references for values.</span></div><div class="line">		List&amp;lt;PropertyValue&amp;gt; deepCopy = <span class="keyword">new</span> ArrayList&amp;lt;PropertyValue&amp;gt;(original.size());</div><div class="line">		<span class="keyword">boolean</span> resolveNecessary = <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">for</span> (PropertyValue pv : original) &#123;</div><div class="line">			<span class="keyword">if</span> (pv.isConverted()) &#123;</div><div class="line">				deepCopy.add(pv);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				String propertyName = pv.getName();</div><div class="line">				Object originalValue = pv.getValue();</div><div class="line">				Object resolvedValue = valueResolver.resolveValueIfNecessary(pv, originalValue);</div><div class="line">				Object convertedValue = resolvedValue;</div><div class="line">				<span class="keyword">boolean</span> convertible = bw.isWritableProperty(propertyName) &amp;amp;&amp;amp;</div><div class="line">						!PropertyAccessorUtils.isNestedOrIndexedProperty(propertyName);</div><div class="line">				<span class="keyword">if</span> (convertible) &#123;</div><div class="line">					convertedValue = convertForProperty(resolvedValue, propertyName, bw, converter);</div><div class="line">				&#125;</div><div class="line">				<span class="comment">// Possibly store converted value in merged bean definition,</span></div><div class="line">				<span class="comment">// in order to avoid re-conversion for every created bean instance.</span></div><div class="line">				<span class="keyword">if</span> (resolvedValue == originalValue) &#123;</div><div class="line">					<span class="keyword">if</span> (convertible) &#123;</div><div class="line">						pv.setConvertedValue(convertedValue);</div><div class="line">					&#125;</div><div class="line">					deepCopy.add(pv);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (convertible &amp;amp;&amp;amp; originalValue <span class="keyword">instanceof</span> TypedStringValue &amp;amp;&amp;amp;</div><div class="line">						!((TypedStringValue) originalValue).isDynamic() &amp;amp;&amp;amp;</div><div class="line">						!(convertedValue <span class="keyword">instanceof</span> Collection || ObjectUtils.isArray(convertedValue))) &#123;</div><div class="line">					pv.setConvertedValue(convertedValue);</div><div class="line">					deepCopy.add(pv);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					resolveNecessary = <span class="keyword">true</span>;</div><div class="line">					deepCopy.add(<span class="keyword">new</span> PropertyValue(pv, convertedValue));</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (mpvs != <span class="keyword">null</span> &amp;amp;&amp;amp; !resolveNecessary) &#123;</div><div class="line">			mpvs.setConverted();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Set our (possibly massaged) deep copy.</span></div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			bw.setPropertyValues(<span class="keyword">new</span> MutablePropertyValues(deepCopy));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(</div><div class="line">					mbd.getResourceDescription(), beanName, &amp;quot;Error setting property values&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>最后辗转反侧到了BeanWrapperImpl中的setPropertyValue方法，首先获取属性名称，这里的tokens.keys我也不知道是什么。可以看到最后使用writeMethod.invoke(this.object, value);方法设置了属性值，这里使用的java的反射思想。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div></pre></td><td class="code"><pre><div class="line">private void setPropertyValue(PropertyTokenHolder tokens, PropertyValue pv) throws BeansException &#123;</div><div class="line">		String propertyName = tokens.canonicalName;</div><div class="line">		String actualName = tokens.actualName;</div><div class="line"></div><div class="line">		if (tokens.keys != null) &#123;</div><div class="line">			// Apply indexes and map keys: fetch value for all keys but the last one.</div><div class="line">			PropertyTokenHolder getterTokens = new PropertyTokenHolder();</div><div class="line">			getterTokens.canonicalName = tokens.canonicalName;</div><div class="line">			getterTokens.actualName = tokens.actualName;</div><div class="line">			getterTokens.keys = new String[tokens.keys.length - 1];</div><div class="line">			System.arraycopy(tokens.keys, 0, getterTokens.keys, 0, tokens.keys.length - 1);</div><div class="line">			Object propValue;</div><div class="line">			try &#123;</div><div class="line">				propValue = getPropertyValue(getterTokens);</div><div class="line">			&#125;</div><div class="line">			catch (NotReadablePropertyException ex) &#123;</div><div class="line">				throw new NotWritablePropertyException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">						&amp;quot;Cannot access indexed value in property referenced &amp;quot; +</div><div class="line">						&amp;quot;in indexed property path '&amp;quot; + propertyName + &amp;quot;'&amp;quot;, ex);</div><div class="line">			&#125;</div><div class="line">			// Set value for last key.</div><div class="line">			String key = tokens.keys[tokens.keys.length - 1];</div><div class="line">			if (propValue == null) &#123;</div><div class="line">				// null map value case</div><div class="line">				if (this.autoGrowNestedPaths) &#123;</div><div class="line">					// TODO: cleanup, this is pretty hacky</div><div class="line">					int lastKeyIndex = tokens.canonicalName.lastIndexOf('[');</div><div class="line">					getterTokens.canonicalName = tokens.canonicalName.substring(0, lastKeyIndex);</div><div class="line">					propValue = setDefaultValue(getterTokens);</div><div class="line">				&#125;</div><div class="line">				else &#123;</div><div class="line">					throw new NullValueInNestedPathException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">							&amp;quot;Cannot access indexed value in property referenced &amp;quot; +</div><div class="line">							&amp;quot;in indexed property path '&amp;quot; + propertyName + &amp;quot;': returned null&amp;quot;);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			if (propValue.getClass().isArray()) &#123;</div><div class="line">				PropertyDescriptor pd = getCachedIntrospectionResults().getPropertyDescriptor(actualName);</div><div class="line">				Class&amp;lt;?&amp;gt; requiredType = propValue.getClass().getComponentType();</div><div class="line">				int arrayIndex = Integer.parseInt(key);</div><div class="line">				Object oldValue = null;</div><div class="line">				try &#123;</div><div class="line">					if (isExtractOldValueForEditor() &amp;amp;&amp;amp; arrayIndex &amp;lt; Array.getLength(propValue)) &#123;</div><div class="line">						oldValue = Array.get(propValue, arrayIndex);</div><div class="line">					&#125;</div><div class="line">					Object convertedValue = convertIfNecessary(propertyName, oldValue, pv.getValue(),</div><div class="line">							requiredType, TypeDescriptor.nested(property(pd), tokens.keys.length));</div><div class="line">					Array.set(propValue, arrayIndex, convertedValue);</div><div class="line">				&#125;</div><div class="line">				catch (IndexOutOfBoundsException ex) &#123;</div><div class="line">					throw new InvalidPropertyException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">							&amp;quot;Invalid array index in property path '&amp;quot; + propertyName + &amp;quot;'&amp;quot;, ex);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			else if (propValue instanceof List) &#123;</div><div class="line">				PropertyDescriptor pd = getCachedIntrospectionResults().getPropertyDescriptor(actualName);</div><div class="line">				Class&amp;lt;?&amp;gt; requiredType = GenericCollectionTypeResolver.getCollectionReturnType(</div><div class="line">						pd.getReadMethod(), tokens.keys.length);</div><div class="line">				List&amp;lt;Object&amp;gt; list = (List&amp;lt;Object&amp;gt;) propValue;</div><div class="line">				int index = Integer.parseInt(key);</div><div class="line">				Object oldValue = null;</div><div class="line">				if (isExtractOldValueForEditor() &amp;amp;&amp;amp; index &amp;lt; list.size()) &#123;</div><div class="line">					oldValue = list.get(index);</div><div class="line">				&#125;</div><div class="line">				Object convertedValue = convertIfNecessary(propertyName, oldValue, pv.getValue(),</div><div class="line">						requiredType, TypeDescriptor.nested(property(pd), tokens.keys.length));</div><div class="line">				int size = list.size();</div><div class="line">				if (index &amp;gt;= size &amp;amp;&amp;amp; index &amp;lt; this.autoGrowCollectionLimit) &#123;</div><div class="line">					for (int i = size; i &amp;lt; index; i++) &#123;</div><div class="line">						try &#123;</div><div class="line">							list.add(null);</div><div class="line">						&#125;</div><div class="line">						catch (NullPointerException ex) &#123;</div><div class="line">							throw new InvalidPropertyException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">									&amp;quot;Cannot set element with index &amp;quot; + index + &amp;quot; in List of size &amp;quot; +</div><div class="line">									size + &amp;quot;, accessed using property path '&amp;quot; + propertyName +</div><div class="line">									&amp;quot;': List does not support filling up gaps with null elements&amp;quot;);</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">					list.add(convertedValue);</div><div class="line">				&#125;</div><div class="line">				else &#123;</div><div class="line">					try &#123;</div><div class="line">						list.set(index, convertedValue);</div><div class="line">					&#125;</div><div class="line">					catch (IndexOutOfBoundsException ex) &#123;</div><div class="line">						throw new InvalidPropertyException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">								&amp;quot;Invalid list index in property path '&amp;quot; + propertyName + &amp;quot;'&amp;quot;, ex);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			else if (propValue instanceof Map) &#123;</div><div class="line">				PropertyDescriptor pd = getCachedIntrospectionResults().getPropertyDescriptor(actualName);</div><div class="line">				Class&amp;lt;?&amp;gt; mapKeyType = GenericCollectionTypeResolver.getMapKeyReturnType(</div><div class="line">						pd.getReadMethod(), tokens.keys.length);</div><div class="line">				Class&amp;lt;?&amp;gt; mapValueType = GenericCollectionTypeResolver.getMapValueReturnType(</div><div class="line">						pd.getReadMethod(), tokens.keys.length);</div><div class="line">				Map&amp;lt;Object, Object&amp;gt; map = (Map&amp;lt;Object, Object&amp;gt;) propValue;</div><div class="line">				// IMPORTANT: Do not pass full property name in here - property editors</div><div class="line">				// must not kick in for map keys but rather only for map values.</div><div class="line">				TypeDescriptor typeDescriptor = (mapKeyType != null ?</div><div class="line">						TypeDescriptor.valueOf(mapKeyType) : TypeDescriptor.valueOf(Object.class));</div><div class="line">				Object convertedMapKey = convertIfNecessary(null, null, key, mapKeyType, typeDescriptor);</div><div class="line">				Object oldValue = null;</div><div class="line">				if (isExtractOldValueForEditor()) &#123;</div><div class="line">					oldValue = map.get(convertedMapKey);</div><div class="line">				&#125;</div><div class="line">				// Pass full property name and old value in here, since we want full</div><div class="line">				// conversion ability for map values.</div><div class="line">				Object convertedMapValue = convertIfNecessary(propertyName, oldValue, pv.getValue(),</div><div class="line">						mapValueType, TypeDescriptor.nested(property(pd), tokens.keys.length));</div><div class="line">				map.put(convertedMapKey, convertedMapValue);</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				throw new InvalidPropertyException(getRootClass(), this.nestedPath + propertyName,</div><div class="line">						&amp;quot;Property referenced in indexed property path '&amp;quot; + propertyName +</div><div class="line">						&amp;quot;' is neither an array nor a List nor a Map; returned value was [&amp;quot; + pv.getValue() + &amp;quot;]&amp;quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		else &#123;</div><div class="line">			PropertyDescriptor pd = pv.resolvedDescriptor;</div><div class="line">			if (pd == null || !pd.getWriteMethod().getDeclaringClass().isInstance(this.object)) &#123;</div><div class="line">				pd = getCachedIntrospectionResults().getPropertyDescriptor(actualName);</div><div class="line">				if (pd == null || pd.getWriteMethod() == null) &#123;</div><div class="line">					if (pv.isOptional()) &#123;</div><div class="line">						logger.debug(&amp;quot;Ignoring optional value for property '&amp;quot; + actualName +</div><div class="line">								&amp;quot;' - property not found on bean class [&amp;quot; + getRootClass().getName() + &amp;quot;]&amp;quot;);</div><div class="line">						return;</div><div class="line">					&#125;</div><div class="line">					else &#123;</div><div class="line">						PropertyMatches matches = PropertyMatches.forProperty(propertyName, getRootClass());</div><div class="line">						throw new NotWritablePropertyException(</div><div class="line">								getRootClass(), this.nestedPath + propertyName,</div><div class="line">								matches.buildErrorMessage(), matches.getPossibleMatches());</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				pv.getOriginalPropertyValue().resolvedDescriptor = pd;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			Object oldValue = null;</div><div class="line">			try &#123;</div><div class="line">				Object originalValue = pv.getValue();</div><div class="line">				Object valueToApply = originalValue;</div><div class="line">				if (!Boolean.FALSE.equals(pv.conversionNecessary)) &#123;</div><div class="line">					if (pv.isConverted()) &#123;</div><div class="line">						valueToApply = pv.getConvertedValue();</div><div class="line">					&#125;</div><div class="line">					else &#123;</div><div class="line">						if (isExtractOldValueForEditor() &amp;amp;&amp;amp; pd.getReadMethod() != null) &#123;</div><div class="line">							final Method readMethod = pd.getReadMethod();</div><div class="line">							if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers()) &amp;amp;&amp;amp;</div><div class="line">									!readMethod.isAccessible()) &#123;</div><div class="line">								if (System.getSecurityManager()!= null) &#123;</div><div class="line">									AccessController.doPrivileged(new PrivilegedAction&amp;lt;Object&amp;gt;() &#123;</div><div class="line">										public Object run() &#123;</div><div class="line">											readMethod.setAccessible(true);</div><div class="line">											return null;</div><div class="line">										&#125;</div><div class="line">									&#125;);</div><div class="line">								&#125;</div><div class="line">								else &#123;</div><div class="line">									readMethod.setAccessible(true);</div><div class="line">								&#125;</div><div class="line">							&#125;</div><div class="line">							try &#123;</div><div class="line">								if (System.getSecurityManager() != null) &#123;</div><div class="line">									oldValue = AccessController.doPrivileged(new PrivilegedExceptionAction&amp;lt;Object&amp;gt;() &#123;</div><div class="line">										public Object run() throws Exception &#123;</div><div class="line">											return readMethod.invoke(object);</div><div class="line">										&#125;</div><div class="line">									&#125;, acc);</div><div class="line">								&#125;</div><div class="line">								else &#123;</div><div class="line">									oldValue = readMethod.invoke(object);</div><div class="line">								&#125;</div><div class="line">							&#125;</div><div class="line">							catch (Exception ex) &#123;</div><div class="line">								if (ex instanceof PrivilegedActionException) &#123;</div><div class="line">									ex = ((PrivilegedActionException) ex).getException();</div><div class="line">								&#125;</div><div class="line">								if (logger.isDebugEnabled()) &#123;</div><div class="line">									logger.debug(&amp;quot;Could not read previous value of property '&amp;quot; +</div><div class="line">											this.nestedPath + propertyName + &amp;quot;'&amp;quot;, ex);</div><div class="line">								&#125;</div><div class="line">							&#125;</div><div class="line">						&#125;</div><div class="line">						valueToApply = convertForProperty(</div><div class="line">								propertyName, oldValue, originalValue, new TypeDescriptor(property(pd)));</div><div class="line">					&#125;</div><div class="line">					pv.getOriginalPropertyValue().conversionNecessary = (valueToApply != originalValue);</div><div class="line">				&#125;</div><div class="line">				final Method writeMethod = (pd instanceof GenericTypeAwarePropertyDescriptor ?</div><div class="line">						((GenericTypeAwarePropertyDescriptor) pd).getWriteMethodForActualAccess() :</div><div class="line">						pd.getWriteMethod());</div><div class="line">				if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers()) &amp;amp;&amp;amp; !writeMethod.isAccessible()) &#123;</div><div class="line">					if (System.getSecurityManager()!= null) &#123;</div><div class="line">						AccessController.doPrivileged(new PrivilegedAction&amp;lt;Object&amp;gt;() &#123;</div><div class="line">							public Object run() &#123;</div><div class="line">								writeMethod.setAccessible(true);</div><div class="line">								return null;</div><div class="line">							&#125;</div><div class="line">						&#125;);</div><div class="line">					&#125;</div><div class="line">					else &#123;</div><div class="line">						writeMethod.setAccessible(true);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				final Object value = valueToApply;</div><div class="line">				if (System.getSecurityManager() != null) &#123;</div><div class="line">					try &#123;</div><div class="line">						AccessController.doPrivileged(new PrivilegedExceptionAction&amp;lt;Object&amp;gt;() &#123;</div><div class="line">							public Object run() throws Exception &#123;</div><div class="line">								writeMethod.invoke(object, value);</div><div class="line">								return null;</div><div class="line">							&#125;</div><div class="line">						&#125;, acc);</div><div class="line">					&#125;</div><div class="line">					catch (PrivilegedActionException ex) &#123;</div><div class="line">						throw ex.getException();</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				else &#123;</div><div class="line">					writeMethod.invoke(this.object, value);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			catch (TypeMismatchException ex) &#123;</div><div class="line">				throw ex;</div><div class="line">			&#125;</div><div class="line">			catch (InvocationTargetException ex) &#123;</div><div class="line">				PropertyChangeEvent propertyChangeEvent =</div><div class="line">						new PropertyChangeEvent(this.rootObject, this.nestedPath + propertyName, oldValue, pv.getValue());</div><div class="line">				if (ex.getTargetException() instanceof ClassCastException) &#123;</div><div class="line">					throw new TypeMismatchException(propertyChangeEvent, pd.getPropertyType(), ex.getTargetException());</div><div class="line">				&#125;</div><div class="line">				else &#123;</div><div class="line">					throw new MethodInvocationException(propertyChangeEvent, ex.getTargetException());</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			catch (Exception ex) &#123;</div><div class="line">				PropertyChangeEvent pce =</div><div class="line">						new PropertyChangeEvent(this.rootObject, this.nestedPath + propertyName, oldValue, pv.getValue());</div><div class="line">				throw new MethodInvocationException(pce, ex);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>由于Spring代码过于庞大，工作忙，时间有限，只能进行打开的代码流程分析，希望以后会有时间进行更加详细的分析。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/12/Spring 使用简单Demo进行源码调试（五）/" rel="next" title="Spring 使用简单Demo进行源码调试（五）">
+                <i class="fa fa-chevron-left"></i> Spring 使用简单Demo进行源码调试（五）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/18/Spring 使用简单Demo进行源码调试（七）/" rel="prev" title="Spring 使用简单Demo进行源码调试（七）">
+                Spring 使用简单Demo进行源码调试（七） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/05/15/Spring 使用简单Demo进行源码调试（六）/"
+     data-title="Spring 使用简单Demo进行源码调试（六）"
+     data-content=""
+     data-url="http://yoursite.com/2015/05/15/Spring 使用简单Demo进行源码调试（六）/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/15/Spring 使用简单Demo进行源码调试（六）/"
+           data-title="Spring 使用简单Demo进行源码调试（六）" data-url="http://yoursite.com/2015/05/15/Spring 使用简单Demo进行源码调试（六）/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

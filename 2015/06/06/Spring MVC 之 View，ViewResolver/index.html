@@ -1,0 +1,855 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、概念理解
+View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下1234567891011public interface View &amp;#123;    //HttpServletRequest中的属性名，其值为响应状态码    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC 之 View，ViewResolver">
+<meta property="og:url" content="http://yoursite.com/2015/06/06/Spring MVC 之 View，ViewResolver/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="一、概念理解
+View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下1234567891011public interface View &amp;#123;    //HttpServletRequest中的属性名，其值为响应状态码    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() +">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring MVC 之 View，ViewResolver">
+<meta name="twitter:description" content="一、概念理解
+View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下1234567891011public interface View &amp;#123;    //HttpServletRequest中的属性名，其值为响应状态码    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() +">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/06/06/Spring MVC 之 View，ViewResolver/"/>
+
+  <title> Spring MVC 之 View，ViewResolver | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring MVC 之 View，ViewResolver
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-06T11:35:14+08:00" content="2015-06-06">
+              2015-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/06/Spring MVC 之 View，ViewResolver/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、概念理解</p>
+<p>View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">View</span> </span>&#123;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，其值为响应状态码</span></div><div class="line">    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() + &amp;quot;.responseStatus&amp;quot;;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，前一篇文章用到了该变量，它的对应值是请求路径中的变量，及@PathVariable</span></div><div class="line">    <span class="comment">//注解的变量</span></div><div class="line">    String PATH_VARIABLES = View.class.getName() + &amp;quot;.pathVariables&amp;quot;;</div><div class="line">    <span class="comment">//该视图的ContentType</span></div><div class="line">    <span class="function">String <span class="title">getContentType</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//渲染该视图</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, HttpServletResponse response)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   该接口只有两个方法定义，分别表明该视图的ContentType和如何被渲染。Spring中提供了丰富的视图支持，几乎包含所有你想得到的，并且Spring的视图拓展性很好，你可以轻松实现自己的视图。</p>
+<p>ViewResolver — ViewResolver接口定义了如何通过view 名称来解析对应View实例的行为，它的定义相当简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ViewResolver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function">View <span class="title">resolveViewName</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>该接口只有一个方法，通过view name 解析出View。同样Spring提供了丰富的ViewResolver实现用来解析不同的View：<br><a id="more"></a><br>二、获取ModelAndView</p>
+<pre><code>上一篇文章我们分析了处理器方法如何被调用以及获取了返回值，但是Spring是如何处理返回值并响应给客户呢？这就是这节要分析的，根据返回值解析出对应的视图。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> ModelAndView <span class="title">invokeHandleMethod</span><span class="params">(HttpServletRequest request,</span></span></div><div class="line">            HttpServletResponse response, HandlerMethod handlerMethod) <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        ServletWebRequest webRequest = <span class="keyword">new</span> ServletWebRequest(request, response);</div><div class="line"></div><div class="line">        WebDataBinderFactory binderFactory = getDataBinderFactory(handlerMethod);</div><div class="line">        ModelFactory modelFactory = getModelFactory(handlerMethod, binderFactory);</div><div class="line">        ServletInvocableHandlerMethod requestMappingMethod = </div><div class="line">                                    createRequestMappingMethod(handlerMethod, binderFactory);</div><div class="line"></div><div class="line">        ModelAndViewContainer mavContainer = <span class="keyword">new</span> ModelAndViewContainer();</div><div class="line">        mavContainer.addAllAttributes(RequestContextUtils.getInputFlashMap(request));</div><div class="line">        modelFactory.initModel(webRequest, mavContainer, requestMappingMethod);</div><div class="line">        mavContainer.setIgnoreDefaultModelOnRedirect(<span class="keyword">this</span>.ignoreDefaultModelOnRedirect);</div><div class="line"></div><div class="line">        AsyncExecutionChain chain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        chain.addDelegatingCallable(getAsyncCallable(mavContainer, modelFactory, webRequest));</div><div class="line">        chain.setAsyncWebRequest(createAsyncWebRequest(request, response));</div><div class="line">        chain.setTaskExecutor(<span class="keyword">this</span>.taskExecutor);</div><div class="line">        <span class="comment">//上一篇文章分析到这里，调用了处理器方法并处理了返回值</span></div><div class="line">        requestMappingMethod.invokeAndHandle(webRequest, mavContainer);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (chain.isAsyncStarted()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//这里是根据返回值返回ModelAndView了</span></div><div class="line">        <span class="keyword">return</span> getModelAndView(mavContainer, modelFactory, webRequest);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>   上面的代码在上一篇文章中已经分析到了invokeAndHandle方法，该方法调用了处理器方法，并处理了返回值，剩下的就是如何将返回值呈现给用户了，我们看getModelAndView的实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> ModelAndView <span class="title">getModelAndView</span><span class="params">(ModelAndViewContainer mavContainer,</span></span></div><div class="line">            ModelFactory modelFactory, NativeWebRequest webRequest) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="comment">//主要是同步model属性，并且将BindingResult添加到model中来</span></div><div class="line">        modelFactory.updateModel(webRequest, mavContainer);</div><div class="line">        <span class="comment">//是否直接处理请求，如@ResponseBody</span></div><div class="line">        <span class="keyword">if</span> (mavContainer.isRequestHandled()) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        ModelMap model = mavContainer.getModel();</div><div class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView(mavContainer.getViewName(), model);</div><div class="line">        <span class="keyword">if</span> (!mavContainer.isViewReference()) &#123;</div><div class="line">            mav.setView((View) mavContainer.getView());</div><div class="line">        &#125;<span class="comment">//如果model是RedirectAttributes，进行flashAttributes的处理</span></div><div class="line">        <span class="comment">//即将flashAttribute属性添加到request的Output FlashMap中，以被重定向后的request获取</span></div><div class="line">        <span class="keyword">if</span> (model <span class="keyword">instanceof</span> RedirectAttributes) &#123;</div><div class="line">            Map&amp;lt;String, ?&amp;gt; flashAttributes = ((RedirectAttributes) model).getFlashAttributes();</div><div class="line">            HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);</div><div class="line">            RequestContextUtils.getOutputFlashMap(request).putAll(flashAttributes);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mav;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   上面的代码是根据方法执行完后生成的model和视图名等信息生成ModelAndView对象，该对象维护了一个View和Model的对应关系，以便在View中可以访问Model的属性。</p>
+<p>三、RedirectAttributes    </p>
+<pre><code>上面的代码还有一个对RedirectAttributes的处理，这里我们来分析下是个什么回事？我们知道request中的属性只能在request范围内访问到，一旦执行重定向，重定向后的request并访问不到前面设置的属性了，虽然放到Session中可以在不同的request中共享这些属性，但是有时候放到Session中显得没有必要，毕竟很多属性只需要在“某次操作”中有用（重定向操作对用户来说其实是一次操作，因为重定向是浏览器执行的，对用户透明的。
+
+因此为了解决这个问题，Spring引入了RedirectAttributes概念，即添加到RedirectAttributes中的属性，在重定向后依旧可以获取到，并且获取到以后，这些属性就会失效，新的request便无法获取了，这样就方便了开发者，同样也节省了内错占用。
+
+那Spring是怎么实现的呢？这里牵扯到了FlashMap这一概念，Spring会默认为每一个请求添加两个FlashMap属性，一个是InputFlashMap，另一个是OutputFlashMap，其中InputFlashMap便包含了上一个请求在重定向到该请求前设置的属性值，也就是上一个请求的OutputFlashMap，看下面的图方便理解：
+
+下面是DispatcherServlet中doService中的代码片段，在调用doDispatch前便设置了InputFlashmap和OutputFlashMap：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//尝试获取该request的InputFlashMap</span></div><div class="line">FlashMap inputFlashMap = <span class="keyword">this</span>.flashMapManager.retrieveAndUpdate(request, response);</div><div class="line">        <span class="keyword">if</span> (inputFlashMap != <span class="keyword">null</span>) &#123;</div><div class="line">            request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, </div><div class="line">                                                Collections.unmodifiableMap(inputFlashMap));</div><div class="line">        &#125;</div><div class="line"><span class="comment">//设置该请求的OutputFlashMap</span></div><div class="line">request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, <span class="keyword">new</span> FlashMap());</div><div class="line"><span class="comment">//设置该请求的FlashMapManager，用来管理InputFlashMap和OutputFlashMap</span></div><div class="line">request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, <span class="keyword">this</span>.flashMapManager);</div></pre></td></tr></table></figure>
+<p>四、视图解析</p>
+<pre><code>了解了FlashMap的概念我们继续往下看，前面我们已经获取到了请求的ModelAndView对象，这时invokeHandleMethod执行完毕将控制权交给了doDispatch，我们看怎么处理ModelAndView：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mv = ha.handle(processedRequest, response, mappedHandler.getHandler());</div><div class="line"><span class="keyword">if</span> (asyncChain.isAsyncStarted()) &#123;<span class="comment">///异步调用，暂不关心</span></div><div class="line">        mappedHandler.applyPostHandleAsyncStarted(processedRequest, response);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">&#125;<span class="comment">//如果ModelAndView中没有设置视图名，则设置默认视图（大致是prefix/请求路径/suffix）</span></div><div class="line">applyDefaultViewName(request, mv);</div><div class="line"><span class="comment">//执行拦截器的后处理器</span></div><div class="line">mappedHandler.applyPostHandle(processedRequest, response, mv);</div><div class="line"><span class="comment">//处理分派结果，响应用户</span></div><div class="line">processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</div></pre></td></tr></table></figure>
+<p>   重点就在最后一行，我们继续追踪：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processDispatchResult</span><span class="params">(HttpServletRequest request, HttpServletResponse response,</span></span></div><div class="line">            HandlerExecutionChain mappedHandler, ModelAndView mv, Exception exception) &#123;</div><div class="line">        <span class="keyword">boolean</span> errorView = <span class="keyword">false</span>;</div><div class="line">        <span class="comment">//出现异常，进行异常处理，暂不关心</span></div><div class="line">        <span class="keyword">if</span> (exception != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (exception <span class="keyword">instanceof</span> ModelAndViewDefiningException) &#123;</div><div class="line">                logger.debug(&amp;quot;ModelAndViewDefiningException encountered&amp;quot;, exception);</div><div class="line">                mv = ((ModelAndViewDefiningException) exception).getModelAndView();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                Object handler = (mappedHandler != <span class="keyword">null</span> ? mappedHandler.getHandler() : <span class="keyword">null</span>);</div><div class="line">                mv = processHandlerException(request, response, handler, exception);</div><div class="line">                errorView = (mv != <span class="keyword">null</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 如果返回View需要渲染？</span></div><div class="line">        <span class="keyword">if</span> (mv != <span class="keyword">null</span> &amp;amp;&amp;amp; !mv.wasCleared()) &#123;</div><div class="line">            <span class="comment">//惊醒视图的渲染，我们主题</span></div><div class="line">            render(mv, request, response);</div><div class="line">            <span class="keyword">if</span> (errorView) &#123;</div><div class="line">                WebUtils.clearErrorRequestAttributes(request);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//调用拦截器的afterComplete</span></div><div class="line">        <span class="keyword">if</span> (mappedHandler != <span class="keyword">null</span>) &#123;</div><div class="line">            mappedHandler.triggerAfterCompletion(request, response, <span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   上面的代码我们着重看render方法是怎样实现的：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">protected void render(ModelAndView mv,HttpServletRequest request,HttpServletResponse response)&#123;</div><div class="line">        // 确定当前请求的Locale，并设置Response</div><div class="line">        Locale locale = this.localeResolver.resolveLocale(request);</div><div class="line">        response.setLocale(locale);</div><div class="line"></div><div class="line">        View view;//ModelAndView中的View还只是名称，需要解析成View对象</div><div class="line">        if (mv.isReference()) &#123;</div><div class="line">            view = resolveViewName(mv.getViewName(), mv.getModelInternal(), locale, request);</div><div class="line">            if (view == null) &#123;</div><div class="line">                throw new ServletException(</div><div class="line">                        &amp;quot;Could not resolve view with name '&amp;quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        else &#123;//直接获取视图对象</div><div class="line">            view = mv.getView();</div><div class="line">            if (view == null) &#123;</div><div class="line">                throw new ServletException(&amp;quot;ModelAndView [&amp;quot; + mv + &amp;quot;] &amp;quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //委托视图对象进行渲染</div><div class="line">        view.render(mv.getModelInternal(), request, response);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   上面的代码涉及了两个重要步骤，视图名的解析和视图的渲染，这一小节我们来讲解视图名的解析，也就是ViewResolver了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> View <span class="title">resolveViewName</span><span class="params">(String viewName, Map&amp;lt;String, Object&amp;gt; model, Locale locale,</span></span></div><div class="line">            HttpServletRequest request) <span class="keyword">throws</span> Exception &#123;</div><div class="line">        <span class="keyword">for</span> (ViewResolver viewResolver : <span class="keyword">this</span>.viewResolvers) &#123;</div><div class="line">            View view = viewResolver.resolveViewName(viewName, locale);</div><div class="line">            <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span> view;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<pre><code>我们查看resolveViewName方法，发现其中有一个viewResolvers实例变量，如果你看过前面的几篇文章，你获取会记得handlerMappings, handlerAdapters等变量，不错他们是一伙的，都是在DispatcherServlet初始化时完成设置的，并且我们可以在配置文件中定义我们自己的HandleMappings， HandlerAdapters，ViewResolvers等（这里不讲解怎样设置了），但是如果我们不设置的话Spring也会为我们设置一些默认值：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">org.springframework.web.servlet.HandlerMapping =</div><div class="line">                org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\</div><div class="line">                org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</div><div class="line"></div><div class="line">org.springframework.web.servlet.HandlerAdapter=</div><div class="line">                org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\</div><div class="line">                org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\</div><div class="line">                org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter</div><div class="line"></div><div class="line">org.springframework.web.servlet.HandlerExceptionResolver=</div><div class="line">    org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\</div><div class="line">    org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\</div><div class="line">    org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.RequestToViewNameTranslator=</div><div class="line">                org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator</div><div class="line"></div><div class="line">org.springframework.web.servlet.ViewResolver=</div><div class="line">                            org.springframework.web.servlet.view.InternalResourceViewResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.FlashMapManager=</div><div class="line">                    org.springframework.web.servlet.support.SessionFlashMapManager</div></pre></td></tr></table></figure>
+<p>   上面代码片段来自Spring MVC包中的DispatcherServlet.properties属性文件中，这里Spring为我们默认设置了诸多处理器，解析器等，可以看出在我们不进行ViewResolver设置的情况下，默认实现是InternalResourceViewResolver。我们知道，InternalResourceViewResolver继承自UrlBasedViewResolver， 而UrlBasedViewResolver继承自AbstractCachingViewResolver，其实这就是Spring的聪明之处，为了提高性能，Spring中充斥着缓存策略，在试图解析中也使用了缓存。这样只需在第一次解析时完成整个的视图创建工作，后续的请求只需从缓存中索取即可了。</p>
+<pre><code>这里的InternalResourceViewResolver主要是用来支持Jsp文件的，换句话说，如果你的系统中只用到了jsp文件而没有模板引擎等框架，这个ViewResolver就够你用了，你也就无需在配置文件中多此一举的写上该ViewResolver了。下面我们就来看它的实现吧：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">resolveViewName</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//如果没有被缓存呢，只能创建了</span></div><div class="line">        <span class="keyword">if</span> (!isCache()) &#123;</div><div class="line">            <span class="keyword">return</span> createView(viewName, locale);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;<span class="comment">//检索缓存中的视图对象</span></div><div class="line">            Object cacheKey = getCacheKey(viewName, locale);</div><div class="line">            <span class="keyword">synchronized</span> (<span class="keyword">this</span>.viewCache) &#123;</div><div class="line">                View view = <span class="keyword">this</span>.viewCache.get(cacheKey);</div><div class="line">                <span class="keyword">if</span> (view == <span class="keyword">null</span> &amp;amp;&amp;amp; (!<span class="keyword">this</span>.cacheUnresolved </div><div class="line">                                                || !<span class="keyword">this</span>.viewCache.containsKey(cacheKey))) &#123;</div><div class="line">                    <span class="comment">// Ask the subclass to create the View object.</span></div><div class="line">                    view = createView(viewName, locale);</div><div class="line">                    <span class="keyword">if</span> (view != <span class="keyword">null</span> || <span class="keyword">this</span>.cacheUnresolved) &#123;</div><div class="line">                        <span class="keyword">this</span>.viewCache.put(cacheKey, view);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> view;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>   方法很简单，我们接着看是怎样创建视图的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> View <span class="title">createView</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// 当前ViewResolver无法解析该视图名，返回null</span></div><div class="line">        <span class="keyword">if</span> (!canHandle(viewName, locale)) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// view名称以redirect:开头，即重定向视图解析</span></div><div class="line">        <span class="keyword">if</span> (viewName.startsWith(REDIRECT_URL_PREFIX)) &#123;</div><div class="line">            String redirectUrl = viewName.substring(REDIRECT_URL_PREFIX.length());</div><div class="line">            RedirectView view = <span class="keyword">new</span> RedirectView(redirectUrl, isRedirectContextRelative()</div><div class="line">                                                               , isRedirectHttp10Compatible());</div><div class="line">            <span class="keyword">return</span> applyLifecycleMethods(viewName, view);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// view名称以forward:开头，即转发视图解析</span></div><div class="line">        <span class="keyword">if</span> (viewName.startsWith(FORWARD_URL_PREFIX)) &#123;</div><div class="line">            String forwardUrl = viewName.substring(FORWARD_URL_PREFIX.length());</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> InternalResourceView(forwardUrl);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 正常情况下，让父类创建吧</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.createView(viewName, locale);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>   创建视图时，Spring会检查视图名，有三种情况redirect视图，forward视图，普通视图，进行了不同处理。对于redirect视图，spring获取redirectURL并创建了RedirectView对象，然后执行了一下bean实例的生命周期方法，没什么实质性东西，我们不关心。对于转发视图，创建了InternalResourceView对象，上面说的这两种对象的渲染过程我们过会会降到的。这里大家先记住。第三种情况呢，又交给了父类处理，我们继续看看吧：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> View <span class="title">createView</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">return</span> loadView(viewName, locale);</div><div class="line">&#125;</div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> View <span class="title">loadView</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        AbstractUrlBasedView view = buildView(viewName);</div><div class="line">        View result = applyLifecycleMethods(viewName, view);</div><div class="line">        <span class="keyword">return</span> (view.checkResource(locale) ? result : <span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   父类的createView方法又委托给了loadView，而loadView是抽象的由子类实现，我们继续看loadView中有一个buildView方法，看着不错哦：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> AbstractUrlBasedView <span class="title">buildView</span><span class="params">(String viewName)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//根据ViewClass实例化该Class</span></div><div class="line">        AbstractUrlBasedView view = (AbstractUrlBasedView) BeanUtils</div><div class="line">                                                            .instantiateClass(getViewClass());</div><div class="line">        <span class="comment">//设置视图的url，prefix/viewName/suffix</span></div><div class="line">        view.setUrl(getPrefix() + viewName + getSuffix());</div><div class="line">        String contentType = getContentType();</div><div class="line">        <span class="keyword">if</span> (contentType != <span class="keyword">null</span>) &#123;<span class="comment">//设置ContentType</span></div><div class="line">            view.setContentType(contentType);</div><div class="line">        &#125;<span class="comment">//设置请求上下文属性</span></div><div class="line">        view.setRequestContextAttribute(getRequestContextAttribute());</div><div class="line">        view.setAttributesMap(getAttributesMap());</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.exposePathVariables != <span class="keyword">null</span>) &#123;<span class="comment">//设置是否暴露PathVariable</span></div><div class="line">            view.setExposePathVariables(exposePathVariables);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   上面的代码又出来个ViewClass， prefix，suffix，他们又是个什么东西呢？其实我们知道在配置InternalResourceViewResolver时可以指定一个viewClass，prefix，suffix，没错，就是他们，先说prefix，suffix，我们看到了它会分别添加到viewName的前后，组成视图的URL。那个viewClass就是视图的class对象类型了。我们看InternalResourceViewResolver的构造器：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">InternalResourceViewResolver</span><span class="params">()</span> </span>&#123;</div><div class="line">        Class viewClass = requiredViewClass();</div><div class="line">        <span class="keyword">if</span> (viewClass.equals(InternalResourceView.class) &amp;amp;&amp;amp; jstlPresent) &#123;</div><div class="line">            viewClass = JstlView.class;</div><div class="line">        &#125;</div><div class="line">        setViewClass(viewClass);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   会发现在我们没有指定的情况下默认是JstlView哦。它继承自InternalResourceView。到此为止我们的视图对象已经创建完毕。</p>
+<pre><code>我们这里只解析了Spring默认情况下的InternalResourceViewResolver的解析过程，默认情况下解析的视图类型是JstlView。如果是Redirect的话则是RedirectView。
+</code></pre><p>五、视图渲染</p>
+<pre><code>视图解析出来了，下面就是要将视图渲染给用户显示了。这里我们依旧只讲解默认的JstlView的渲染过程，当然还有RedirectView的。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, </span></span></div><div class="line">                                                HttpServletResponse response) <span class="keyword">throws</span> Exception &#123;</div><div class="line"></div><div class="line">        Map&amp;lt;String, Object&amp;gt; mergedModel = createMergedOutputModel(model, request, response);</div><div class="line"></div><div class="line">        prepareResponse(request, response);</div><div class="line">        renderMergedOutputModel(mergedModel, request, response);</div><div class="line">&#125;</div><div class="line"><span class="keyword">protected</span> Map&amp;lt;String, Object&amp;gt; createMergedOutputModel(Map&amp;lt;String, ?&amp;gt; model, </div><div class="line">                            HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">        <span class="meta">@SuppressWarnings</span>(&amp;quot;unchecked&amp;quot;)</div><div class="line">        <span class="comment">//如果需要保留PathVariable</span></div><div class="line">        Map&amp;lt;String, Object&amp;gt; pathVars = <span class="keyword">this</span>.exposePathVariables ?</div><div class="line">            (Map&amp;lt;String, Object&amp;gt;) request.getAttribute(View.PATH_VARIABLES) : <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="comment">//联合动态和静态属性</span></div><div class="line">        <span class="keyword">int</span> size = <span class="keyword">this</span>.staticAttributes.size();</div><div class="line">        size += (model != <span class="keyword">null</span>) ? model.size() : <span class="number">0</span>;</div><div class="line">        size += (pathVars != <span class="keyword">null</span>) ? pathVars.size() : <span class="number">0</span>;</div><div class="line">        Map&amp;lt;String, Object&amp;gt; mergedModel = <span class="keyword">new</span> HashMap&amp;lt;String, Object&amp;gt;(size);</div><div class="line">        mergedModel.putAll(<span class="keyword">this</span>.staticAttributes);</div><div class="line">        <span class="keyword">if</span> (pathVars != <span class="keyword">null</span>) &#123;</div><div class="line">            mergedModel.putAll(pathVars);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (model != <span class="keyword">null</span>) &#123;</div><div class="line">            mergedModel.putAll(model);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Expose RequestContext?</span></div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.requestContextAttribute != <span class="keyword">null</span>) &#123;</div><div class="line">            mergedModel.put(<span class="keyword">this</span>.requestContextAttribute, </div><div class="line">                                        createRequestContext(request, response, mergedModel));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> mergedModel;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   上面代码是AbstractView中的方法，也就是所有视图都会执行的操作，就是将静态属性和动态生成的属性合并，我们重点看</p>
+<p>renderMergedOutputModel方法，子类会覆盖该方法，实现不同的逻辑。我们来看JstlView和RedirectView的实现，首先JstlView :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">renderMergedOutputModel</span><span class="params">(</span></span></div><div class="line">            Map&amp;lt;String, Object&amp;gt; model, HttpServletRequest request,HttpServletResponse response)&#123;</div><div class="line"></div><div class="line">        <span class="comment">//确定执行请求转发的request对象</span></div><div class="line">        HttpServletRequest requestToExpose = getRequestToExpose(request);</div><div class="line">        <span class="comment">//将model中的属性暴露为请求属性表中</span></div><div class="line">        exposeModelAsRequestAttributes(model, requestToExpose);</div><div class="line">        <span class="comment">//暴露MessageResource</span></div><div class="line">        exposeHelpers(requestToExpose);</div><div class="line">        <span class="comment">//确定转发的路径，也就是View的URL，但会检查是否会进入死循环，即跟当前请求同一个路径</span></div><div class="line">        String dispatcherPath = prepareForRendering(requestToExpose, response);</div><div class="line">        <span class="comment">//生成RequestDispatcher对象</span></div><div class="line">        RequestDispatcher rd = getRequestDispatcher(requestToExpose, dispatcherPath);</div><div class="line">        <span class="keyword">if</span> (rd == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(&amp;quot;Could not get RequestDispatcher <span class="keyword">for</span> [&amp;quot; + getUrl() +&amp;quot;]&amp;quot;);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//include操作</span></div><div class="line">        <span class="keyword">if</span> (useInclude(requestToExpose, response)) &#123;</div><div class="line">            response.setContentType(getContentType());</div><div class="line">            rd.include(requestToExpose, response);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">//执行转发，暴露属性到转发请求中</span></div><div class="line">            exposeForwardRequestAttributes(requestToExpose);</div><div class="line">            rd.forward(requestToExpose, response);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  方法看着很长其实思路比较简单，主要就是调用了RequestDispatcher的include 或forward的方法，将请求转发到指定URL。JstlView的视图渲染相对简单，我们来看RedirectView的渲染：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">renderMergedOutputModel</span><span class="params">(</span></span></div><div class="line">            Map&amp;lt;String, Object&amp;gt; model, HttpServletRequest request, HttpServletResponse response)</div><div class="line">            <span class="keyword">throws</span> IOException &#123;</div><div class="line">        <span class="comment">//获取重定向的路径，也就是前面生成RedirectView时设置的URL，但会进行相对路径的处理</span></div><div class="line">        String targetUrl = createTargetUrl(model, request);</div><div class="line">        <span class="comment">//调用用户注册的RequestDataValueProcessor的process方法，通常用不到，不管</span></div><div class="line">        targetUrl = updateTargetUrl(targetUrl, model, request, response);</div><div class="line">        <span class="comment">//这里就是上面讲到的FlashMap的处理啦，是怎样实现的呢？</span></div><div class="line">        <span class="comment">//我们知道前面将RedirectAttributes的属性都设置到了当前请求的OutputFlashMap中了，这里再取出来。</span></div><div class="line">        <span class="comment">//设置flashMap的目标请求路径，用来比对下次请求的路径，如果匹配，将其中的属性设置到请求属性表中</span></div><div class="line">        FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);</div><div class="line">        <span class="keyword">if</span> (!CollectionUtils.isEmpty(flashMap)) &#123;</div><div class="line">            UriComponents uriComponents = UriComponentsBuilder.fromUriString(targetUrl).build();</div><div class="line">            flashMap.setTargetRequestPath(uriComponents.getPath());</div><div class="line">            flashMap.addTargetRequestParams(uriComponents.getQueryParams());</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//将flashMap交由FlashMapManager管理。</span></div><div class="line">        FlashMapManager flashMapManager = RequestContextUtils.getFlashMapManager(request);</div><div class="line">        flashMapManager.saveOutputFlashMap(flashMap, request, response);</div><div class="line">        <span class="comment">//返回结果，设置响应头304.</span></div><div class="line">        sendRedirect(request, response, targetUrl.toString(), <span class="keyword">this</span>.http10Compatible);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   到此为止，我们的试图解析，渲染过程就完全分析完了，获取到目前为止有点晕，其实好好思考下，Spring在视图解析，和渲染这块给了我们足够的拓展空间。</p>
+<p>六、总结<br>    Spring对视图的支持相当完善，默认的JSP不用说，PDF，Excel, 等，还包括主流的模板引擎，像FreeMarker， Tiles等，可以参考第一张图片。当然你完全也可以实现自己的View，以及ViewResolver，来解析自定义的视图。不过应该没多大必要。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" rel="next" title="Spring MVC 之 @RequestMapping（2）">
+                <i class="fa fa-chevron-left"></i> Spring MVC 之 @RequestMapping（2）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/06/24/[转]Git 常用命令大全/" rel="prev" title="[转]Git 常用命令大全">
+                [转]Git 常用命令大全 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/06/06/Spring MVC 之 View，ViewResolver/"
+     data-title="Spring MVC 之 View，ViewResolver"
+     data-content=""
+     data-url="http://yoursite.com/2015/06/06/Spring MVC 之 View，ViewResolver/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/06/06/Spring MVC 之 View，ViewResolver/"
+           data-title="Spring MVC 之 View，ViewResolver" data-url="http://yoursite.com/2015/06/06/Spring MVC 之 View，ViewResolver/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

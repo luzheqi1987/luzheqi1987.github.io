@@ -1,0 +1,825 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC 之 &lt;context:component-scan/>">
+<meta property="og:url" content="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring MVC 之 &lt;context:component-scan/>">
+<meta name="twitter:description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/"/>
+
+  <title> Spring MVC 之 &lt;context:component-scan/> | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring MVC 之 &lt;context:component-scan/>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-19T10:04:40+08:00" content="2015-05-19">
+              2015-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/19/Spring MVC 之 contextcomponent-scan/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/19/Spring MVC 之 contextcomponent-scan/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一、ContextLoader<br>通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类，接着使用configureAndRefreshWebApplicationContext初始化这个WebApplicactionContext对象，是在configureAndRefreshWebApplicationContext方法中进行了配置文件的加载和组件的扫描。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context == <span class="keyword">null</span>) &#123;</div><div class="line">	<span class="keyword">this</span>.context = createWebApplicationContext(servletContext);</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context <span class="keyword">instanceof</span> ConfigurableWebApplicationContext) &#123;</div><div class="line">	ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) <span class="keyword">this</span>.context;</div><div class="line">	<span class="keyword">if</span> (!cwac.isActive()) &#123;</div><div class="line">		<span class="comment">// The context has not yet been refreshed -&amp;gt; provide services such as</span></div><div class="line">		<span class="comment">// setting the parent context, setting the application context id, etc</span></div><div class="line">		<span class="keyword">if</span> (cwac.getParent() == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="comment">// The context instance was injected without an explicit parent -&amp;gt;</span></div><div class="line">			<span class="comment">// determine parent for root web application context, if any.</span></div><div class="line">			ApplicationContext parent = loadParentContext(servletContext);</div><div class="line">			cwac.setParent(parent);</div><div class="line">		&#125;</div><div class="line">		configureAndRefreshWebApplicationContext(cwac, servletContext);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>展开createWebApplicationContext方法。该方法初始化根WebApplicationContext，这个WebApplicationContext可以使默认的context也尅进行定制。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">protected WebApplicationContext createWebApplicationContext(ServletContext sc) &#123;</div><div class="line">	Class&amp;lt;?&amp;gt; contextClass = determineContextClass(sc);</div><div class="line">	if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) &#123;</div><div class="line">		throw new ApplicationContextException(&amp;quot;Custom context class [&amp;quot; + contextClass.getName() +</div><div class="line">				&amp;quot;] is not of type [&amp;quot; + ConfigurableWebApplicationContext.class.getName() + &amp;quot;]&amp;quot;);</div><div class="line">	&#125;</div><div class="line">	return (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>展开determineContextClass方法。这个方法比较简单，首先查看有没有配置CONTEXT_CLASS_PARAM这个属性，有的话使用这个属性配置的类进行加载，否则使用默认的类。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">protected Class&amp;lt;?&amp;gt; determineContextClass(ServletContext servletContext) &#123;</div><div class="line">	String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS_PARAM);</div><div class="line">	if (contextClassName != null) &#123;</div><div class="line">		try &#123;</div><div class="line">			return ClassUtils.forName(contextClassName, ClassUtils.getDefaultClassLoader());</div><div class="line">		&#125;</div><div class="line">		catch (ClassNotFoundException ex) &#123;</div><div class="line">			throw new ApplicationContextException(</div><div class="line">					&amp;quot;Failed to load custom context class [&amp;quot; + contextClassName + &amp;quot;]&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else &#123;</div><div class="line">		contextClassName = defaultStrategies.getProperty(WebApplicationContext.class.getName());</div><div class="line">		try &#123;</div><div class="line">			return ClassUtils.forName(contextClassName, ContextLoader.class.getClassLoader());</div><div class="line">		&#125;</div><div class="line">		catch (ClassNotFoundException ex) &#123;</div><div class="line">			throw new ApplicationContextException(</div><div class="line">					&amp;quot;Failed to load default context class [&amp;quot; + contextClassName + &amp;quot;]&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再看configureAndRefreshWebApplicationContext方法。configureAndRefreshWebApplicationContext最后的refresh方法已经在前面的<a href="http://www.bugpointer.com/archives/491.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试</a>系列文章里进行了简单的分析调试。</p>
+<p>二、 &lt;context:component-scan/&gt;<br> 我们在SpringMVC开发项目中，有的用注解和XML配置Bean,这两种都各有自己的优势，数据源配置比较经常用XML配置，控制层依赖的service比较经常用注解等（在部署时比较不会改变的），我们经常比较常用的注解有@Component是通用标注，@Controller标注web控制器，@Service标注Servicec层的服务，@Respository标注DAO层的数据访问。SpringMVC启动时怎么被自动扫描然后解析并注册到Bean工厂中去（放到DefaultListableBeanFactory中的Map<string, beandefinition=""> beanDefinitionMap中 以BeanName为key）？我们今天带着这些问题来了解分析这实现的过程，我们在分析之前先了解一下这些注解。<br>   @Controller标注web控制器，@Service标注Service层的服务，@Respository标注DAO层的数据访问。@Component是通用标注，只是定义为一个类为Bean，SpringMVC会把所有添加@Component注解的类作为使用自动扫描注入配置路径下的备选对象。@Controller、@Service\@Respository只是更加的细化，都是被@Component标注，所以我们比较不推荐使用@Component。源代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Service &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Controller &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Repository &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></string,></p>
+<p>都是有标示@Component<br> 我们在配置文件中，标示配置需要扫描哪些包下，也可以配置对某个包下不扫描，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&amp;lt;context:component-scan base-<span class="keyword">package</span>=&amp;quot;cn.test&amp;quot;&amp;gt;  </div><div class="line">        &amp;lt;context:exclude-filter type=&amp;quot;regex&amp;quot; expression=&amp;quot;cn.test.*.*.controller&amp;quot;/&amp;gt;  </div><div class="line">        &amp;lt;context:exclude-filter type=&amp;quot;regex&amp;quot; expression=&amp;quot;cn.test.*.*.controller2&amp;quot;/&amp;gt;  </div><div class="line">&amp;lt;/context:component-scan&amp;gt;</div></pre></td></tr></table></figure></p>
+<p>说明：<br>   <context:exclude-filter>指定的不扫描包，<context:exclude-filter>指定的扫描包<br>SpringMVC先读取配置文件，然后根据context:component-scan中属性base-package去扫描指定包下的class和jar文件，把标示@Controller标注web控制器，@Service标注Servicec层的服务，@Respository标注DAO层的数据访问等注解的都获取，并注册为Bean类放到Bean工厂。</context:exclude-filter></context:exclude-filter></p>
+<p>三、ComponentScanBeanDefinitionParser<br>通过阅读源码，知道接口BeanDefinitionParser可以实现将自定义的标签转化为 BeanDefinition类。而<context:component-scan>则是由ComponentScanBeanDefinitionParser进行解析的。</context:component-scan></p>
+<p>展开ComponentScanBeanDefinitionParser中的parse方法。可以看到主要完成以下工作。<br>    （1）获取context:component-scan 配置的属性base-package的值，然后放到数组。<br>    （2）创建扫描对应包下的class和jar文件的对象ClassPathBeanDefinitionScanner ，由这个类来实现扫描包下的class和jar文件并把注解的Bean包装成BeanDefinition。<br>    （3）BeanDefinition注册到Bean工厂。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BeanDefinition <span class="title">parse</span><span class="params">(Element element, ParserContext parserContext)</span> </span>&#123;</div><div class="line">	String basePackage = element.getAttribute(BASE_PACKAGE_ATTRIBUTE);</div><div class="line">	basePackage = parserContext.getReaderContext().getEnvironment().resolvePlaceholders(basePackage);</div><div class="line">	String[] basePackages = StringUtils.tokenizeToStringArray(basePackage,</div><div class="line">			ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);</div><div class="line">	<span class="comment">// Actually scan for bean definitions and register them.</span></div><div class="line">	ClassPathBeanDefinitionScanner scanner = configureScanner(parserContext, element);</div><div class="line">	Set&amp;lt;BeanDefinitionHolder&amp;gt; beanDefinitions = scanner.doScan(basePackages);</div><div class="line">	registerComponents(parserContext.getReaderContext(), beanDefinitions, element);</div><div class="line">	<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再展开configureScanner方法。首先通过findCandidateComponents获取候选bean definition。然后注册到registry中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> Set&amp;lt;BeanDefinitionHolder&amp;gt; doScan(String... basePackages) &#123;</div><div class="line">	Assert.notEmpty(basePackages, &amp;quot;At least one base <span class="keyword">package</span> must be specified&amp;quot;);</div><div class="line">	Set&amp;lt;BeanDefinitionHolder&amp;gt; beanDefinitions = <span class="keyword">new</span> LinkedHashSet&amp;lt;BeanDefinitionHolder&amp;gt;();</div><div class="line">	<span class="keyword">for</span> (String basePackage : basePackages) &#123;</div><div class="line">		Set&amp;lt;BeanDefinition&amp;gt; candidates = findCandidateComponents(basePackage);</div><div class="line">		<span class="keyword">for</span> (BeanDefinition candidate : candidates) &#123;</div><div class="line">			ScopeMetadata scopeMetadata = <span class="keyword">this</span>.scopeMetadataResolver.resolveScopeMetadata(candidate);</div><div class="line">			candidate.setScope(scopeMetadata.getScopeName());</div><div class="line">			String beanName = <span class="keyword">this</span>.beanNameGenerator.generateBeanName(candidate, <span class="keyword">this</span>.registry);</div><div class="line">			<span class="keyword">if</span> (candidate <span class="keyword">instanceof</span> AbstractBeanDefinition) &#123;</div><div class="line">				postProcessBeanDefinition((AbstractBeanDefinition) candidate, beanName);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (candidate <span class="keyword">instanceof</span> AnnotatedBeanDefinition) &#123;</div><div class="line">				AnnotationConfigUtils.processCommonDefinitionAnnotations((AnnotatedBeanDefinition) candidate);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (checkCandidate(beanName, candidate)) &#123;</div><div class="line">				BeanDefinitionHolder definitionHolder = <span class="keyword">new</span> BeanDefinitionHolder(candidate, beanName);</div><div class="line">				definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, <span class="keyword">this</span>.registry);</div><div class="line">				beanDefinitions.add(definitionHolder);</div><div class="line">				registerBeanDefinition(definitionHolder, <span class="keyword">this</span>.registry);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> beanDefinitions;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>四、筛选类<br>展开findCandidateComponents方法。首先获取路径下的资源Resource，然后判断资源是否可读，并且获取可读资源的MetadataReader对象，然后再调用isCandidateComponent(MetadataReader)判段是否是候选组件，如果是，则生成该metadataReader的ScannedGenericBeanDefinition对象。最后判断ScannedGenericBeanDefinition是否为候选的，如果是则添加到工厂中。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">public Set&amp;lt;BeanDefinition&amp;gt; findCandidateComponents(String basePackage) &#123;</div><div class="line">	Set&amp;lt;BeanDefinition&amp;gt; candidates = new LinkedHashSet&amp;lt;BeanDefinition&amp;gt;();</div><div class="line">	try &#123;</div><div class="line">		String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +</div><div class="line">				resolveBasePackage(basePackage) + &amp;quot;/&amp;quot; + this.resourcePattern;</div><div class="line">		Resource[] resources = this.resourcePatternResolver.getResources(packageSearchPath);</div><div class="line">		boolean traceEnabled = logger.isTraceEnabled();</div><div class="line">		boolean debugEnabled = logger.isDebugEnabled();</div><div class="line">		for (Resource resource : resources) &#123;</div><div class="line">			if (traceEnabled) &#123;</div><div class="line">				logger.trace(&amp;quot;Scanning &amp;quot; + resource);</div><div class="line">			&#125;</div><div class="line">			if (resource.isReadable()) &#123;</div><div class="line">				try &#123;</div><div class="line">					MetadataReader metadataReader = this.metadataReaderFactory.getMetadataReader(resource);</div><div class="line">					if (isCandidateComponent(metadataReader)) &#123;</div><div class="line">						ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);</div><div class="line">						sbd.setResource(resource);</div><div class="line">						sbd.setSource(resource);</div><div class="line">						if (isCandidateComponent(sbd)) &#123;</div><div class="line">							if (debugEnabled) &#123;</div><div class="line">								logger.debug(&amp;quot;Identified candidate component class: &amp;quot; + resource);</div><div class="line">							&#125;</div><div class="line">							candidates.add(sbd);</div><div class="line">						&#125;</div><div class="line">						else &#123;</div><div class="line">							if (debugEnabled) &#123;</div><div class="line">								logger.debug(&amp;quot;Ignored because not a concrete top-level class: &amp;quot; + resource);</div><div class="line">							&#125;</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">					else &#123;</div><div class="line">						if (traceEnabled) &#123;</div><div class="line">							logger.trace(&amp;quot;Ignored because not matching any filter: &amp;quot; + resource);</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				catch (Throwable ex) &#123;</div><div class="line">					throw new BeanDefinitionStoreException(</div><div class="line">							&amp;quot;Failed to read candidate component class: &amp;quot; + resource, ex);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			else &#123;</div><div class="line">				if (traceEnabled) &#123;</div><div class="line">					logger.trace(&amp;quot;Ignored because not readable: &amp;quot; + resource);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">        catch (IOException ex) &#123;</div><div class="line">	       throw new BeanDefinitionStoreException(&amp;quot;I/O failure during classpath scanning&amp;quot;, ex);</div><div class="line">	&#125;</div><div class="line">	return candidates;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>展开isCandidateComponent方法。通过变量excludeFilters, includeFilters去匹配传递进来的MetadataReader，如果与excludeFilter匹配成功返回false， 与includeFilter匹配成功返回true。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isCandidateComponent</span><span class="params">(MetadataReader metadataReader)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">	<span class="keyword">for</span> (TypeFilter tf : <span class="keyword">this</span>.excludeFilters) &#123;</div><div class="line">		<span class="keyword">if</span> (tf.match(metadataReader, <span class="keyword">this</span>.metadataReaderFactory)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (TypeFilter tf : <span class="keyword">this</span>.includeFilters) &#123;</div><div class="line">		<span class="keyword">if</span> (tf.match(metadataReader, <span class="keyword">this</span>.metadataReaderFactory)) &#123;</div><div class="line">			<span class="keyword">return</span> isConditionMatch(metadataReader);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>五、注册bean factory</p>
+<p>在上面doScan方法中有<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//注册到工厂中</span></div><div class="line">registerBeanDefinition(definitionHolder, <span class="keyword">this</span>.registry);</div></pre></td></tr></table></figure></p>
+<pre><code>这样一行代码将beanDefinition注册到registry中,这是一个BeanDefinitionRegistry，下面是它的接口定义及继承结构：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanDefinitionRegistry</span> <span class="keyword">extends</span> <span class="title">AliasRegistry</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">registerBeanDefinition</span><span class="params">(String beanName, BeanDefinition beanDefinition)</span></span></div><div class="line">            <span class="keyword">throws</span> BeanDefinitionStoreException;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">removeBeanDefinition</span><span class="params">(String beanName)</span> <span class="keyword">throws</span> NoSuchBeanDefinitionException</span>;</div><div class="line">    <span class="function">BeanDefinition <span class="title">getBeanDefinition</span><span class="params">(String beanName)</span> <span class="keyword">throws</span> NoSuchBeanDefinitionException</span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">containsBeanDefinition</span><span class="params">(String beanName)</span></span>;</div><div class="line">    String[] getBeanDefinitionNames();</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getBeanDefinitionCount</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isBeanNameInUse</span><span class="params">(String beanName)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们可以看到接口中定义了诸多beandefinition的注册，删除，获取等方法，并且Spring为我们提供了三个内部实现，那么运行时，和之前文章的分析一样，使用了DefaultListableBeanFactory。<br>展开registerBeanDefinition方法。可以看出，所有的beanDefinition都由实例变量beanDefinitionMap来保存管理，他是一个ConcurrentHashMap，beanName作为键，beanDefinition对象作为值。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition)</div><div class="line">		throws BeanDefinitionStoreException &#123;</div><div class="line">	Assert.hasText(beanName, &amp;quot;Bean name must not be empty&amp;quot;);</div><div class="line">	Assert.notNull(beanDefinition, &amp;quot;BeanDefinition must not be null&amp;quot;);</div><div class="line">	if (beanDefinition instanceof AbstractBeanDefinition) &#123;</div><div class="line">		try &#123;</div><div class="line">			((AbstractBeanDefinition) beanDefinition).validate();</div><div class="line">		&#125;</div><div class="line">		catch (BeanDefinitionValidationException ex) &#123;</div><div class="line">			throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">					&amp;quot;Validation of bean definition failed&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	BeanDefinition oldBeanDefinition;</div><div class="line"></div><div class="line">	oldBeanDefinition = this.beanDefinitionMap.get(beanName);</div><div class="line">	if (oldBeanDefinition != null) &#123;</div><div class="line">		if (!isAllowBeanDefinitionOverriding()) &#123;</div><div class="line">			throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">					&amp;quot;Cannot register bean definition [&amp;quot; + beanDefinition + &amp;quot;] for bean '&amp;quot; + beanName +</div><div class="line">					&amp;quot;': There is already [&amp;quot; + oldBeanDefinition + &amp;quot;] bound.&amp;quot;);</div><div class="line">		&#125;</div><div class="line">		else if (oldBeanDefinition.getRole() &amp;lt; beanDefinition.getRole()) &#123;</div><div class="line">			// e.g. was ROLE_APPLICATION, now overriding with ROLE_SUPPORT or ROLE_INFRASTRUCTURE</div><div class="line">			if (this.logger.isWarnEnabled()) &#123;</div><div class="line">				this.logger.warn(&amp;quot;Overriding user-defined bean definition for bean '&amp;quot; + beanName +</div><div class="line">						&amp;quot;' with a framework-generated bean definition: replacing [&amp;quot; +</div><div class="line">						oldBeanDefinition + &amp;quot;] with [&amp;quot; + beanDefinition + &amp;quot;]&amp;quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		else &#123;</div><div class="line">			if (this.logger.isInfoEnabled()) &#123;</div><div class="line">				this.logger.info(&amp;quot;Overriding bean definition for bean '&amp;quot; + beanName +</div><div class="line">						&amp;quot;': replacing [&amp;quot; + oldBeanDefinition + &amp;quot;] with [&amp;quot; + beanDefinition + &amp;quot;]&amp;quot;);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else &#123;</div><div class="line">		this.beanDefinitionNames.add(beanName);</div><div class="line">		this.manualSingletonNames.remove(beanName);</div><div class="line">		this.frozenBeanDefinitionNames = null;</div><div class="line">	&#125;</div><div class="line">	this.beanDefinitionMap.put(beanName, beanDefinition);</div><div class="line">	if (oldBeanDefinition != null || containsSingleton(beanName)) &#123;</div><div class="line">		resetBeanDefinition(beanName);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/18/Spring 使用简单Demo进行源码调试（七）/" rel="next" title="Spring 使用简单Demo进行源码调试（七）">
+                <i class="fa fa-chevron-left"></i> Spring 使用简单Demo进行源码调试（七）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/21/Spring MVC 之 @Autowired/" rel="prev" title="Spring MVC 之 @Autowired">
+                Spring MVC 之 @Autowired <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/05/19/Spring MVC 之 contextcomponent-scan/"
+     data-title="Spring MVC 之 &lt;context:component-scan/>"
+     data-content=""
+     data-url="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/05/19/Spring MVC 之 contextcomponent-scan/"
+           data-title="Spring MVC 之 &lt;context:component-scan/>" data-url="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="#pySerial
+##OverviewThis module encapsulates the access for the serial port. It provides backends for Python running on Windows, Linux, BSD (possibly any POSIX compliant system), Jython and IronPython">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python串口通信模块——pySerial">
+<meta property="og:url" content="http://yoursite.com/2011/11/17/2011-11-17-python串口通信模块pySerial/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="#pySerial
+##OverviewThis module encapsulates the access for the serial port. It provides backends for Python running on Windows, Linux, BSD (possibly any POSIX compliant system), Jython and IronPython">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python串口通信模块——pySerial">
+<meta name="twitter:description" content="#pySerial
+##OverviewThis module encapsulates the access for the serial port. It provides backends for Python running on Windows, Linux, BSD (possibly any POSIX compliant system), Jython and IronPython">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2011/11/17/2011-11-17-python串口通信模块pySerial/"/>
+
+  <title> python串口通信模块——pySerial | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                python串口通信模块——pySerial
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2011-11-17T22:20:00+08:00" content="2011-11-17">
+              2011-11-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2011/11/17/2011-11-17-python串口通信模块pySerial/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2011/11/17/2011-11-17-python串口通信模块pySerial/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#pySerial</p>
+<p>##Overview<br>This module encapsulates the access for the serial port. It provides backends for Python running on Windows, Linux, BSD (possibly any POSIX compliant system), Jython and IronPython (.NET and Mono). The module named “serial” automatically selects the appropriate<br> backend.</p>
+<p>It is released under a free software license, see <a href="http://pyserial.svn.sourceforge.net/viewvc/*checkout*/pyserial/trunk/pyserial/LICENSE.txt" target="_blank" rel="external">LICENSE.txt</a> for more details.<br>(C) 2001-2008 Chris Liechti <a href="mailto:cliechti@gmx.net" target="_blank" rel="external">cliechti@gmx.net</a></p>
+<p>The <a href="http://sourceforge.net/projects/pyserial/" target="_blank" rel="external">project page on SourceForge</a> and here is the <a href="http://sourceforge.net/svn/?group_id=46487" target="_blank" rel="external">SVN repository</a> and the <a href="http://sourceforge.net/project/showfiles.php?group_id=46487" target="_blank" rel="external">Download Page</a> .<br>The homepage is on <a href="http://pyserial.sf.net/" target="_blank" rel="external">http://pyserial.sf.net/</a></p>
+<p>##Features</p>
+<ul>
+<li>same class based interface on all supported platforms </li>
+<li>access to the port settings through Python 2.2+ properties </li>
+<li>port numbering starts at zero, no need to know the port name in the user program</li>
+<li>port string (device name) can be specified if access through numbering is inappropriate</li>
+<li>support for different bytesizes, stopbits, parity and flow control with RTS/CTS and/or Xon/Xoff</li>
+<li>working with or without receive timeout </li>
+<li>file like API with “read” and “write” (“readline” etc. also supported) </li>
+<li>The files in this package are 100% pure Python. They depend on non standard but common packages on Windows (pywin32) and Jython (JavaComm). POSIX (Linux, BSD) uses only modules from the standard Python distribution)</li>
+<li>The port is set up for binary transmission. No NULL byte stripping, CR-LF translation etc. (which are many times enabled for POSIX.) This makes this module universally useful.</li>
+</ul>
+<p>##Requirements</p>
+<ul>
+<li>Python 2.2 or newer </li>
+<li>pywin32 extensions on Windows </li>
+<li>“Java Communications” (JavaComm) or compatible extension for Java/Jython </li>
+</ul>
+<p>##Installation</p>
+<p>###from source<br>Extract files from the archive, open a shell/console in that directory and let Distutils do the rest:<br>python setup.py install</p>
+<p>The files get installed in the “Lib/site-packages” directory.</p>
+<p>###easy_install<br>An EGG is available from the Python Package Index: <a href="http://pypi.python.org/pypi/pyserial" target="_blank" rel="external">http://pypi.python.org/pypi/pyserial</a><br>easy_install pyserial</p>
+<p>###windows installer<br>There is also a Windows installer for end users. It is located in the <a href="http://sourceforge.net/project/showfiles.php?group_id=46487" target="_blank" rel="external">Download Page</a><br>Developers may be interested to get the source archive, because it contains examples and the readme.</p>
+<p>##Short introduction<br>Open port 0 at “9600,8,N,1”, no timeout<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import serial</div><div class="line">ser = serial.Serial(0)  # open first serial port</div><div class="line">print ser.portstr       # check which port was really used</div><div class="line">ser.write("hello")      # write a string</div><div class="line">ser.close()             # close port</div></pre></td></tr></table></figure></p>
+<p>Open named port at “19200,8,N,1”, 1s timeout<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial('/dev/ttyS1', 19200, timeout=1)</div><div class="line">x = ser.read()          # read one byte</div><div class="line">s = ser.read(10)        # read up to ten bytes (timeout)</div><div class="line">line = ser.readline()   # read a '\n' terminated line</div><div class="line">ser.close()</div></pre></td></tr></table></figure></p>
+<p>Open second port at “38400,8,E,1”, non blocking HW handshaking<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial(1, 38400, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)</div><div class="line">s = ser.read(100)       # read up to one hundred bytes</div><div class="line">...                     # or as much is in the buffer</div></pre></td></tr></table></figure></p>
+<p>Get a Serial instance and configure/open it later<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; ser = serial.Serial()</div><div class="line">&gt;&gt;&gt; ser.baudrate = 19200</div><div class="line">&gt;&gt;&gt; ser.port = 0</div><div class="line">&gt;&gt;&gt; ser</div><div class="line">Serial<span class="tag">&lt;<span class="name">id=0xa81c10,</span> <span class="attr">open</span>=<span class="string">False</span>&gt;</span>(port='COM1', baudrate=19200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0)</div><div class="line">&gt;&gt;&gt; ser.open()</div><div class="line">&gt;&gt;&gt; ser.isOpen()</div><div class="line">True</div><div class="line">&gt;&gt;&gt; ser.close()</div><div class="line">&gt;&gt;&gt; ser.isOpen()</div><div class="line">False</div></pre></td></tr></table></figure></p>
+<p>Be carefully when using “readline”. Do specify a timeout when opening the serial port otherwise it could block forever if no newline character is received. Also note that “readlines” only works with a timeout. “readlines”<br> depends on having a timeout and interprets that as EOF (end of file). It raises an exception if the port is not opened correctly.<br>Do also have a look at the example files in the examples directory in the source distribution or online.</p>
+<p>##Examples<br>Please look in the SVN Repository. There is an example directory where you can find a simple terminal and more.<br><a href="http://pyserial.svn.sourceforge.net/viewvc/pyserial/trunk/pyserial/examples/" target="_blank" rel="external">http://pyserial.svn.sourceforge.net/viewvc/pyserial/trunk/pyserial/examples/</a></p>
+<p>##Parameters for the Serial class<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial(</div><div class="line">port=None,              # number of device, numbering starts at</div><div class="line"># zero. if everything fails, the user</div><div class="line"># can specify a device string, note</div><div class="line"># that this isn't portable anymore</div><div class="line"># if no port is specified an unconfigured</div><div class="line"># an closed serial port object is created</div><div class="line">baudrate=9600,          # baud rate</div><div class="line">bytesize=EIGHTBITS,     # number of databits</div><div class="line">parity=PARITY_NONE,     # enable parity checking</div><div class="line">stopbits=STOPBITS_ONE,  # number of stopbits</div><div class="line">timeout=None,           # set a timeout value, None for waiting forever</div><div class="line">xonxoff=0,              # enable software flow control</div><div class="line">rtscts=0,               # enable RTS/CTS flow control</div><div class="line">interCharTimeout=None   # Inter-character timeout, None to disable</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<p>The port is immediately opened on object creation, if a port is given. It is not opened if port is None.<br>Options for read timeout:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">timeout=None            # wait forever</div><div class="line">timeout=0               # non-blocking mode (return immediately on read)</div><div class="line">timeout=x               # set timeout to x seconds (float allowed)</div></pre></td></tr></table></figure></p>
+<p>##Methods of Serial instances<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">open()                  # open port</div><div class="line">close()                 # close port immediately</div><div class="line">setBaudrate(baudrate)   # change baud rate on an open port</div><div class="line">inWaiting()             # return the number of chars in the receive buffer</div><div class="line">read(size=1)            # read "size" characters</div><div class="line">write(s)                # write the string s to the port</div><div class="line">flushInput()            # flush input buffer, discarding all it's contents</div><div class="line">flushOutput()           # flush output buffer, abort output</div><div class="line">sendBreak()             # send break condition</div><div class="line">setRTS(level=1)         # set RTS line to specified logic level</div><div class="line">setDTR(level=1)         # set DTR line to specified logic level</div><div class="line">getCTS()                # return the state of the CTS line</div><div class="line">getDSR()                # return the state of the DSR line</div><div class="line">getRI()                 # return the state of the RI line</div><div class="line">getCD()                 # return the state of the CD line</div></pre></td></tr></table></figure></p>
+<p>##Attributes of Serial instances<br>Read Only:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">portstr                 # device name</div><div class="line">BAUDRATES               # list of valid baudrates</div><div class="line">BYTESIZES               # list of valid byte sizes</div><div class="line">PARITIES                # list of valid parities</div><div class="line">STOPBITS                # list of valid stop bit widths</div></pre></td></tr></table></figure></p>
+<p>New values can be assigned to the following attributes, the port will be reconfigured, even if it’s opened at that time:</p>
+<!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} -->
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">port                    # port name/number as set by the user</div><div class="line">baudrate                # current baud rate setting</div><div class="line">bytesize                # byte size in bits</div><div class="line">parity                  # parity setting</div><div class="line">stopbits                # stop bit with (1,2)</div><div class="line">timeout                 # timeout setting</div><div class="line">xonxoff                 # if Xon/Xoff flow control is enabled</div><div class="line">rtscts                  # if hardware flow control is enabled</div></pre></td></tr></table></figure>
+<p>##Exceptions<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">serial.SerialException</div></pre></td></tr></table></figure></p>
+<p>##Constants<br>parity:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">serial.PARITY_NONE</div><div class="line">serial.PARITY_EVEN</div><div class="line">serial.PARITY_ODD</div></pre></td></tr></table></figure></p>
+<p>stopbits:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">serial.STOPBITS_ONE</div><div class="line">serial.STOPBITS_TWO</div></pre></td></tr></table></figure></p>
+<p>bytesize:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">serial.FIVEBITS</div><div class="line">serial.SIXBITS</div><div class="line">serial.SEVENBITS</div><div class="line">serial.EIGHTBITS</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/11/14/2011-11-14-在python文件中集成图片/" rel="next" title="在python文件中集成图片">
+                <i class="fa fa-chevron-left"></i> 在python文件中集成图片
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/11/17/2011-11-17-python 串口测试工具中 py2exe的使用/" rel="prev" title="python 串口测试工具中 py2exe的使用">
+                python 串口测试工具中 py2exe的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2011/11/17/2011-11-17-python串口通信模块pySerial/"
+     data-title="python串口通信模块——pySerial"
+     data-content=""
+     data-url="http://yoursite.com/2011/11/17/2011-11-17-python串口通信模块pySerial/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2011/11/17/2011-11-17-python串口通信模块pySerial/"
+           data-title="python串口通信模块——pySerial" data-url="http://yoursite.com/2011/11/17/2011-11-17-python串口通信模块pySerial/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

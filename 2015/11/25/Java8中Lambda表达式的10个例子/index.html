@@ -1,0 +1,830 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="例1: 用Lambda表达式实现Runnable接口123456789//Before Java 8:  new Thread(new Runnable() &amp;#123;  @Override  public void run() &amp;#123;      System.out.println(&amp;amp;quot;Before Java8, too much code for too little">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8中Lambda表达式的10个例子">
+<meta property="og:url" content="http://yoursite.com/2015/11/25/Java8中Lambda表达式的10个例子/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="例1: 用Lambda表达式实现Runnable接口123456789//Before Java 8:  new Thread(new Runnable() &amp;#123;  @Override  public void run() &amp;#123;      System.out.println(&amp;amp;quot;Before Java8, too much code for too little">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java8中Lambda表达式的10个例子">
+<meta name="twitter:description" content="例1: 用Lambda表达式实现Runnable接口123456789//Before Java 8:  new Thread(new Runnable() &amp;#123;  @Override  public void run() &amp;#123;      System.out.println(&amp;amp;quot;Before Java8, too much code for too little">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/25/Java8中Lambda表达式的10个例子/"/>
+
+  <title> Java8中Lambda表达式的10个例子 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java8中Lambda表达式的10个例子
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-25T14:46:18+08:00" content="2015-11-25">
+              2015-11-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/25/Java8中Lambda表达式的10个例子/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/25/Java8中Lambda表达式的10个例子/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="例1-用Lambda表达式实现Runnable接口"><a href="#例1-用Lambda表达式实现Runnable接口" class="headerlink" title="例1: 用Lambda表达式实现Runnable接口"></a>例1: 用Lambda表达式实现Runnable接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Before Java 8:  </span></div><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;  </div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </div><div class="line">    System.out.println(&amp;quot;Before Java8, too much code <span class="keyword">for</span> too little to do&amp;quot;);  </div><div class="line">&#125;  </div><div class="line">&#125;).start();  </div><div class="line"><span class="comment">//Java 8 way:  </span></div><div class="line"><span class="keyword">new</span> Thread( () -&amp;gt; System.out.println(&amp;quot;In Java8, Lambda expression rocks !!&amp;quot;) ).start();</div></pre></td></tr></table></figure>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">too much code, for too little to do </div><div class="line">Lambda expression rocks !!</div></pre></td></tr></table></figure></p>
+<p>这个例子使我们学到了java8中Lambda表达式的书写方式：<br>(参数) -&gt; 表达式<br>(参数) -&gt; 语句<br>(参数) -&gt; { 语句 }<br>例如，如果你的方法只是在控制台打印信息，则可以这么写： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">() -&amp;gt; System.out.println(&amp;quot;Hello Lambda Expressions&amp;quot;);</div></pre></td></tr></table></figure>
+<p>如果你的方法接收两个参数，那么：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">int</span> even, <span class="keyword">int</span> odd) -&amp;gt; even + odd</div></pre></td></tr></table></figure></p>
+<p>顺带提一句，一般来说在Lambda表达式中要尽量保持变量的简洁性。这会使你的代码简短而能保持在一行之内。所以像上面的代码可以选择变量名类似a,b或者x,y之类的，比起even和odd来会更好。 </p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><h3 id="例2-用Lambda表达式写事件监听程序"><a href="#例2-用Lambda表达式写事件监听程序" class="headerlink" title="例2: 用Lambda表达式写事件监听程序"></a>例2: 用Lambda表达式写事件监听程序</h3><p>要是你用过Swing API，那就少不了事件监听代码，这是使用匿名类的经典例子。现在我们可以用Lambda表达式来抒写更好的事件处理代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Before Java 8:  </span></div><div class="line">JButton show = <span class="keyword">new</span> JButton(&amp;quot;Show&amp;quot;);  </div><div class="line">show.addActionListener(<span class="keyword">new</span> ActionListener() &#123;  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actionPerformed</span><span class="params">(ActionEvent e)</span> </span>&#123;  </div><div class="line">        System.out.println(&amp;quot;Event handling without lambda expression is boring&amp;quot;);  </div><div class="line">    &#125;  </div><div class="line">&#125;);  </div><div class="line"><span class="comment">// Java 8 way:  </span></div><div class="line">show.addActionListener((e) -&amp;gt; &#123;  </div><div class="line">    System.out.println(&amp;quot;Light, Camera, Action !! Lambda expressions Rocks&amp;quot;);  </div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>另外一个常用匿名类的地方是给Collections.sort()方法提供自定义的Comparator接口实现。这个地方也可以用Lambda表达式。 </p>
+<hr>
+<h3 id="例3-用Lambda表达式进行List迭代"><a href="#例3-用Lambda表达式进行List迭代" class="headerlink" title="例3: 用Lambda表达式进行List迭代"></a>例3: 用Lambda表达式进行List迭代</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Prior Java 8 :  </span></div><div class="line">List features = Arrays.asList(&amp;quot;Lambdas&amp;quot;, &amp;quot;Default Method&amp;quot;, &amp;quot;Stream API&amp;quot;, &amp;quot;Date and Time API&amp;quot;);  </div><div class="line"><span class="keyword">for</span> (String feature : features) &#123;  </div><div class="line">    System.out.println(feature);  </div><div class="line">&#125;  </div><div class="line"><span class="comment">//In Java 8:  </span></div><div class="line">List features = Arrays.asList(&amp;quot;Lambdas&amp;quot;, &amp;quot;Default Method&amp;quot;, &amp;quot;Stream API&amp;quot;, &amp;quot;Date and Time API&amp;quot;);  </div><div class="line">features.forEach(n -&amp;gt; System.out.println(n));  </div><div class="line"></div><div class="line"><span class="comment">// 用java8的方法引用更好，方法引用由::(双冒号)操作符来完成,看起来像c++中的作用域操作符 </span></div><div class="line">Java代码  收藏代码</div><div class="line">features.forEach(System.out::println);</div></pre></td></tr></table></figure>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Lambdas </div><div class="line">Default Method </div><div class="line">Stream API </div><div class="line">Date and Time API</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="例4-使用Lambda表达式和函数式接口Predicate"><a href="#例4-使用Lambda表达式和函数式接口Predicate" class="headerlink" title="例4: 使用Lambda表达式和函数式接口Predicate"></a>例4: 使用Lambda表达式和函数式接口Predicate</h3><p>除了提供函数式编程语言级别的支持外，java8同时也新增了一个新的包java.util.function。其中包含了许多类来支持java函数式编程。其中之一是Predicate接口，使用这个接口和lamb表达式就可以以更少的代码为API方法添加更多的动态行为。<br>以下是Predicate的使用范例，展示了过滤集合数据的许多共性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(args[])</span></span>&#123;  </div><div class="line">    List languages = Arrays.asList(&amp;quot;Java&amp;quot;, &amp;quot;Scala&amp;quot;, &amp;quot;C++&amp;quot;, &amp;quot;Haskell&amp;quot;, &amp;quot;Lisp&amp;quot;);  </div><div class="line">    System.out.println(&amp;quot;Languages which starts with J :&amp;quot;);  </div><div class="line">    filter(languages, (str)-&amp;gt;str.startsWith(&amp;quot;J&amp;quot;));  </div><div class="line">    System.out.println(&amp;quot;Languages which ends with a &amp;quot;);  </div><div class="line">    filter(languages, (str)-&amp;gt;str.endsWith(&amp;quot;a&amp;quot;));  </div><div class="line">    System.out.println(&amp;quot;Print all languages :&amp;quot;);  </div><div class="line">    filter(languages, (str)-&amp;gt;<span class="keyword">true</span>);  </div><div class="line">    System.out.println(&amp;quot;Print no language : &amp;quot;);  </div><div class="line">    filter(languages, (str)-&amp;gt;<span class="keyword">false</span>);  </div><div class="line">    System.out.println(&amp;quot;Print language whose length greater than <span class="number">4</span>:&amp;quot;);  </div><div class="line">    filter(languages, (str)-&amp;gt;str.length() &amp;gt; <span class="number">4</span>);  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">filter</span><span class="params">(List names, Predicate condition)</span> </span>&#123;  </div><div class="line">    <span class="keyword">for</span>(String name: names) &#123;  </div><div class="line">        <span class="keyword">if</span>(condition.test(name)) &#123;  </div><div class="line">            System.out.println(name + &amp;quot; &amp;quot;);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Languages which starts with J : </div><div class="line">Java </div><div class="line">Languages which ends with a </div><div class="line">Java </div><div class="line">Scala </div><div class="line">Print all languages : </div><div class="line">Java </div><div class="line">Scala </div><div class="line">C++ </div><div class="line">Haskell </div><div class="line">Lisp </div><div class="line">Print no language : </div><div class="line">Print language whose length greater than 4: </div><div class="line">Scala </div><div class="line">Haskell</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//更佳的方式  </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">filter</span><span class="params">(List names, Predicate condition)</span> </span>&#123;  </div><div class="line">    names.stream().filter((name) -&amp;gt; (condition.test(name))).forEach((name) -&amp;gt; &#123;  </div><div class="line">        System.out.println(name + &amp;quot; &amp;quot;);  </div><div class="line">    &#125;);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到Stream API的filter方法也接受一个Predicate，意味着可以用内联代码直接替换我们自定义的filter()方法。这就是Lambda表达式的威力所在。除此之外Predicate接口也可以测试多个条件，将会在下面的例子中加以说明。</p>
+<hr>
+<h3 id="例5-Lambda表达式结合Predicate"><a href="#例5-Lambda表达式结合Predicate" class="headerlink" title="例5: Lambda表达式结合Predicate"></a>例5: Lambda表达式结合Predicate</h3><p>就像上个例子所说，Predicate允许组合两个以上的条件，它提供了类似于逻辑与和或的操作and(),or()和xor()，这些方法可以用来组合传递到filter方法中的多个条件。例如为了获取所有以J开头并有四个字符长度的语言，可以定义两个单独的Predicate实例覆盖每个条件然后用and方法将他们组合在一起。看例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Predicate&amp;lt;String&amp;gt; startsWithJ = (n) -&amp;gt; n.startsWith(&amp;quot;J&amp;quot;);  </div><div class="line">Predicate&amp;lt;String&amp;gt; fourLetterLong = (n) -&amp;gt; n.length() == <span class="number">4</span>;  </div><div class="line">names.stream().filter(startsWithJ.and(fourLetterLong)).forEach((n) -&amp;gt; System.out.print(&amp;quot;\nName, which starts with <span class="string">'J'</span> and four letter <span class="keyword">long</span> is : &amp;quot; + n));</div></pre></td></tr></table></figure></p>
+<p>类似可以用or或者xor。这个例子也强调了单独用或者按需组合用Predicate的重要性。简而言之用Predicate和Lambda表达式的优势你可以写的更少做得更多。 </p>
+<hr>
+<h3 id="例6-Map和Reduce的例子"><a href="#例6-Map和Reduce的例子" class="headerlink" title="例6: Map和Reduce的例子"></a>例6: Map和Reduce的例子</h3><h4 id="6-1-Map"><a href="#6-1-Map" class="headerlink" title="6.1 Map"></a>6.1 Map</h4><p>在这个例子中，我们要将costBeforeTax的每个元素以加上他们的增值税。传递一个Lambda表达式给map方法使之应用于每个元素，之后在用forEach打印结果。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Without lambda expressions:  </span></div><div class="line">List costBeforeTax = Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </div><div class="line"><span class="keyword">for</span> (Integer cost : costBeforeTax) &#123;  </div><div class="line">    <span class="keyword">double</span> price = cost + .<span class="number">12</span>*cost;  </div><div class="line">    System.out.println(price);  </div><div class="line">&#125;   </div><div class="line"><span class="comment">// With Lambda expression:  </span></div><div class="line">List costBeforeTax = Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </div><div class="line">costBeforeTax.stream().map((cost) -&amp;gt; cost + .<span class="number">12</span>*cost).forEach(System.out::println);</div></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">112.0 </div><div class="line">224.0 </div><div class="line">336.0 </div><div class="line">448.0 </div><div class="line">560.0 </div><div class="line">112.0 </div><div class="line">224.0 </div><div class="line">336.0 </div><div class="line">448.0 </div><div class="line">560.0</div></pre></td></tr></table></figure></p>
+<h4 id="6-2-Reduce"><a href="#6-2-Reduce" class="headerlink" title="6.2 Reduce"></a>6.2 Reduce</h4><p>还有另外一个函数reduce可以将所有值转换为一个值。map跟reduce操作是函数式编程的核心，reduce也被称作折叠操作。reduce并不是一种新的操作，在SQL中我们用的一些聚集函数比如sum，avg，count等他们实际上也是reduce操作，因为他们也是将多个值进行操作然后返回一个值。Stream API定义了reduce函数，可以接受一个Lambda表达式然后组合所有值。Stream类中像IntStream都有内置的方法像average(), count(), sum(), mapToLong(), mapToDouble()等转换方法。我们可以用内置的方法也可以自定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Old way:  </span></div><div class="line">List costBeforeTax = Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </div><div class="line"><span class="keyword">double</span> total = <span class="number">0</span>;  </div><div class="line"><span class="keyword">for</span> (Integer cost : costBeforeTax) &#123;  </div><div class="line">    <span class="keyword">double</span> price = cost + .<span class="number">12</span>*cost;  </div><div class="line">    total = total + price;  </div><div class="line">&#125;  </div><div class="line">System.out.println(&amp;quot;Total : &amp;quot; + total);  </div><div class="line"><span class="comment">// New way:  </span></div><div class="line">List costBeforeTax = Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </div><div class="line"><span class="keyword">double</span> bill = costBeforeTax.stream().map((cost) -&amp;gt; cost + .<span class="number">12</span>*cost).reduce((sum, cost) -&amp;gt; sum  </div><div class="line">+ cost).get();  </div><div class="line">System.out.println(&amp;quot;Total : &amp;quot; + bill);</div></pre></td></tr></table></figure></p>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Total : 1680.0 </div><div class="line">Total : 1680.0</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="例7-用filter创建一个字符串List"><a href="#例7-用filter创建一个字符串List" class="headerlink" title="例7: 用filter创建一个字符串List"></a>例7: 用filter创建一个字符串List</h3><p>在java开发中对大的集合进行过滤是常用的操作。用Lambda表达式和Stream API会让操作变得简单易懂。<br>Stream提供了一个filter()方法，接受一个Predicate对象。这意味着可以传递一个Lambda表达式作为过滤逻辑，看例子:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一个长度大于两个字符的字符串List  </span></div><div class="line">List&amp;lt;String&amp;gt; filtered = strList.stream().filter(x -&amp;gt; x.length()&amp;gt;  </div><div class="line"><span class="number">2</span>).collect(Collectors.toList());  </div><div class="line">System.out.printf(&amp;quot;Original List : %s, filtered list : %s %n&amp;quot;, strList, filtered);</div></pre></td></tr></table></figure></p>
+<p>输出 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Original List : [abc, , bcd, , defg, jk], filtered list : [abc, bcd, defg]</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="例8-给每个List元素应用函数"><a href="#例8-给每个List元素应用函数" class="headerlink" title="例8: 给每个List元素应用函数"></a>例8: 给每个List元素应用函数</h3><p>在工作中我们经常会碰到这样的情况：给List中每个元素加以一定的操作例如乘以或者除以某个值等。这些操作用map方法再好不过了，我们可以将转换逻辑以Lambda表达式传给map方法来应用于每个元素：<br>//将字符串转为大写然后用逗号连起来<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&amp;lt;String&amp;gt; G7 = Arrays.asList(&amp;quot;USA&amp;quot;, &amp;quot;Japan&amp;quot;, &amp;quot;France&amp;quot;, &amp;quot;Germany&amp;quot;, &amp;quot;Italy&amp;quot;,&amp;quot;U.K.&amp;quot;,&amp;quot;Canada&amp;quot;);  </div><div class="line">String G7Countries = G7.stream().map(x -&amp;gt; x.toUpperCase()).collect(Collectors.joining(&amp;quot;, &amp;quot;));  </div><div class="line">System.out.println(G7Countries);</div></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">USA, JAPAN, FRANCE, GERMANY, ITALY, U.K., CANADA</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="例9-复制不同值到子列表"><a href="#例9-复制不同值到子列表" class="headerlink" title="例9: 复制不同值到子列表"></a>例9: 复制不同值到子列表</h3><p>本例演示如何利用Stream类的distinct方法过滤重复值到集合中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&amp;lt;Integer&amp;gt; numbers = Arrays.asList(<span class="number">9</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">4</span>);  </div><div class="line">List&amp;lt;Integer&amp;gt; distinct = numbers.stream().map( i -&amp;gt;i*i).distinct().collect(Collectors.toList());  </div><div class="line">System.out.printf(&amp;quot;Original List : %s, Square Without duplicates : %s %n&amp;quot;, numbers, distinct);</div></pre></td></tr></table></figure></p>
+<p>输出 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Original List : [9, 10, 3, 4, 7, 3, 4], Square Without duplicates : [81, 100, 9, 16, 49]</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="例10-计算List中元素的最大，最小，和以及平均值"><a href="#例10-计算List中元素的最大，最小，和以及平均值" class="headerlink" title="例10: 计算List中元素的最大，最小，和以及平均值"></a>例10: 计算List中元素的最大，最小，和以及平均值</h3><p>在Stream类中像IntStream, LongStream and DoubleStream有一个非常有用的方法summaryStattics()，返回IntSummaryStatistics, LongSummaryStatistics or DoubleSummaryStatistics其描述了这个流中元素的统计数据。下面的例子中我们用这个方法来计算一个List中的最大最小值总和以及均值:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">List&amp;lt;Integer&amp;gt; primes = Arrays.asList(<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">23</span>, <span class="number">29</span>);  </div><div class="line">IntSummaryStatistics stats = primes.stream().mapToInt((x) -&amp;gt; x).summaryStatistics();  </div><div class="line">System.out.println(&amp;quot;Highest prime number in List : &amp;quot; + stats.getMax());  </div><div class="line">System.out.println(&amp;quot;Lowest prime number in List : &amp;quot; + stats.getMin());  </div><div class="line">System.out.println(&amp;quot;Sum of all prime numbers : &amp;quot; + stats.getSum());  </div><div class="line">System.out.println(&amp;quot;Average of all prime numbers : &amp;quot; + stats.getAverage());</div></pre></td></tr></table></figure></p>
+<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Highest prime number in List : 29 </div><div class="line">Lowest prime number in List : 2 </div><div class="line">Sum of all prime numbers : 129 </div><div class="line">Average of all prime numbers : 12.9</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/22/Python之在Windows 7下安装PIL/" rel="next" title="Python之在Windows 7下安装PIL">
+                <i class="fa fa-chevron-left"></i> Python之在Windows 7下安装PIL
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/" rel="prev" title="[转]如何处理异常? catch Exception OR catch Throwable">
+                [转]如何处理异常? catch Exception OR catch Throwable <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/11/25/Java8中Lambda表达式的10个例子/"
+     data-title="Java8中Lambda表达式的10个例子"
+     data-content=""
+     data-url="http://yoursite.com/2015/11/25/Java8中Lambda表达式的10个例子/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/25/Java8中Lambda表达式的10个例子/"
+           data-title="Java8中Lambda表达式的10个例子" data-url="http://yoursite.com/2015/11/25/Java8中Lambda表达式的10个例子/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#例1-用Lambda表达式实现Runnable接口"><span class="nav-number">1.</span> <span class="nav-text">例1: 用Lambda表达式实现Runnable接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number"></span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例2-用Lambda表达式写事件监听程序"><span class="nav-number">1.</span> <span class="nav-text">例2: 用Lambda表达式写事件监听程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例3-用Lambda表达式进行List迭代"><span class="nav-number">2.</span> <span class="nav-text">例3: 用Lambda表达式进行List迭代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例4-使用Lambda表达式和函数式接口Predicate"><span class="nav-number">3.</span> <span class="nav-text">例4: 使用Lambda表达式和函数式接口Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例5-Lambda表达式结合Predicate"><span class="nav-number">4.</span> <span class="nav-text">例5: Lambda表达式结合Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例6-Map和Reduce的例子"><span class="nav-number">5.</span> <span class="nav-text">例6: Map和Reduce的例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-Map"><span class="nav-number">5.1.</span> <span class="nav-text">6.1 Map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-Reduce"><span class="nav-number">5.2.</span> <span class="nav-text">6.2 Reduce</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例7-用filter创建一个字符串List"><span class="nav-number">6.</span> <span class="nav-text">例7: 用filter创建一个字符串List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例8-给每个List元素应用函数"><span class="nav-number">7.</span> <span class="nav-text">例8: 给每个List元素应用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例9-复制不同值到子列表"><span class="nav-number">8.</span> <span class="nav-text">例9: 复制不同值到子列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例10-计算List中元素的最大，最小，和以及平均值"><span class="nav-number">9.</span> <span class="nav-text">例10: 计算List中元素的最大，最小，和以及平均值</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

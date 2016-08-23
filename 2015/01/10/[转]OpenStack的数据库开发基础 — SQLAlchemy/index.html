@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python,openstack,sql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文地址：点击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]OpenStack的数据库开发基础 — SQLAlchemy">
+<meta property="og:url" content="http://yoursite.com/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="原文地址：点击">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-23-%E4%B8%8A%E5%8D%8811.21.51.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.23.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.30.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.38.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.47.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.54.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.01.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.09.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.18.png">
+<meta property="og:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.25.png">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]OpenStack的数据库开发基础 — SQLAlchemy">
+<meta name="twitter:description" content="原文地址：点击">
+<meta name="twitter:image" content="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-23-%E4%B8%8A%E5%8D%8811.21.51.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/"/>
+
+  <title> [转]OpenStack的数据库开发基础 — SQLAlchemy | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]OpenStack的数据库开发基础 — SQLAlchemy
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-10T14:46:17+08:00" content="2015-01-10">
+              2015-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址：<a href="https://www.ustack.com/blog/sqlalchemy/" target="_blank" rel="external">点击</a></p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-23-%E4%B8%8A%E5%8D%8811.21.51.png" alt=""></p>
+<a id="more"></a>
+<p>前言</p>
+<p>对于一个业务系统，如何高效、平稳地使用数据库是每一个开发人员都会遇到的问题，OpenStack 也不例外，以 OpenStack 的虚拟网络组件 Neutron 为例，其数据库涉及几百张表，需要维护数据库版本近百；一些表因为设计原因形成了很高的“热点”；因为 OpenStack 是分布式的，需要以最好小一点的代价保证操作时的一致性……最重要的是，每个人的数据库水平都不一样，怎么保证整个开源社区数百名提交者有一样的数据库操作风格，如何维护这些代码？<br>OpenStack 做为一个完全使用 Python 开发的项目，利用已有的丰富模块是开发时重要的中心思想之一，同时为了便于整个社区几百名背景不同水平不同的开发者协作，最终选择了 SQLAlchemy 和 Alembic 作为数据库开发的基础。</p>
+<p>Why SQLAlchemy</p>
+<p>在回答为什么使用 SQLAlchemy 之前，我们先盘点一下目前 Python 能用的 ORM 库，因为挑一个库在很大程度上实在挑社区，所以我把最新版的 release 时间也写出来：</p>
+<p>Storm：最新版 0.20，release 于 2013 年，开发已经比较沉寂……对外键的更新、删除要求比较奇怪。<br>SQLObject：最新版 1.7.3，release 于 2014.12.18，开发历史久，目前活跃度不是很高。<br>Django’s ORM：来自于 Django，Django 内置，使用 Django 开发的话会很方便，但它不能脱离 Django 运行，也不能处理一些复杂的请求。<br>peewee：最新版 2.4.4 发布于2014.12.3，轻量方便，内置 SQLite、MySQL和PostgreSQL的支持。<br>PonyORM：最新版 0.6，release 于 2014.11.5。使用 AGPL 许可。有图形化的编辑器。非为大型应用设计。<br>SQLAlchemy:最新版 0.9.8，release 于 2014.10.13，企业级 API，设计灵活。加入了一些自己的概念，学习曲线较高。<br>总结一下，Storm 曾经应用比较广泛，但现在社区不再活跃，很难保证将来遇到问题能否交给社区解决，而且 Storm 对数据库架构同步处理的比较奇怪，还有频繁产生 DDL 操作 造成库级锁这些问题无法让人放心；SQLObject 也是一个很出名的 ORM 库，但与 SQLAlchemy 相比，后者效率更高，对一些高级特性的支持不如后者。</p>
+<p>SQLAlchemy 的架构</p>
+<p>Summary<br>SQLAlchemy 很有特色的一点就是它刻意被分为另种用法，就是 CORE 和 ORM，这是由它的架构决定的。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.23.png" alt=""></p>
+<p>这样的架构的好处是带来了 Core 与 ORM 的解耦和，当我们需要高性能的 SQL 执行但又不想抛弃 SQLAlchemy 带来的session管理、连接池管理、数据库“中立”的语句编写等这些好处时我们可以直接用 CORE。直接用 CORE 是什么意思呢？我们看到架构里只有Rational Mapper在 CORE 之上，实际也确实如此，因为Schema、SQL Expression Language还在 CORE 内，所以使用 CORE 可以直接写纯 SQL 语句，我们称之为Raw SQL的写法，也可以用SQL Expression，后者因为是相当于写 Python 代码，所以可以带来更好地阅读性和可维护性，不过Raw SQL更灵活，所以在很复杂的语句面前Raw SQL就更占优势了。</p>
+<p>再往下看这个图，我们可以看到 DBAPI 是由Third party libraries实现的，也就是说 SQLAlchemy 并没有提供直接连接数据库的功能，而是通过第三方实现：</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.30.png" alt=""></p>
+<p>SQLalchemy 对dialect支持很全，就以常见的 MySQL 为例，可以支持：<br>MySQL-Python、OurSQL、PyMySQL、MySQL Connector/Python、CyMySQL、Google Cloud SQL、PyODBC、zxjdbc for Jython，具体可以在 SQAlchemy 的dialects页面里查到。</p>
+<p>这样有什么坏处呢，最明显的就是低效。因为传统 Python 解释器 CPython 的实现原因（主要是 C 的问题）长的函数调用栈会带来显著地性能问题。 由于路径过长，不可避免地导致运行时的缓慢。SQLAlchemy 花了很旧去缩短调用路径和通过 C 代码处理性能瓶颈，效果还不错，不过最好还是希望 PyPy 能够广泛流行起来，通过JIT缓解这个问题。</p>
+<p>Engine<br>上面的图还是一张抽象程度比较高的，下面我细节点的介绍下 SQLAlchemy 的Engine。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.38.png" alt=""></p>
+<p>对于使用者来说，Engine是核心，因为Connection、ResultProxy这些都是在Engine之后生成的，建立Engine则有两个重点，就是Pool和Dialect，前者是做连接池管理，后者则负责与 DBAPI 的沟通，如同其名字所示，负责“方言”与“普通话”的翻译。上图是以psycopg2为例的，使用 MySQL（PyODBC）也是类似的。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.47.png" alt=""></p>
+<p>通过Dialect和ExecutionContext向开发者提供了一致的接口，前者处理了数据库的特性，比如使用 PostgreSQL 数据库其 Array 数据类型、schema、catalog等，后者处理psycopg2 DBAPI 的用法，比如 unicode 字符处理、服务端 cursor 的行为这些。</p>
+<p>所以说，DBAPI中的cursor在 SQLAlchemy 中会被包装成ExecutionContext和ResultProxy来使用的。</p>
+<p>Schema<br>当数据库的连接和交互处理完了，下一步就是提供非特定的表、字段的建立和操作方法。我们需要首先定义在数据库中的表和字段的定义，及他们之间的关系，也就是 Schema。对于数据库的使用来说，最基本的至少要有两个元素，那就是Table和Column，SQLAlchemy 使用了这两个名字来描述表和字段。多个Column组合成Table，然后一些 Table构成MetaData。Schema的结构设计主要来自于 Martin Fowler 撰写的 Patterns of Enterprise Application Architecture。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.07.54.png" alt=""></p>
+<p>此外，Table和Column同时继承自sqlalchemy.schema和sqlalchemy.sql，使用时既可以在 ORM 的方式中使用，也可以以 SQL Expression Language 使用。在下图中我们可以看到Table从sqlalchemy.sql中“可以select from”的类继承，Coloumn从“可以用在 SQL expression”的类继承。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.01.png" alt=""></p>
+<p>表达式树</p>
+<p>SQLAlchemy 可以生成结构丰富的各种语句，这是一个词法分析树，核心结构是ClauseElement。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.09.png" alt=""></p>
+<p>在 Python 中，得益于其 Magic Method，我们可以用<strong>eq</strong>、<strong>ne</strong>、<strong>le</strong>、<strong>lt</strong>、<strong>add</strong>、<strong>mul</strong>方便的重载运算符。以 Column 为对象的运算符由一个 mixin 类ColumnOperators实现重载。</p>
+<p>编译</p>
+<p>在这里，编译指生成 SQL 语句，主要由Compiled类完成，这个类有两个核心的子类，SQLComplier和DDLCompiler。SQLComplier负责像SELECT、INSERT、UPDATE、DELETE这些统称为DQL (data query language) 和 DML (data manipulation language)的操作符的渲染，DDLCompiler负责CREATE和DROP，一般称为 DDL。此外，还有一个类TypeCompiler处理某些数据库的特殊语法。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.18.png" alt=""></p>
+<p>Compiled的子类定以了一系列的 visit 开头的方法，每一个都源于一个ClauseElement的特定子类。然后Compiled对象维护名字、结合参数和子查询，最终是为了生成一个 SQL 查询语句。</p>
+<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-22-%E4%B8%8B%E5%8D%887.08.25.png" alt=""></p>
+<p>Migration</p>
+<p>我们希望能像管理代码一样管理数据库，可以像 git 一样给数据库定义版本、升/降级、打标签，可以么？答案就是 Alembic。</p>
+<p>Alembic 的作者与 SQLAlchemy 是同一人，使用起来有点像简化版的 git，在 db 目录里执行 init，就可以自动生成基本结构和配置文件。配置妥当后使用 alembic 可以生成一个数据库模版，作为这个“版本”的数据升/降级文件，SQLAlchemy 会自动生成其“版本号”和历史关系我们所需要做的便只是用调用 SQLAlchemy 和 Alembic 提供的 sa 和 op 定义数据库表即可。</p>
+<p>有同学可能问我在 SQLAlchemy 上做过一模一样的定义了，是不是能不要让我重复劳动啊？或者在我给 SQLAlchemy 做完修改后 Alembic 能不能自动“感知”到这些修改然后自己生成版本文件啊？答案是可以的，配置好元数据来源后，Alembic 可以用–autogenerate自动生成相应的版本文件。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag">#python</a>
+          
+            <a href="/tags/openstack/" rel="tag">#openstack</a>
+          
+            <a href="/tags/sql/" rel="tag">#sql</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/10/[转]分布式系统的事务处理/" rel="next" title="[转]分布式系统的事务处理">
+                <i class="fa fa-chevron-left"></i> [转]分布式系统的事务处理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/11/[转]OpenStack extension api/" rel="prev" title="[转]OpenStack extension api">
+                [转]OpenStack extension api <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/"
+     data-title="[转]OpenStack的数据库开发基础 — SQLAlchemy"
+     data-content=""
+     data-url="http://yoursite.com/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/"
+           data-title="[转]OpenStack的数据库开发基础 — SQLAlchemy" data-url="http://yoursite.com/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

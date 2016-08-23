@@ -1,0 +1,815 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="openstack," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文地址
+有了前面的一些基础之后，我们再来看一下，大家可能非常关系的一个问题，就是如何通过OpenStack创建一个虚拟机实例。本文注重结构性分析，细节性问题，请小伙伴们自己多思考撒，因为我也是正在边学Python，边看nova源码的，我的理解肯定会有错误的地方，也劳烦大神们，看到错误的时候，和小弟说一下，先谢了。
+1、nova-api  &amp;lt;文件位于/nova/api/openstackco">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nova创建虚拟机实例过程简述">
+<meta property="og:url" content="http://yoursite.com/2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="原文地址
+有了前面的一些基础之后，我们再来看一下，大家可能非常关系的一个问题，就是如何通过OpenStack创建一个虚拟机实例。本文注重结构性分析，细节性问题，请小伙伴们自己多思考撒，因为我也是正在边学Python，边看nova源码的，我的理解肯定会有错误的地方，也劳烦大神们，看到错误的时候，和小弟说一下，先谢了。
+1、nova-api  &amp;lt;文件位于/nova/api/openstackco">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nova创建虚拟机实例过程简述">
+<meta name="twitter:description" content="原文地址
+有了前面的一些基础之后，我们再来看一下，大家可能非常关系的一个问题，就是如何通过OpenStack创建一个虚拟机实例。本文注重结构性分析，细节性问题，请小伙伴们自己多思考撒，因为我也是正在边学Python，边看nova源码的，我的理解肯定会有错误的地方，也劳烦大神们，看到错误的时候，和小弟说一下，先谢了。
+1、nova-api  &amp;lt;文件位于/nova/api/openstackco">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/"/>
+
+  <title> Nova创建虚拟机实例过程简述 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Nova创建虚拟机实例过程简述
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-12T15:10:00+08:00" content="2014-11-12">
+              2014-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://blog.csdn.net/bingxx11/article/details/20143433" target="_blank" rel="external">原文地址</a></p>
+<p>有了前面的一些基础之后，我们再来看一下，大家可能非常关系的一个问题，就是如何通过OpenStack创建一个虚拟机实例。本文注重结构性分析，细节性问题，请小伙伴们自己多思考撒，因为我也是正在边学Python，边看nova源码的，我的理解肯定会有错误的地方，也劳烦大神们，看到错误的时候，和小弟说一下，先谢了。</p>
+<p>1、nova-api  &lt;文件位于/nova/api/openstackcompute/server.py&gt;<br>      nova-api起到了一个Cloud Controller的作用，主要为所有的API查询提供了一个接口（比如Openstack API ，EC2 API），引发多数业务流程的活动（如运行一个实例），并实施一些政策（主要是配额检查）。<br>      因为今天我们主题是虚拟机实例的启动过程，所以，重点关注/nova/api/openstackcompute/server.py。找到类class Controller(wsgi.Controller):create()代码段，我们知道nova-api的作用就是对外提供标准REST接口的服务。下面的代码段，已经标注了很多内容，大家看一下即可。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#对外提供创建虚拟机实例的外部接口，nova-api.create()  </span></div><div class="line">    <span class="comment">#其中req是整个http报文内容，body就是REST中传递过来的参数  </span></div><div class="line">    <span class="comment">#整个方法的作用是将REST接口参数映射到内部接口compute-api.create()  </span></div><div class="line">    <span class="comment">#比如非常重要的环节，将image-flavor的id转换成虚拟机具体配置信息instanc_type  </span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, req, body)</span>:</span>  </div><div class="line">        <span class="string">"""Creates a new server for a given user."""</span>  </div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.is_valid_body(body, <span class="string">'server'</span>):  </div><div class="line">            <span class="keyword">raise</span> exc.HTTPUnprocessableEntity()  </div><div class="line">  </div><div class="line">        <span class="comment">#A mapping object representing the string environment.   </span></div><div class="line">        <span class="comment">#For example, environ['HOME'] is the pathname of your   </span></div><div class="line">        <span class="comment">#home directory (on some platforms), and is equivalent to getenv("HOME") in C  </span></div><div class="line">          </div><div class="line">        <span class="comment">#对下面两个参数的讨论，设计到webob等概念，需要在以后做专门的讲述  </span></div><div class="line">        <span class="comment">#*****************经常会用到的两个参数***************  </span></div><div class="line">        context = req.environ[<span class="string">'nova.context'</span>]  </div><div class="line">        server_dict = body[<span class="string">'server'</span>]  </div><div class="line">        <span class="comment">#*****************经常会用到的两个参数***************</span></div></pre></td></tr></table></figure></p>
+<p>nova-api的create方法作用是将REST接口参数映射到内部接口compute-api.create()，参数转换完成后，create最后会调用如下代码，转去调用comput-api<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(instances, resv_id) = self.compute_api.create(context,  </div><div class="line">                           inst_type,  <span class="comment">###*****已经转换的flavor  </span></div><div class="line">                           image_uuid,  </div><div class="line">                           display_name=name,  </div><div class="line">                           display_description=name,  </div><div class="line">                           key_name=key_name,  </div><div class="line">                           metadata=server_dict.get(<span class="string">'metadata'</span>, &#123;&#125;),  </div><div class="line">                           access_ip_v4=access_ip_v4,  </div><div class="line">                           access_ip_v6=access_ip_v6,  </div><div class="line">                           injected_files=injected_files,  </div><div class="line">                           admin_password=password,  </div><div class="line">                           min_count=min_count,  </div><div class="line">                           max_count=max_count,  </div><div class="line">                           requested_networks=requested_networks,  </div><div class="line">                           security_group=sg_names,  </div><div class="line">                           user_data=user_data,  </div><div class="line">                           availability_zone=availability_zone,  </div><div class="line">                           config_drive=config_drive,  </div><div class="line">                           block_device_mapping=block_device_mapping,  </div><div class="line">                           auto_disk_config=auto_disk_config,  </div><div class="line">                           scheduler_hints=scheduler_hints,  </div><div class="line">                           legacy_bdm=legacy_bdm)</div></pre></td></tr></table></figure></p>
+<p>2、compute-api 的处理过程<br>       compute-api的作用是对外提供了管理compute的api接口，外部模块通过这些接口完成对计算资源的操作。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#*********************************#compute-api下面的create()函数*******************************#  </span></div><div class="line"><span class="meta">    @hooks.add_hook("create_instance")  </span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, context, instance_type,     #由/nova/api/compute/service.py的套餐id转换到这个type  </span></span></div><div class="line">               image_href, kernel_id=None, ramdisk_id=None,  </div><div class="line">               min_count=None, max_count=None,  </div><div class="line">               display_name=None, display_description=None,  </div><div class="line">               key_name=None, key_data=None, security_group=None,  </div><div class="line">               availability_zone=None, user_data=None, metadata=None,  </div><div class="line">               injected_files=None, admin_password=None,  </div><div class="line">               block_device_mapping=None, access_ip_v4=None,  </div><div class="line">               access_ip_v6=None, requested_networks=None, config_drive=None,  </div><div class="line">               auto_disk_config=None, scheduler_hints=None, legacy_bdm=True):  </div><div class="line">        <span class="string">""" </span></div><div class="line">        Provision instances, sending instance information to the </div><div class="line">        scheduler.  The scheduler will determine where the instance(s) </div><div class="line">        go and will handle creating the DB entries. </div><div class="line">             </div><div class="line">        Returns a tuple of (instances, reservation_id) </div><div class="line">        """  </div><div class="line">        <span class="comment">#policy是nova中一个资格验证机制  </span></div><div class="line">        self._check_create_policies(context, availability_zone,  </div><div class="line">                requested_networks, block_device_mapping)  </div><div class="line">        <span class="comment">#创建一个实例的函数，  </span></div><div class="line">        <span class="keyword">return</span> self._create_instance(  </div><div class="line">                               context, instance_type,  </div><div class="line">                               image_href, kernel_id, ramdisk_id,  </div><div class="line">                               min_count, max_count,  </div><div class="line">                               display_name, display_description,  </div><div class="line">                               key_name, key_data, security_group,  </div><div class="line">                               availability_zone, user_data, metadata,  </div><div class="line">                               injected_files, admin_password,  </div><div class="line">                               access_ip_v4, access_ip_v6,  </div><div class="line">                               requested_networks, config_drive,  </div><div class="line">                               block_device_mapping, auto_disk_config,  </div><div class="line">                               scheduler_hints=scheduler_hints,  </div><div class="line">                               legacy_bdm=legacy_bdm)</div></pre></td></tr></table></figure></p>
+<p>我们看下上面的代码：a) 首先进行了能否创建实例的资格验证　　ｂ）再调用了_create_instance（）方法<strong>
+</strong><br>3、在_create_instance（）方法中，做的一些操作有，验证各种参数，如意套餐类型instance_type是否存在，租户配额限制检查等，没问题后，commit一下，确定资源的占用。为了简化问题，我大概描述一下该方法做的事情，具体小伙伴们看一下代码就知道了。<br>完成上面的操作后，在_create_instance() 最后调用了 <strong>self.compute_task_api.build_instances(context,*</strong>）方法。</p>
+<p><strong>4、我们通过寻找compute_task_api，找到了这个其实conductor.ComputeTaskAPI()的一个对象。</strong><br><em>注：关于conductor的话，我们单独还会再讲，G版中开始添加了这个conductor，以前的版本是没有这个东西的。主要作用是隔离compute对数据库的直接操作。</em><br>我们转到<strong>/nova/conductor/api.py</strong>文件下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建实例的调用  </span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_instances</span><span class="params">(self, context, instances, image, filter_properties,  </span></span></div><div class="line">            admin_password, injected_files, requested_networks,  </div><div class="line">            security_groups, block_device_mapping, legacy_bdm=True):  </div><div class="line">        self.conductor_compute_rpcapi.build_instances(context,  </div><div class="line">                instances=instances, image=image,  </div><div class="line">                filter_properties=filter_properties,  </div><div class="line">                admin_password=admin_password, injected_files=injected_files,  </div><div class="line">                requested_networks=requested_networks,  </div><div class="line">                security_groups=security_groups,  </div><div class="line">                block_device_mapping=block_device_mapping,  </div><div class="line">                legacy_bdm=legacy_bdm) </div><div class="line">```                </div><div class="line"></div><div class="line"></div><div class="line">通过上述代码，我们看到，compute调用了conductor的API接口，再调用了conductor的RpcAPi接口，转到/nova/conductor/rpcapi.py看如下代码：</div><div class="line">```python</div><div class="line"><span class="comment">#创建虚拟机实例  </span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">build_instances</span><span class="params">(self, context, instances, image, filter_properties,  </span></span></div><div class="line">            admin_password, injected_files, requested_networks,  </div><div class="line">            security_groups, block_device_mapping, legacy_bdm=True):  </div><div class="line">        instances_p = [jsonutils.to_primitive(inst) <span class="keyword">for</span> inst <span class="keyword">in</span> instances]  </div><div class="line">        image_p = jsonutils.to_primitive(image)  </div><div class="line">          </div><div class="line">        cctxt = self.client.prepare(version=<span class="string">'1.5'</span>)  </div><div class="line">          </div><div class="line">        cctxt.cast(context, <span class="string">'build_instances'</span>,  </div><div class="line">                   instances=instances_p, image=image_p,  </div><div class="line">                   filter_properties=filter_properties,  </div><div class="line">                   admin_password=admin_password,  </div><div class="line">                   injected_files=injected_files,  </div><div class="line">                   requested_networks=requested_networks,  </div><div class="line">                   security_groups=security_groups,  </div><div class="line">                   block_device_mapping=block_device_mapping,  </div><div class="line">                   legacy_bdm=legacy_bdm)</div></pre></td></tr></table></figure></p>
+<p>哈哈，看到了吧，上面的调用给conductor发送了一个rpc消息。根据OpenStack AMQP的rpc消息传递的原理，我们很顺理成章的转到/nova/conductor/manager.py去查看是否在manager.py里面会有”build_instance”方法。找了下，果然有，请看如下代码：<strong>[python]</strong> [view<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_instances</span><span class="params">(self, context, instances, image, filter_properties,  </span></span></div><div class="line">            admin_password, injected_files, requested_networks,  </div><div class="line">            security_groups, block_device_mapping, legacy_bdm=True):  </div><div class="line">          </div><div class="line">        request_spec = scheduler_utils.build_request_spec(context, image,  </div><div class="line">                                                          instances)      </div><div class="line">        request_spec.update(&#123;<span class="string">'block_device_mapping'</span>: block_device_mapping,  </div><div class="line">                             <span class="string">'security_group'</span>: security_groups&#125;)  </div><div class="line">          </div><div class="line">        self.scheduler_rpcapi.run_instance(context, request_spec=request_spec,  </div><div class="line">                admin_password=admin_password, injected_files=injected_files,  </div><div class="line">                requested_networks=requested_networks, is_first_time=<span class="keyword">True</span>,  </div><div class="line">                filter_properties=filter_properties,  </div><div class="line">                legacy_bdm_in_spec=legacy_bdm)</div></pre></td></tr></table></figure></p>
+<p>看到最后一行，self.scheduler_rpcapi.run_instance(context,<strong><em>）方法，conductor通过调用Scheduler的rpcapi接口，把请求启动虚拟机的相关信息传递到调度器上。就是从这里开始，相关的工作就被转移到了Scheduler中了(</em>关于具体怎么调度的，会有专门的博文，讲述这个过程,今天只关注，虚拟机实例请求是怎么一步一步建立的*)<br>5、再次转到/nova/scheduler/目录<br>（1）首先看</strong>/nova/shceduler/rpcapi.py**<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_instance</span><span class="params">(self, ctxt, request_spec, admin_password,  </span></span></div><div class="line">            injected_files, requested_networks, is_first_time,  </div><div class="line">            filter_properties, legacy_bdm_in_spec=True):  </div><div class="line">        version = <span class="string">'2.0'</span>  </div><div class="line">          </div><div class="line">        <span class="comment">#制作成msg_kwargs的参数  </span></div><div class="line">        <span class="comment">#消息参数（用户请求，过滤属性等等）  </span></div><div class="line">        msg_kwargs = &#123;<span class="string">'request_spec'</span>: request_spec,  </div><div class="line">                      <span class="string">'admin_password'</span>: admin_password,  </div><div class="line">                      <span class="string">'injected_files'</span>: injected_files,  </div><div class="line">                      <span class="string">'requested_networks'</span>: requested_networks,  </div><div class="line">                      <span class="string">'is_first_time'</span>: is_first_time,  </div><div class="line">                      <span class="string">'filter_properties'</span>: filter_properties&#125;  </div><div class="line">  </div><div class="line">        <span class="keyword">if</span> self.client.can_send_version(<span class="string">'2.9'</span>):  </div><div class="line">            version = <span class="string">'2.9'</span>  </div><div class="line">            msg_kwargs[<span class="string">'legacy_bdm_in_spec'</span>] = legacy_bdm_in_spec  </div><div class="line">        cctxt = self.client.prepare(version=version)  </div><div class="line">      </div><div class="line">        <span class="keyword">return</span> cctxt.cast(ctxt, <span class="string">'run_instance'</span>, **msg_kwargs)</div></pre></td></tr></table></figure></p>
+<p>继续看到最后一句，Scheduler-rpcpai把消息发送到了Scheduler的manager去处理具体的run_instance()方法。(2) 看到<strong>/nova/scheduler/manager.py</strong><br>找到如下代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#启动虚拟机  </span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run_instance</span><span class="params">(self, context, request_spec, admin_password,  </span></span></div><div class="line">            injected_files, requested_networks, is_first_time,  </div><div class="line">            filter_properties, legacy_bdm_in_spec=True):  </div><div class="line">        <span class="string">"""Tries to call schedule_run_instance on the driver. </span></div><div class="line">     </div><div class="line">        Sets instance vm_state to ERROR on exceptions </div><div class="line">        """  </div><div class="line">        instance_uuids = request_spec[<span class="string">'instance_uuids'</span>]  </div><div class="line">        <span class="string">"""Compute-related Utilities and helpers."""</span>  </div><div class="line">        <span class="comment">#compute_utils = utils  </span></div><div class="line">        <span class="comment">#EventReoprt()是一个类  </span></div><div class="line">        <span class="keyword">with</span> compute_utils.EventReporter(context, conductor_api.LocalAPI(),  </div><div class="line">                                         <span class="string">'schedule'</span>, *instance_uuids):  </div><div class="line">            <span class="keyword">try</span>:  </div><div class="line">                   </div><div class="line">                <span class="comment">#调用driver（filter_scheduler.py）中的schedule_run_instance（）  </span></div><div class="line">                <span class="keyword">return</span> self.driver.schedule_run_instance(context,  </div><div class="line">                        request_spec, admin_password, injected_files,  </div><div class="line">                        requested_networks, is_first_time, filter_properties,  </div><div class="line">                        legacy_bdm_in_spec)</div></pre></td></tr></table></figure></p>
+<p>上图代码中，driver通过动态读取nova.conf配置文件，我们知道driver = Filter_Scheduler。创建实例调度的时候，我们默认使用的是FilterScheduler类中的<strong>schedule_run_instance()</strong>方法，在该方法中，有如下调用，主要作用是通过_schedule方法，筛选出我们需要已经按照经过（Filters筛选+权重计算）的符合条件的最后weight_hosts列表。—筛选的具体过程，我们以后再看，现在暂不做讨论。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">weighed_hosts = self._schedule(context, request_spec,  </div><div class="line">                                      filter_properties, instance_uuids)  </div><div class="line">```                                   </div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">（<span class="number">6</span>）通过调用_provision_resource()方法，在选定的compute节点上运行虚拟机实例。</div><div class="line">```python</div><div class="line"><span class="keyword">try</span>:  </div><div class="line">                    <span class="comment">#默认只要第一个符合条件的主机  </span></div><div class="line">                    <span class="comment">#The best_host  </span></div><div class="line">                    weighed_host = weighed_hosts.pop(<span class="number">0</span>)  </div><div class="line">                    LOG.info(_(<span class="string">"Choosing host %(weighed_host)s "</span>  </div><div class="line">                                <span class="string">"for instance %(instance_uuid)s"</span>),  </div><div class="line">                              &#123;<span class="string">'weighed_host'</span>: weighed_host,  </div><div class="line">                               <span class="string">'instance_uuid'</span>: instance_uuid&#125;)  </div><div class="line">                <span class="keyword">except</span> IndexError:  </div><div class="line">                    <span class="keyword">raise</span> exception.NoValidHost(reason=<span class="string">""</span>)  </div><div class="line">  </div><div class="line">                <span class="comment">#开始分配资源  </span></div><div class="line">                self._provision_resource(context, weighed_host,  </div><div class="line">                                         request_spec,  </div><div class="line">                                         filter_properties,  </div><div class="line">                                         requested_networks,  </div><div class="line">                                         injected_files, admin_password,  </div><div class="line">                                         is_first_time,  </div><div class="line">                                         instance_uuid=instance_uuid,  </div><div class="line">                                         legacy_bdm_in_spec=legacy_bdm_in_spec)</div></pre></td></tr></table></figure></p>
+<p>Scheduler通过一系列操作选定了最后的compute节点之后，必然要讲控制权，转移到compute中，所以，又要开始一次rpc调用了，如下面代码所述：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#*************调度完成，开始使用compute-Manager的run_instance()******************#  </span></div><div class="line">            self.compute_rpcapi.run_instance(context,  </div><div class="line">                    instance=updated_instance,  </div><div class="line">                    host=weighed_host.obj.host,  </div><div class="line">                    request_spec=request_spec,  </div><div class="line">                    filter_properties=filter_properties,  </div><div class="line">                    requested_networks=requested_networks,  </div><div class="line">                    injected_files=injected_files,  </div><div class="line">                    admin_password=admin_password, is_first_time=is_first_time,  </div><div class="line">                    node=weighed_host.obj.nodename,  </div><div class="line">                    legacy_bdm_in_spec=legacy_bdm_in_spec)  </div><div class="line"><span class="comment">#*************调度完成，开始使用compute-Manager的run_instance()********************#</span></div></pre></td></tr></table></figure></p>
+<p>(7) 控制权转移，我们需要看/nova/compute目录了，因为前面已经讲过，rpc过来的消息，最后会经过compute-manager处理，所以，我们直接看/nova/compute/compute.py下面的run_instance()方法，代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_instance</span><span class="params">(self, context, instance, request_spec=None,  </span></span></div><div class="line">                     filter_properties=None, requested_networks=None,  </div><div class="line">                     injected_files=None, admin_password=None,  </div><div class="line">                     is_first_time=False, node=None, legacy_bdm_in_spec=True):  </div><div class="line">  </div><div class="line">        <span class="keyword">if</span> filter_properties <span class="keyword">is</span> <span class="keyword">None</span>:  </div><div class="line">            filter_properties = &#123;&#125;  </div><div class="line"> </div><div class="line"><span class="meta">        @utils.synchronized(instance['uuid'])  </span></div><div class="line">        <span class="function"><span class="keyword">def</span> <span class="title">do_run_instance</span><span class="params">()</span>:</span>  </div><div class="line">            self._run_instance(context, request_spec,  </div><div class="line">                    filter_properties, requested_networks, injected_files,  </div><div class="line">                    admin_password, is_first_time, node, instance,  </div><div class="line">                    legacy_bdm_in_spec)  </div><div class="line">        do_run_instance()</div></pre></td></tr></table></figure></p>
+<p>至此，再经过compute内部一些操作，一个实例就创建完成了，具体细节不再讨论。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openstack/" rel="tag">#openstack</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/12/2014-11-12-openstack 中的Routes + webob 的 REST API/" rel="next" title="openstack 中的Routes + webob 的 REST API">
+                <i class="fa fa-chevron-left"></i> openstack 中的Routes + webob 的 REST API
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/11/13/2014-11-13-Openstack中的tox/" rel="prev" title="Openstack中的tox">
+                Openstack中的tox <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/"
+     data-title="Nova创建虚拟机实例过程简述"
+     data-content=""
+     data-url="http://yoursite.com/2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/"
+           data-title="Nova创建虚拟机实例过程简述" data-url="http://yoursite.com/2014/11/12/2014-11-12-Nova创建虚拟机实例过程简述/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

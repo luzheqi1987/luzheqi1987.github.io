@@ -1,0 +1,808 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tcp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="TCP报文到达确认机制CP数据包中的序列号（Sequence Number）不是以报文段来进行编号的，而是将连接生存周期内传输的所有数据当作一个字节流，序列号就是整个字节流中每个字节的编号。一个TCP数据包中包含多个字节流的数据（即数据段），而且每个TCP数据包中的数据大小不一定相同。在建立TCP连接的三次握手过程中，通信双方各自已确定了初始的序号x和y，TCP每次传送的报文段中的序号字段值表示所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP协议面试题">
+<meta property="og:url" content="http://yoursite.com/2015/03/04/TCP协议面试题/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="TCP报文到达确认机制CP数据包中的序列号（Sequence Number）不是以报文段来进行编号的，而是将连接生存周期内传输的所有数据当作一个字节流，序列号就是整个字节流中每个字节的编号。一个TCP数据包中包含多个字节流的数据（即数据段），而且每个TCP数据包中的数据大小不一定相同。在建立TCP连接的三次握手过程中，通信双方各自已确定了初始的序号x和y，TCP每次传送的报文段中的序号字段值表示所">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TCP协议面试题">
+<meta name="twitter:description" content="TCP报文到达确认机制CP数据包中的序列号（Sequence Number）不是以报文段来进行编号的，而是将连接生存周期内传输的所有数据当作一个字节流，序列号就是整个字节流中每个字节的编号。一个TCP数据包中包含多个字节流的数据（即数据段），而且每个TCP数据包中的数据大小不一定相同。在建立TCP连接的三次握手过程中，通信双方各自已确定了初始的序号x和y，TCP每次传送的报文段中的序号字段值表示所">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/03/04/TCP协议面试题/"/>
+
+  <title> TCP协议面试题 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TCP协议面试题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-04T12:20:00+08:00" content="2015-03-04">
+              2015-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/04/TCP协议面试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/TCP协议面试题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="TCP报文到达确认机制"><a href="#TCP报文到达确认机制" class="headerlink" title="TCP报文到达确认机制"></a>TCP报文到达确认机制</h1><p>CP数据包中的序列号（Sequence Number）不是以报文段来进行编号的，而是将连接生存周期内传输的所有数据当作一个字节流，序列号就是整个字节流中每个字节的编号。一个TCP数据包中包含多个字节流的数据（即数据段），而且每个TCP数据包中的数据大小不一定相同。在建立TCP连接的三次握手过程中，通信双方各自已确定了初始的序号x和y，TCP每次传送的报文段中的序号字段值表示所要传送本报文中的第一个字节的序号。<br>TCP的报文到达确认（ACK），是对接收到的数据的最高序列号的确认，并向发送端返回一个下次接收时期望的TCP数据包的序列号（Ack Number）。例如，主机A发送的当前数据序号是400，数据长度是100，则接收端收到后会返回一个确认号是501的确认号给主机A。<br>TCP提供的确认机制，可以在通信过程中可以不对每一个TCP数据包发出单独的确认包（Delayed ACK机制），而是在传送数据时，顺便把确认信息传出，这样可以大大提高网络的利用率和传输效率。同时，TCP的确认机制，也可以一次确认多个数据报，例如，接收方收到了201，301，401的数据报，则只需要对401的数据包进行确认即可，对401的数据包的确认也意味着401之前的所有数据包都已经确认，这样也可以提高系统的效率。<br>若发送方在规定时间内没有收到接收方的确认信息，就要将未被确认的数据包重新发送。接收方如果收到一个有差错的报文，则丢弃此报文，并不向发送方发送确认信息。因此，TCP报文的重传机制是由设置的超时定时器来决定的，在定时的时间内没有收到确认信息，则进行重传。这个定时的时间值的设定非常重要，太大会使包重传的延时比较大，太小则可能没有来得及收到对方的确认包发送方就再次重传，会使网络陷入无休止的重传过程中。接收方如果收到了重复的报文，将会丢弃重复的报文，但是必须发回确认信息，否则对方会再次发送。<br>TCP协议应当保证数据报按序到达接收方。如果接收方收到的数据报文没有错误，只是未按序号，这种现象如何处理呢？TCP协议本身没有规定，而是由TCP协议的实现者自己去确定。通常有两种方法进行处理：一是对没有按序号到达的报文直接丢弃，二是将未按序号到达的数据包先放于缓冲区内，等待它前面的序号包到达后，再将它交给应用进程。后一种方法将会提高系统的效率。例如，发送方连续发送了每个报文中100个字节的TCP数据报，其序号分别是1，101，201，…,701。假如其它7个数据报都收到了，而201这个数据报没有收到，则接收端应当对1和101这两个数据报进行确认，并将数据递交给相关的应用进程，301至701这5个数据报则应当放于缓冲区，等到201这个数据报到达后，然后按序将201至701这些数据报递交给相关应用进程，并对701数据报进行确认，确保了应用进程级的TCP数据的按序到达。</p>
+<h1 id="TCP-流量控制-差错控制"><a href="#TCP-流量控制-差错控制" class="headerlink" title="TCP 流量控制 差错控制"></a>TCP 流量控制 差错控制</h1><p>流量控制：<br>1、流量控制是管理两端的流量，以免会产生发送过块导致收端溢出，或者因收端处理太快而浪费时间的状态。用的是：滑动窗口，以字节为单位</p>
+<p>2、窗口有3种动作：展开（右边向右），合拢（左边向右），收缩（右边向左）这三种动作受接收端的控制。<br>合拢：表示已经收到相应字节的确认了<br>展开：表示允许缓存发送更多的字节<br>收缩（非常不希望出现的，某些实现是禁止的）：表示本来可以发送的，现在不能发送；但是如果收缩的是那些已经发出的，就会有问题；为了避免，收端会等待到缓存中有更多缓存空间时才进行通信。<br>发端窗口的大小取决于收端的窗口大小rwnd（TCP报文的窗口大小字段）和拥塞窗口大小cwnd（见拥塞控制）<br>发端窗口大小 = min{ rwnd , cwnd };</p>
+<p>3、关闭窗口：窗口缩回有个例外，就是发送rwnd=0表示暂时不愿意接收数据。这种情况下，发端不是把窗口收缩，二是停止发送数据。（为了比避免死锁，会用一些探测报定时发送试探，见定时器一节）</p>
+<p>4、问题：某些时候，由于发端或收端的数据很慢，会引起大量的1字节数据痛惜，浪费很多资源。<br>（1）、发端的进程产生数据很慢时候，时不时的来个1字节数据，那么TCP就会1字节1字节的发送，效率很低。<br>解决方法（Nagle算法）：<br>a、将第一块数据发出去<br>b、然后等到发送缓存有足够多的数据（最大报文段长度），或者等到收端确认的ACK时再发送数据。<br>c、重复b的过程<br>（2）、收端进程由于消耗数据很慢，所以可能会有这么一种情况，收端会发送其窗口大小为1的信息，然后有是1字节的传输<br>解决办法（2种）<br>a、Clark方法：在接收缓存的一半变空，或者有足够空间放最大报文长度之前，宣告接收窗口大小为0<br>b、推迟确认：在对收到的报文段确认之前等待到足够的接收缓存，或者等待到一个时间段（现在一般定义500ms）</p>
+<p>拥塞控制：<br>1、如果网络上的负载（发送到网络上的分组数）大于网络上的容量（网络同时能处理的分组数），就可能引起拥塞，判断网络拥塞的两个因素：延时和吞吐量。拥塞控制机制是：开环（预防）和闭环（消除）（见网络原理相关书籍，略）<br>tcp处理拥塞的三种策略：慢启动（指数增大），拥塞避免（加法增大），拥塞检测（除2减少，或叫做乘法减少）</p>
+<p>2、慢启动：指数增大<br>/<em> ssthresh是慢开始门限，slow start threshold表示一个上限，一般的实现为65535B </em>/<br>cwnd = 1;(1表示一个MSS报文段，不是一个字节)<br>while （ cwnd &lt; ssthresh )<br>if（ 发出的报文段确认 ）<br>cwd *= 2;</p>
+<p>3、拥塞避免：加法增大<br>当到达ssthresh之后，就是加法阶段了，每收到一个确认，cwd += 1；</p>
+<p>4、拥塞检测：乘法减少（除2减少）<br>当报文需要重传时，说明拥塞可能发生了，由于重传有2种情况，所以也分两种处理<br>（1）、由于超时重传，这是拥塞的可能性比较大，如下做强反映调整<br>a、 ssthresh /= 2;<br>b、 cwnd = 1；<br>重新慢启动过程<br>（2）、由于收到3个重复的ACK的重传，采取弱反映：<br>a、ssthresh /= 2;<br>b、cwnd = ssthresh;<br>c、开始拥塞避免过程</p>
+<p>差错控制：<br>1、TCP必须保证数据：按序，没有差错，没有部分丢失，没有重复的交给应用层。方法就是：校验和，确认，超时重传</p>
+<p>2、校验和：和UDP的做法一样，也要伪首部，和UDP不同的是这个功能在TCP中是必须的</p>
+<p>3、确认：ACK的确认机制（下面是一些原则）<br>a、ACK报文不需要确认，也不消耗序号<br>b、当一端发送数据时，尽量包含捎带确认。<br>c、收端推迟发送ACK报文段，如果仅有一个未确认的按序报文段；延迟到500ms，或者有第二个报文段接收时（转d），或者有数据要发送时（转b）<br>d、任何时候,不能有两个（以上）未确认的报文段（就是说如果收端有两个未确认的按序报文段，就马上发送ACK报文段进行确认）<br>e、当收到一个序号比期望序号还大的报文段时，马上发送ACK，让发端进行快重传<br>f、收到重复的报文段，就立即发送确认(解决ACK丢失问题)<br>g、丢失的报文段到达，发送确认，表示已经收到了丢失的报文</p>
+<p>4、确认类型<br>累计确认：收端忽略掉所有失序报文，告知发端他期待下一个收到的序号，叫做肯定累计ACK。肯定是说：丢弃的，丢失的，重复的都不报告。<br>选择确认（SACK）：在某些新TCP实现里面实现了这个东西，报告失序和重复的数据，作伪TCP首部选项字段的一部分。</p>
+<p>5、重传（两种情况） ： 重传定时器时间到，或者 发端收到重复的三个ACK（快重传）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tcp/" rel="tag">#tcp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/04/计算机网络面试题/" rel="next" title="计算机网络面试题">
+                <i class="fa fa-chevron-left"></i> 计算机网络面试题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/04/百度面试题/" rel="prev" title="百度面试题">
+                百度面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/03/04/TCP协议面试题/"
+     data-title="TCP协议面试题"
+     data-content=""
+     data-url="http://yoursite.com/2015/03/04/TCP协议面试题/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/03/04/TCP协议面试题/"
+           data-title="TCP协议面试题" data-url="http://yoursite.com/2015/03/04/TCP协议面试题/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP报文到达确认机制"><span class="nav-number">1.</span> <span class="nav-text">TCP报文到达确认机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-流量控制-差错控制"><span class="nav-number">2.</span> <span class="nav-text">TCP 流量控制 差错控制</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

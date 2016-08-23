@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="gc," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原文链接： Bob Nystrom翻译： 伯乐在线 - deathmonkey译文链接： http://blog.jobbole.com/53376/
+本文由 伯乐在线 - deathmonkey 翻译自 Bob Nystrom。欢迎加入技术翻译小组。转载请参见文章末尾处的要求。
+伯乐在线补充：本文作者 Bob Nystrom 是 Google Dart 团队的一名工程师，所以下文中”处理一些工作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转] 编写你的第一个垃圾收集器">
+<meta property="og:url" content="http://yoursite.com/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="原文链接： Bob Nystrom翻译： 伯乐在线 - deathmonkey译文链接： http://blog.jobbole.com/53376/
+本文由 伯乐在线 - deathmonkey 翻译自 Bob Nystrom。欢迎加入技术翻译小组。转载请参见文章末尾处的要求。
+伯乐在线补充：本文作者 Bob Nystrom 是 Google Dart 团队的一名工程师，所以下文中”处理一些工作">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转] 编写你的第一个垃圾收集器">
+<meta name="twitter:description" content="原文链接： Bob Nystrom翻译： 伯乐在线 - deathmonkey译文链接： http://blog.jobbole.com/53376/
+本文由 伯乐在线 - deathmonkey 翻译自 Bob Nystrom。欢迎加入技术翻译小组。转载请参见文章末尾处的要求。
+伯乐在线补充：本文作者 Bob Nystrom 是 Google Dart 团队的一名工程师，所以下文中”处理一些工作">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/"/>
+
+  <title> [转] 编写你的第一个垃圾收集器 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转] 编写你的第一个垃圾收集器
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-22T09:53:00+08:00" content="2013-12-22">
+              2013-12-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/22/2013-12-22-编写你的第一个垃圾收集器/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文链接： <a href="http://journal.stuffwithstuff.com/2013/12/08/babys-first-garbage-collector/" target="_blank" rel="external">Bob Nystrom</a><br>翻译： <a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线 </a>- <a href="http://blog.jobbole.m/author/deathmonkey/" target="_blank" rel="external">deathmonkey</a><br>译文链接： <a href="http://blog.jobbole.com/53376/" target="_blank" rel="external">http://blog.jobbole.com/53376/</a></p>
+<p>本文由 <a href="http://blog.jobbole.com/" target="_blank" rel="external">伯乐在线</a> - <a href="http://blog.jobbole.com/author/deathmonkey/" target="_blank" rel="external">deathmonkey</a> 翻译自 <a href="http://journal.stuffwithstuff.com/2013/12/08/babys-first-garbage-collector/" target="_blank" rel="external">Bob Nystrom</a>。欢迎加入<a href="http://www.jobbole.com/groups/6/" target="_blank" rel="external">技术翻译小组</a>。转载请参见文章末尾处的要求。</p>
+<p>伯乐在线补充：本文作者 Bob Nystrom 是 Google Dart 团队的一名工程师，所以下文中”处理<a href="https://www.dartlang.org/" target="_blank" rel="external">一些工作上的事情</a>“中的链接是指向了Dart 官网。Bob 之前（曾在 EA 公司）做过游戏开发，UI 设计。更多信息，请看<a href="http://www.stuffwithstuff.com/bob-nystrom.html" target="_blank" rel="external">他的简历</a>。</p>
+<p>每当我倍感压力以及有很多事情要做的时候，我总是有这样一种反常的反应，那就是希望做一些其他的事情来摆脱这种状况。通常情况下，这些事情都是些我能够编写并实现的独立的小程序。</p>
+<p>一天早上，我几乎要被一堆事情给整疯了——我得写我那本<a href="http://gameprogrammingpatterns.com/" target="_blank" rel="external">《游戏编程模式》</a>、处理<a href="https://www.dartlang.org/" target="_blank" rel="external">一些工作上的事情</a>、还要准备<a href="https://thestrangeloop.com/sessions/dart-for-the-language-enthusiast" target="_blank" rel="external">一场Strange Loop的演讲</a>，然后这时我突然想到：“我该写一个垃圾收集器了”。</p>
+<p>是的，我知道那一刻让我看上去有多疯狂。不过我的神经故障却是你实现一段基础的程序语言设计的免费教程！在100行左右毫无新意的c代码中，我设法实现一个基本的<a href="http://en.wikipedia.org/wiki/Garbage_collection_(computer_science" target="_blank" rel="external">标记和扫描</a>#Na.C3.AFve_mark-and-sweep)模块。</p>
+<p>垃圾收集被认为是有更多编程牛人出没的水域之一，但在这里，我会给你一个漂亮的儿童游泳池去玩耍。可能这里面仍然会有一些能手，但至少这会是一个浅水区。</p>
+<h3 id="精简、复用、再复用"><a href="#精简、复用、再复用" class="headerlink" title="精简、复用、再复用"></a>精简、复用、再复用</h3><p>垃圾回收背后有这样一个基本的观念：编程语言（大多数的）似乎总能访问无限的内存。而开发者可以一直分配、分配再分配——像魔法一样，取之不尽用之不竭。</p>
+<p>当然，我们从来都没有无限的内存。所以计算机实现回收的方式就是当机器需要分配一些内存，而内存又不足时，让它回收垃圾。</p>
+<p>“垃圾(Garbage)”在这里表示那些事先分配过但后来不再被使用的内存。而基于对无限内存的幻想，我们需要确保“不再被使用”对于编程语言来说是非常安全的。要知道在你的程序试图访问一些随机的对象时它们却刚好正在得到回收，这可不是一件好玩的事情。</p>
+<p>为了实现回收，编程语言需要确保程序不再使用那个对象。如果该程序不能得到一个对象的引用，那么显然它也不会再去使用它。所以关于”in use”的定义事实上非常简单：</p>
+<ol>
+<li>任何被一个变量引用的对象，仍然在作用域内，就属于”in use”状态。</li>
+<li>任何被另一个对象引用的对象，仍在使用中，就是”in use”状态。</li>
+</ol>
+<p>如果对象A被一个变量引用，而它又有一些地方引用了对象B，那么B就是在使用中(“in use”)，因为你能够通过A来访问到它。这样到最后的结果就是得到一张可访问的对象图——以一个变量为起点并能够遍历到的所有对象。任何不在图中的对象对于程序来说都是死的，而它的内存也是时候被回收了。</p>
+<h3 id="标记并清理"><a href="#标记并清理" class="headerlink" title="标记并清理"></a>标记并清理</h3><p>有很多<a href="http://en.wikipedia.org/wiki/Garbage_collection_(computer_science" target="_blank" rel="external">不同的方法</a>#Tracing_garbage_collectors)可以实现关于查找和回收所有未被使用的对象的操作，但是最简单也是第一个被提出的算法就是”标记-清除”算法。它由John McCarthy——Lisp(列表处理语言)的发明者提出，所以你现在做的事情就像是与一个古老的神在交流，但希望你别用一些<a href="http://zh.wikipedia.org/wiki/%E9%9C%8D%E5%8D%8E%E5%BE%B7%C2%B7%E8%8F%B2%E5%88%A9%E6%99%AE%E6%96%AF%C2%B7%E6%B4%9B%E5%A4%AB%E5%85%8B%E6%8B%89%E5%A4%AB%E7%89%B9" target="_blank" rel="external">洛夫克拉夫特</a>式的方法——最后以你的大脑和视网膜的完全枯萎而结束。该算法的工作原理几乎与我们对”可访问性(reachability)”的定义完全一样：</p>
+<ol>
+<li>从根节点开始，依次遍历整个对象图。每当你访问到一个对象，在上面设置一个”标记(mark)”位，置为true。</li>
+<li>一旦搞定，找出所有标记位为”not”的对象集，然后删除它们。</li>
+</ol>
+<p>对，就是这样。我猜你可能已经想到了，对吧？如果是，那你可能就成为了一位被引用了数百次的文章的作者。所以这件事情的教训就是，想要在CS(计算机科学)领域中出名，你不必开始就搞出一个很牛的东西，你只需要第一个整出来即可，哪怕这玩意看上去很搓。</p>
+<h3 id="对象对"><a href="#对象对" class="headerlink" title="对象对"></a>对象对</h3><p>在我们落实这两个步骤之前，让我们先做些不相关的准备工作。我们不会为一种语言真正实现一个解释器——没有分析器，字节码、或任何这种愚蠢的东西。但我们确实需要一些少量的代码来创建一些垃圾去收集。<br>让我们假装我们正在为一种简单的语言编写一个解释器。它是动态类型，并且有两种类型的变量：int 和 pair。 下面是用枚举来标示一个对象的类型：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123;</div><div class="line">    OBJ_INT,</div><div class="line">    OBJ_PAIR</div><div class="line">&#125; ObjectType;</div></pre></td></tr></table></figure></p>
+<p> 其中，pair可以是任何一对东西，两个int、一个int和另一个pair，什么都可以。<a href="http://www.flickr.com/photos/raganwald/212588975/" target="_blank" rel="external">随你怎么想都行</a>。因为一个对象在虚拟机中可以是这两个当中的任意一种类型，所以在c中实现对象的典型方法是时用一个<a href="http://en.wikipedia.org/wiki/Tagged_union" target="_blank" rel="external">标记联合体</a><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">typedef</span> <span class="keyword">struct</span> sObject &#123;</div><div class="line"> 	ObjectType type;	 </div><div class="line">  	<span class="keyword">union</span> &#123;</div><div class="line">    	<span class="comment">/* OBJ_INT */</span></div><div class="line">    	<span class="keyword">int</span> value;</div><div class="line"> </div><div class="line">    	<span class="comment">/* OBJ_PAIR */</span></div><div class="line">    	<span class="keyword">struct</span> &#123;</div><div class="line">      	<span class="keyword">struct</span> sObject* head;</div><div class="line">      	<span class="keyword">struct</span> sObject* tail;</div><div class="line">    	&#125;;</div><div class="line">  	&#125;;</div><div class="line">&#125; Object;</div></pre></td></tr></table></figure></p>
+<p>这个Object结构拥有一个type字段表示它是哪种类型的值——要么是int要么是pair。接下来用一个union来持有这个int或是pair的数据。如果你对c语言很生疏，一个union就是一个结构体，它将字段重叠在内存中。由于一个给定的对象只能是int或是pair，我们没有任何理在一个单独的对象中同时为所有这3个字段分配内存。一个union就搞定。帅吧。</p>
+<h3 id="小虚拟机"><a href="#小虚拟机" class="headerlink" title="小虚拟机"></a>小虚拟机</h3><p>现在我们可以将其包装在一个小的虚拟机结构中了。它(指虚拟机)在这里的角色是用一个栈来存储在当前作用域内的变量。大多数语言虚拟机要么是基于栈(如JVM和CLR)的，要么是基于寄存器(如Lua)的。但是不管哪种情况，实际上仍然存在这样一个栈。它用来存放在一个表达式中间需要用到的临时变量和局部变量。<br>我们来简洁明了地建立这个模型，如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> STACK_MAX 256</span></div><div class="line"> </div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">  	Object* <span class="built_in">stack</span>[STACK_MAX];</div><div class="line">  	<span class="keyword">int</span> stackSize;</div><div class="line">&#125; VM;</div></pre></td></tr></table></figure></p>
+<p>现在我们得到了一个合适的基本数据结构，接下来我们一起敲些代码来创建些东西。首先，我们来写一个方法创建并初始化一个虚拟机：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">VM* <span class="title">newVM</span><span class="params">()</span> </span>&#123;</div><div class="line">  VM* vm = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(VM));</div><div class="line">  vm-&gt;stackSize = <span class="number">0</span>;</div><div class="line">  <span class="keyword">return</span> vm;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>一旦我们得到了虚拟机，我们需要能够操作它的堆栈：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(VM* vm, Object* value)</span> </span>&#123;</div><div class="line">  assert(vm-&gt;stackSize &lt; STACK_MAX, <span class="string">"Stack overflow!"</span>);</div><div class="line">  vm-&gt;<span class="built_in">stack</span>[vm-&gt;stackSize++] = value;</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function">Object* <span class="title">pop</span><span class="params">(VM* vm)</span> </span>&#123;</div><div class="line">  assert(vm-&gt;stackSize &gt; <span class="number">0</span>, <span class="string">"Stack underflow!"</span>);</div><div class="line">  <span class="keyword">return</span> vm-&gt;<span class="built_in">stack</span>[--vm-&gt;stackSize];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>好了，现在我们能敲些玩意到”变量”中了，我们需要能够实际的创建对象。首先来一些辅助函数：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function">Object* <span class="title">newObject</span><span class="params">(VM* vm, ObjectType type)</span> </span>&#123;</div><div class="line">  Object* object = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Object));</div><div class="line">  object-&gt;type = type;</div><div class="line">  <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>它实现了内存的分配和设置类型标记。我们一会儿会重温它的。利用它，我们可以编写方法将每种类型的对象压到虚拟机的栈上：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushInt</span><span class="params">(VM* vm, <span class="keyword">int</span> intValue)</span> </span>&#123;</div><div class="line">  Object* object = newObject(vm, OBJ_INT);</div><div class="line">  object-&gt;value = intValue;</div><div class="line">  push(vm, object);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"><span class="function">Object* <span class="title">pushPair</span><span class="params">(VM* vm)</span> </span>&#123;</div><div class="line">  Object* object = newObject(vm, OBJ_PAIR);</div><div class="line">  object-&gt;tail = pop(vm);</div><div class="line">  object-&gt;head = pop(vm);</div><div class="line"> </div><div class="line">  push(vm, object);</div><div class="line">  <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这就是我们的小小虚拟机。如果我们有调用这些方法的解析器和解释器，那我们手上就有了一种对上帝都诚实的语言。而且，如果我们有无限的内存，它甚至能够运行真正的程序。可惜咱们没有，所以让我们来收集些垃圾吧。</p>
+<h3 id="标记"><a href="#标记" class="headerlink" title="标记"></a>标记</h3><p>第一个阶段就是标记(marking)。我们需要扫遍所有可以访问到的对象，并设置其标志位。现在我们需要做的第一件事就是为对象添加一个标志位(mark bit)：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> sObject &#123;</div><div class="line">  <span class="keyword">unsigned</span> <span class="keyword">char</span> marked;</div><div class="line">  <span class="comment">/* Previous stuff... */</span></div><div class="line">&#125; Object;</div></pre></td></tr></table></figure></p>
+<p>一旦我们创建了一个新的对象，我们将修改newObject()方法初始化marked为0。为了标记所有可访问的对象，我们从内存中的变量入手，这样就意味着要扫一遍堆栈。看上去就像这样：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">markAll</span><span class="params">(VM* vm)</span></span></div><div class="line">&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vm-&gt;stackSize; i++) &#123;</div><div class="line">    mark(vm-&gt;<span class="built_in">stack</span>[i]);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>里面又调用了mark。我们来分几步搭建它。第一：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mark</span><span class="params">(Object* object)</span> </span>&#123;</div><div class="line">  object-&gt;marked = <span class="number">1</span>;</div><div class="line">&#125;`</div></pre></td></tr></table></figure></p>
+<p>毫无疑问，这是最重要的一点。我们标记了这个对象自身是可访问的，但记住，我们还需要处理对象中的引用：可访问性是递归的。如果该对象是一个pair，它的两个字段也是可访问的。操作很简单：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mark</span><span class="params">(Object* object)</span> </span>&#123;</div><div class="line">  object-&gt;marked = <span class="number">1</span>;</div><div class="line"> </div><div class="line">  <span class="keyword">if</span> (object-&gt;type == OBJ_PAIR) &#123;</div><div class="line">    mark(object-&gt;head);</div><div class="line">    mark(object-&gt;tail);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是这里有一个bug。你看到了吗？我们正在递归，但我们没有检查循环。如果你有一堆pair在一个循环中相互指向对方，这就会造成栈溢出并崩溃。<br>为了解决这个情况，我们仅需要做的是在访问到了一个已经处理过的对象时，退出即可。所以完整的mark()方法应该是：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mark</span><span class="params">(Object* object)</span> </span>&#123;</div><div class="line">  <span class="comment">/* If already marked, we're done. Check this first</span></div><div class="line">     to avoid recursing on cycles in the object graph. */</div><div class="line">  <span class="keyword">if</span> (object-&gt;marked) <span class="keyword">return</span>;</div><div class="line"> </div><div class="line">  object-&gt;marked = <span class="number">1</span>;</div><div class="line"> </div><div class="line">  <span class="keyword">if</span> (object-&gt;type == OBJ_PAIR) &#123;</div><div class="line">    mark(object-&gt;head);</div><div class="line">    mark(object-&gt;tail);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在我们可以调用markAll()方法了，它会准确的标记内存中所有可访问的对象。我们已经成功一半了！</p>
+<h3 id="清理"><a href="#清理" class="headerlink" title="清理"></a>清理</h3><p>下一个阶段就是清理一遍所有我们已经分配过(内存)的对象并释放那些没有被标记过的(对象)。但这里有一个问题：所有未被标记的对象——我们所定义的——都不可达！我们都不能访问到它们！<br>虚拟机已经实现了对象引用的语义：所以我们只在变量和pair元素中储存指向对象的指针。当一个对象不再被任何指针指向时，那我们就完全失去它了，而这也实际上造成了内存泄露。<br>解决这个问题的诀窍是：虚拟机可以有它自己的对象引用，而这不同于对语言使用者可读的那种语义。换句话说，我们自己可以保留它们的痕迹。<br>这么做最简单的方法是仅维持一张由所有分配过(内存)的对象(组成)的链表。我们在这个链表中将对象自身扩展为一个节点：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> sObject &#123;</div><div class="line">  <span class="comment">/* The next object in the list of all objects. */</span></div><div class="line">  <span class="keyword">struct</span> sObject* next;</div><div class="line"> </div><div class="line">  <span class="comment">/* Previous stuff... */</span></div><div class="line">&#125; Object;</div></pre></td></tr></table></figure></p>
+<p>虚拟机会保留这个链表头的痕迹：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">  <span class="comment">/* The first object in the list of all objects. */</span></div><div class="line">  Object* firstObject;</div><div class="line"></div><div class="line">  <span class="comment">/* Previous stuff... */</span></div><div class="line">&#125; VM;</div></pre></td></tr></table></figure></p>
+<p>在newVM()方法中我们确保将firstObject初始化为NULL。无论何时创建一个对象，我们都将其添加到链表中：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function">Object* <span class="title">newObject</span><span class="params">(VM* vm, ObjectType type)</span> </span>&#123;</div><div class="line">  Object* object = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Object));</div><div class="line">  object-&gt;type = type;</div><div class="line">  object-&gt;marked = <span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="comment">/* Insert it into the list of allocated objects. */</span></div><div class="line">  object-&gt;next = vm-&gt;firstObject;</div><div class="line">  vm-&gt;firstObject = object;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样一来，即便是语言找不到一个对像，它还是可以被实现。想要清理并删除那些未被标记的对象，我们只需要遍历该链表：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sweep</span><span class="params">(VM* vm)</span></span></div><div class="line">&#123;</div><div class="line">  Object** object = &amp;vm-&gt;firstObject;</div><div class="line">  <span class="keyword">while</span> (*object) &#123;</div><div class="line">    <span class="keyword">if</span> (!(*object)-&gt;marked) &#123;</div><div class="line">      <span class="comment">/* This object wasn't reached, so remove it from the list</span></div><div class="line">         and free it. */</div><div class="line">      Object* unreached = *object;</div><div class="line"></div><div class="line">      *object = unreached-&gt;next;</div><div class="line">      <span class="built_in">free</span>(unreached);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="comment">/* This object was reached, so unmark it (for the next GC)</span></div><div class="line">         and move on to the next. */</div><div class="line">      (*object)-&gt;marked = <span class="number">0</span>;</div><div class="line">      object = &amp;(*object)-&gt;next;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这段代码读起来有点棘手，因为那个指针(指object)指向的是一个指针，但是通过它的工作你会发现它还是非常简单的。它只是扫遍了整张链表。只要它碰到了一个未被标记的对象，它就会释放该对象的内存并将其从链表中移除。最后，我们将会删除所有不可访问的对象。<br>祝贺你！我们已经有了一个垃圾收集器！现在只剩下一点工作了：实际调用它！首先我们将这两个阶段整合在一起：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">gc</span><span class="params">(VM* vm)</span> </span>&#123;</div><div class="line">  markAll(vm);</div><div class="line">  sweep(vm);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>没有比这更明显的”标记-清除”算法了。现在最棘手的是搞清楚什么时候来实际调用它。”内存不足(low on memory)”是个什么意思？尤其是对于现在的计算机，它们几乎拥有无限的虚拟内存！<br>事实证明，我们没有完全正确或错误的答案。这真的取决于你使用虚拟机的目的以及让它运行在什么样的硬件上。为了让这个例子看上去很简单，我们仅在进行了一定数量的内存分配之后开始收集。事实上一些语言的实现就是这么做的，而这也很容易。<br>我们将邀请虚拟机来追踪我们到底创建了多少(对象)：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</div><div class="line">  <span class="comment">/* The total number of currently allocated objects. */</span></div><div class="line">  <span class="keyword">int</span> numObjects;</div><div class="line"> </div><div class="line">  <span class="comment">/* The number of objects required to trigger a GC. */</span></div><div class="line">  <span class="keyword">int</span> maxObjects;</div><div class="line"> </div><div class="line">  <span class="comment">/* Previous stuff... */</span></div><div class="line">&#125; VM;</div></pre></td></tr></table></figure></p>
+<p>接下来，初始化：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">VM* <span class="title">newVM</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">/* Previous stuff... */</span></div><div class="line"> </div><div class="line">  vm-&gt;numObjects = <span class="number">0</span>;</div><div class="line">  vm-&gt;maxObjects = INITIAL_GC_THRESHOLD;</div><div class="line">  <span class="keyword">return</span> vm;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中，INITIAL_GC_THRESHOLD为你启动第一个GC(垃圾收集器)的对象数量。较小的值会更节省内存，而较大的值则更省时。自己看着办吧。<br>每当我们创建一个对象，我们增加numObjects，如果它达到最大值就启动一次收集：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function">Object* <span class="title">newObject</span><span class="params">(VM* vm, ObjectType type)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (vm-&gt;numObjects == vm-&gt;maxObjects) gc(vm);</div><div class="line"> </div><div class="line">  <span class="comment">/* Create object... */</span></div><div class="line"> </div><div class="line">  vm-&gt;numObjects++;</div><div class="line">  <span class="keyword">return</span> object;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我不会费心的显示它(指numObjects)，但是我们也会稍微调整sweep()方法，每释放一次就递减numObjects。最后，我们修改了gc()方法来更新最大值：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">gc</span><span class="params">(VM* vm)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> numObjects = vm-&gt;numObjects;</div><div class="line"> </div><div class="line">  markAll(vm);</div><div class="line">  sweep(vm);</div><div class="line"> </div><div class="line">  vm-&gt;maxObjects = vm-&gt;numObjects * <span class="number">2</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>每次收集之后，我们更新maxObjects——以进行收集后仍在活动的对象为基准。乘法器让我们的堆随着活动中的对象数量的增加而增加。同样，也会随着一些对象最终被释放掉而自动减少。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>你成功了！如果你全部照做了，那你现在已经得到了一个简单的垃圾收集算法的句柄。如果你想看完整的代码，<a href="https://github.com/munificent/mark-sweep" target="_blank" rel="external">在这里</a>。我再强调一点，尽管这个收集器很简单，但它可不是一个玩具。<br>你可以在这上面做一大堆的优化（像在GC和程序设计语言这些事情中，90%的努力都在优化上），但它的核心代码可是真正的GC。它与目前Ruby和Lua中的收集器非常的相似。你可以使用一些类似的代码到你的项目中。去做些很酷的事情吧！</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gc/" rel="tag">#gc</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/" rel="next" title="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作">
+                <i class="fa fa-chevron-left"></i> [转]cocos2d-x 2x 菜鸟编塔防 01 准备工作
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/12/22/2013-12-22-Eclipse上GIT插件EGIT使用手册/" rel="prev" title="Eclipse上GIT插件EGIT使用手册">
+                Eclipse上GIT插件EGIT使用手册 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/12/22/2013-12-22-编写你的第一个垃圾收集器/"
+     data-title="[转] 编写你的第一个垃圾收集器"
+     data-content=""
+     data-url="http://yoursite.com/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2013/12/22/2013-12-22-编写你的第一个垃圾收集器/"
+           data-title="[转] 编写你的第一个垃圾收集器" data-url="http://yoursite.com/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#精简、复用、再复用"><span class="nav-number">1.</span> <span class="nav-text">精简、复用、再复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记并清理"><span class="nav-number">2.</span> <span class="nav-text">标记并清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象对"><span class="nav-number">3.</span> <span class="nav-text">对象对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小虚拟机"><span class="nav-number">4.</span> <span class="nav-text">小虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记"><span class="nav-number">5.</span> <span class="nav-text">标记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清理"><span class="nav-number">6.</span> <span class="nav-text">清理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后"><span class="nav-number">7.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

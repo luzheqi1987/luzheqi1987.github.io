@@ -1,0 +1,863 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java,spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="转载自jmatrix本文链接地址: Spring MVC源码分析——初始化过程
+1.概述
+对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]Spring MVC源码分析——初始化过程">
+<meta property="og:url" content="http://yoursite.com/2015/04/08/[转]Spring MVC源码分析——初始化过程/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="转载自jmatrix本文链接地址: Spring MVC源码分析——初始化过程
+1.概述
+对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutio">
+<meta property="og:image" content="http://www.jmatrix.org/wp-content/uploads/2013/08/1.jpg">
+<meta property="og:image" content="http://www.jmatrix.org/wp-content/uploads/2013/08/2.jpg">
+<meta property="og:image" content="http://www.jmatrix.org/wp-content/uploads/2013/08/3.jpg">
+<meta property="og:image" content="http://www.jmatrix.org/wp-content/uploads/2013/08/4.jpg">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]Spring MVC源码分析——初始化过程">
+<meta name="twitter:description" content="转载自jmatrix本文链接地址: Spring MVC源码分析——初始化过程
+1.概述
+对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutio">
+<meta name="twitter:image" content="http://www.jmatrix.org/wp-content/uploads/2013/08/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/08/[转]Spring MVC源码分析——初始化过程/"/>
+
+  <title> [转]Spring MVC源码分析——初始化过程 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]Spring MVC源码分析——初始化过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-08T16:02:03+08:00" content="2015-04-08">
+              2015-04-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/08/[转]Spring MVC源码分析——初始化过程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转载自<a href="http://www.jmatrix.org/" target="_blank" rel="external">jmatrix</a><br>本文链接地址: <a href="http://www.jmatrix.org/spring/453.html" target="_blank" rel="external">Spring MVC源码分析——初始化过程</a></p>
+<p>1.<strong>概述</strong></p>
+<p>对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutionChain，其中包含了具体的处理对象handler（也即我们编程时写的controller）以及一系列的拦截器interceptors，此时DispatcherServlet会根据返回的HandlerExecutionChain中的handler找到支持这一处理器类型的适配器（handlerAdapter），在处理器适配器中最终会去调用控制器的请求响应方法并返回结果视图（ModelAndView），得到结果视图后，通过render方法完成结果的显示。</p>
+<p>HanderMapping的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/1.jpg" alt=""></p>
+<p>HandlerAdapter的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/2.jpg" alt=""></p>
+<p>同样的视图解析器ViewResolver针对不同的输出格式也有一系列的实现类，具体可自己看。</p>
+<p>2.<strong>实现分析</strong><br>以我自己的一个web项目中spring mvc的配置为例：<br>[xml]<br>&lt;context:component-scan base-package=&quot;cn.ds.log&quot; /&gt;<br>&lt;bean id=&quot;defaultHandlerMapping&quot;<br>    class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot; /&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean id=&quot;viewResolver&quot;<br>    class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name=&quot;prefix&quot;&gt;<br>        &lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;<br>    &lt;/property&gt;<br>    &lt;property name=&quot;suffix&quot;&gt;<br>        &lt;value&gt;.jsp&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/bean&gt;<br>[/xml]<br>这里因为是采用全注解的方式，所以先通过context:component-scan配置让spring自定扫描的包路径，接着配置handlerMapping、handlerAdapter及ViewResolver，几乎包含了SpringMVC的配置中需要涉及的所有元素。后面需要涉及具体的HanderMapping等的实现时，将以这里配置中的实现为例进行分析，其它的大家“同理可解”。</p>
+<p>2.1 <strong>Spring MVC初始化流程</strong><br>DispatcherServlet的继承体系如：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/3.jpg" alt=""><br>看到它们继承自HttpServlet，你就知道初始化过程应该是从init方法开始了，整个初始化的流程为：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/4.jpg" alt=""></p>
+<p>很简单是么？我也觉得是，至少从上面的时序图看来是这样，不过前提是你已经很了解Spring IOC的实现原理了。上面的时序图中，在5的initStragegies()中除了调用6,7的函数外，还有几个类似的初始化函数，因为这里主要是为了理解整个的流程，所以我都省略了。上面流程可能需要分析的地方就在于3,4步，我们看看initWebApplicationContext函数的实现：<br>[java]<br>protected WebApplicationContext initWebApplicationContext() {<br>        WebApplicationContext rootContext =<br>                WebApplicationContextUtils.getWebApplicationContext(getServletContext());<br>        WebApplicationContext wac = null;</p>
+<pre><code>    if (this.webApplicationContext != null) {
+        // A context instance was injected at construction time -&amp;amp;gt; use it
+        wac = this.webApplicationContext;
+        if (wac instanceof ConfigurableWebApplicationContext) {
+            ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
+            if (!cwac.isActive()) {
+                ……
+                configureAndRefreshWebApplicationContext(cwac);
+            }
+        }
+    }
+    if (wac == null) {
+        wac = findWebApplicationContext();
+    }
+    if (wac == null) {
+        // No context instance is defined for this servlet -&amp;amp;gt; create a local one
+        wac = createWebApplicationContext(rootContext);
+    }
+
+    if (!this.refreshEventReceived) {
+        // Either the context is not a ConfigurableApplicationContext with refresh
+        // support or the context injected at construction time had already been
+        // refreshed -&amp;amp;gt; trigger initial onRefresh manually here.
+        onRefresh(wac);
+    }
+
+    if (this.publishContext) {
+        ……
+    }
+
+    return wac;
+}
+</code></pre><p>[/java]<br>看起来貌似有点复杂，其实理解了IOC容器的实现原理（可以看下“spring ioc源码分析”一文，⊙﹏⊙多年前弄的，这次暑假实习时又以读书报告的形式写了，感觉当年肿么可以写得这么乱……也是一种成长，不打算修改）就很简单，函数一开始会去获取WebApplicationContext对象，这个对象在ContextLoaderListener初始化IOC容器时就已经把它set到ServletContext的属性中，而且它也正是ConfigurableWebApplicationContext的实例，第一个if语句其实就是如果此时SpringIOC容器没有初始化的话就在这里启动IOC容器的初始化过程，因为看“省略（1）”中的代码你就知道，它会在这里调用refresh函数，“世人”都知道这就是IOC容器启动的入口，这里会解析配置文件springmvc-servlet.xml。</p>
+<p>这里最终要执行onRefresh()，而这个就是SpringMVC初始化的入口。</p>
+<p>（注：其实这里也可以配置log4j，通过其打印的info信息来看IOC与MVC的初始化顺序）</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+            <a href="/tags/spring/" rel="tag">#spring</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/" rel="next" title="[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC">
+                <i class="fa fa-chevron-left"></i> [转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/13/关于java字节码框架ASM的学习'/" rel="prev" title="关于java字节码框架ASM的学习">
+                关于java字节码框架ASM的学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/04/08/[转]Spring MVC源码分析——初始化过程/"
+     data-title="[转]Spring MVC源码分析——初始化过程"
+     data-content=""
+     data-url="http://yoursite.com/2015/04/08/[转]Spring MVC源码分析——初始化过程/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/08/[转]Spring MVC源码分析——初始化过程/"
+           data-title="[转]Spring MVC源码分析——初始化过程" data-url="http://yoursite.com/2015/04/08/[转]Spring MVC源码分析——初始化过程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1017 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="cocos2d," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="点击打开链接
+一.前言最近在学习2dx，看了几个源码，手很是痒痒，下面跟我一下编写一个类似保卫大萝卜的塔防游戏吧。
+
+二.不废话开始编代码。我用的cocos2d-x 的版本是2.04 ，编辑器是vs2010.首先创建一个工程，我们取名字叫“TDgame”。之后我们添加几个常用到的模块。 1.动画管理器，AnimationManager类 AnimationManager类这是个单例的类,大家要问这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作">
+<meta property="og:url" content="http://yoursite.com/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="点击打开链接
+一.前言最近在学习2dx，看了几个源码，手很是痒痒，下面跟我一下编写一个类似保卫大萝卜的塔防游戏吧。
+
+二.不废话开始编代码。我用的cocos2d-x 的版本是2.04 ，编辑器是vs2010.首先创建一个工程，我们取名字叫“TDgame”。之后我们添加几个常用到的模块。 1.动画管理器，AnimationManager类 AnimationManager类这是个单例的类,大家要问这">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作">
+<meta name="twitter:description" content="点击打开链接
+一.前言最近在学习2dx，看了几个源码，手很是痒痒，下面跟我一下编写一个类似保卫大萝卜的塔防游戏吧。
+
+二.不废话开始编代码。我用的cocos2d-x 的版本是2.04 ，编辑器是vs2010.首先创建一个工程，我们取名字叫“TDgame”。之后我们添加几个常用到的模块。 1.动画管理器，AnimationManager类 AnimationManager类这是个单例的类,大家要问这">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/"/>
+
+  <title> [转]cocos2d-x 2x 菜鸟编塔防 01 准备工作 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]cocos2d-x 2x 菜鸟编塔防 01 准备工作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-16T19:37:00+08:00" content="2013-12-16">
+              2013-12-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/COCOS2D-X/" itemprop="url" rel="index">
+                    <span itemprop="name">COCOS2D-X</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="http://farsa.blog.51cto.com/6172595/1132161" target="_blank" rel="external">点击打开链接</a></p>
+<h4 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h4><p>最近在学习2dx，看了几个源码，手很是痒痒，下面跟我一下编写一个类似保卫大萝卜的塔防游戏吧。</p>
+<hr>
+<h4 id="二-不废话开始编代码。"><a href="#二-不废话开始编代码。" class="headerlink" title="二.不废话开始编代码。"></a>二.不废话开始编代码。</h4><p>我用的cocos2d-x 的版本是2.04 ，编辑器是vs2010.首先创建一个工程，我们取名字叫“TDgame”。<br>之后我们添加几个常用到的模块。<br> 1.动画管理器，AnimationManager类<br> AnimationManager类这是个单例的类,大家要问这样弄个单例类出来有什么好处呢，有什么作用呢，一开始我也是不明白，最后看了看魔塔的源代码，总结了一下：1. 实现了一体化，也就是说把所有的动画加载都放到一个函数中，我们可以让这个函数出现在想要的位置上，比如,我们有一大堆的精灵动画，如果在游戏中加载起来会让游戏有点卡，这时候我们就可以创建一个进入游戏时的加载页面，同时执行加载动画。一般游戏也都是这么做的。</p>
+<ol>
+<li>规范代码，有利于编写代码。</li>
+</ol>
+<p>好了它的优点和作用就说到这吧，肯定还有很多，我也就不知道了。</p>
+<p>关于单例的问题大家可以看看这篇文章<br><a href="http://www.zilongshanren.com/cocos2d-x-design-pattern" target="_blank" rel="external">http://www.zilongshanren.com/cocos2d-x-design-pattern-singleton1/</a></p>
+<p>回到主题，首先我们粘贴一段代码。</p>
+<hr>
+<h2 id="第一步：复制黏贴"><a href="#第一步：复制黏贴" class="headerlink" title="第一步：复制黏贴"></a>第一步：复制黏贴</h2><p>在魔塔的源代码中有一个单例类的模板，无脑的复制黏贴，这个模板是动画管理器AnimationManager的基类，这个有什么用呢，其实用处很简单就是一个单例的模板让继承他的子类都变成单例模式，下次再做别的游戏时用到直接继承，多方便。当然你也可以不用这个模板，直接让AnimationManager变成单例类。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _SINGLETON_H </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _SINGLETON_H </span></div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">class</span> Singleton </div><div class="line">&#123; </div><div class="line"><span class="keyword">public</span>: </div><div class="line">    <span class="comment">//获取类的唯一实例 </span></div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> T* <span class="title">instance</span><span class="params">()</span></span>; </div><div class="line">    <span class="comment">//释放类的唯一实例 </span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">release</span><span class="params">()</span></span>; </div><div class="line"><span class="keyword">protected</span>: </div><div class="line">    Singleton(<span class="keyword">void</span>)&#123;&#125; </div><div class="line">    ~Singleton(<span class="keyword">void</span>)&#123;&#125; </div><div class="line">    <span class="keyword">static</span> T* <span class="number">_</span>instance; </div><div class="line">&#125;; </div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">inline</span> T* Singleton&lt;T&gt;::instance() </div><div class="line">&#123; </div><div class="line">    <span class="keyword">if</span>(!<span class="number">_</span>instance) </div><div class="line">        <span class="number">_</span>instance = <span class="keyword">new</span> T; </div><div class="line">    <span class="keyword">return</span> <span class="number">_</span>instance; </div><div class="line">&#125; </div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">void</span> Singleton&lt;T&gt;::release() </div><div class="line">&#123; </div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>instance) </div><div class="line">        <span class="keyword">return</span>; </div><div class="line">    <span class="keyword">delete</span> <span class="number">_</span>instance; </div><div class="line">    <span class="number">_</span>instance = <span class="number">0</span>; </div><div class="line">&#125; </div><div class="line"> </div><div class="line"><span class="comment">//cpp文件中需要先声明静态变量 </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DECLARE_SINGLETON_MEMBER(_Ty)   \ </span></div><div class="line">    <span class="keyword">template</span> &lt;&gt; <span class="number">_</span>Ty* Singleton&lt;<span class="number">_</span>Ty&gt;::<span class="number">_</span>instance = <span class="literal">NULL</span>; </div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span><span class="comment">//_SINGLETON_H</span></span></div></pre></td></tr></table></figure>
+<p>好了这样我们的标准的单例基类就写好了,记住这是一个.h文件 注意：<br>1.子类要在子类的cpp文件开始写上DECLARE_SINGLETON_MEMBER(子类的名字)<br>2.子类最好写上构造和析构函数</p>
+<hr>
+<h2 id="第二步：编写动画管理器AnimationManager类"><a href="#第二步：编写动画管理器AnimationManager类" class="headerlink" title="第二步：编写动画管理器AnimationManager类"></a>第二步：编写动画管理器AnimationManager类</h2><p>先看代码：###AnimationManager.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _ANIMATION_MANAGER_H_ </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _ANIMATION_MANAGER_H_ </span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cocos2d.h"</span> </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Singleton.h"</span> </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"type.h"</span> </span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cocos2d; </div><div class="line"> </div><div class="line"><span class="keyword">class</span> AnimationManager : <span class="keyword">public</span> Singleton&lt;AnimationManager&gt; </div><div class="line">&#123; </div><div class="line"><span class="keyword">public</span>: </div><div class="line">    AnimationManager(); </div><div class="line">    ~AnimationManager(); </div><div class="line">    <span class="comment">//初始化动画模版缓存表 </span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">initAnimationMap</span><span class="params">()</span></span>; </div><div class="line">    <span class="comment">//根据名字得到一个动画模板 </span></div><div class="line">    <span class="function">CCAnimation* <span class="title">getAnimation</span><span class="params">(<span class="keyword">int</span> key)</span></span>; </div><div class="line">    <span class="comment">//创建一个动画实例 </span></div><div class="line">    <span class="function">CCAnimate* <span class="title">createAnimate</span><span class="params">(<span class="keyword">int</span> key)</span></span>; </div><div class="line">    <span class="comment">//创建一个动画实例 </span></div><div class="line">    <span class="function">CCAnimate* <span class="title">createAnimate</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* key)</span></span>; </div><div class="line">    <span class="comment">//清空所有缓存 </span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">releaseAllCacha</span><span class="params">()</span></span>; </div><div class="line"><span class="keyword">protected</span>: </div><div class="line">    <span class="comment">//加载勇士行走动画模版 </span></div><div class="line">    <span class="function">CCAnimation* <span class="title">createAnimationByDirection</span><span class="params">(HeroDirection direction)</span></span>; </div><div class="line">&#125;; </div><div class="line"><span class="comment">//定义动画管理器实例的别名 </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> sAnimationMgr AnimationManager::instance() </span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<h3 id="AnimationManager-cpp"><a href="#AnimationManager-cpp" class="headerlink" title="AnimationManager.cpp"></a>AnimationManager.cpp</h3><pre><code class="c++"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"AnimationManager.h"</span> </span>
+DECLARE_SINGLETON_MEMBER(AnimationManager); 
+
+
+
+AnimationManager::AnimationManager() 
+{ 
+
+} 
+
+AnimationManager::~AnimationManager() 
+{ 
+
+} 
+
+<span class="keyword">bool</span> AnimationManager::initAnimationMap() 
+{ 
+    <span class="keyword">bool</span> sRet = <span class="literal">false</span>; 
+    <span class="keyword">do</span>  
+    { 
+        <span class="comment">//1.添加图片进内存 </span>
+        CCTexture2D * creepTexture = CCTextureCache::sharedTextureCache()-&gt;addImage(<span class="string">"boy.png"</span>); 
+        CC_BREAK_IF(!creepTexture); 
+        <span class="comment">//2.加载各个方向的敌人动画 </span>
+        <span class="keyword">char</span> temp[<span class="number">20</span>]; 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aDown); 
+        <span class="comment">//加载勇士向下走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kDown), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aRight); 
+        <span class="comment">//加载勇士向右走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kRight), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aLeft); 
+        <span class="comment">//加载勇士向左走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kLeft), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aUp); 
+        <span class="comment">//加载勇士向上走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kUp), temp); 
+
+        sRet = <span class="literal">true</span>; 
+    } <span class="keyword">while</span> (<span class="number">0</span>); 
+    <span class="keyword">return</span> sRet; 
+} 
+
+CCAnimation* AnimationManager::getAnimation( <span class="keyword">int</span> key ) 
+{ 
+    <span class="keyword">char</span> temp[<span class="number">20</span>]; 
+    <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, key); 
+    <span class="keyword">return</span> CCAnimationCache::sharedAnimationCache()-&gt;animationByName(temp); 
+} 
+
+CCAnimate* AnimationManager::createAnimate( <span class="keyword">int</span> key ) 
+{ 
+    <span class="comment">//获取指定动画模版 </span>
+    CCAnimation* anim = getAnimation(key); 
+    <span class="keyword">if</span>(anim) 
+    { 
+        <span class="comment">//根据动画模版生成一个动画实例 </span>
+    <span class="comment">//  return cocos2d::CCAnimate::actionWithAnimation(anim); </span>
+        <span class="keyword">return</span> cocos2d::CCAnimate::create(anim); 
+    } 
+    <span class="keyword">return</span> <span class="literal">NULL</span>; 
+} 
+
+CCAnimate* AnimationManager::createAnimate( <span class="keyword">const</span> <span class="keyword">char</span>* key ) 
+{ 
+    <span class="comment">//获取指定动画模版 </span>
+    CCAnimation* anim = CCAnimationCache::sharedAnimationCache()-&gt;animationByName(key); 
+    <span class="keyword">if</span>(anim) 
+    { 
+        <span class="comment">//根据动画模版生成一个动画实例 </span>
+        <span class="keyword">return</span> cocos2d::CCAnimate::create(anim); 
+    } 
+    <span class="keyword">return</span> <span class="literal">NULL</span>; 
+} 
+
+CCAnimation* AnimationManager::createAnimationByDirection( HeroDirection direction ) 
+{ 
+    <span class="comment">//3.生产剪切动画 </span>
+    CCTexture2D * creepTexture=CCTextureCache::sharedTextureCache()-&gt;textureForKey(<span class="string">"boy.png"</span>); 
+    CCSpriteFrame *frame0, *frame1, *frame2, *frame3; 
+    frame0 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">0</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame1 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">1</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame2 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">2</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame3 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">3</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    CCArray * animFrames = <span class="keyword">new</span> CCArray(<span class="number">4</span>); 
+    animFrames-&gt;addObject(frame0); 
+    animFrames-&gt;addObject(frame1); 
+    animFrames-&gt;addObject(frame2); 
+    animFrames-&gt;addObject(frame3); 
+    CC_SAFE_RETAIN(animFrames); 
+    CCAnimation * animation= CCAnimation::createWithSpriteFrames(animFrames,<span class="number">0.5f</span>); 
+
+    animFrames-&gt;release(); 
+    <span class="keyword">return</span> animation; 
+} 
+
+<span class="keyword">void</span> AnimationManager::releaseAllCacha() 
+{ 
+
+}
+</code></pre>
+<p>建立完这个动画管理单例后，用法也是很简单,只需要调用那几个getXXXX 就行，当然这个动画管理器功能还比较简单，因为我是个新手所以不能一下吧所有的功能都写上，还是先用到哪些写那些。</p>
+<hr>
+<h2 id="第三步：全局数据"><a href="#第三步：全局数据" class="headerlink" title="第三步：全局数据"></a>第三步：全局数据</h2><p>之后我们在建立一个单例类，来保存一些全局数据<br>HWorld.h</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">ifndef</span> __HWORLD_H__ </span>
+<span class="meta">#<span class="meta-keyword">define</span> __HWORLD_H__ </span>
+
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cocos2d.h"</span> </span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"type.h"</span> </span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Singleton.h"</span> </span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> cocos2d; 
+<span class="keyword">class</span> HWorld: 
+    <span class="keyword">public</span> Singleton&lt;HWorld&gt; 
+{ 
+<span class="keyword">public</span>: 
+    HWorld(); 
+    ~HWorld(); 
+    <span class="comment">//初始化 </span>
+    <span class="function"><span class="keyword">bool</span> <span class="title">initHWorld</span><span class="params">()</span></span>; 
+    <span class="comment">//清空所有缓存 </span>
+    <span class="function"><span class="keyword">void</span> <span class="title">releaseAll</span><span class="params">()</span></span>; 
+<span class="keyword">public</span>: 
+    <span class="comment">//路点数组 </span>
+    CCPointArray * <span class="number">_</span>wayPoint;    
+}; 
+<span class="comment">//定义动画管理器实例的别名 </span>
+<span class="meta">#<span class="meta-keyword">define</span> sHWorld HWorld::instance() </span>
+<span class="meta">#<span class="meta-keyword">endif</span></span>
+</code></pre>
+<p>HWorld.cpp</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HWorld.h"</span>  </span>
+DECLARE_SINGLETON_MEMBER(HWorld);  
+
+<span class="keyword">bool</span> HWorld::initHWorld()  
+{  
+    <span class="keyword">return</span> <span class="literal">true</span>;  
+}  
+
+<span class="keyword">void</span> HWorld::releaseAll()  
+{  
+}  
+
+HWorld::HWorld()  
+{  
+}  
+
+HWorld::~HWorld()  
+{  
+}
+</code></pre>
+<p>目前这个类里面之后一个路点的数组，这个数组中保存了地图上需要转弯地方的坐标,其他的东西以后再添加。<br>当然还有我们的枚举，把它放在一个.h文件中，方便查看<br>type.h</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">ifndef</span> __TYPE_H__  </span>
+<span class="meta">#<span class="meta-keyword">define</span> __TYPE_H__  </span>
+
+<span class="keyword">typedef</span> <span class="keyword">enum</span> {  
+    kDown =  <span class="number">0</span>,<span class="comment">//向下方向  </span>
+    kLeft = <span class="number">1</span>,<span class="comment">//向左方向  </span>
+    kRight= <span class="number">2</span>,<span class="comment">//向右方向  </span>
+    kUp = <span class="number">3</span>,<span class="comment">//向上方向  </span>
+    kNormal,  
+} HeroDirection;<span class="comment">//勇士方向  </span>
+
+
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    aDown = <span class="number">0</span>,<span class="comment">//向下行走动画  </span>
+    aLeft,<span class="comment">//向左行走动画  </span>
+    aRight,<span class="comment">//向右行走动画  </span>
+    aUp,<span class="comment">//向上行走动画  </span>
+    aFight,<span class="comment">//刀光动画  </span>
+} AnimationKey;<span class="comment">//动画模版键值  </span>
+<span class="comment">//定义怪物的类型  </span>
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    kHighBlood=<span class="number">0</span>,<span class="comment">//高血量怪物  </span>
+    kQuick = <span class="number">1</span>,  
+
+}CreepType;  
+<span class="comment">//----------------定义一个creep中所用到的tag--------  </span>
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    kSprite =<span class="number">0</span>,<span class="comment">//精灵的标签  </span>
+    kSpeedAction = <span class="number">1</span>,<span class="comment">//控制速度的action所用的标签  </span>
+    kFoveverAction = <span class="number">2</span>,<span class="comment">//控制精灵帧的action标签  </span>
+}CreepTag;  
+ <span class="keyword">enum</span>   
+{  
+    kZMap = <span class="number">0</span>,<span class="comment">//地图的zOrder  </span>
+    kZNPC,  
+    kZTeleport,  
+    kZHero,<span class="comment">//勇士精灵的zOrder  </span>
+    kZTip,<span class="comment">//提示信息的zOrder  </span>
+};<span class="comment">//GameLayer中各部分的显示zOrder及tag  </span>
+<span class="meta">#<span class="meta-keyword">endif</span></span>
+</code></pre>
+<hr>
+<p>好了，生成一下。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cocos2d/" rel="tag">#cocos2d</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" rel="next" title="CODE 147. Evaluate Reverse Polish Notation">
+                <i class="fa fa-chevron-left"></i> CODE 147. Evaluate Reverse Polish Notation
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/12/22/2013-12-22-编写你的第一个垃圾收集器/" rel="prev" title="[转] 编写你的第一个垃圾收集器">
+                [转] 编写你的第一个垃圾收集器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/"
+     data-title="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作"
+     data-content=""
+     data-url="http://yoursite.com/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/"
+           data-title="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作" data-url="http://yoursite.com/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一-前言"><span class="nav-number">1.</span> <span class="nav-text">一.前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二-不废话开始编代码。"><span class="nav-number">2.</span> <span class="nav-text">二.不废话开始编代码。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步：复制黏贴"><span class="nav-number"></span> <span class="nav-text">第一步：复制黏贴</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步：编写动画管理器AnimationManager类"><span class="nav-number"></span> <span class="nav-text">第二步：编写动画管理器AnimationManager类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AnimationManager-cpp"><span class="nav-number"></span> <span class="nav-text">AnimationManager.cpp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步：全局数据"><span class="nav-number"></span> <span class="nav-text">第三步：全局数据</span></a></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

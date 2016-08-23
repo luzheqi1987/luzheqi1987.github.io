@@ -1,0 +1,799 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="emacs," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="原地址：点击打开链接
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta property="og:type" content="article">
+<meta property="og:title" content="别人的Emacs配置1">
+<meta property="og:url" content="http://yoursite.com/2014/01/04/2014-01-04-别人的Emacs配置1/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="原地址：点击打开链接
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="别人的Emacs配置1">
+<meta name="twitter:description" content="原地址：点击打开链接
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/01/04/2014-01-04-别人的Emacs配置1/"/>
+
+  <title> 别人的Emacs配置1 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                别人的Emacs配置1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-04T17:24:00+08:00" content="2014-01-04">
+              2014-01-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index">
+                    <span itemprop="name">Emacs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/04/2014-01-04-别人的Emacs配置1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原地址：<a href="http://blog.csdn.net/shyanyang/article/details/7979866" target="_blank" rel="external">点击打开链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div></pre></td><td class="code"><pre><div class="line">;;使用C-x C-e检测配置的正确性</div><div class="line">(global-linum-mode t);显示行号</div><div class="line">(setq column-number-mode t);显示列号</div><div class="line">(setq auto-image-file-mode t);让Emacs可以直接打开和显示图片</div><div class="line">(auto-compression-mode t);打开压缩文件时自动解压缩</div><div class="line">;(setq global-font-lock-mode t);进行语法加亮</div><div class="line">(setq x-select-enable-clipboard t);允许emacs和外部其他程序的粘贴</div><div class="line">(setq mouse-yank-at-point t);使用鼠标中键可以粘贴</div><div class="line">(set-scroll-bar-mode nil);;取消滚动栏</div><div class="line">(tool-bar-mode nil);取消工具栏</div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(display-time-mode 1);;启用时间显示设置，在minibuffer上面的那个杠上</div><div class="line">(setq display-time-24hr-format t);;时间使用24小时制</div><div class="line">(setq display-time-day-and-date t);;时间显示包括日期和具体时间</div><div class="line">(setq display-time-use-mail-icon t);;时间栏旁边启用邮件设置</div><div class="line">(setq display-time-interval 10);;时间的变化频率，单位多少来着？</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置结束 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(setq visible-bell t)</div><div class="line">;;关闭烦人的出错时的提示声</div><div class="line">(setq inhibit-startup-message t)</div><div class="line">;;关闭emacs启动时的画面</div><div class="line"></div><div class="line">;(setq font-lock-maximum-decoration t)</div><div class="line">;(setq font-lock-global-modes &apos;(not shell-mode text-mode))</div><div class="line">;(setq font-lock-verbose t)</div><div class="line">;(setq font-lock-maximum-size &apos;((t . 1048576) (vm-mode . 5250000)))</div><div class="line">;; 语法高亮。除 shell-mode 和 text-mode 之外的模式中使用语法高亮。</div><div class="line"></div><div class="line">(fset &apos;yes-or-no-p &apos;y-or-n-p)</div><div class="line">;; 改变 Emacs 固执的要你回答 yes 的行为。按 y 或空格键表示 yes，n 表示 no。</div><div class="line"></div><div class="line">(ansi-color-for-comint-mode-on)</div><div class="line">;真正shell－mode乱码解决。</div><div class="line"></div><div class="line">(setq default-fill-column 80)</div><div class="line">;默认显示 80列就换行</div><div class="line"></div><div class="line">(setq default-fill-column 120)</div><div class="line">;;把 fill-column 设为 60. 这样的文字更好读</div><div class="line"></div><div class="line">(setq default-major-mode &apos;text-mode)</div><div class="line">(add-hook &apos;text-mode-hook &apos;turn-on-auto-fill)</div><div class="line">;;设置缺省主模式是text，,并进入auto-fill次模式.而不是基本模式fundamental-mode</div><div class="line"></div><div class="line">(show-paren-mode t);显示括号匹配</div><div class="line">(setq show-paren-style &apos;parenthesis)</div><div class="line">;;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。</div><div class="line"></div><div class="line">(mouse-avoidance-mode &apos;animate)</div><div class="line">;;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。</div><div class="line"></div><div class="line">;;;;;;;disable tip of the day</div><div class="line">(setq ecb-tip-of-the-day nil)</div><div class="line"></div><div class="line">(setq-default indent-tabs-mode nil)</div><div class="line">(setq default-tab-width 4)</div><div class="line">(setq tab-stop-list ())</div><div class="line">;;不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的。</div><div class="line"></div><div class="line">(setq-default make-backup-files nil);不要生成临时文件</div><div class="line">(setq backup-directory-alist &apos;((&quot;.&quot; . &quot;~/.autosave&quot;)))</div><div class="line">;;设置自动备份文件保存的目录,以免把你的磁盘弄得乱七八糟(你可以</div><div class="line">;;去掉这一行试试看:P ~/.autosave 表示 主目录下的一个叫.autosave 的子目录，</div><div class="line">;;按照前面的方法设置主目录。</div><div class="line"></div><div class="line">;;最大化</div><div class="line">(defun my-maximized ()  </div><div class="line">  (interactive)  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_HORZ&quot; 0))  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0)))  </div><div class="line">(my-maximized)</div><div class="line"></div><div class="line">;;自动插入匹配的括号</div><div class="line">;;C/C++  mode</div><div class="line"></div><div class="line">(defun my-c-mode-auto-pair ()</div><div class="line">  (interactive)</div><div class="line">  (make-local-variable &apos;skeleton-pair-alist)</div><div class="line">  (setq skeleton-pair-alist  &apos;(</div><div class="line">;;    (?&apos; _ &quot;&apos;&quot;)</div><div class="line">    (?\&quot; _ &quot;\&quot;&quot;)</div><div class="line">    (?\(  _ &quot;)&quot;)</div><div class="line">    (?\[  _ &quot;]&quot;)</div><div class="line">    (?&#123; \n &gt; _ \n ?&#125; &gt;)))</div><div class="line">  (setq skeleton-pair t)</div><div class="line">  (local-set-key (kbd &quot;(&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;&#123;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">;;  (local-set-key (kbd &quot;&apos;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;\&quot;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;[&quot;) &apos;skeleton-pair-insert-maybe))</div><div class="line">(add-hook &apos;c-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">(add-hook &apos;c++-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">;;输入左边的括号，就会自动补全右边的部分.包括(), &quot;&quot;, [] , &#123;&#125; , 等等。</div><div class="line"></div><div class="line">;;;;自动补齐</div><div class="line">(defun my-indent-or-complete ();;;;如果在单词中间就补齐，否则就是tab</div><div class="line">   (interactive)</div><div class="line">   (if (looking-at &quot;\\&gt;&quot;)</div><div class="line">       (hippie-expand nil)</div><div class="line">       (indent-for-tab-command))</div><div class="line"> )</div><div class="line"></div><div class="line">(global-set-key [(control tab)] &apos;my-indent-or-complete)</div><div class="line"></div><div class="line">;;;hippie的自动补齐策略，优先调用了senator的分析结果：</div><div class="line">(autoload &apos;senator-try-expand-semantic &quot;senator&quot;)</div><div class="line"></div><div class="line">(setq hippie-expand-try-functions-list</div><div class="line">       &apos;(</div><div class="line">        senator-try-expand-semantic</div><div class="line">        try-expand-dabbrev</div><div class="line">        try-expand-dabbrev-visible</div><div class="line">        try-expand-dabbrev-all-buffers</div><div class="line">        try-expand-dabbrev-from-kill</div><div class="line">        try-expand-list</div><div class="line">        try-expand-list-all-buffers</div><div class="line">        try-expand-line</div><div class="line">        try-expand-line-all-buffers</div><div class="line">        try-complete-file-name-partially</div><div class="line">        try-complete-file-name</div><div class="line">        try-expand-whole-kill</div><div class="line">        )</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">;;;; 当输入&quot;.&quot;或&quot;&gt;&quot;时，在另一个窗口中列出结构体或类的成员</div><div class="line"></div><div class="line">;; (defun my-c-mode-cedet-hook ()</div><div class="line"></div><div class="line">;;   (local-set-key &quot;.&quot; &apos;semantic-complete-self-insert)</div><div class="line">;;   (local-set-key &quot;&gt;&quot; &apos;semantic-complete-self-insert))</div><div class="line"></div><div class="line">;; (add-hook &apos;c-mode-common-hook &apos;my-c-mode-cedet-hook)</div><div class="line">;; (add-hook &apos;c++-mode-commom-hook &apos;my-c-mode-cedet-hook)</div><div class="line"></div><div class="line">;;配置CEDET</div><div class="line">(load-file &quot;~/.emacs.d/my_plus/cedet-1.0/common/cedet.el&quot;)</div><div class="line">(semantic-load-enable-excessive-code-helpers)</div><div class="line">(global-ede-mode t)</div><div class="line">(require &apos;semantic-ia)</div><div class="line">(require &apos;semantic-gcc)</div><div class="line">(global-srecode-minor-mode 1)</div><div class="line">(semantic-load-enable-semantic-debugging-helpers)</div><div class="line">(global-set-key [f12] &apos;semantic-ia-fast-jump);代码跳转</div><div class="line">;;</div><div class="line">(global-set-key [S-f12]</div><div class="line">                (lambda ()</div><div class="line">                  (interactive)</div><div class="line">                  (if (ring-empty-p (oref semantic-mru-bookmark-ring ring))</div><div class="line">                      (error &quot;Semantic Bookmark ring is currently empty&quot;))</div><div class="line">                  (let* ((ring (oref semantic-mru-bookmark-ring ring))</div><div class="line">                         (alist (semantic-mrub-ring-to-assoc-list ring))</div><div class="line">                         (first (cdr (car alist))))</div><div class="line">                    (if (semantic-equivalent-tag-p (oref first tag)</div><div class="line">                                                   (semantic-current-tag))</div><div class="line">                        (setq first (cdr (car (cdr alist)))))</div><div class="line">                    (semantic-mrub-switch-tags first))))</div><div class="line">;;代码跳转（跳回上次的位置）</div><div class="line"></div><div class="line">(require &apos;eassist nil &apos;noerror)</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">(define-key c-mode-base-map [M-f12] &apos;eassist-switch-h-cpp)</div><div class="line">));;;;;eassist.el就提供了一个在C++的头文件和实现文件间跳转</div><div class="line"></div><div class="line">(setq eassist-header-switches</div><div class="line">      &apos;((&quot;h&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;c&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;hh&quot; . (&quot;cc&quot; &quot;CC&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;C&quot;))</div><div class="line">        (&quot;hpp&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;hxx&quot; . (&quot;cxx&quot; &quot;cpp&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;h++&quot; . (&quot;c++&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;H&quot; . (&quot;C&quot; &quot;CC&quot; &quot;cc&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;HH&quot; . (&quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot;))</div><div class="line">        (&quot;cpp&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cxx&quot; . (&quot;hxx&quot; &quot;hpp&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c++&quot; . (&quot;h++&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;CC&quot; . (&quot;HH&quot; &quot;hh&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cc&quot; . (&quot;hh&quot; &quot;HH&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;C&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;m&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;mm&quot; . (&quot;h&quot;))));;;;填补eassist-switch-h-cpp扩展名不全的BUG</div><div class="line"></div><div class="line">;(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">;(defun my-c-mode-common-hook()</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">;(define-key c-mode-base-map [M-S-f12] &apos;semantic-analyze-proto-impl-toggle);;;;;在函数和声明和实现间跳转，不是这个功能不是十分准确，一般在cpp中函数实现处想跳到函数声明处正常，但是从声明处跳到实现处的话cedet不一定能找到cpp文件的位置。</div><div class="line"></div><div class="line">(define-key c-mode-base-map (kbd &quot;M-n&quot;) &apos;semantic-ia-complete-symbol-menu);;;;;;代码补全</div><div class="line">))</div><div class="line"></div><div class="line"></div><div class="line">;;;;;;;;;;;;;;配置ecb</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/ecb-2.40&quot;)</div><div class="line">(require &apos;ecb)</div><div class="line">(ecb-activate)</div><div class="line"></div><div class="line"></div><div class="line">;;定制ecb窗口布局</div><div class="line">(custom-set-variables  </div><div class="line">  ;; custom-set-variables was added by Custom.  </div><div class="line">  ;; If you edit it by hand, you could mess it up, so be careful.  </div><div class="line">  ;; Your init file should contain only one such instance.  </div><div class="line">  ;; If there is more than one, they won&apos;t work right.  </div><div class="line"> &apos;(ecb-fix-window-size t)  </div><div class="line"> &apos;(ecb-layout-window-sizes nil)  </div><div class="line"> &apos;(ecb-options-version &quot;2.40&quot;)  </div><div class="line"> ;; &apos;(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))  </div><div class="line"> &apos;(ecb-windows-width 0.18))</div><div class="line"></div><div class="line">;颜色配置</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus&quot;)</div><div class="line">(require &apos;color-theme)</div><div class="line">(color-theme-initialize)</div><div class="line">(color-theme-calm-forest)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [f1] &apos;shell)                              ; 进入shell</div><div class="line">(global-set-key [S-f9] &apos;gdb)                              ; 调试</div><div class="line">;(setq compile-command &quot;g++ &quot;)                            ; 编译</div><div class="line">(global-set-key [f9] &apos;compile)</div><div class="line"></div><div class="line">;; c-mode公共设置</div><div class="line">(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">(defun my-c-mode-common-hook ()</div><div class="line">  (setq default-tab-width 4)</div><div class="line">  (setq tab-width 4)</div><div class="line">  (setq c-basic-offset 4)</div><div class="line">  (hs-minor-mode t)</div><div class="line">  (define-key c-mode-base-map [(tab)] &apos;my-indent-or-complete)</div><div class="line">  (define-key c-mode-base-map [(meta ?/)] &apos;semantic-ia-complete-symbol-menu)</div><div class="line">  ;;;最后两行是代码自动补齐的快捷键</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [S-f10] &apos;comment-or-uncomment-region)     ; 注释 / 取消注释</div><div class="line">(global-set-key [f10] &apos;c-indent-line-or-region)           ; 格式化代码</div><div class="line"></div><div class="line">;全屏</div><div class="line">(defun my-fullscreen ()</div><div class="line">  (interactive)</div><div class="line">  (x-send-client-message</div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32</div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_FULLSCREEN&quot; 0))</div><div class="line">  ;; (x-send-client-message  </div><div class="line">  ;;  nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">  ;;  &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0))</div><div class="line">  )</div><div class="line">;; (my-fullscreen)</div><div class="line"></div><div class="line">(global-set-key [f11] &apos;my-fullscreen) ; emacs全屏</div><div class="line"></div><div class="line">;gdb快捷键设置</div><div class="line">(add-hook &apos;gdb-mode-hook &apos;(lambda ()</div><div class="line">                            (define-key c-mode-base-map [(f5)] &apos;gud-go)</div><div class="line">                            (define-key c-mode-base-map [(f7)] &apos;gud-step)</div><div class="line">                            (define-key c-mode-base-map [(f8)] &apos;gud-next)</div><div class="line">                            (define-key c-mode-base-map [(f6)] &apos;gud-cont)))</div><div class="line"></div><div class="line">;;代码折叠</div><div class="line">(global-set-key [f2] &apos;hs-toggle-hiding)</div><div class="line"></div><div class="line">;;;auctex配置</div><div class="line">(load &quot;auctex.el&quot; nil t t)</div><div class="line">(load &quot;preview-latex.el&quot; nil t t)</div><div class="line">(add-hook &apos;LaTeX-mode-hook #&apos;LaTeX-install-toolbar)</div><div class="line">(add-hook &apos;LaTeX-mode-hook &apos;turn-on-reftex) ; with AUCTeX LaTeX mode</div><div class="line">(add-hook &apos;latex-mode-hook &apos;turn-on-reftex) ; with Emacs latex mode</div><div class="line">(add-hook &apos;LaTeX-mode-hook (lambda()</div><div class="line">                              (add-to-list &apos;TeX-command-list &apos;(&quot;XeLaTeX&quot; &quot;%`xelatex%(mode)%&apos; %t&quot; TeX-run-TeX nil t))</div><div class="line">                              (setq TeX-command-default &quot;XeLaTeX&quot;)</div><div class="line">                                 (setq TeX-save-query  nil )</div><div class="line">                                  (setq TeX-show-compilation t)</div><div class="line">                                                               ))</div><div class="line">(setq TeX-auto-save t)</div><div class="line">(setq TeX-parse-self t)</div><div class="line">(setq-default TeX-master nil)</div><div class="line">(setq TeX-engine &apos;xetex)</div><div class="line">(setq TeX-PDF-mode t)</div><div class="line"></div><div class="line">;;;;;;;;;;;;weibo;;;;;;;;;;</div><div class="line">;;;;;;使用M-x weibo-timeline</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/austin------weibo.emacs-0cf9784&quot;)</div><div class="line">(require &apos;weibo)</div><div class="line"></div><div class="line">;;;;;;保存上次emacs关闭时的状态</div><div class="line">(load &quot;desktop&quot;)</div><div class="line">(desktop-load-default)</div><div class="line">(desktop-read)</div><div class="line"></div><div class="line">;;当emacs退出时保存文件打开状态</div><div class="line"></div><div class="line">(add-hook &apos;kill-emacs-hook</div><div class="line">          &apos;(lambda()(desktop-save &quot;~/&quot;)))</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;w3m设置;;;;;;;;;;;;;;;;;</div><div class="line">;; (add-to-list &apos;load-path &quot;/usr/share/emacs/site-lisp/w3m/&quot;)</div><div class="line">;; (require &apos;w3m)</div><div class="line">;; (setq w3m-home-page &quot;http://www.google.com.hk&quot;) ;设置主页</div><div class="line">;; (require &apos;mime-w3m)</div><div class="line">;;  ;设置显示图片</div><div class="line">;; (setq w3m-default-display-inline-images t)</div><div class="line">;; (setq w3m-default-toggle-inline-images t)</div><div class="line">;; ;;显示图标</div><div class="line">;; (setq w3m-show-graphic-icons-in-header-line t)</div><div class="line">;; (setq w3m-show-graphic-icons-in-mode-line t)</div><div class="line">;; ;;启用cookie</div><div class="line">;; (setq w3m-use-cookies t)</div><div class="line">;; ;;设定w3m运行的参数，分别为使用cookie和使用框架</div><div class="line">;; (setq w3m-command-arguments &apos;(&quot;-cookie&quot; &quot;-F&quot;))</div><div class="line"></div><div class="line">;; ;;;解决wrong type argument: stringp, nil问题</div><div class="line">;; (setq debug-on-error t);;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/emacs/" rel="tag">#emacs</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/04/Emacs 配置之查找是否有“＊scheme＊”窗口/" rel="next" title="Emacs 配置之查找是否有“＊scheme＊”窗口">
+                <i class="fa fa-chevron-left"></i> Emacs 配置之查找是否有“＊scheme＊”窗口
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/06/2014-01-06-练习1.1－练习1.9/" rel="prev" title="练习1.1－练习1.9">
+                练习1.1－练习1.9 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2014/01/04/2014-01-04-别人的Emacs配置1/"
+     data-title="别人的Emacs配置1"
+     data-content=""
+     data-url="http://yoursite.com/2014/01/04/2014-01-04-别人的Emacs配置1/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/01/04/2014-01-04-别人的Emacs配置1/"
+           data-title="别人的Emacs配置1" data-url="http://yoursite.com/2014/01/04/2014-01-04-别人的Emacs配置1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="exam," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1.Linux中优先级和优先数有什么关系，如何判断一个进程的优先级和优先数；2.什么是僵尸进程和孤儿进程，它们是否消耗系统资源；僵尸进程：一个子进程在其父进程还没有调用wait()或waitpid()的情况下退出。这个子进程就是僵尸进程。孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状">
+<meta property="og:type" content="article">
+<meta property="og:title" content="百度面试题">
+<meta property="og:url" content="http://yoursite.com/2015/03/04/百度面试题/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="1.Linux中优先级和优先数有什么关系，如何判断一个进程的优先级和优先数；2.什么是僵尸进程和孤儿进程，它们是否消耗系统资源；僵尸进程：一个子进程在其父进程还没有调用wait()或waitpid()的情况下退出。这个子进程就是僵尸进程。孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="百度面试题">
+<meta name="twitter:description" content="1.Linux中优先级和优先数有什么关系，如何判断一个进程的优先级和优先数；2.什么是僵尸进程和孤儿进程，它们是否消耗系统资源；僵尸进程：一个子进程在其父进程还没有调用wait()或waitpid()的情况下退出。这个子进程就是僵尸进程。孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/03/04/百度面试题/"/>
+
+  <title> 百度面试题 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                百度面试题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-04T12:20:32+08:00" content="2015-03-04">
+              2015-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/04/百度面试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/百度面试题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1.Linux中优先级和优先数有什么关系，如何判断一个进程的优先级和优先数；<br>2.什么是僵尸进程和孤儿进程，它们是否消耗系统资源；<br>僵尸进程：一个子进程在其父进程还没有调用wait()或waitpid()的情况下退出。这个子进程就是僵尸进程。<br>孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。<br>注：<br>僵尸进程将会导致资源浪费，而孤儿则不会。<br>3.一个实时的、批处理的操作系统应该如何进行作业调度；<br>4.数据库表中索引的作用是什么，谈谈你对索引的认识。<br>可以利用索引快速访问数据库表中的特定信息。索引是对数据库表中一个或多个列（例如，employee 表的姓氏 (lname) 列）的值进行排序的结构。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引提供指针以指向存储在表中指定列的数据值，然后根据指定的排序次序排列这些指针。数据库使用索引的方式与使用书的目录很相似：通过搜索索引找到特定的值，然后跟随指针到达包含该值的行。<br>在数据库关系图中，可以为选定的表创建、编辑或删除索引/键属性页中的每个索引类型。当保存附加在此索引上的表或包含此表的数据库关系图时，索引同时被保存。有关详细信息，请参见创建索引。<br>通常情况下，只有当经常查询索引列中的数据时，才需要在表上创建索引。索引将占用磁盘空间，并且降低添加、删除和更新行的速度。不过在多数情况下，索引所带来的数据检索速度的优势大大超过它的不足之处。然而，如果应用程序非常频繁地更新数据，或磁盘空间有限，那么最好限制索引的数量。<br>在创建索引前，必须确定要使用的列和要创建的索引类型。<br>3.简述LRU算法。<br>LRU是Least Recently Used 近期最少使用算法。<br>内存管理的一种页面置换算法，对于在内存中但又不用的数据块（内存块）叫做LRU，Oracle会根据哪些数据属于LRU而将其移出内存而腾出空间来加载另外的数据。<br>4.操作系统中同一父进程中的子进程之间如何交互，不同父进程中的子进程之间如何交互，父进程与子进程之间如何交互。<br>5.选择一个你熟悉的磁盘调度算法进行简单描述。<br>1.先来先服务算法（First Come First Served，FCFS）</p>
+<p>先来先服务（FCFS）调度:按先来后到次序服务，未作优化。</p>
+<p>最简单的移臂调度算法是“先来先服务”调度算法，这个算法实际上不考虑访问者要求访问的物理位置，而只是考虑访问者提出访问请求的先后次序。例如，如果现在读写磁头正在50号柱面上执行输出操作，而等待访问者依次要访问的柱面为130、199、32、159、15、148、61、99，那么，当50号柱面上的操作结束后，移动臂将按请求的先后次序先移到130号柱面，最后到达99号柱面。</p>
+<p>采用先来先服务算法决定等待访问者执行输入输出操作的次序时，移动臂来回地移动。先来先服务算法花费的寻找时间较长，所以执行输入输出操作的总时间也很长。</p>
+<p>2.最短寻道时间优先算法（Shortest Seek Time First，SSTF）</p>
+<p>最短寻找时间优先调度算法总是从等待访问者中挑选寻找时间最短的那个请求先执行的，而不管访问者到来的先后次序。现在仍利用同一个例子来讨论，现在当50 号柱面的操作结束后，应该先处理61号柱面的请求，然后到达32号柱面执行操作，随后处理15号柱面请求，后继操作的次序应该是99、130、148、 159、199。</p>
+<p>采用最短寻找时间优先算法决定等待访问者执行操作的次序时，读写磁头总共移动了200多个柱面的距离，与先来先服务、算法比较，大幅度地减少了寻找时间，因而缩短了为各访问者请求服务的平均时间，也就提高了系统效率。</p>
+<p>但最短查找时间优先（SSTF）调度，FCFS会引起读写头在盘面上的大范围移动，SSTF查找距离磁头最短（也就是查找时间最短）的请求作为下一次服务的对象。SSTF查找模式有高度局部化的倾向，会推迟一些请求的服务，甚至引起无限拖延（又称饥饿）。</p>
+<p>3.扫描算法（SCAN）</p>
+<p>SCAN 算法又称电梯调度算法。SCAN算法是磁头前进方向上的最短查找时间优先算法，它排除了磁头在盘面局部位置上的往复移动，SCAN算法在很大程度上消除了SSTF算法的不公平性，但仍有利于对中间磁道的请求。</p>
+<p>“电梯调度”算法是从移动臂当前位置开始沿着臂的移动方向去选择离当前移动臂最近的那个柱访问者，如果沿臂的移动方向无请求访问时，就改变臂的移动方向再选择。这好比乘电梯，如果电梯已向上运动到4层时，依次有3位乘客陈生、伍生、张生在等候乘电梯。他们的要求是：陈生在2层等待去10层；伍生在5层等待去底层；张生在8层等待15层。由于电梯目前运动方向是向上，所以电梯的形成是先把乘客张生从8层带到15层，然后电梯换成下行方向，把乘客伍生从5层带到底层，电梯最后再调换方向，把乘客陈生从2层送到10层。</p>
+<p>我们仍用前述的同一例子来讨论采用“电梯调度”算法的情况。由于磁盘移动臂的初始方向有两个，而该算法是与移动臂方向有关，所以分成两种情况来讨论。</p>
+<p>〈1〉.移动臂由里向外移动</p>
+<p>开始时在50号柱面执行操作的读写磁头的移动臂方向是由里向外，趋向32号柱面的位置，因此，当访问50号柱面的操作结束后，沿臂移动方向最近的柱面是 32号柱面。所以应先为32号柱面的访问者服务，然后是为15号柱面的访问者服务。之后，由于在向外移方向已无访问等待者，故改变移动臂的方向，由外向里依次为各访问者服务。在这种情况下为等待访问者服务的次序是61、99、130、148、159、199。</p>
+<p>〈2〉.移动臂由外向里移动</p>
+<p>开始时，正在50号柱面执行操作的读写磁头的移动臂是由外向里（即向柱面号增大的内圈方向）趋向61号柱面的位置，因此，当访问50号柱面的操作结束后，沿臂移动方向最近的柱面是61号柱面。所以，应先为61号柱面服务，然后按移动臂由外向里移动的方向，依次为99、130、148、159、199柱面的访问者服务。当201号柱面的操作结束后，向里移动的方向已经无访问等待者，所以改变移动臂的前进方向，由里向外依次为32、15柱面的访问者服务。</p>
+<p>“电梯调度”与“最短寻找时间优先”都是要尽量减少移动臂时所花的时间。所不同的是：“最短寻找时间优先”不考虑臂的移动方向，总是选择离当前读写磁头最近的那个柱面，这种选择可能导致移动臂来回改变移动方向；“电梯调度”是沿着臂的移动方向去选择离当前读写词头最近的哪个柱面的访问者，仅当沿移动臂的前进移动方向无访问等待者时，才改变移动臂的前进方向。由于移动臂改变方向是机械动作，速度相对较慢，所以，电梯调度算法是一种简单、使用且高效的调度算法。</p>
+<p>但是，“电梯调度”算法在实现时，不仅要记住读写磁头的当前位置，还必须记住移动臂的当前前进方向。</p>
+<p>4.循环扫描算法（CSCAN）</p>
+<p>单项扫描调度算法的基本思想是，不考虑访问者等待的先后次序，总是从0号柱面开始向里道扫描，按照各自所要访问的柱面位置的次序去选择访问者。在移动臂到达最后一个柱面后，立即快速返回到0号柱面，返回时不为任何的访问者等待服务。在返回到0号柱面后，再次进行扫描。</p>
+<p>由于该例中已假定读写的当前位置在50号柱面，所以，指示了从50号柱面继续向里扫描，依次为61、99、130、148、159、199各柱面的访问者服务，此时移动臂已经是最内的柱面，于是立即返回到0号柱面，重新扫描，依次为15、32号柱面的访问者服务。</p>
+<p>除了“先来先服务”调度算法外，其余三种调度算法都是根据欲访问的柱面位置来继续调度的。在调度过程中可能有新的请求访问者加入。在这些新的请求访问者加入时，如果读写已经超过了它们所要访问的柱面位置，则只能在以后的调度中被选择执行。</p>
+<p>在多道程序设计系统中，在等待访问磁盘的若干访问者请求中，可能要求访问的柱面号相同，但在同一柱面上的不同磁道，或访问同一柱面中同一磁道上的不同扇区。所以，在进行移动调度时，在按照某种短法把移动臂定位到某个柱面后，应该在等待访问这个柱面的各个访问者的输入输出操作都完成之后，再改变移动臂的位置。<br>6.路由器工作于网络的哪一层，简述它的工作原理，它维护路由表的协议是什么。<br>传统地，路由器工作于OSI七层协议中的第三层，其主要任务是接收来自一个网络接口的数据包，根据其中所含的目的地址，决定转发到下一个目的地址。因此，路由器首先得在转发路由表中查找它的目的地址，若找到了目的地址，就在数据包的帧格前添加下一个MAC地址，同时IP数据包头的TTL（Time To Live）域也开始减数，并重新计算校验和。当数据包被送到输出端口时，它需要按顺序等待，以便被传送到输出链路上。 路由器在工作时能够按照某种路由通信协议查找设备中的路由表。如果到某一特定节点有一条以上的路径，则基本预先确定的路由准则是选择最优（或最经济）的传输路径。由于各种网络段和其相互连接情况可能会因环境变化而变化，因此路由情况的信息一般也按所使用的路由信息协议的规定而定时更新。 网络中，每个路由器的基本功能都是按照一定的规则来动态地更新它所保持的路由表，以便保持路由信息的有效性。为了便于在网络间传送报文，路由器总是先按照预定的规则把较大的数据分解成适当大小的数据包，再将这些数据包分别通过相同或不同路径发送出去。当这些数据包按先后秩序到达目的地后，再把分解的数据包按照一定顺序包装成原有的报文形式。路由器的分层寻址功能是路由器的重要功能之一，该功能可以帮助具有很多节点站的网络来存储寻址信息，同时还能在网络间截获发送到远地网段的报文，起转发作用；选择最合理的路由，引导通信也是路由器基本功能；多协议路由器还可以连接使用不同通信协议的网络段，成为不同通信协议网络段之间的通信平台。<br>7.路由器与交换机的区别是什么。<br>（1）工作层次不同<br>最初的的交换机是工作在OSI/RM开放体系结构的数据链路层，也就是第二层，而路由器一开始就设计工作在OSI模型的网络层。由于交换机工作在OSI的第二层（数据链路层），所以它的工作原理比较简单，而路由器工作在OSI的第三层（网络层），可以得到更多的协议信息，路由器可以做出更加智能的转发决策。<br>（2）数据转发所依据的对象不同<br>交换机是利用物理地址或者说MAC地址来确定转发数据的目的地址。而路由器则是利用不同网络的ID号（即IP地址）来确定数据转发的地址。IP地址是在软件中实现的，描述的是设备所在的网络，有时这些第三层的地址也称为协议地址或者网络地址。MAC地址通常是硬件自带的，由网卡生产商来分配的，而且已经固化到了网卡中去，一般来说是不可更改的。而IP地址则通常由网络管理员或系统自动分配。<br>（3）传统的交换机只能分割冲突域，不能分割广播域；而路由器可以分割广播域<br>由交换机连接的网段仍属于同一个广播域，广播数据包会在交换机连接的所有网段上传播，在某些情况下会导致通信拥挤和安全漏洞。连接到路由器上的网段会被分配成不同的广播域，广播数据不会穿过路由器。虽然第三层以上交换机具有VLAN功能，也可以分割广播域，但是各子广播域之间是不能通信交流的，它们之间的交流仍然需要路由器。<br>（4）路由器提供了防火墙的服务<br>路由器仅仅转发特定地址的数据包，不传送不支持路由协议的数据包传送和未知目标网络数据包的传送，从而可以防止广播风暴。<br>交换机一般用于LAN-WAN的连接，交换机归于网桥，是数据链路层的设备，有些交换机也可实现第三层的交换。路由器用于WAN-WAN之间的连接，可以解决异性网络之间转发分组，作用于网络层。他们只是从一条线路上接受输入分组，然后向另一条线路转发。这两条线路可能分属于不同的网络，并采用不同协议。相比较而言，路由器的功能较交换机要强大，但速度相对也慢，价格昂贵，第三层交换机既有交换机线速转发报文能力，又有路由器良好的控制功能，因此得以广泛应用。<br>（5）总之，可以这么认为，交换机在具体的城域网中往往扮演着VLAN透传的角色，就是桥。而路由器默认的是不支持二层的，路由器的每一个端口都是一个独立的广播域和冲突域，而交换机是只有一个广播域和端口数量的冲突域，在二层交换机上存在MAC表，三层交换机上存在路由表.MAC.ARP表，在路由器上存在路由表和arp表。比如当一个路由器上有一个2层的vlan100和另外一个路由器上的3层vlan100对接的时候，是不通的，这时候我们需要借助L2VPN技术来进行互通，比较流行的就是VPLS技术。<br>8.路由器所在层的上一层是哪一层，都有哪些协议。<br>TCP/UDP<br>9.TCP与UDP的区别是什么。<br><a href="http://baike.baidu.com/link?url=F50rSmByNUgpJ_yQDwkrr0Y9fmld1ZHUZNBZLAI_xCYWRkpFVFt3se5bFceB6tDuXa-FNtUV_Ricrgp6mcAlUXvHi4GqWNT4yUA4bYbJqpO" target="_blank" rel="external">http://baike.baidu.com/link?url=F50rSmByNUgpJ_yQDwkrr0Y9fmld1ZHUZNBZLAI_xCYWRkpFVFt3se5bFceB6tDuXa-FNtUV_Ricrgp6mcAlUXvHi4GqWNT4yUA4bYbJqpO</a><br>10.画出TCP三次握手的过程，并说出TCP滑动窗口协议应用于三次握手的哪一步。<br>滑动窗口协议，是TCP使用的一种流量控制方法。该协议允许发送方在停止并等待确认前可以连续发送多个分组。由于发送方不必每发一个分组就停下来等待确认，因此该协议可以加速数据的传输。<br>11.画图详细逐步分析一下两个问题：滑动窗口过大和滑动窗口过小。<br>滑动窗口：是两台主机间传送数据时的缓冲区。每台TCP/IP主机支持两个滑动窗口：一个用于接收数据，另一个用于发送数据。窗口尺寸表示计算机可能缓冲的数据量大小。<br>滑动窗口的大小对网络性能有很大的影响。如果滑动窗口过小，则需要在网络上频繁的传输确认信息，占用了大量的网络带宽；如果滑动窗口过大，对于利用率较高，容易产生丢包现象的网络，则需要多次发送重复的数据，也同样耗费了网络带</p>
+<p>为什么要有滑动窗口<br>1）H1第一次只发送出一个数据包。<br>2）为什么不一次发送完所有数据包？<br>在英特网中，可能同时存在着数百万条TCP连接。如果这些连接同时无节制的发送数据包，那么整个网络都会被堵死，没有数据包能到达目的地。<br>因此TCP需要根据网络状况，每次发送若干数据包。</p>
+<p>窗口的移动<br>1）每收到一个（不重复的）确认，窗口的左边界就会向右移动一格<br>2）每收到一个新的确认，LAR(last ack received)就会增加1。而滑动窗口左边的数据包，序号就是LAR。<br><a href="http://histrory.visualland.net/tcp_swnd_tutorial.html" target="_blank" rel="external">http://histrory.visualland.net/tcp_swnd_tutorial.html</a><br>12.如果上网速度过慢，可能是哪里产生的问题。（我这道题回答的是：客户端、路由器或者服务器端出问题。于是他问了第13题）<br>13.用什么方法能够检测出是客户端，还是路由器，还是服务器端出了问题。<br>14.fork与clone有什么区别。<br><a href="http://blog.csdn.net/soundtravel/article/details/6835620" target="_blank" rel="external">http://blog.csdn.net/soundtravel/article/details/6835620</a><br>15.Oracle中冷启动与热启动有什么区别。<br>16.存储过程的概念以及优缺点是什么，写出一个存储过程的大概代码，你是如何在项目中应用的，又产生了什么问题，你是如何解决的。<br>35.truncate与delete的区别是什么。<br>从功能上区别，turncate,delete都是只删除表中的数据，而表结构，索引，约束等都保持不变；而 drop语句将删除表的结构以及被依赖的约束(constrain),触发器(trigger),索引(index); 依赖于该表的存储过程/函数将保留,但是变为invalid状态。<br>再分析turncate与delete异同：<br>相同点： turncate talbe 在功能上与不带 WHERE 子句的 DELETE 语句相同：二者均删除表中的全部行。<br>不同点：<br>1 事务管理：delete语句是dml,这个操作会放到rollback segement中,事务提交之后才生效;如果有相应的trigger,执行的时候将被触发.delele可以回滚。 truncate是ddl, 操作立即生效,原数据不放到rollback segment中,不能回滚. 操作不触发trigger.<br>2 速度：turncate table比delete速度快，且使用的系统和事务日志资源少。<br>原因是delete语句每次删除一行，并在事务日志中为删除的每一行记录一项；而turncate table通过释放存储表数据的数据页来删除数据，并且只在事务日志中记录页的释放。<br>3 对于由FOREIGN KEY 约束引用的表，不能使用 TRUNCATE TABLE，而应使用不带 WHERE 子句的 DELETE 语句。由于 TRUNCATE TABLE 不记录在日志中，所以它不能激活触发器。<br>应用中，如果不再需要该表时，用drop<br>如果想要保留表结构，但要删除所有记录，用turncate<br>如果只删除部分记录，用带where条件的delete</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/exam/" rel="tag">#exam</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/04/TCP协议面试题/" rel="next" title="TCP协议面试题">
+                <i class="fa fa-chevron-left"></i> TCP协议面试题
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/04/操作系统面试题（1）/" rel="prev" title="操作系统面试题（1）">
+                操作系统面试题（1） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/03/04/百度面试题/"
+     data-title="百度面试题"
+     data-content=""
+     data-url="http://yoursite.com/2015/03/04/百度面试题/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/03/04/百度面试题/"
+           data-title="百度面试题" data-url="http://yoursite.com/2015/03/04/百度面试题/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

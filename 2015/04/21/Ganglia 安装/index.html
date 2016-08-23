@@ -1,0 +1,845 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ganglia," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1. Install prerequisites on server node
+Step 0: Use yum to install dependency
+yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ganglia 安装">
+<meta property="og:url" content="http://yoursite.com/2015/04/21/Ganglia 安装/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="1. Install prerequisites on server node
+Step 0: Use yum to install dependency
+yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel">
+<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ganglia 安装">
+<meta name="twitter:description" content="1. Install prerequisites on server node
+Step 0: Use yum to install dependency
+yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/21/Ganglia 安装/"/>
+
+  <title> Ganglia 安装 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5kqhuHWPE1K7EyEMbQ14','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Ganglia 安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-21T14:09:28+08:00" content="2015-04-21">
+              2015-04-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Operation-And-Maintenance/" itemprop="url" rel="index">
+                    <span itemprop="name">Operation And Maintenance</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/21/Ganglia 安装/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/Ganglia 安装/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>1. Install prerequisites on server node</p>
+<p>Step 0: Use yum to install dependency</p>
+<h1 id="yum-y-install-apr-devel-apr-util-check-devel-cairo-devel-pango-devel-libxml2-devel-glib2-devel-dbus-devel-freetype-devel-fontconfig-devel-gcc-c-expat-devel-python-devel-libXrender-devel-zlib-libpng-freetype-libjpeg-fontconfig-gd-libxml2-pcre-pcre-devel"><a href="#yum-y-install-apr-devel-apr-util-check-devel-cairo-devel-pango-devel-libxml2-devel-glib2-devel-dbus-devel-freetype-devel-fontconfig-devel-gcc-c-expat-devel-python-devel-libXrender-devel-zlib-libpng-freetype-libjpeg-fontconfig-gd-libxml2-pcre-pcre-devel" class="headerlink" title="yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel fontconfig-devel gcc-c++ expat-devel python-devel libXrender-devel zlib libpng freetype libjpeg fontconfig gd libxml2 pcre pcre-devel"></a>yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel fontconfig-devel gcc-c++ expat-devel python-devel libXrender-devel zlib libpng freetype libjpeg fontconfig gd libxml2 pcre pcre-devel</h1><p>Step 1: Install libconfuse</p>
+<h1 id="wget-http-savannah-nongnu-org-download-confuse-confuse-2-7-tar-gz"><a href="#wget-http-savannah-nongnu-org-download-confuse-confuse-2-7-tar-gz" class="headerlink" title="wget http://savannah.nongnu.org/download/confuse/confuse-2.7.tar.gz"></a>wget <a href="http://savannah.nongnu.org/download/confuse/confuse-2.7.tar.gz" target="_blank" rel="external">http://savannah.nongnu.org/download/confuse/confuse-2.7.tar.gz</a></h1><h1 id="tar-xzvf-confuse-2-7-tar-gz"><a href="#tar-xzvf-confuse-2-7-tar-gz" class="headerlink" title="tar -xzvf confuse-2.7.tar.gz"></a>tar -xzvf confuse-2.7.tar.gz</h1><h1 id="cd-confuse-2-7"><a href="#cd-confuse-2-7" class="headerlink" title="cd confuse-2.7"></a>cd confuse-2.7</h1><h1 id="configure-CFLAGS-fPIC-–disable-nls-amp-amp-make-amp-amp-make-install"><a href="#configure-CFLAGS-fPIC-–disable-nls-amp-amp-make-amp-amp-make-install" class="headerlink" title="./configure CFLAGS=-fPIC –disable-nls &amp;&amp; make &amp;&amp; make install"></a>./configure CFLAGS=-fPIC –disable-nls &amp;&amp; make &amp;&amp; make install</h1><p>Step 2: Install rrdtool on server node</p>
+<h1 id="wget-http-oss-oetiker-ch-rrdtool-pub-rrdtool-1-4-7-tar-gz"><a href="#wget-http-oss-oetiker-ch-rrdtool-pub-rrdtool-1-4-7-tar-gz" class="headerlink" title="wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz"></a>wget <a href="http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz" target="_blank" rel="external">http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz</a></h1><h1 id="tar-xzvf-rrdtool-1-4-7-tar-gz"><a href="#tar-xzvf-rrdtool-1-4-7-tar-gz" class="headerlink" title="tar -xzvf rrdtool-1.4.7.tar.gz"></a>tar -xzvf rrdtool-1.4.7.tar.gz</h1><h1 id="cd-rrdtool-1-4-7"><a href="#cd-rrdtool-1-4-7" class="headerlink" title="cd rrdtool-1.4.7"></a>cd rrdtool-1.4.7</h1><h1 id="configure-–prefix-usr-lib64-rrdtool-–disable-perl"><a href="#configure-–prefix-usr-lib64-rrdtool-–disable-perl" class="headerlink" title="./configure –prefix=/usr/lib64/rrdtool –disable-perl"></a>./configure –prefix=/usr/lib64/rrdtool –disable-perl</h1><h1 id="make-amp-amp-make-install"><a href="#make-amp-amp-make-install" class="headerlink" title="make &amp;&amp; make install"></a>make &amp;&amp; make install</h1><p>Step 3(Optional): Install libpre</p>
+<h1 id="wget-http-downloads-sourceforge-net-pcre-pcre-8-32-tar-bz2"><a href="#wget-http-downloads-sourceforge-net-pcre-pcre-8-32-tar-bz2" class="headerlink" title="wget  http://downloads.sourceforge.net/pcre/pcre-8.32.tar.bz2"></a>wget  <a href="http://downloads.sourceforge.net/pcre/pcre-8.32.tar.bz2" target="_blank" rel="external">http://downloads.sourceforge.net/pcre/pcre-8.32.tar.bz2</a></h1><h1 id="tar-xvf-pcre-8-32-tar-bz2"><a href="#tar-xvf-pcre-8-32-tar-bz2" class="headerlink" title="tar -xvf pcre-8.32.tar.bz2"></a>tar -xvf pcre-8.32.tar.bz2</h1><h1 id="cd-pcre-8-32"><a href="#cd-pcre-8-32" class="headerlink" title="cd pcre-8.32"></a>cd pcre-8.32</h1><h1 id="configure-amp-amp-make-amp-amp-make-install"><a href="#configure-amp-amp-make-amp-amp-make-install" class="headerlink" title="./configure &amp;&amp; make &amp;&amp; make install"></a>./configure &amp;&amp; make &amp;&amp; make install</h1><p>2. Install and configure gmetad&amp;gmond on server node</p>
+<p>Step 0: Install ganglia code</p>
+<h1 id="wget-http-sourceforge-net-projects-ganglia-files-latest-download-source-files"><a href="#wget-http-sourceforge-net-projects-ganglia-files-latest-download-source-files" class="headerlink" title="wget http://sourceforge.net/projects/ganglia/files/latest/download?source=files"></a>wget <a href="http://sourceforge.net/projects/ganglia/files/latest/download?source=files" target="_blank" rel="external">http://sourceforge.net/projects/ganglia/files/latest/download?source=files</a></h1><h1 id="tar-xzvf-ganglia-3-5-0-tar-gz"><a href="#tar-xzvf-ganglia-3-5-0-tar-gz" class="headerlink" title="tar -xzvf ganglia-3.5.0.tar.gz"></a>tar -xzvf ganglia-3.5.0.tar.gz</h1><h1 id="cd-ganglia-3-5-0"><a href="#cd-ganglia-3-5-0" class="headerlink" title="cd ganglia-3.5.0"></a>cd ganglia-3.5.0</h1><h1 id="configure-–with-gmetad-–with-librrd-usr-lib64-rrdtool-–sysconfdir-etc-ganglia"><a href="#configure-–with-gmetad-–with-librrd-usr-lib64-rrdtool-–sysconfdir-etc-ganglia" class="headerlink" title="./configure –with-gmetad –with-librrd=/usr/lib64/rrdtool –sysconfdir=/etc/ganglia"></a>./configure –with-gmetad –with-librrd=/usr/lib64/rrdtool –sysconfdir=/etc/ganglia</h1><p>Ganglia can not be compiled successfully until the information as below shows up.<br>Welcome to..</p>
+<pre><code> ______                  ___
+/ ____/___ _____  ____ _/ (_)___ _
+</code></pre><p>   / / <strong>/ </strong> <code>/ __ \/ __</code>/ / / <strong> `/<br>  / /<em>/ / /</em>/ / / / / /<em>/ / / / /</em>/ /<br>  __</strong>/_<em>,</em>/<em>/ /</em>/_<em>, /</em>/<em>/__,</em>/<br>                   /<em>__</em>/</p>
+<p>Copyright (c) 2005 University of California, Berkeley</p>
+<h1 id="make-amp-amp-make-install-1"><a href="#make-amp-amp-make-install-1" class="headerlink" title="make &amp;&amp; make install"></a>make &amp;&amp; make install</h1><p>Step 1: Check gmetad&amp;gmond binary</p>
+<h1 id="which-gmetric"><a href="#which-gmetric" class="headerlink" title="which gmetric"></a>which gmetric</h1><p>/usr/local/bin/gmetric</p>
+<h1 id="which-gmond"><a href="#which-gmond" class="headerlink" title="which gmond"></a>which gmond</h1><p>/usr/local/sbin/gmond</p>
+<h1 id="which-gmetad"><a href="#which-gmetad" class="headerlink" title="which gmetad"></a>which gmetad</h1><p>/usr/local/sbin/gmetad</p>
+<p>Step 2: Customize data_source name and hosts in gmetad.conf</p>
+<h1 id="vi-etc-ganglia-gmetad-conf"><a href="#vi-etc-ganglia-gmetad-conf" class="headerlink" title="vi /etc/ganglia/gmetad.conf"></a>vi /etc/ganglia/gmetad.conf</h1><p>data_source “cluster1” mdw # provide the name of host containing all data, better more than one if a cluster, default port number is 8649</p>
+<p>Step 3: Generate &amp;&amp; Customize gmond.conf(Using unicast)</p>
+<h1 id="gmond-–default-config-gt-etc-ganglia-gmond-conf"><a href="#gmond-–default-config-gt-etc-ganglia-gmond-conf" class="headerlink" title="gmond –default_config &gt; /etc/ganglia/gmond.conf"></a>gmond –default_config &gt; /etc/ganglia/gmond.conf</h1><p>At this point you may get this error</p>
+<p>gmond: error while loading shared libraries: libpcre.so.1: cannot open shared object file: No such file or directory</p>
+<p>Create a symlink and execute the command again</p>
+<h1 id="ln-s-lib64-libpcre-so-0-lib64-libpcre-so-1"><a href="#ln-s-lib64-libpcre-so-0-lib64-libpcre-so-1" class="headerlink" title="ln -s /lib64/libpcre.so.0 /lib64/libpcre.so.1"></a>ln -s /lib64/libpcre.so.0 /lib64/libpcre.so.1</h1><h1 id="vi-etc-ganglia-gmond-conf"><a href="#vi-etc-ganglia-gmond-conf" class="headerlink" title="vi /etc/ganglia/gmond.conf"></a>vi /etc/ganglia/gmond.conf</h1><p>cluster {<br>  name = “cluster1” # use the cluster name defined in gmetad.conf<br>  owner = “unspecified”<br>  latlong = “unspecified”<br>  url = “unspecified”<br>}<br>udp_send_channel {</p>
+<p>  #bind_hostname = yes # Highly recommended, soon to be default.</p>
+<pre><code># This option tells gmond to use a source address
+# that resolves to the machine&apos;s hostname.  Without
+# this, the metrics may appear to come from any
+# interface and the DNS names associated with
+# those IPs will be used to create the RRDs.
+</code></pre><p>  host = 172.28.8.250 #if using unicast, provide ip address of server node, host and mcast_join cannot be in a channel<br>  port = 8649<br>  ttl = 1<br>}</p>
+<p>udp_recv_channel {</p>
+<p>  #mcast_join = 239.2.11.71 don’t need to provide multicast address if using unicast<br>  port = 8649</p>
+<h1 id="bind-239-2-11-71"><a href="#bind-239-2-11-71" class="headerlink" title="bind = 239.2.11.71"></a>bind = 239.2.11.71</h1><p>  #retry_bind = true<br>}<br>Step 4: Create rrd directory, change permissions</p>
+<h1 id="mkdir-p-var-lib-ganglia-rrds"><a href="#mkdir-p-var-lib-ganglia-rrds" class="headerlink" title="mkdir -p /var/lib/ganglia/rrds"></a>mkdir -p /var/lib/ganglia/rrds</h1><h1 id="chown-nobody-nobody-var-lib-ganglia-R"><a href="#chown-nobody-nobody-var-lib-ganglia-R" class="headerlink" title="chown nobody:nobody /var/lib/ganglia/ -R"></a>chown nobody:nobody /var/lib/ganglia/ -R</h1><p>Step 5: Copy the init script &amp;&amp; binary to corresponding directory</p>
+<h1 id="cp-gmetad-gmetad-init-etc-rc-d-init-d-gmetad"><a href="#cp-gmetad-gmetad-init-etc-rc-d-init-d-gmetad" class="headerlink" title="cp gmetad/gmetad.init /etc/rc.d/init.d/gmetad"></a>cp gmetad/gmetad.init /etc/rc.d/init.d/gmetad</h1><h1 id="cp-usr-local-sbin-gmetad-usr-sbin"><a href="#cp-usr-local-sbin-gmetad-usr-sbin" class="headerlink" title="cp /usr/local/sbin/gmetad /usr/sbin/"></a>cp /usr/local/sbin/gmetad /usr/sbin/</h1><h1 id="cp-gmond-gmond-init-etc-rc-d-init-d-gmond"><a href="#cp-gmond-gmond-init-etc-rc-d-init-d-gmond" class="headerlink" title="cp gmond/gmond.init /etc/rc.d/init.d/gmond"></a>cp gmond/gmond.init /etc/rc.d/init.d/gmond</h1><h1 id="cp-usr-local-sbin-gmond-usr-sbin"><a href="#cp-usr-local-sbin-gmond-usr-sbin" class="headerlink" title="cp /usr/local/sbin/gmond /usr/sbin/"></a>cp /usr/local/sbin/gmond /usr/sbin/</h1><p>Step 6: Start gmetad and gmond service</p>
+<h1 id="chkconfig-–add-gmetad"><a href="#chkconfig-–add-gmetad" class="headerlink" title="chkconfig –add gmetad"></a>chkconfig –add gmetad</h1><h1 id="chkconfig-–add-gmond"><a href="#chkconfig-–add-gmond" class="headerlink" title="chkconfig –add gmond"></a>chkconfig –add gmond</h1><h1 id="chkconfig-gmetad-on"><a href="#chkconfig-gmetad-on" class="headerlink" title="chkconfig gmetad on"></a>chkconfig gmetad on</h1><h1 id="chkconfig-gmond-on"><a href="#chkconfig-gmond-on" class="headerlink" title="chkconfig gmond on"></a>chkconfig gmond on</h1><h1 id="service-gmetad-start"><a href="#service-gmetad-start" class="headerlink" title="service gmetad start"></a>service gmetad start</h1><h1 id="service-gmond-start"><a href="#service-gmond-start" class="headerlink" title="service gmond start"></a>service gmond start</h1><p>3. Install and configure gmond on client node</p>
+<p>Put Ganglia on the compute nodes by just copying a few files. This is something you can add to a post install script.<br>Step 0: Create a file with all your host names.<br>Step 1: Change paths of libraries and run ganglia install script.</p>
+<h1 id="cat-home-gpadmin-yum-install-ganglia-install-sh"><a href="#cat-home-gpadmin-yum-install-ganglia-install-sh" class="headerlink" title="cat /home/gpadmin/yum_install/ganglia_install.sh"></a>cat /home/gpadmin/yum_install/ganglia_install.sh</h1><p>#!/bin/sh</p>
+<p>for i in <code>cat /home/gpadmin/yum_install/hosts_nomaster</code>; do<br>    scp /usr/sbin/gmond $i:/usr/sbin/gmond<br>    ssh $i mkdir -p /etc/ganglia/<br>    scp /etc/ganglia/gmond.conf $i:/etc/ganglia/<br>    scp /etc/init.d/gmond $i:/etc/init.d/<br>    scp /usr/local/lib64/libganglia-3.5.0.so.0 $i:/usr/local/lib64/<br>    scp /usr/lib64/libexpat.so.0 $i:/usr/lib64/<br>    scp /usr/local/lib/libconfuse.a $i:/usr/local/lib/<br>    scp /usr/lib64/libapr-1.so.0 $i:/usr/lib64/<br>    scp -r /usr/local/lib64/ganglia/ $i:/usr/local/lib64/ganglia/<br>    ssh $i service gmond start<br>done</p>
+<p>4. Install web front-end on server node</p>
+<p>Step 0: Install prerequisites</p>
+<h1 id="yum-install-httpd-php"><a href="#yum-install-httpd-php" class="headerlink" title="yum install httpd php"></a>yum install httpd php</h1><p>Step 1: Install ganglia-web binary</p>
+<h1 id="wget-http-downloads-sourceforge-net-project-ganglia-ganglia-web-3-5-2-ganglia-web-3-5-2-tar-gz-r-http-3A-2F-2Fsourceforge-net-2Fprojects-2Fganglia-2Ffiles-2Fganglia-web-2F3-5-2-2F-amp-ts-1347011991-amp-use-mirror-cdnetworks-kr-1"><a href="#wget-http-downloads-sourceforge-net-project-ganglia-ganglia-web-3-5-2-ganglia-web-3-5-2-tar-gz-r-http-3A-2F-2Fsourceforge-net-2Fprojects-2Fganglia-2Ffiles-2Fganglia-web-2F3-5-2-2F-amp-ts-1347011991-amp-use-mirror-cdnetworks-kr-1" class="headerlink" title="wget http://downloads.sourceforge.net/project/ganglia/ganglia-web/3.5.2/ganglia-web-3.5.2.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fganglia%2Ffiles%2Fganglia-web%2F3.5.2%2F&amp;ts=1347011991&amp;use_mirror=cdnetworks-kr-1"></a>wget <a href="http://downloads.sourceforge.net/project/ganglia/ganglia-web/3.5.2/ganglia-web-3.5.2.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fganglia%2Ffiles%2Fganglia-web%2F3.5.2%2F&amp;ts=1347011991&amp;use_mirror=cdnetworks-kr-1" target="_blank" rel="external">http://downloads.sourceforge.net/project/ganglia/ganglia-web/3.5.2/ganglia-web-3.5.2.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fganglia%2Ffiles%2Fganglia-web%2F3.5.2%2F&amp;ts=1347011991&amp;use_mirror=cdnetworks-kr-1</a></h1><h1 id="tar-xzvf-ganglia-web-3-5-2-tar-gz"><a href="#tar-xzvf-ganglia-web-3-5-2-tar-gz" class="headerlink" title="tar -xzvf ganglia-web-3.5.2.tar.gz"></a>tar -xzvf ganglia-web-3.5.2.tar.gz</h1><h1 id="cd-ganglia-web-3-5-2"><a href="#cd-ganglia-web-3-5-2" class="headerlink" title="cd ganglia-web-3.5.2"></a>cd ganglia-web-3.5.2</h1><h1 id="make-amp-amp-make-install-2"><a href="#make-amp-amp-make-install-2" class="headerlink" title="make &amp;&amp; make install"></a>make &amp;&amp; make install</h1><p>Step 2: Configure rrdtool path</p>
+<h1 id="vi-var-www-html-ganglia-conf-default-php"><a href="#vi-var-www-html-ganglia-conf-default-php" class="headerlink" title="vi /var/www/html/ganglia/conf_default.php"></a>vi /var/www/html/ganglia/conf_default.php</h1><p>$conf[‘rrdtool’] = “/usr/lib64/rrdtool/bin/rrdtool”;</p>
+<p>Step 3: Visit ganglia web interface through  “<a href="http://server-ip/ganglia" target="_blank" rel="external">http://server-ip/ganglia</a>“</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ganglia/" rel="tag">#ganglia</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/21/Postgres 源码学习/" rel="next" title="Postgre 源码学习">
+                <i class="fa fa-chevron-left"></i> Postgre 源码学习
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/22/vim下ctags使用/" rel="prev" title="vim下ctags使用">
+                vim下ctags使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2015/04/21/Ganglia 安装/"
+     data-title="Ganglia 安装"
+     data-content=""
+     data-url="http://yoursite.com/2015/04/21/Ganglia 安装/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/21/Ganglia 安装/"
+           data-title="Ganglia 安装" data-url="http://yoursite.com/2015/04/21/Ganglia 安装/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-y-install-apr-devel-apr-util-check-devel-cairo-devel-pango-devel-libxml2-devel-glib2-devel-dbus-devel-freetype-devel-fontconfig-devel-gcc-c-expat-devel-python-devel-libXrender-devel-zlib-libpng-freetype-libjpeg-fontconfig-gd-libxml2-pcre-pcre-devel"><span class="nav-number">1.</span> <span class="nav-text">yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel glib2-devel dbus-devel freetype-devel fontconfig-devel gcc-c++ expat-devel python-devel libXrender-devel zlib libpng freetype libjpeg fontconfig gd libxml2 pcre pcre-devel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-savannah-nongnu-org-download-confuse-confuse-2-7-tar-gz"><span class="nav-number">2.</span> <span class="nav-text">wget http://savannah.nongnu.org/download/confuse/confuse-2.7.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-xzvf-confuse-2-7-tar-gz"><span class="nav-number">3.</span> <span class="nav-text">tar -xzvf confuse-2.7.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-confuse-2-7"><span class="nav-number">4.</span> <span class="nav-text">cd confuse-2.7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-CFLAGS-fPIC-–disable-nls-amp-amp-make-amp-amp-make-install"><span class="nav-number">5.</span> <span class="nav-text">./configure CFLAGS=-fPIC –disable-nls && make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-oss-oetiker-ch-rrdtool-pub-rrdtool-1-4-7-tar-gz"><span class="nav-number">6.</span> <span class="nav-text">wget http://oss.oetiker.ch/rrdtool/pub/rrdtool-1.4.7.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-xzvf-rrdtool-1-4-7-tar-gz"><span class="nav-number">7.</span> <span class="nav-text">tar -xzvf rrdtool-1.4.7.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-rrdtool-1-4-7"><span class="nav-number">8.</span> <span class="nav-text">cd rrdtool-1.4.7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-–prefix-usr-lib64-rrdtool-–disable-perl"><span class="nav-number">9.</span> <span class="nav-text">./configure –prefix=/usr/lib64/rrdtool –disable-perl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-amp-amp-make-install"><span class="nav-number">10.</span> <span class="nav-text">make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-downloads-sourceforge-net-pcre-pcre-8-32-tar-bz2"><span class="nav-number">11.</span> <span class="nav-text">wget  http://downloads.sourceforge.net/pcre/pcre-8.32.tar.bz2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-xvf-pcre-8-32-tar-bz2"><span class="nav-number">12.</span> <span class="nav-text">tar -xvf pcre-8.32.tar.bz2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-pcre-8-32"><span class="nav-number">13.</span> <span class="nav-text">cd pcre-8.32</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-amp-amp-make-amp-amp-make-install"><span class="nav-number">14.</span> <span class="nav-text">./configure && make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-sourceforge-net-projects-ganglia-files-latest-download-source-files"><span class="nav-number">15.</span> <span class="nav-text">wget http://sourceforge.net/projects/ganglia/files/latest/download?source=files</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-xzvf-ganglia-3-5-0-tar-gz"><span class="nav-number">16.</span> <span class="nav-text">tar -xzvf ganglia-3.5.0.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-ganglia-3-5-0"><span class="nav-number">17.</span> <span class="nav-text">cd ganglia-3.5.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#configure-–with-gmetad-–with-librrd-usr-lib64-rrdtool-–sysconfdir-etc-ganglia"><span class="nav-number">18.</span> <span class="nav-text">./configure –with-gmetad –with-librrd=/usr/lib64/rrdtool –sysconfdir=/etc/ganglia</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-amp-amp-make-install-1"><span class="nav-number">19.</span> <span class="nav-text">make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#which-gmetric"><span class="nav-number">20.</span> <span class="nav-text">which gmetric</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#which-gmond"><span class="nav-number">21.</span> <span class="nav-text">which gmond</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#which-gmetad"><span class="nav-number">22.</span> <span class="nav-text">which gmetad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-etc-ganglia-gmetad-conf"><span class="nav-number">23.</span> <span class="nav-text">vi /etc/ganglia/gmetad.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gmond-–default-config-gt-etc-ganglia-gmond-conf"><span class="nav-number">24.</span> <span class="nav-text">gmond –default_config > /etc/ganglia/gmond.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ln-s-lib64-libpcre-so-0-lib64-libpcre-so-1"><span class="nav-number">25.</span> <span class="nav-text">ln -s /lib64/libpcre.so.0 /lib64/libpcre.so.1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-etc-ganglia-gmond-conf"><span class="nav-number">26.</span> <span class="nav-text">vi /etc/ganglia/gmond.conf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bind-239-2-11-71"><span class="nav-number">27.</span> <span class="nav-text">bind = 239.2.11.71</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mkdir-p-var-lib-ganglia-rrds"><span class="nav-number">28.</span> <span class="nav-text">mkdir -p /var/lib/ganglia/rrds</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chown-nobody-nobody-var-lib-ganglia-R"><span class="nav-number">29.</span> <span class="nav-text">chown nobody:nobody /var/lib/ganglia/ -R</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cp-gmetad-gmetad-init-etc-rc-d-init-d-gmetad"><span class="nav-number">30.</span> <span class="nav-text">cp gmetad/gmetad.init /etc/rc.d/init.d/gmetad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cp-usr-local-sbin-gmetad-usr-sbin"><span class="nav-number">31.</span> <span class="nav-text">cp /usr/local/sbin/gmetad /usr/sbin/</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cp-gmond-gmond-init-etc-rc-d-init-d-gmond"><span class="nav-number">32.</span> <span class="nav-text">cp gmond/gmond.init /etc/rc.d/init.d/gmond</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cp-usr-local-sbin-gmond-usr-sbin"><span class="nav-number">33.</span> <span class="nav-text">cp /usr/local/sbin/gmond /usr/sbin/</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chkconfig-–add-gmetad"><span class="nav-number">34.</span> <span class="nav-text">chkconfig –add gmetad</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chkconfig-–add-gmond"><span class="nav-number">35.</span> <span class="nav-text">chkconfig –add gmond</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chkconfig-gmetad-on"><span class="nav-number">36.</span> <span class="nav-text">chkconfig gmetad on</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chkconfig-gmond-on"><span class="nav-number">37.</span> <span class="nav-text">chkconfig gmond on</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-gmetad-start"><span class="nav-number">38.</span> <span class="nav-text">service gmetad start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#service-gmond-start"><span class="nav-number">39.</span> <span class="nav-text">service gmond start</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cat-home-gpadmin-yum-install-ganglia-install-sh"><span class="nav-number">40.</span> <span class="nav-text">cat /home/gpadmin/yum_install/ganglia_install.sh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yum-install-httpd-php"><span class="nav-number">41.</span> <span class="nav-text">yum install httpd php</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-downloads-sourceforge-net-project-ganglia-ganglia-web-3-5-2-ganglia-web-3-5-2-tar-gz-r-http-3A-2F-2Fsourceforge-net-2Fprojects-2Fganglia-2Ffiles-2Fganglia-web-2F3-5-2-2F-amp-ts-1347011991-amp-use-mirror-cdnetworks-kr-1"><span class="nav-number">42.</span> <span class="nav-text">wget http://downloads.sourceforge.net/project/ganglia/ganglia-web/3.5.2/ganglia-web-3.5.2.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fganglia%2Ffiles%2Fganglia-web%2F3.5.2%2F&ts=1347011991&use_mirror=cdnetworks-kr-1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tar-xzvf-ganglia-web-3-5-2-tar-gz"><span class="nav-number">43.</span> <span class="nav-text">tar -xzvf ganglia-web-3.5.2.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-ganglia-web-3-5-2"><span class="nav-number">44.</span> <span class="nav-text">cd ganglia-web-3.5.2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#make-amp-amp-make-install-2"><span class="nav-number">45.</span> <span class="nav-text">make && make install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vi-var-www-html-ganglia-conf-default-php"><span class="nav-number">46.</span> <span class="nav-text">vi /var/www/html/ganglia/conf_default.php</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jerkybible"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
