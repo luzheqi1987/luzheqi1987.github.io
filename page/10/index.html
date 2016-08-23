@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/10/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,141 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/02/12/Mac编译OpenJDK/" itemprop="url">
+                  Mac编译OpenJDK
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-12T09:26:03+08:00" content="2015-02-12">
+              2015-02-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/02/12/Mac编译OpenJDK/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/12/Mac编译OpenJDK/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/12/Mac编译OpenJDK/" class="leancloud_visitors" data-flag-title="Mac编译OpenJDK">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先确定要使用的JDK版本，由于jdk8已经发布很久了，所以选择OpenJDK8u。 </p>
+<p>获取源码有两种方式。一是通过Mercurial代码版本管理工具从Repository中直接取得源码（Repository地址：<a href="http://hg.openjdk.java.net/jdk8u/jdk8u），这是最直接的方式，从版本管理中看变更轨迹比看什么Release" target="_blank" rel="external">http://hg.openjdk.java.net/jdk8u/jdk8u），这是最直接的方式，从版本管理中看变更轨迹比看什么Release</a> Note都来得实在，不过坏处自然是太麻烦了一些，尤其是Mercurial远不如SVN、ClearCase或CVS之类的版本控制工具那样普及。另外一种就是直接下载官方打包好的源码包了，可以从Source Releases页面（地址：<a href="http://download.java.net/openjdk/jdk7/）取得打包好的源码，一般来说大概一个月左右会更新一次，虽然不够及时，但的确方便了许多。" target="_blank" rel="external">http://download.java.net/openjdk/jdk7/）取得打包好的源码，一般来说大概一个月左右会更新一次，虽然不够及时，但的确方便了许多。</a></p>
+<p>由于我们选择使用OpenJDK8u，无法使用上面提到的第二种方式，所以只能从hg库中下载源码。</p>
+<p>下载过程如下：<br>1.安装Mercurial。使用下面的命令进行安装。<br>[shell]$ brew install mercurial[/shell]<br>2.下载源码。使用下面的命令下载源码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hg clone http://hg.openjdk.java.net/jdk8u/jdk8u-dev</div><div class="line">cd jdk8u-dev</div><div class="line">bash ./get_source.sh</div></pre></td></tr></table></figure></p>
+<p>3.接下来就开始着手编译JDK了，按照README-builds.html的描述，需要首先运行<br>[shell]bash ./configure[/shell]<br>但是在这一步走了很多弯路。首先我把系统升级到了10.10，然后Xcode也装了最新的6.1.1，但是在运行中发现需要Xcode4，Xcode6.1.1不行；那就装Xcode4，发现Xcode4在10.10上跑的不好，决定把系统将回10.8；系统降回10.8后安装了Xcode4.6.3，这时候Xcode没有问题了。但是还是会报一个错误如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">could not find freetype!</div></pre></td></tr></table></figure></p>
+<p>但是我确定已经装了freetype，而且在README-builds.html里对Mac的要求中也没有提到freetype，最后把命令改为如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bash ./configure --with-target-bits=64  --with-freetype-include=/usr/local/include/freetype2 --with-freetype-lib=/usr/local/Cellar/freetype/2.5.5/lib</div></pre></td></tr></table></figure></p>
+<p>终于跑通了！！在此期间还安装了XQuartz，不知道有没有作用。<br>4.运行<br><code>make all</code><br>编译成功的结果如下：<br><img src="/images/MacJdk编译成功.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1504,140 +1652,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/03/Ambari遇到TIMELINE SERVER无法启动/" itemprop="url">
-                  Ambari遇到TIMELINE SERVER无法启动
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-03T16:25:27+08:00" content="2015-01-03">
-              2015-01-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/03/Ambari遇到TIMELINE SERVER无法启动/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/03/Ambari遇到TIMELINE SERVER无法启动/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/03/Ambari遇到TIMELINE SERVER无法启动/" class="leancloud_visitors" data-flag-title="Ambari遇到TIMELINE SERVER无法启动">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Hadoop 2.3之后采用LevelDB作为历史作业的记录保存, 并引入一个叫做App TimeLine Server的角色作为历史记录的保存. 但是当Hadoop从2.3升级到2.4或2.5后，App Timeline Server会发生无法启动的问题，这是由于App TimeLine所使用的Java类发生了变更所导致的。</p>
-<p>在yarn-site.xml配置中将</p>
-<p>yarn.timeline-service.store-class</p>
-<p>从 org.apache.hadoop.yarn.server.applicationhistoryservice.timeline.LeveldbTimelineStore</p>
-<p>变更为 org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore</p>
-<p>在Ambari中通过界面配置即可。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1678,12 +1692,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

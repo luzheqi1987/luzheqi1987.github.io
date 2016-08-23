@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/3/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,387 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/04/java实现文件操作/" itemprop="url">
+                  java实现文件操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-04T09:57:38+08:00" content="2015-05-04">
+              2015-05-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/04/java实现文件操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/04/java实现文件操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/04/java实现文件操作/" class="leancloud_visitors" data-flag-title="java实现文件操作">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.java实现文件复制、剪切文件和删除<br>[java]<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
+<p>/**</p>
+<ul>
+<li>Java实现文件复制、剪切、删除操作</li>
+<li>文件指文件或文件夹</li>
+<li>文件分割符统一用&quot;\&quot;<br>*/</li>
+</ul>
+<p>public class FileOperateDemo {</p>
+<pre><code>/**
+ * 复制文件或文件夹
+ * @param srcPath 源文件或源文件夹的路径
+ * @param destDir 目标文件所在的目录
+ * @return
+ */
+public static boolean copyGeneralFile(String srcPath, String destDir) {
+    boolean flag = false;
+    File file = new File(srcPath);
+    if(!file.exists()) { // 源文件或源文件夹不存在
+        return false;
+    }
+
+    if(file.isFile()) {    // 文件复制
+        flag = copyFile(srcPath, destDir);
+    }
+    else if(file.isDirectory()) { // 文件夹复制
+        flag = copyDirectory(srcPath, destDir);
+    }
+
+    return flag;
+}
+
+/**
+ * 默认的复制文件方法，默认会覆盖目标文件夹下的同名文件
+ * @param srcPath
+ *            源文件绝对路径
+ * @param destDir
+ *            目标文件所在目录
+ * @return boolean
+ */
+public static boolean copyFile(String srcPath, String destDir) {
+ return copyFile(srcPath, destDir, true/**overwriteExistFile*/); // 默认覆盖同名文件
+}
+
+/**
+ * 默认的复制文件夹方法，默认会覆盖目标文件夹下的同名文件夹
+ * @param srcPath    源文件夹路径
+ * @param destPath    目标文件夹所在目录
+ * @return boolean
+ */
+public static boolean copyDirectory(String srcPath, String destDir) {
+ return copyDirectory(srcPath, destDir, true/**overwriteExistDir*/);
+}
+
+/**
+ * 复制文件到目标目录
+ * @param srcPath
+ *            源文件绝对路径
+ * @param destDir
+ *            目标文件所在目录
+ * @param overwriteExistFile
+ *            是否覆盖目标目录下的同名文件
+ * @return boolean
+ */
+public static boolean copyFile(String srcPath, String destDir, boolean overwriteExistFile) {
+    boolean flag = false;
+
+    File srcFile = new File(srcPath);
+    if (!srcFile.exists() || !srcFile.isFile()) { // 源文件不存在
+        return false;
+    }
+
+    //获取待复制文件的文件名
+    String fileName = srcFile.getName();
+    String destPath = destDir + File.separator +fileName;
+    File destFile = new File(destPath);
+    if (destFile.getAbsolutePath().equals(srcFile.getAbsolutePath())) { // 源文件路径和目标文件路径重复
+        return false;
+    }
+    if(destFile.exists() &amp;amp;&amp;amp; !overwriteExistFile) {    // 目标目录下已有同名文件且不允许覆盖
+        return false;
+    }
+
+    File destFileDir = new File(destDir);
+    if(!destFileDir.exists() &amp;amp;&amp;amp; !destFileDir.mkdirs()) { // 目录不存在并且创建目录失败直接返回
+     return false;
+    }
+
+    try {
+        FileInputStream fis = new FileInputStream(srcPath);
+        FileOutputStream fos = new FileOutputStream(destFile);
+        byte[] buf = new byte[1024];
+        int c;
+        while ((c = fis.read(buf)) != -1) {
+            fos.write(buf, 0, c);
+        }
+        fos.flush();
+        fis.close();
+        fos.close();
+
+        flag = true;
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return flag;
+}
+
+/**
+ * 
+ * @param srcPath    源文件夹路径
+ * @param destPath    目标文件夹所在目录
+ * @return
+ */
+public static boolean copyDirectory(String srcPath, String destDir, boolean overwriteExistDir) {
+    if(destDir.contains(srcPath))
+       return false;
+    boolean flag = false;
+
+    File srcFile = new File(srcPath);
+    if (!srcFile.exists() || !srcFile.isDirectory()) { // 源文件夹不存在
+        return false;
+    }
+
+    //获得待复制的文件夹的名字，比如待复制的文件夹为&amp;quot;E:\\dir\\&amp;quot;则获取的名字为&amp;quot;dir&amp;quot;
+    String dirName = srcFile.getName();
+
+    //目标文件夹的完整路径
+    String destDirPath = destDir + File.separator + dirName + File.separator;
+    File destDirFile = new File(destDirPath);
+    if(destDirFile.getAbsolutePath().equals(srcFile.getAbsolutePath())) {
+     return false;
+    }
+    if(destDirFile.exists() &amp;amp;&amp;amp; destDirFile.isDirectory() &amp;amp;&amp;amp; !overwriteExistDir) {    // 目标位置有一个同名文件夹且不允许覆盖同名文件夹，则直接返回false
+        return false;
+    }
+
+    if(!destDirFile.exists() &amp;amp;&amp;amp; !destDirFile.mkdirs()) {  // 如果目标目录不存在并且创建目录失败
+     return false;
+    }
+
+    File[] fileList = srcFile.listFiles();    //获取源文件夹下的子文件和子文件夹
+    if(fileList.length==0) {    // 如果源文件夹为空目录则直接设置flag为true，这一步非常隐蔽，debug了很久
+        flag = true;
+    }
+    else {
+        for(File temp: fileList) {
+            if(temp.isFile()) {    // 文件
+                flag = copyFile(temp.getAbsolutePath(), destDirPath, overwriteExistDir);     // 递归复制时也继承覆盖属性
+            }
+            else if(temp.isDirectory()) {    // 文件夹
+                flag = copyDirectory(temp.getAbsolutePath(), destDirPath, overwriteExistDir);   // 递归复制时也继承覆盖属性
+            }
+
+            if(!flag) {
+                break;
+            }
+        }
+    }
+
+    return flag;
+}
+
+/**
+ * 删除文件或文件夹
+ * @param path
+ *            待删除的文件的绝对路径
+ * @return boolean
+ */
+public static boolean deleteFile(String path) {
+    boolean flag = false;
+
+    File file = new File(path);
+    if (!file.exists()) { // 文件不存在直接返回
+        return flag;
+    }
+    flag = file.delete();
+
+    return flag;
+}
+
+/**
+ * 由上面方法延伸出剪切方法：复制+删除
+ * @param  destDir 同上
+ */
+public static boolean cutGeneralFile(String srcPath, String destDir) {
+ boolean flag = false;
+    if(copyGeneralFile(srcPath, destDir) &amp;amp;&amp;amp; deleteFile(srcPath)) { // 复制和删除都成功
+     flag = true;
+    }
+
+    return flag;
+}
+
+public static void main(String[] args) {
+ /** 测试复制文件 */
+ System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/test/&amp;quot;));  // 一般正常场景
+ System.out.println(copyGeneralFile(&amp;quot;d://notexistfile&amp;quot;, &amp;quot;d://test/&amp;quot;));      // 复制不存在的文件或文件夹
+ System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/&amp;quot;));      // 待复制文件与目标文件在同一目录下
+ System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/test/&amp;quot;));  // 覆盖目标目录下的同名文件
+ System.out.println(copyFile(&amp;quot;d://test/&amp;quot;, &amp;quot;d://test2&amp;quot;, false)); // 不覆盖目标目录下的同名文件
+ System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;notexist://noexistdir/&amp;quot;)); // 复制文件到一个不可能存在也不可能创建的目录下
+
+ System.out.println(&amp;quot;---------&amp;quot;);
+
+ /** 测试复制文件夹 */
+ System.out.println(copyGeneralFile(&amp;quot;d://test/&amp;quot;, &amp;quot;d://test2/&amp;quot;));
+
+ System.out.println(&amp;quot;---------&amp;quot;);
+
+ /** 测试删除文件 */
+ System.out.println(deleteFile(&amp;quot;d://a/&amp;quot;));
+}
+</code></pre><p>}<br>[/java]</p>
+<p>2.验证传入路径是否为正确的路径名(Windows系统，其他系统未使用)<br>[java]<br>// 验证字符串是否为正确路径名的正则表达式<br>private static String matches = &quot;[A-Za-z]:\\[^:?\&quot;&gt;&lt;<em>]</em>&quot;;<br>// 通过 sPath.matches(matches) 方法的返回值判断是否正确<br>// sPath 为路径字符串<br>[/java]</p>
+<p>3.通用的文件夹或文件删除方法，直接调用此方法，即可实现删除文件夹或文件，包括文件夹下的所有文件<br>[java]<br>/** </p>
+<ul>
+<li>根据路径删除指定的目录或文件，无论存在与否<br><em>@param sPath  要删除的目录或文件 
+</em>@return 删除成功返回 true，否则返回 false。<br>*/<br>public boolean DeleteFolder(String sPath) {<br>flag = false;<br>file = new File(sPath);<br>// 判断目录或文件是否存在<br>if (!file.exists()) {  // 不存在返回 false  <pre><code>return flag;  
+</code></pre>} else {  <pre><code>// 判断是否为文件  
+if (file.isFile()) {  // 为文件时调用删除文件方法  
+    return deleteFile(sPath);  
+} else {  // 为目录时调用删除目录方法  
+    return deleteDirectory(sPath);  
+}  
+</code></pre>}<br>}<br>[/java]</li>
+</ul>
+<p>4.实现删除文件的方法，<br>[java]<br>/** </p>
+<ul>
+<li>删除单个文件 </li>
+<li>@param   sPath    被删除文件的文件名 </li>
+<li>@return 单个文件删除成功返回true，否则返回false<br>*/<br>public boolean deleteFile(String sPath) {<br> flag = false;<br> file = new File(sPath);<br> // 路径为文件且不为空则进行删除<br> if (file.isFile() &amp;&amp; file.exists()) {  <pre><code>file.delete();  
+flag = true;  
+</code></pre> }<br> return flag;<br>}<br>[/java]</li>
+</ul>
+<p>5.实现删除文件夹的方法，<br>[java]<br>/** </p>
+<ul>
+<li>删除目录（文件夹）以及目录下的文件 </li>
+<li>@param   sPath 被删除目录的文件路径 </li>
+<li>@return  目录删除成功返回true，否则返回false<br>*/<br>public boolean deleteDirectory(String sPath) {<br> //如果sPath不以文件分隔符结尾，自动添加文件分隔符<br> if (!sPath.endsWith(File.separator)) {  <pre><code>sPath = sPath + File.separator;  
+</code></pre> }<br> File dirFile = new File(sPath);<br> //如果dir对应的文件不存在，或者不是一个目录，则退出<br> if (!dirFile.exists() || !dirFile.isDirectory()) {  <pre><code>return false;  
+</code></pre> }<br> flag = true;<br> //删除文件夹下的所有文件(包括子目录)<br> File[] files = dirFile.listFiles();<br> for (int i = 0; i &lt; files.length; i++) {  <pre><code>//删除子文件  
+if (files[i].isFile()) {  
+    flag = deleteFile(files[i].getAbsolutePath());  
+    if (!flag) break;  
+} //删除子目录  
+else {  
+    flag = deleteDirectory(files[i].getAbsolutePath());  
+    if (!flag) break;  
+}  
+</code></pre> }<br> if (!flag) return false;<br> //删除当前目录<br> if (dirFile.delete()) {  <pre><code>return true;  
+</code></pre> } else {  <pre><code>return false;  
+</code></pre> }<br>}<br>[/java] </li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -2304,154 +2698,6 @@ void render(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, Http
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/13/进程 线程操作/" itemprop="url">
-                  进程/线程操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-13T10:59:50+08:00" content="2015-04-13">
-              2015-04-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/13/进程 线程操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/进程 线程操作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/13/进程 线程操作/" class="leancloud_visitors" data-flag-title="进程/线程操作">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.为什么要进行线程/进程间的同步？<br>因为存在多个线程或者进程需要访问相同的资源。如果不进行同步，可能导致错误发生。比如因读写的不同步造成的数据错误，或者死锁的出现等，让系统和数据进入到一种错误或者不稳定的状态。</p>
-<p>2.使用了多线程就必须要进行同步么？<br>大部分情况下是这样，但也不能绝对。 因为需要进行同步的情况需要满足两个条件：</p>
-<p>a.存在多个线程/进程</p>
-<p>b.多个线程/进程之间会相互的竞争资源</p>
-<p>如果只是存在多个线程/进程，但只见并没有竟让共有资源，那也没必要进行同步。 如线程内的局部变量等数据</p>
-<p>3.进行同步的机制都有什么？<br>比如加互斥锁，临界区，信号量等。</p>
-<p>互斥锁： 一次只允许一个线程进入共享区域，在离开共享区域时释放锁。</p>
-<p>临界区： 类似互斥锁</p>
-<p>信号量： 维护一个数，允许特定数量的线程进入</p>
-<p>4.什么是原子操作。</p>
-<p>原子操作就是一组不可分离的操作。应该把它视为一个整体，要么全部成功，要么全部失败，不会出现部分成功，部分失败的现象。而且原子操作执行中间不会被打断。</p>
-<p>5.原子操作的不会被打断是什么意思，是说线程不会被切换么？<br>不是的。</p>
-<p>有的原子操作是由处理器本身所支持的。 如一条指令本身肯定是一个原子操作。</p>
-<p>但有的原子操作是一个执行块，这时在这个执行块中间，是非常有可能发生线程间的切换的。</p>
-<p>有时候，一条高级语言的语句可能会被编译成好几条对应的汇编语句（机器语句） 如 c = a+b； 很有可能还没有算出c的结果线程就被切换了。<br>但发生线程间的切换并不意味着数据就可以被其他的线程访问。因为我们可以通过加锁的办法，让其他线程不能进入到执行块内部。这样其他线程虽然获得了CPU时间，但如果要访问执行块，只有等待，别的什么也做不了。数据还是安全的。</p>
-<p>6.锁和原子操作是一个概念么。<br>原子操作是一个不可被分割的单个或者多个操作。<br>锁是一种机制，让我们来协调各个线程，来实现原子操作。<br>原子操作 分为物理的  和 软件实现的两种<br>物理的比如一条单独的汇编语句。<br>软件实现的往往依赖于锁</p>
-<p>7. 什么是死锁。<br>如在一个单轨的铁路上，两条火车向不同的方向开。 谁也动不了了</p>
-<p>8.为什么会发生死锁<br>死锁一般都是由于对共享资源的竞争引起的。 但对共享资源的竞争又不一定就会发生死锁。 死锁的发生必须同时满足四个条件：互斥，持有/等待，非抢占， 形成等待环</p>
-<p>9.什么是活锁<br>活锁和死锁很像似。 只是活锁的状态可以发生改变。不过虽然状态可以改变，却没有实质的进展。<br>活锁一般是由于对死锁的不正确处理引起的。由于处于死锁中的多个线程同时采取了行动。 而避免的方法也是只让一个线程释放资源。<br>比如两个人在一个很宅的胡同里。 一次只能并排过两个人。 两人比较礼貌，都要给对方让路。 结果一起要么让到左边，要么让到右边，结果仍然是谁也过不去。 类似于原地踏步或者震荡状态。</p>
-<p>10. 什么是饿死<br>饿死（starvation） 是一个线程长时间得不到需要的资源而不能执行的现象。 有人饿死并不代表着出现了死锁。很有可能系统还能很好的进行。<br>所以，没有出现死锁并不能就认为系统是完好的。还要保证没有出现饿死的现象。<br>避免饿死就应该是采用队列的方式，保证每个人都有机会获得请求的资源。 当然实现方式可以很多个变化，比如优先级，时间片，等，都是“队列”的特殊形式</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2492,12 +2738,12 @@ void render(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, Http
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

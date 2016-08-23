@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/22/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,148 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/16/2013-10-16-CODE 81 N-Queens II/" itemprop="url">
+                  CODE 81. N-Queens II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-16T22:41:00+08:00" content="2013-10-16">
+              2013-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/16/2013-10-16-CODE 81 N-Queens II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/16/2013-10-16-CODE 81 N-Queens II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/16/2013-10-16-CODE 81 N-Queens II/" class="leancloud_visitors" data-flag-title="CODE 81. N-Queens II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Follow up for N-Queens problem.<br>Now, instead outputting board configurations, return the total number of distinct solutions.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">totalNQueens</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">int</span>[] cols = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">		cols[i] = -<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> number = createNQueens(n, cols, <span class="number">0</span>);</div><div class="line">	<span class="keyword">return</span> number;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">createNQueens</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] rows, <span class="keyword">int</span> row)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> number = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">		<span class="keyword">int</span> j;</div><div class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; row; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (rows[j] == i || (row - j == Math.abs(rows[j] - i))) &#123;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (j &lt; row) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		rows[row] = i;</div><div class="line">		<span class="keyword">if</span> (row == n - <span class="number">1</span>) &#123;</div><div class="line">			rows[row] = -<span class="number">1</span>;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">int</span> tmp = createNQueens(n, rows, row + <span class="number">1</span>);</div><div class="line">			number += tmp;</div><div class="line">		&#125;</div><div class="line">		rows[row] = -<span class="number">1</span>;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> number;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1561,150 +1716,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/07/2013-10-07-CODE 70 Unique Paths II/" itemprop="url">
-                  CODE 70. Unique Paths II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-07T23:22:00+08:00" content="2013-10-07">
-              2013-10-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/07/2013-10-07-CODE 70 Unique Paths II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/07/2013-10-07-CODE 70 Unique Paths II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/07/2013-10-07-CODE 70 Unique Paths II/" class="leancloud_visitors" data-flag-title="CODE 70. Unique Paths II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Follow up for “Unique Paths”:<br>Now consider if some obstacles are added to the grids. How many unique paths would there be?<br>An obstacle and empty space is marked as <code>1</code> and <code>0</code> respectively<br> in the grid.<br>For example,</p>
-<p>There is one obstacle in the middle of a 3x3 grid as illustrated below.<br>    [<br>      [0,0,0],<br>      [0,1,0],<br>      [0,0,0]<br>    ]</p>
-<p>The total number of unique paths is <code>2</code>.<br>Note: m and n will be at most 100.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="keyword">int</span>[][] obstacleGrid)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">int</span> m = obstacleGrid.length;</div><div class="line">	<span class="keyword">int</span> n = obstacleGrid[<span class="number">0</span>].length;</div><div class="line">	<span class="keyword">int</span>[][] sum = <span class="keyword">new</span> <span class="keyword">int</span>[m][n];</div><div class="line">	sum[<span class="number">0</span>][<span class="number">0</span>] = obstacleGrid[<span class="number">0</span>][<span class="number">0</span>] == <span class="number">1</span> ? <span class="number">0</span> : <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (obstacleGrid[i][<span class="number">0</span>] == <span class="number">1</span>) &#123;</div><div class="line">			sum[i][<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			sum[i][<span class="number">0</span>] = sum[i - <span class="number">1</span>][<span class="number">0</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (obstacleGrid[<span class="number">0</span>][i] == <span class="number">1</span>) &#123;</div><div class="line">			sum[<span class="number">0</span>][i] = <span class="number">0</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			sum[<span class="number">0</span>][i] = sum[<span class="number">0</span>][i - <span class="number">1</span>];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (obstacleGrid[i][j] != <span class="number">1</span>) &#123;</div><div class="line">				sum[i][j] = sum[i - <span class="number">1</span>][j] + sum[i][j - <span class="number">1</span>];</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				sum[i][j] = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sum[m - <span class="number">1</span>][n - <span class="number">1</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1745,12 +1756,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

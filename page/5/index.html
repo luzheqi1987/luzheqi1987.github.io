@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/5/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,181 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="url">
+                  [转]Spring4新特性——核心容器的其他改进
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:57:38+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——核心容器的其他改进">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989379" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989379</a></p>
+<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p>1、Map依赖注入：<br>[java]<br>@Autowired<br>private Map&lt;String, BaseService&gt; map;<br>[/java]<br>这样会注入：key是bean名字；value就是所有实现了BaseService的Bean，假设使用上一篇的例子，则会得到：<br>[java]<br>{organizationService=com.sishuok.spring4.service.OrganizationService@617029, userService=com.sishuok.spring4.service.UserService@10ac73b}<br>[/java]</p>
+<p>2、List/数组注入：<br>[java]<br>@Autowired<br>private List&lt;BaseService&gt; list;<br>[/java]<br> 这样会注入所有实现了BaseService的Bean；但是顺序是不确定的，如果我们想要按照某个顺序获取；在Spring4中可以使用@Order或实现Ordered接口来实现，如：<br>[java]<br>@Order(value = 1)<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>这种方式在一些需要多态的场景下是非常有用的。</p>
+<p>3、@Lazy可以延迟依赖注入：<br>[java]<br>@Lazy<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>[java]<br>@Lazy<br>@Autowired<br>private UserService userService;<br>[/java]<br> 我们可以把@Lazy放在@Autowired之上，即依赖注入也是延迟的；当我们调用userService时才会注入。即延迟依赖注入到使用时。同样适用于@Bean。</p>
+<p>4、@Conditional<br>@Conditional类似于@Profile（一般用于如我们有开发环境、测试环境、正式机环境，为了方便切换不同的环境可以使用@Profile指定各个环境的配置，然后通过某个配置来开启某一个环境，方便切换），但是@Conditional的优点是允许自己定义规则。可以指定在如@Component、@Bean、@Configuration等注解的类上，以绝对Bean是否创建等。首先来看看使用@Profile的用例，假设我们有个用户模块：<br>1、在测试/开发期间调用本机的模拟接口方便开发；<br>2、在部署到正式机时换成调用远程接口；<br>[java]<br>public abstract class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Profile(&quot;local&quot;)<br>@Service<br>public class LocalUserService extends UserService {<br>}  </p>
+<p>@Profile(&quot;remote&quot;)<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>我们在写测试用例时，可以指定我们使用哪个Profile：<br>[java]<br>@ActiveProfiles(&quot;remote&quot;)<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations =  &quot;classpath:spring-config.xml&quot;)<br>public class ServiceTest {  </p>
+<pre><code>@Autowired  
+private UserService userService;  
+</code></pre><p>}<br>[/java]<br>  这种方式非常简单。如果想自定义如@Profile之类的注解等，那么@Conditional就派上用场了；假设我们系统中有好多本地/远程接口，那么我们定义两个注解@Local和@Remote注解要比使用@Profile方便的多；如：</p>
+<p>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Local {<br>}  </p>
+<p>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Remote {<br>}<br>[/java]<br>[java]<br>public class CustomCondition implements Condition {  </p>
+<pre><code>@Override  
+public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {  
+    boolean isLocalBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Local&amp;quot;);  
+    boolean isRemoteBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Remote&amp;quot;);  
+    //如果bean没有注解@Local或@Remote，返回true，表示创建Bean  
+    if(!isLocalBean &amp;amp;&amp;amp; !isRemoteBean) {  
+        return true;  
+    }  
+
+    boolean isLocalProfile = context.getEnvironment().acceptsProfiles(&amp;quot;local&amp;quot;);  
+
+    //如果profile=local 且 bean注解了@Local，则返回true 表示创建bean；  
+    if(isLocalProfile) {  
+        return isLocalBean;  
+    }  
+
+    //否则默认返回注解了@Remote或没有注解@Remote的Bean  
+    return isRemoteBean;  
+}  
+</code></pre><p>}<br>[/java]<br> 然后我们使用这两个注解分别注解我们的Service：<br>[java]<br>@Local<br>@Service<br>public class LocalUserService extends UserService {<br>}<br>[/java]<br>[java]<br>@Remote<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>首先在@Local和@Remote注解上使用@Conditional(CustomCondition.class)指定条件，然后使用@Local和@Remote注解我们的Service，这样当加载Service时，会先执行条件然后判断是否加载为Bean。@Profile就是这样实现的，其Condition是：org.springframework.context.annotation.ProfileCondition。可以去看下源码，很简单。</p>
+<p>5、基于CGLIB的类代理不再要求类必须有空参构造器了：<br>这是一个很好的特性，使用构造器注入有很多好处，比如可以只在创建Bean时注入依赖，然后就不变了，如果使用setter注入，是允许别人改的。当然我们可以使用spring的字段级别注入。如果大家使用过如Shiro，我们可能要对Controller加代理。如果是类级别代理，此时要求Controller必须有空参构造器，有时候挺烦人的。spring如何实现的呢？其内联了objenesis类库，通过它来实现，可以去其官网看看介绍。这样就支持如下方式的构造器注入了：</p>
+<p>[java]<br>@Controller<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>}<br>[/java]<br>org.springframework.cglib.proxy.Enhancer在其github和maven仓库中的source中竟然木有，其github：<a href="https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？" target="_blank" rel="external">https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1685,139 +1873,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="url">
-                  同一进程中的线程究竟共享哪些资源
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:39:39+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/同一进程中的线程究竟共享哪些资源/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/同一进程中的线程究竟共享哪些资源/" class="leancloud_visitors" data-flag-title="同一进程中的线程究竟共享哪些资源">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>线程共享的环境包括：进程代码段、进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)、进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。<br>进程拥有这许多共性的同时，还拥有自己的个性。有了这些个性，线程才能实现并发性。这些个性包括：</p>
-<p>1.线程ID<br>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标<br>识线程。<br>2.寄存器组的值<br>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线<br>程切换到另一个线程上时，必须将原有的线程的寄存器集合的状态保存，以便<br>将来该线程在被重新切换到时能得以恢复。<br>3.线程的堆栈<br>堆栈是保证线程独立运行所必须的。<br>线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程<br>必须拥有自己的函数堆栈，使得函数调用可以正常执行，不受其他线程的影<br>响。</p>
-<p>4.错误返回码<br>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用<br>后设置了errno值，而在该线程还没有处理这个错误，另外一个线程就在此时<br>被调度器投入运行，这样错误值就有可能被修改。<br>所以，不同的线程应该拥有自己的错误返回码变量。</p>
-<p>5.线程的信号屏蔽码<br>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自<br>己管理。但所有的线程都共享同样的信号处理器。</p>
-<p>6.线程的优先级<br>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参<br>数，这个参数就是线程的优先级。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1858,12 +1913,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

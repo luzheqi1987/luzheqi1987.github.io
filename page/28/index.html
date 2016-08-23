@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/28/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,163 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/16/2013-09-16-CODE 16 Populating Next Right Pointers in Each Node II/" itemprop="url">
+                  CODE 16. Populating Next Right Pointers in Each Node II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-16T21:23:00+08:00" content="2013-09-16">
+              2013-09-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/16/2013-09-16-CODE 16 Populating Next Right Pointers in Each Node II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/16/2013-09-16-CODE 16 Populating Next Right Pointers in Each Node II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/16/2013-09-16-CODE 16 Populating Next Right Pointers in Each Node II/" class="leancloud_visitors" data-flag-title="CODE 16. Populating Next Right Pointers in Each Node II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Follow up for problem “Populating Next Right Pointers in Each Node”.<br>What if the given tree could be any binary tree? Would your previous solution still work?<br>Note:</p>
+<ul>
+<li>You may only use constant extra space.</li>
+</ul>
+<p>For example,<br>Given the following binary tree,</p>
+<pre><code>     1
+   /  \
+  2    3
+ / \    \
+4   5    7
+</code></pre><p>After calling your function, the tree should look like:</p>
+<pre><code>     1 -&gt; NULL
+   /  \
+  2 -&gt; 3 -&gt; NULL
+ / \    \
+4-&gt; 5 -&gt; 7 -&gt; NULL
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">(TreeLinkNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	bfs(root);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(TreeLinkNode root)</span> </span>&#123;</div><div class="line">	Queue&lt;TreeLinkNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeLinkNode&gt;();</div><div class="line">	queue.offer(root);</div><div class="line">	<span class="keyword">int</span> queueNumber = <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> layerNumber = <span class="number">0</span>;</div><div class="line">	TreeLinkNode tempNode = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		tempNode = queue.poll();</div><div class="line">		queueNumber--;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != tempNode.left) &#123;</div><div class="line">			queue.offer(tempNode.left);</div><div class="line">			layerNumber++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != tempNode.right) &#123;</div><div class="line">			queue.offer(tempNode.right);</div><div class="line">			layerNumber++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (queueNumber != <span class="number">0</span>) &#123;</div><div class="line">			tempNode.next = queue.peek();</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			tempNode.next = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (queueNumber == <span class="number">0</span> &amp;&amp; layerNumber != <span class="number">0</span>) &#123;</div><div class="line">			queueNumber = layerNumber;</div><div class="line">			layerNumber = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1570,148 +1740,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/12/2013-09-12-CODE 8 Valid Palindrome/" itemprop="url">
-                  CODE 8. Valid Palindrome
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-12T22:13:00+08:00" content="2013-09-12">
-              2013-09-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/12/2013-09-12-CODE 8 Valid Palindrome/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/12/2013-09-12-CODE 8 Valid Palindrome/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/12/2013-09-12-CODE 8 Valid Palindrome/" class="leancloud_visitors" data-flag-title="CODE 8. Valid Palindrome">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.<br>For example,<br><code>&quot;A man, a plan, a canal: Panama&quot;</code>is a palindrome.<br><code>&quot;race a car&quot;</code>is<em>not</em>a palindrome.<br><strong>Note:</strong><br>Have you consider that the string might be empty? This is a good question to ask during an interview.<br>For the purpose of this problem, we define empty string as valid palindrome.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == s) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (s.length() &lt;= <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> j = s.length() - <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (i &lt; j) &#123;</div><div class="line">		<span class="keyword">char</span> a = s.charAt(i);</div><div class="line">		<span class="keyword">char</span> b = s.charAt(j);</div><div class="line">		<span class="keyword">if</span> (a &lt; <span class="string">'0'</span> || (a &gt; <span class="string">'9'</span> &amp;&amp; a &lt; <span class="string">'A'</span>) || (a &gt; <span class="string">'Z'</span> &amp;&amp; a &lt; <span class="string">'a'</span>)</div><div class="line">				|| a &gt; <span class="string">'z'</span>) &#123;</div><div class="line">			i++;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (b &lt; <span class="string">'0'</span> || (b &gt; <span class="string">'9'</span> &amp;&amp; b &lt; <span class="string">'A'</span>) || (b &gt; <span class="string">'Z'</span> &amp;&amp; b &lt; <span class="string">'a'</span>)</div><div class="line">				|| b &gt; <span class="string">'z'</span>) &#123;</div><div class="line">			j--;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (a == b || ((a &lt; b) &amp;&amp; (a + <span class="number">32</span> == b))</div><div class="line">				|| ((a &gt; b) &amp;&amp; (a - <span class="number">32</span> == b))) &#123;</div><div class="line">			i++;</div><div class="line">			j--;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (i &lt; j) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1752,12 +1780,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

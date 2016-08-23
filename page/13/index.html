@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/13/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,127 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/17/2014-01-17-练习2.11-练习2.20/" itemprop="url">
+                  练习2.11-练习2.20
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-17T21:42:00+08:00" content="2014-01-17">
+              2014-01-17
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/17/2014-01-17-练习2.11-练习2.20/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/17/2014-01-17-练习2.11-练习2.20/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/17/2014-01-17-练习2.11-练习2.20/" class="leancloud_visitors" data-flag-title="练习2.11-练习2.20">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.练习2.11</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(define (mul-interval x y)</div><div class="line">  (let ((x1 (lower-bound x))</div><div class="line">	(x2 (upper-bound x))</div><div class="line">	(y1 (lower-bound y))</div><div class="line">	(y2 (upper-bound y)))</div><div class="line">    (let</div><div class="line">	((zzx (and (&gt;= x1 0) (&gt;= x2 0)))</div><div class="line">	 (zzy (and (&gt;= y1 0) (&gt;= y2 0)))</div><div class="line">	 (fzx (and (&lt; x1 0) (&gt;= x2 0)))</div><div class="line">	 (fzy (and (&lt; y1 0) (&gt;= y2 0)))</div><div class="line">	 (ffx (and (&lt; x1 0) (&lt; x2 0)))</div><div class="line">	 (ffy (and (&lt; y1 0) (&lt; y2 0))))</div><div class="line">      (cond (zzy (cond (zzx (make-interval (* x1 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (* x1 y2) (* x2 y2)))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x2 y1)))))</div><div class="line">	    (fzy (cond (zzx (make-interval (* x2 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (min (* x1 y2) (* x2 y1))</div><div class="line">					   (max (* x1 y1) (* x2 y2))))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x1 y1)))))</div><div class="line">	    (ffy (cond (zzx (make-interval (* x2 y1) (* x1 y2)))</div><div class="line">		       (fzx (make-interval (* x2 y1) (* x1 y1)))</div><div class="line">		       (ffx (make-interval (* x2 y2) (* x1 y1)))))))))</div></pre></td></tr></table></figure>
+<p>2.练习2.12</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(define (mul-interval x y)</div><div class="line">  (let ((x1 (lower-bound x))</div><div class="line">	(x2 (upper-bound x))</div><div class="line">	(y1 (lower-bound y))</div><div class="line">	(y2 (upper-bound y)))</div><div class="line">    (let</div><div class="line">	((zzx (and (&gt;= x1 0) (&gt;= x2 0)))</div><div class="line">	 (zzy (and (&gt;= y1 0) (&gt;= y2 0)))</div><div class="line">	 (fzx (and (&lt; x1 0) (&gt;= x2 0)))</div><div class="line">	 (fzy (and (&lt; y1 0) (&gt;= y2 0)))</div><div class="line">	 (ffx (and (&lt; x1 0) (&lt; x2 0)))</div><div class="line">	 (ffy (and (&lt; y1 0) (&lt; y2 0))))</div><div class="line">      (cond (zzy (cond (zzx (make-interval (* x1 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (* x1 y2) (* x2 y2)))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x2 y1)))))</div><div class="line">	    (fzy (cond (zzx (make-interval (* x2 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (min (* x1 y2) (* x2 y1))</div><div class="line">					   (max (* x1 y1) (* x2 y2))))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x1 y1)))))</div><div class="line">	    (ffy (cond (zzx (make-interval (* x2 y1) (* x1 y2)))</div><div class="line">		       (fzx (make-interval (* x2 y1) (* x1 y1)))</div><div class="line">		       (ffx (make-interval (* x2 y2) (* x1 y1)))))))))</div></pre></td></tr></table></figure>
+<p>3.练习2.13中文的翻译太差了，句中的“两个被乘区间的误差”应该是“被乘区间的百分比误差”吧，很生气。。。<br>4.练习2.14<br>5.练习2.15<br>因为引入的误差少，所以更精确<br>6.练习2.16<br>设计一种好难啊<br>7.练习2.17</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (last-pair items)</div><div class="line">  (let ((len (length items)))</div><div class="line">    (define (last-pair-iter item tmplen)</div><div class="line">      (if (= tmplen 1)</div><div class="line">	  item</div><div class="line">	  (last-pair-iter (cdr item) (- tmplen 1))))</div><div class="line">    (last-pair-iter items len)))</div></pre></td></tr></table></figure>
+<p>8.练习2.18</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (reverse items)</div><div class="line">  (define (reverse-iter tmpitems result)</div><div class="line">    (if (null? tmpitems)</div><div class="line">	result</div><div class="line">	(reverse-iter (cdr tmpitems)</div><div class="line">		      (cons (car tmpitems) result))))</div><div class="line">  (reverse-iter items &apos;()))</div></pre></td></tr></table></figure>
+<p>9.练习2.19</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (first-denomination list1)</div><div class="line">  (car list1))</div><div class="line"></div><div class="line">(define (except-first-denomination list1)</div><div class="line">  (cdr list1))</div><div class="line"></div><div class="line">(define (no-more? list1)</div><div class="line">  (null? list1))</div></pre></td></tr></table></figure>
+<p>10.练习2.20</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (same-parity . other)</div><div class="line">  (define (even-number? number)</div><div class="line">    (= (remainder number 2) 0))</div><div class="line">  (define (same-parity-recur even items)</div><div class="line">    (if (null? items)</div><div class="line">	&apos;()</div><div class="line">	(let ((now-even (even-number? (car items)))</div><div class="line">	      (next (same-parity-recur even (cdr items))))</div><div class="line">	  (if (or (and even now-even)</div><div class="line">		  (and (not even) (not now-even)))</div><div class="line">	      (cons (car items) next)</div><div class="line">	      next))))</div><div class="line">  (let ((evenodds (even-number? (car other))))</div><div class="line">    (same-parity-recur evenodds other)))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1376,136 +1510,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="url">
-                  别人的Emacs配置1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-04T17:24:00+08:00" content="2014-01-04">
-              2014-01-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Emacs/" itemprop="url" rel="index">
-                    <span itemprop="name">Emacs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/04/2014-01-04-别人的Emacs配置1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/04/2014-01-04-别人的Emacs配置1/" class="leancloud_visitors" data-flag-title="别人的Emacs配置1">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原地址：<a href="http://blog.csdn.net/shyanyang/article/details/7979866" target="_blank" rel="external">点击打开链接</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div></pre></td><td class="code"><pre><div class="line">;;使用C-x C-e检测配置的正确性</div><div class="line">(global-linum-mode t);显示行号</div><div class="line">(setq column-number-mode t);显示列号</div><div class="line">(setq auto-image-file-mode t);让Emacs可以直接打开和显示图片</div><div class="line">(auto-compression-mode t);打开压缩文件时自动解压缩</div><div class="line">;(setq global-font-lock-mode t);进行语法加亮</div><div class="line">(setq x-select-enable-clipboard t);允许emacs和外部其他程序的粘贴</div><div class="line">(setq mouse-yank-at-point t);使用鼠标中键可以粘贴</div><div class="line">(set-scroll-bar-mode nil);;取消滚动栏</div><div class="line">(tool-bar-mode nil);取消工具栏</div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(display-time-mode 1);;启用时间显示设置，在minibuffer上面的那个杠上</div><div class="line">(setq display-time-24hr-format t);;时间使用24小时制</div><div class="line">(setq display-time-day-and-date t);;时间显示包括日期和具体时间</div><div class="line">(setq display-time-use-mail-icon t);;时间栏旁边启用邮件设置</div><div class="line">(setq display-time-interval 10);;时间的变化频率，单位多少来着？</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置结束 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(setq visible-bell t)</div><div class="line">;;关闭烦人的出错时的提示声</div><div class="line">(setq inhibit-startup-message t)</div><div class="line">;;关闭emacs启动时的画面</div><div class="line"></div><div class="line">;(setq font-lock-maximum-decoration t)</div><div class="line">;(setq font-lock-global-modes &apos;(not shell-mode text-mode))</div><div class="line">;(setq font-lock-verbose t)</div><div class="line">;(setq font-lock-maximum-size &apos;((t . 1048576) (vm-mode . 5250000)))</div><div class="line">;; 语法高亮。除 shell-mode 和 text-mode 之外的模式中使用语法高亮。</div><div class="line"></div><div class="line">(fset &apos;yes-or-no-p &apos;y-or-n-p)</div><div class="line">;; 改变 Emacs 固执的要你回答 yes 的行为。按 y 或空格键表示 yes，n 表示 no。</div><div class="line"></div><div class="line">(ansi-color-for-comint-mode-on)</div><div class="line">;真正shell－mode乱码解决。</div><div class="line"></div><div class="line">(setq default-fill-column 80)</div><div class="line">;默认显示 80列就换行</div><div class="line"></div><div class="line">(setq default-fill-column 120)</div><div class="line">;;把 fill-column 设为 60. 这样的文字更好读</div><div class="line"></div><div class="line">(setq default-major-mode &apos;text-mode)</div><div class="line">(add-hook &apos;text-mode-hook &apos;turn-on-auto-fill)</div><div class="line">;;设置缺省主模式是text，,并进入auto-fill次模式.而不是基本模式fundamental-mode</div><div class="line"></div><div class="line">(show-paren-mode t);显示括号匹配</div><div class="line">(setq show-paren-style &apos;parenthesis)</div><div class="line">;;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。</div><div class="line"></div><div class="line">(mouse-avoidance-mode &apos;animate)</div><div class="line">;;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。</div><div class="line"></div><div class="line">;;;;;;;disable tip of the day</div><div class="line">(setq ecb-tip-of-the-day nil)</div><div class="line"></div><div class="line">(setq-default indent-tabs-mode nil)</div><div class="line">(setq default-tab-width 4)</div><div class="line">(setq tab-stop-list ())</div><div class="line">;;不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的。</div><div class="line"></div><div class="line">(setq-default make-backup-files nil);不要生成临时文件</div><div class="line">(setq backup-directory-alist &apos;((&quot;.&quot; . &quot;~/.autosave&quot;)))</div><div class="line">;;设置自动备份文件保存的目录,以免把你的磁盘弄得乱七八糟(你可以</div><div class="line">;;去掉这一行试试看:P ~/.autosave 表示 主目录下的一个叫.autosave 的子目录，</div><div class="line">;;按照前面的方法设置主目录。</div><div class="line"></div><div class="line">;;最大化</div><div class="line">(defun my-maximized ()  </div><div class="line">  (interactive)  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_HORZ&quot; 0))  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0)))  </div><div class="line">(my-maximized)</div><div class="line"></div><div class="line">;;自动插入匹配的括号</div><div class="line">;;C/C++  mode</div><div class="line"></div><div class="line">(defun my-c-mode-auto-pair ()</div><div class="line">  (interactive)</div><div class="line">  (make-local-variable &apos;skeleton-pair-alist)</div><div class="line">  (setq skeleton-pair-alist  &apos;(</div><div class="line">;;    (?&apos; _ &quot;&apos;&quot;)</div><div class="line">    (?\&quot; _ &quot;\&quot;&quot;)</div><div class="line">    (?\(  _ &quot;)&quot;)</div><div class="line">    (?\[  _ &quot;]&quot;)</div><div class="line">    (?&#123; \n &gt; _ \n ?&#125; &gt;)))</div><div class="line">  (setq skeleton-pair t)</div><div class="line">  (local-set-key (kbd &quot;(&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;&#123;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">;;  (local-set-key (kbd &quot;&apos;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;\&quot;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;[&quot;) &apos;skeleton-pair-insert-maybe))</div><div class="line">(add-hook &apos;c-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">(add-hook &apos;c++-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">;;输入左边的括号，就会自动补全右边的部分.包括(), &quot;&quot;, [] , &#123;&#125; , 等等。</div><div class="line"></div><div class="line">;;;;自动补齐</div><div class="line">(defun my-indent-or-complete ();;;;如果在单词中间就补齐，否则就是tab</div><div class="line">   (interactive)</div><div class="line">   (if (looking-at &quot;\\&gt;&quot;)</div><div class="line">       (hippie-expand nil)</div><div class="line">       (indent-for-tab-command))</div><div class="line"> )</div><div class="line"></div><div class="line">(global-set-key [(control tab)] &apos;my-indent-or-complete)</div><div class="line"></div><div class="line">;;;hippie的自动补齐策略，优先调用了senator的分析结果：</div><div class="line">(autoload &apos;senator-try-expand-semantic &quot;senator&quot;)</div><div class="line"></div><div class="line">(setq hippie-expand-try-functions-list</div><div class="line">       &apos;(</div><div class="line">        senator-try-expand-semantic</div><div class="line">        try-expand-dabbrev</div><div class="line">        try-expand-dabbrev-visible</div><div class="line">        try-expand-dabbrev-all-buffers</div><div class="line">        try-expand-dabbrev-from-kill</div><div class="line">        try-expand-list</div><div class="line">        try-expand-list-all-buffers</div><div class="line">        try-expand-line</div><div class="line">        try-expand-line-all-buffers</div><div class="line">        try-complete-file-name-partially</div><div class="line">        try-complete-file-name</div><div class="line">        try-expand-whole-kill</div><div class="line">        )</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">;;;; 当输入&quot;.&quot;或&quot;&gt;&quot;时，在另一个窗口中列出结构体或类的成员</div><div class="line"></div><div class="line">;; (defun my-c-mode-cedet-hook ()</div><div class="line"></div><div class="line">;;   (local-set-key &quot;.&quot; &apos;semantic-complete-self-insert)</div><div class="line">;;   (local-set-key &quot;&gt;&quot; &apos;semantic-complete-self-insert))</div><div class="line"></div><div class="line">;; (add-hook &apos;c-mode-common-hook &apos;my-c-mode-cedet-hook)</div><div class="line">;; (add-hook &apos;c++-mode-commom-hook &apos;my-c-mode-cedet-hook)</div><div class="line"></div><div class="line">;;配置CEDET</div><div class="line">(load-file &quot;~/.emacs.d/my_plus/cedet-1.0/common/cedet.el&quot;)</div><div class="line">(semantic-load-enable-excessive-code-helpers)</div><div class="line">(global-ede-mode t)</div><div class="line">(require &apos;semantic-ia)</div><div class="line">(require &apos;semantic-gcc)</div><div class="line">(global-srecode-minor-mode 1)</div><div class="line">(semantic-load-enable-semantic-debugging-helpers)</div><div class="line">(global-set-key [f12] &apos;semantic-ia-fast-jump);代码跳转</div><div class="line">;;</div><div class="line">(global-set-key [S-f12]</div><div class="line">                (lambda ()</div><div class="line">                  (interactive)</div><div class="line">                  (if (ring-empty-p (oref semantic-mru-bookmark-ring ring))</div><div class="line">                      (error &quot;Semantic Bookmark ring is currently empty&quot;))</div><div class="line">                  (let* ((ring (oref semantic-mru-bookmark-ring ring))</div><div class="line">                         (alist (semantic-mrub-ring-to-assoc-list ring))</div><div class="line">                         (first (cdr (car alist))))</div><div class="line">                    (if (semantic-equivalent-tag-p (oref first tag)</div><div class="line">                                                   (semantic-current-tag))</div><div class="line">                        (setq first (cdr (car (cdr alist)))))</div><div class="line">                    (semantic-mrub-switch-tags first))))</div><div class="line">;;代码跳转（跳回上次的位置）</div><div class="line"></div><div class="line">(require &apos;eassist nil &apos;noerror)</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">(define-key c-mode-base-map [M-f12] &apos;eassist-switch-h-cpp)</div><div class="line">));;;;;eassist.el就提供了一个在C++的头文件和实现文件间跳转</div><div class="line"></div><div class="line">(setq eassist-header-switches</div><div class="line">      &apos;((&quot;h&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;c&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;hh&quot; . (&quot;cc&quot; &quot;CC&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;C&quot;))</div><div class="line">        (&quot;hpp&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;hxx&quot; . (&quot;cxx&quot; &quot;cpp&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;h++&quot; . (&quot;c++&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;H&quot; . (&quot;C&quot; &quot;CC&quot; &quot;cc&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;HH&quot; . (&quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot;))</div><div class="line">        (&quot;cpp&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cxx&quot; . (&quot;hxx&quot; &quot;hpp&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c++&quot; . (&quot;h++&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;CC&quot; . (&quot;HH&quot; &quot;hh&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cc&quot; . (&quot;hh&quot; &quot;HH&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;C&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;m&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;mm&quot; . (&quot;h&quot;))));;;;填补eassist-switch-h-cpp扩展名不全的BUG</div><div class="line"></div><div class="line">;(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">;(defun my-c-mode-common-hook()</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">;(define-key c-mode-base-map [M-S-f12] &apos;semantic-analyze-proto-impl-toggle);;;;;在函数和声明和实现间跳转，不是这个功能不是十分准确，一般在cpp中函数实现处想跳到函数声明处正常，但是从声明处跳到实现处的话cedet不一定能找到cpp文件的位置。</div><div class="line"></div><div class="line">(define-key c-mode-base-map (kbd &quot;M-n&quot;) &apos;semantic-ia-complete-symbol-menu);;;;;;代码补全</div><div class="line">))</div><div class="line"></div><div class="line"></div><div class="line">;;;;;;;;;;;;;;配置ecb</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/ecb-2.40&quot;)</div><div class="line">(require &apos;ecb)</div><div class="line">(ecb-activate)</div><div class="line"></div><div class="line"></div><div class="line">;;定制ecb窗口布局</div><div class="line">(custom-set-variables  </div><div class="line">  ;; custom-set-variables was added by Custom.  </div><div class="line">  ;; If you edit it by hand, you could mess it up, so be careful.  </div><div class="line">  ;; Your init file should contain only one such instance.  </div><div class="line">  ;; If there is more than one, they won&apos;t work right.  </div><div class="line"> &apos;(ecb-fix-window-size t)  </div><div class="line"> &apos;(ecb-layout-window-sizes nil)  </div><div class="line"> &apos;(ecb-options-version &quot;2.40&quot;)  </div><div class="line"> ;; &apos;(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))  </div><div class="line"> &apos;(ecb-windows-width 0.18))</div><div class="line"></div><div class="line">;颜色配置</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus&quot;)</div><div class="line">(require &apos;color-theme)</div><div class="line">(color-theme-initialize)</div><div class="line">(color-theme-calm-forest)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [f1] &apos;shell)                              ; 进入shell</div><div class="line">(global-set-key [S-f9] &apos;gdb)                              ; 调试</div><div class="line">;(setq compile-command &quot;g++ &quot;)                            ; 编译</div><div class="line">(global-set-key [f9] &apos;compile)</div><div class="line"></div><div class="line">;; c-mode公共设置</div><div class="line">(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">(defun my-c-mode-common-hook ()</div><div class="line">  (setq default-tab-width 4)</div><div class="line">  (setq tab-width 4)</div><div class="line">  (setq c-basic-offset 4)</div><div class="line">  (hs-minor-mode t)</div><div class="line">  (define-key c-mode-base-map [(tab)] &apos;my-indent-or-complete)</div><div class="line">  (define-key c-mode-base-map [(meta ?/)] &apos;semantic-ia-complete-symbol-menu)</div><div class="line">  ;;;最后两行是代码自动补齐的快捷键</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [S-f10] &apos;comment-or-uncomment-region)     ; 注释 / 取消注释</div><div class="line">(global-set-key [f10] &apos;c-indent-line-or-region)           ; 格式化代码</div><div class="line"></div><div class="line">;全屏</div><div class="line">(defun my-fullscreen ()</div><div class="line">  (interactive)</div><div class="line">  (x-send-client-message</div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32</div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_FULLSCREEN&quot; 0))</div><div class="line">  ;; (x-send-client-message  </div><div class="line">  ;;  nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">  ;;  &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0))</div><div class="line">  )</div><div class="line">;; (my-fullscreen)</div><div class="line"></div><div class="line">(global-set-key [f11] &apos;my-fullscreen) ; emacs全屏</div><div class="line"></div><div class="line">;gdb快捷键设置</div><div class="line">(add-hook &apos;gdb-mode-hook &apos;(lambda ()</div><div class="line">                            (define-key c-mode-base-map [(f5)] &apos;gud-go)</div><div class="line">                            (define-key c-mode-base-map [(f7)] &apos;gud-step)</div><div class="line">                            (define-key c-mode-base-map [(f8)] &apos;gud-next)</div><div class="line">                            (define-key c-mode-base-map [(f6)] &apos;gud-cont)))</div><div class="line"></div><div class="line">;;代码折叠</div><div class="line">(global-set-key [f2] &apos;hs-toggle-hiding)</div><div class="line"></div><div class="line">;;;auctex配置</div><div class="line">(load &quot;auctex.el&quot; nil t t)</div><div class="line">(load &quot;preview-latex.el&quot; nil t t)</div><div class="line">(add-hook &apos;LaTeX-mode-hook #&apos;LaTeX-install-toolbar)</div><div class="line">(add-hook &apos;LaTeX-mode-hook &apos;turn-on-reftex) ; with AUCTeX LaTeX mode</div><div class="line">(add-hook &apos;latex-mode-hook &apos;turn-on-reftex) ; with Emacs latex mode</div><div class="line">(add-hook &apos;LaTeX-mode-hook (lambda()</div><div class="line">                              (add-to-list &apos;TeX-command-list &apos;(&quot;XeLaTeX&quot; &quot;%`xelatex%(mode)%&apos; %t&quot; TeX-run-TeX nil t))</div><div class="line">                              (setq TeX-command-default &quot;XeLaTeX&quot;)</div><div class="line">                                 (setq TeX-save-query  nil )</div><div class="line">                                  (setq TeX-show-compilation t)</div><div class="line">                                                               ))</div><div class="line">(setq TeX-auto-save t)</div><div class="line">(setq TeX-parse-self t)</div><div class="line">(setq-default TeX-master nil)</div><div class="line">(setq TeX-engine &apos;xetex)</div><div class="line">(setq TeX-PDF-mode t)</div><div class="line"></div><div class="line">;;;;;;;;;;;;weibo;;;;;;;;;;</div><div class="line">;;;;;;使用M-x weibo-timeline</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/austin------weibo.emacs-0cf9784&quot;)</div><div class="line">(require &apos;weibo)</div><div class="line"></div><div class="line">;;;;;;保存上次emacs关闭时的状态</div><div class="line">(load &quot;desktop&quot;)</div><div class="line">(desktop-load-default)</div><div class="line">(desktop-read)</div><div class="line"></div><div class="line">;;当emacs退出时保存文件打开状态</div><div class="line"></div><div class="line">(add-hook &apos;kill-emacs-hook</div><div class="line">          &apos;(lambda()(desktop-save &quot;~/&quot;)))</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;w3m设置;;;;;;;;;;;;;;;;;</div><div class="line">;; (add-to-list &apos;load-path &quot;/usr/share/emacs/site-lisp/w3m/&quot;)</div><div class="line">;; (require &apos;w3m)</div><div class="line">;; (setq w3m-home-page &quot;http://www.google.com.hk&quot;) ;设置主页</div><div class="line">;; (require &apos;mime-w3m)</div><div class="line">;;  ;设置显示图片</div><div class="line">;; (setq w3m-default-display-inline-images t)</div><div class="line">;; (setq w3m-default-toggle-inline-images t)</div><div class="line">;; ;;显示图标</div><div class="line">;; (setq w3m-show-graphic-icons-in-header-line t)</div><div class="line">;; (setq w3m-show-graphic-icons-in-mode-line t)</div><div class="line">;; ;;启用cookie</div><div class="line">;; (setq w3m-use-cookies t)</div><div class="line">;; ;;设定w3m运行的参数，分别为使用cookie和使用框架</div><div class="line">;; (setq w3m-command-arguments &apos;(&quot;-cookie&quot; &quot;-F&quot;))</div><div class="line"></div><div class="line">;; ;;;解决wrong type argument: stringp, nil问题</div><div class="line">;; (setq debug-on-error t);;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1546,12 +1550,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

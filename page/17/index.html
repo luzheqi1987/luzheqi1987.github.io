@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/17/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,148 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" itemprop="url">
+                  CODE 53. Remove Duplicates from Sorted Array II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-17T14:06:00+08:00" content="2013-11-17">
+              2013-11-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" class="leancloud_visitors" data-flag-title="CODE 53. Remove Duplicates from Sorted Array II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = <code>[1,1,1,2,2,3]</code>,<br>Your function should return length = <code>5</code>,<br> and A is now <code>[1,1,2,2,3]</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		<span class="keyword">if</span> (A.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> length = A.length;</div><div class="line">		<span class="keyword">int</span> cur = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> nxt = <span class="number">1</span>;</div><div class="line">		<span class="keyword">boolean</span> morethan2 = <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">for</span> (; nxt &lt; A.length; nxt++) &#123;</div><div class="line">			<span class="keyword">if</span> (A[nxt] != A[nxt - <span class="number">1</span>]) &#123;</div><div class="line">				A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">				cur++;</div><div class="line">				morethan2 = <span class="keyword">false</span>;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (!morethan2) &#123;</div><div class="line">				A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">				cur++;</div><div class="line">				morethan2 = <span class="keyword">true</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				length--;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">		<span class="keyword">return</span> length;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1547,148 +1702,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/12/2013-11-12-CODE 121 Palindrome Number/" itemprop="url">
-                  CODE 121. Palindrome Number
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-12T20:46:00+08:00" content="2013-11-12">
-              2013-11-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/12/2013-11-12-CODE 121 Palindrome Number/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/12/2013-11-12-CODE 121 Palindrome Number/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/12/2013-11-12-CODE 121 Palindrome Number/" class="leancloud_visitors" data-flag-title="CODE 121. Palindrome Number">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Determine whether an integer is a palindrome. Do this without extra space.<br><a href="http://oj.leetcode.com/problems/palindrome-number/#" target="_blank" rel="external">click to show spoilers.</a><br>Some hints:Could negative integers be palindromes? (ie, -1)<br>If you are thinking of converting the integer to string, note the restriction of using extra space.<br>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?<br>There is a more generic way of solving this problem.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &gt;= <span class="number">0</span> &amp;&amp; x &lt;= <span class="number">9</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> num = x;</div><div class="line">	<span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (num &gt; <span class="number">0</span>) &#123;</div><div class="line">		length++;</div><div class="line">		num = num / <span class="number">10</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= (length + <span class="number">1</span>) / <span class="number">2</span> - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span> ((x / (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, i) % <span class="number">10</span>) != (x</div><div class="line">				/ (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, length - <span class="number">1</span> - i) % <span class="number">10</span>)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1729,12 +1742,12 @@
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

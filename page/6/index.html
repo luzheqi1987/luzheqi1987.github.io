@@ -85,12 +85,15 @@
 
 
 
+<meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
 <meta property="og:url" content="http://yoursite.com/page/6/index.html">
 <meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="行走的轮子">
+<meta name="twitter:description" content="戒急用忍">
 
 
 
@@ -168,7 +171,7 @@
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle"></p>
+  <p class="site-subtitle">戒急用忍</p>
 </div>
 
 <div class="site-nav-toggle">
@@ -212,6 +215,16 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
           </a>
         </li>
       
@@ -266,6 +279,139 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="url">
+                  同一进程中的线程究竟共享哪些资源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-02T12:39:39+08:00" content="2015-04-02">
+              2015-04-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/02/同一进程中的线程究竟共享哪些资源/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/02/同一进程中的线程究竟共享哪些资源/" class="leancloud_visitors" data-flag-title="同一进程中的线程究竟共享哪些资源">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>线程共享的环境包括：进程代码段、进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)、进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。<br>进程拥有这许多共性的同时，还拥有自己的个性。有了这些个性，线程才能实现并发性。这些个性包括：</p>
+<p>1.线程ID<br>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标<br>识线程。<br>2.寄存器组的值<br>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线<br>程切换到另一个线程上时，必须将原有的线程的寄存器集合的状态保存，以便<br>将来该线程在被重新切换到时能得以恢复。<br>3.线程的堆栈<br>堆栈是保证线程独立运行所必须的。<br>线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程<br>必须拥有自己的函数堆栈，使得函数调用可以正常执行，不受其他线程的影<br>响。</p>
+<p>4.错误返回码<br>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用<br>后设置了errno值，而在该线程还没有处理这个错误，另外一个线程就在此时<br>被调度器投入运行，这样错误值就有可能被修改。<br>所以，不同的线程应该拥有自己的错误返回码变量。</p>
+<p>5.线程的信号屏蔽码<br>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自<br>己管理。但所有的线程都共享同样的信号处理器。</p>
+<p>6.线程的优先级<br>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参<br>数，这个参数就是线程的优先级。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1678,134 +1824,6 @@ public List&amp;lt;User&amp;gt; list();
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="url">
-                  Hibernate中使用count(*)取得表中记录总数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-11T05:40:45+08:00" content="2015-03-11">
-              2015-03-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/11/Hibernate中使用count取得表中记录总数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/11/Hibernate中使用count取得表中记录总数/" class="leancloud_visitors" data-flag-title="Hibernate中使用count(*)取得表中记录总数">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//第一种方法：</span></div><div class="line">  String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  Integer count = (Integer)getHibernateTemplate().find(hql).listIterator().next();</div><div class="line">  <span class="keyword">return</span> count.intValue();</div><div class="line"></div><div class="line"><span class="comment">//第二种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  <span class="keyword">return</span> ((Integer)getHibernateTemplate().iterate(hql).next()).intValue();</div><div class="line"></div><div class="line"><span class="comment">//第三种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line"> Query query =  getHibernateTemplate().createQuery( getSession(),hql);</div><div class="line"> <span class="keyword">return</span> ((Integer)query.uniqueResult()).intValue();</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1846,12 +1864,12 @@ public List&amp;lt;User&amp;gt; list();
                src="/images/avatar.jpg"
                alt="Jerky Lu" />
           <p class="site-author-name" itemprop="name">Jerky Lu</p>
-          <p class="site-description motion-element" itemprop="description"></p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">312</span>
+              <span class="site-state-item-count">313</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
