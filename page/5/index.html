@@ -301,6 +301,167 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="url">
+                  [转]Spring4新特性——Web开发的增强
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:00:32+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——Web开发的增强/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——Web开发的增强">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
+<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
+<p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
+<pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
+public String view2() {  
+    return &amp;quot;{\&amp;quot;id\&amp;quot; : 1}&amp;quot;;  
+}  
+</code></pre><p>}<br>[/java]<br> 其实现就是在@@RestController中加入@ResponseBody：<br>[java]<br>@org.springframework.stereotype.Controller<br>@org.springframework.web.bind.annotation.ResponseBody<br>public @interface RestController {<br>}<br>[/java]<br>这样当你开发Rest服务器端的时候，spring-mvc配置文件需要的代码极少，可能就仅需如下一行：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>2、mvc:annotation-driven配置变化<br>统一风格；将 enableMatrixVariables改为enable-matrix-variables属性；将ignoreDefaultModelOnRedirect改为ignore-default-model-on-redirect。</p>
+<p>3、提供AsyncRestTemplate用于客户端非阻塞异步支持。<br>3.1、服务器端<br>对于服务器端的springmvc开发可以参考<a href="https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc</a><br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/api&quot;)<br>      public Callable&lt;User&gt; api() {<br>        System.out.println(&quot;=====hello&quot;);<br>        return new Callable&lt;User&gt;() {<br>            @Override<br>            public User call() throws Exception {<br>                Thread.sleep(10L * 1000); //暂停两秒<br>                User user = new User();<br>                user.setId(1L);<br>                user.setName(&quot;haha&quot;);<br>                return user;<br>            }<br>        };<br>    }<br>}<br>[/java]<br>非常简单，服务器端暂停10秒再返回结果（但是服务器也是非阻塞的）。具体参考我github上的代码。</p>
+<p>3.2、客户端<br>[java]<br>public static void main(String[] args) {<br>    AsyncRestTemplate template = new AsyncRestTemplate();<br>    //调用完后立即返回（没有阻塞）<br>    ListenableFuture&lt;ResponseEntity&lt;User&gt;&gt; future = template.getForEntity(&quot;<a href="http://localhost:9080/spring4/api&amp;quot" target="_blank" rel="external">http://localhost:9080/spring4/api&amp;quot</a>;, User.class);<br>    //设置异步回调<br>    future.addCallback(new ListenableFutureCallback&lt;ResponseEntity&lt;User&gt;&gt;() {<br>        @Override<br>        public void onSuccess(ResponseEntity&lt;User&gt; result) {<br>            System.out.println(&quot;======client get result : &quot; + result.getBody());<br>        }  </p>
+<pre><code>    @Override  
+    public void onFailure(Throwable t) {  
+        System.out.println(&amp;quot;======client failure : &amp;quot; + t);  
+    }  
+});  
+System.out.println(&amp;quot;==no wait&amp;quot;);  
+</code></pre><p>}<br>[/java]<br> 此处使用Future来完成非阻塞，这样的话我们也需要给它一个回调接口来拿结果； Future和Callable是一对，一个消费结果，一个产生结果。调用完模板后会立即返回，不会阻塞；有结果时会调用其回调。</p>
+<p>AsyncRestTemplate默认使用SimpleClientHttpRequestFactory，即通过java.net.HttpURLConnection实现；另外我们也可以使用apache的http components；使用template.setAsyncRequestFactory(new HttpComponentsAsyncClientHttpRequestFactory());设置即可。</p>
+<p>另外在开发时尽量不要自己注册如：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;<br>[/java]<br>尽量使用<br>[java]<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>它设计的已经足够好，使用子元素可以配置我们需要的配置。</p>
+<p>且不要使用老版本的：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>[/java]<br>否则可能得到如下异常：<br>写道<br>[text]<br>Circular view path [login]: would dispatch back to the current handler URL [/spring4/login] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)<br>[/text]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="url">
                   [转]Spring4新特性——核心容器的其他改进
                 </a>
@@ -1740,139 +1901,6 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/各种树的平均查找效率/" itemprop="url">
-                  各种树的平均查找效率
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:40:24+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/各种树的平均查找效率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/各种树的平均查找效率/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/各种树的平均查找效率/" class="leancloud_visitors" data-flag-title="各种树的平均查找效率">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>BST：二叉搜索树<br>查找最好时间复杂度为O(lgn),最坏为O(n);<br>删除和插入的时间复杂度与查找差不多</p>
-<p>AVL：二叉平衡树<br>查找时间复杂度为O(lgn)<br>插入的时候做多需要一次旋转，时间复杂度为O(lgn)<br>删除的时候需要的时间复杂度为O(2lgn)</p>
-<p>红黑树：<br>查找时间复杂度为2O(lg(n+1))<br>删除和插入的时间复杂度为O(lgn)</p>
-<p>B树：<br>从叶节点插入心的节点，<br>从磁盘读写效率上讲，查找、删除和插入的时间复杂度要小于任何二叉树</p>
-<p>B+树<br>非叶节点只是为了索引第一个节点<br>之后叶节点之间可以相互索引，大型数据库采用的结构</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1918,7 +1946,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">313</span>
+              <span class="site-state-item-count">314</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1926,7 +1954,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1935,7 +1963,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -301,6 +301,126 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习2.41-练习2.47/" itemprop="url">
+                  练习2.41-练习2.47
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-20T18:59:00+08:00" content="2014-01-20">
+              2014-01-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/20/2014-01-20-练习2.41-练习2.47/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/20/2014-01-20-练习2.41-练习2.47/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/20/2014-01-20-练习2.41-练习2.47/" class="leancloud_visitors" data-flag-title="练习2.41-练习2.47">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.练习2.41</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(define (seprate-except x except)</div><div class="line">  (filter (lambda (couple) </div><div class="line">            (let ((first (car couple))</div><div class="line">                  (second (cadr couple)))</div><div class="line">            (and (not (= first except))</div><div class="line">                 (not (= second except))</div><div class="line">                 (not (= first second)))))</div><div class="line">          (map (lambda (n) (list n (- x n)))</div><div class="line">               (enumerate-interval 1 (- x 1)))</div><div class="line">          )</div><div class="line">  )</div><div class="line"></div><div class="line">(define (flatmap proc seq)</div><div class="line">  (accumulate append &apos;() (map proc seq)))</div><div class="line"></div><div class="line">(define (seprate-to-three n)</div><div class="line">  (flatmap (lambda (x) </div><div class="line">             (map (lambda (y) (cons x y)) </div><div class="line">                  (seprate-except (- n x) x)))</div><div class="line">           (enumerate-interval 1 (- n 1)))</div><div class="line">  )</div></pre></td></tr></table></figure>
+<p>2.练习2.42</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(define empty-board '())</div><div class="line"></div><div class="line">(define (adjoin-position new-row k rest-of-queens)</div><div class="line">  (cons (list k new-row) rest-of-queens))</div><div class="line"></div><div class="line">(define (safe? k positions)</div><div class="line">  (define (check-safe col row rest-positions)</div><div class="line">    (if (null? rest-positions)</div><div class="line">        true</div><div class="line">        (let ((first-position-col (car (car rest-positions)))</div><div class="line">              (first-position-row (cadr (car rest-positions)))</div><div class="line">              (remain-positions (cdr rest-positions)))</div><div class="line">          (and (not (= col first-position-col))</div><div class="line">               (not (= row first-position-row))</div><div class="line">               (not (= (abs (- col first-position-col))</div><div class="line">                       (abs (- row first-position-row))))</div><div class="line">               (check-safe col row remain-positions)))))</div><div class="line">  (if (null? positions)</div><div class="line">      true</div><div class="line">      (let ((col (car (car positions)))</div><div class="line">            (row (cadr (car positions)))</div><div class="line">            (rest (cdr positions)))</div><div class="line">        (if (null? rest)</div><div class="line">            true</div><div class="line">            (check-safe col row rest)))))</div></pre></td></tr></table></figure>
+<p>3.练习2.43<br>因为重复计算k-1的皇后问题。<br>4.练习2.44</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(require (planet &quot;sicp.ss&quot; (&quot;soegaard&quot; &quot;sicp.plt&quot; 2 1)))</div><div class="line"></div><div class="line">(define (up-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((smaller (up-split painter (- n 1))))</div><div class="line">        (below painter (beside smaller smaller)))))</div></pre></td></tr></table></figure>
+<p>5.练习2.45</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (split action1 action2)</div><div class="line">  (lambda (painter n)</div><div class="line">    (if (= n 0)</div><div class="line">        painter</div><div class="line">        (let ((smaller ((split action1 action2) painter (- n 1))))</div><div class="line">          (action1 painter (action2 smaller smaller))))))</div></pre></td></tr></table></figure>
+<p>6.练习2.46<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">(define (make-vect x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (xcor-vect v)</div><div class="line">  (car v))</div><div class="line"></div><div class="line">(define (ycor-vect v)</div><div class="line">  (cdr v))</div><div class="line"></div><div class="line">(define (add-vect v1 v2)</div><div class="line">  (make-vect (+ (xcor-vect v1)</div><div class="line">                (xcor-vect v2))</div><div class="line">             (+ (ycor-vect v1)</div><div class="line">                (ycor-vect v2))))</div><div class="line"></div><div class="line">(define (sub-vect v1 v2)</div><div class="line">  (make-vect (- (xcor-vect v1)</div><div class="line">                (xcor-vect v2))</div><div class="line">             (- (ycor-vect v1)</div><div class="line">                (ycor-vect v2))))</div><div class="line"></div><div class="line">(define (scale-vect v s)</div><div class="line">  (make-vect (* s (xcor-vect v))</div><div class="line">             (* s (ycor-vect v))))</div></pre></td></tr></table></figure></p>
+<p>7.练习2.47</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">(define (make-frame-list origin edge1 edge2)</div><div class="line">  (list origin edge1 edge2))</div><div class="line"></div><div class="line">(define (make-frame-cons origin edge1 edge2)</div><div class="line">  (cons origin (cons edge1 edge2)))</div><div class="line"></div><div class="line">(define (origin-frame-list frame)</div><div class="line">  (car frame))</div><div class="line"></div><div class="line">(define (edge1-frame-list frame)</div><div class="line">  (cadr frame))</div><div class="line"></div><div class="line">(define (edge2-frame-list frame)</div><div class="line">  (caddr frame))</div><div class="line"></div><div class="line"></div><div class="line">(define (origin-frame-cons frame)</div><div class="line">  (car frame))</div><div class="line"></div><div class="line">(define (edge1-frame-cons frame)</div><div class="line">  (cadr frame))</div><div class="line"></div><div class="line">(define (edge2-frame-cons frame)</div><div class="line">  (cddr frame))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/17/2014-01-17-练习2.11-练习2.20/" itemprop="url">
                   练习2.11-练习2.20
                 </a>
@@ -1387,129 +1507,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="url">
-                  练习1.1－练习1.9
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-06T21:20:00+08:00" content="2014-01-06">
-              2014-01-06
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/06/2014-01-06-练习1.1－练习1.9/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/06/2014-01-06-练习1.1－练习1.9/" class="leancloud_visitors" data-flag-title="练习1.1－练习1.9">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>练习1.1<br>这个题没有什么好说的了，只要把代码敲出来，运行一遍就可以了。</li>
-<li>练习1.2<br>这个题应该不算难吧，没有看过别人的答案，我把我的贴出来吧。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))</div><div class="line">   (* 3 (- 6 2) (- 2 7)))</div></pre></td></tr></table></figure>
-<p>3.练习1.3我的方法是求出3个数的和，再将减去最小的数，算不上最好的方法吧，马马虎虎。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sumofmax2 x y z)</div><div class="line">  (- (+ x y z)</div><div class="line">     (cond ((and (&lt; x y) (&lt; x z)) x)</div><div class="line">	   ((and (&lt; y x) (&lt; y z)) y)</div><div class="line">	   (else z))))</div></pre></td></tr></table></figure>
-<p>4.练习1.4这个函数首先判断b是否大于0，根据判断结果使用加法或者减法，这也是Lisp的奇妙之出，可以将运算符作为返回值。<br>5.练习1.5<br>这个题我没有亲自试验，且从理论上分析下吧。<br>Scheme的解释器用的是应用序，所以在求表达式(test 0 (p))时首先会将(p)进行展开，可以看到p的实现时他自己，所以会进入一个无穷的递归，最终导致“死机”或者奔溃。<br>而在使用正则序时，解释器先不去求参数的值，而是将参数替换到过程中去，将过程展开，接着看展开的结果中是否还有其他过程，有的话继续展开，将过程完全展开后再进行计算，然后根据计算结果归约。<br>本题最后假设：特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。<br>所以当正则序先展开为</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(if (= 0 0)</div><div class="line">     0</div><div class="line">    (p))</div></pre></td></tr></table></figure>
-<p>时，只会求if表达式中的谓词部分，根据谓词部分再判断展开那部分，这道题的if中的谓词为t，所以不会展开（p），所以时可以终止的。6.练习1.6<br>这道题类似于上一题，特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。但是自定义的函数new-if时没有这种求值规则的，所以会不断的展开sqrt-iter函数，而不会由于new-if中的条件判断而中止。<br>7.练习1.7</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.99999999999999)</div><div class="line">       (&lt; (/ guess old-guess) 1.00000000000001)))</div><div class="line"></div><div class="line">(define (average x y)</div><div class="line">  (/ (+ x y) 2))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (average guess (/ x guess)))</div><div class="line"></div><div class="line">(define (sqrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (sqrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (sqrt x)</div><div class="line">  (sqrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
-<p>8.练习1.8</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.9999)</div><div class="line">       (&lt; (/ guess old-guess) 1.0001)))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))</div><div class="line"></div><div class="line">(define (cbrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (cbrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (cbrt x)</div><div class="line">  (cbrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
-<p>9.练习1.9第一个是递归计算过程，因为在无法在一开始确定inc的参数，要推迟计算。<br>第二个是迭代计算过程，因为在计算的过程中只需要保存参数的值就可以了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1555,7 +1552,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">313</span>
+              <span class="site-state-item-count">314</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1563,7 +1560,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1572,7 +1569,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -301,6 +301,148 @@
             
               
                 
+                <a class="post-title-link" href="/2013/10/16/2013-10-16-CODE 83 Pow(x, n)/" itemprop="url">
+                  CODE 83. Pow(x, n)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-16T23:17:00+08:00" content="2013-10-16">
+              2013-10-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/16/2013-10-16-CODE 83 Pow(x, n)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/16/2013-10-16-CODE 83 Pow(x, n)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/16/2013-10-16-CODE 83 Pow(x, n)/" class="leancloud_visitors" data-flag-title="CODE 83. Pow(x, n)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Implement pow(x, n).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">pow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">boolean</span> minus = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">double</span> result = x;</div><div class="line">	<span class="keyword">if</span> (Math.abs(n - <span class="number">0.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(x - <span class="number">1.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(x + <span class="number">1.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> -<span class="number">1.0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</div><div class="line">		minus = <span class="keyword">true</span>;</div><div class="line">		n = -n;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">		result *= x;</div><div class="line">		<span class="keyword">if</span> (Math.abs(result) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (minus) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span> / result;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/10/16/2013-10-16-CODE 81 N-Queens II/" itemprop="url">
                   CODE 81. N-Queens II
                 </a>
@@ -1574,148 +1716,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/09/2013-10-09-CODE 72 Rotate List/" itemprop="url">
-                  CODE 72. Rotate List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-09T00:06:00+08:00" content="2013-10-09">
-              2013-10-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/09/2013-10-09-CODE 72 Rotate List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/09/2013-10-09-CODE 72 Rotate List/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/09/2013-10-09-CODE 72 Rotate List/" class="leancloud_visitors" data-flag-title="CODE 72. Rotate List">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a list, rotate the list to the right by k places, where k is non-negative.<br>For example:<br>Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code> and k = <code>2</code>,<br>return <code>4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">rotateRight</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == head) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line">	ListNode round1 = <span class="keyword">null</span>;</div><div class="line">	ListNode p = head;</div><div class="line">	<span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != p) &#123;</div><div class="line">		ListNode node = <span class="keyword">new</span> ListNode(p.val);</div><div class="line">		node.next = round1;</div><div class="line">		p = p.next;</div><div class="line">		round1 = node;</div><div class="line">		length++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (n % length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> head;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		n = n % length;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">	ListNode round2 = <span class="keyword">null</span>;</div><div class="line">	ListNode p1 = round1;</div><div class="line">	<span class="keyword">while</span> (num &lt; n) &#123;</div><div class="line">		ListNode node = <span class="keyword">new</span> ListNode(p1.val);</div><div class="line">		node.next = round2;</div><div class="line">		p1 = p1.next;</div><div class="line">		round2 = node;</div><div class="line">		num++;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	ListNode round3 = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode round3Cpy = round3;</div><div class="line">	ListNode p2 = round2;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != p2) &#123;</div><div class="line">		ListNode node = <span class="keyword">new</span> ListNode(p2.val);</div><div class="line">		p2 = p2.next;</div><div class="line">		round3Cpy.next = node;</div><div class="line">		round3Cpy = round3Cpy.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != p1) &#123;</div><div class="line">		ListNode node = <span class="keyword">new</span> ListNode(p1.val);</div><div class="line">		node.next = round3Cpy.next;</div><div class="line">		round3Cpy.next = node;</div><div class="line">		p1 = p1.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> round3.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1761,7 +1761,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">313</span>
+              <span class="site-state-item-count">314</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1769,7 +1769,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1778,7 +1778,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

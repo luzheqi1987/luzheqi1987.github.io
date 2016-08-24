@@ -301,6 +301,129 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="url">
+                  练习1.1－练习1.9
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-06T21:20:00+08:00" content="2014-01-06">
+              2014-01-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/06/2014-01-06-练习1.1－练习1.9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/06/2014-01-06-练习1.1－练习1.9/" class="leancloud_visitors" data-flag-title="练习1.1－练习1.9">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>练习1.1<br>这个题没有什么好说的了，只要把代码敲出来，运行一遍就可以了。</li>
+<li>练习1.2<br>这个题应该不算难吧，没有看过别人的答案，我把我的贴出来吧。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))</div><div class="line">   (* 3 (- 6 2) (- 2 7)))</div></pre></td></tr></table></figure>
+<p>3.练习1.3我的方法是求出3个数的和，再将减去最小的数，算不上最好的方法吧，马马虎虎。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sumofmax2 x y z)</div><div class="line">  (- (+ x y z)</div><div class="line">     (cond ((and (&lt; x y) (&lt; x z)) x)</div><div class="line">	   ((and (&lt; y x) (&lt; y z)) y)</div><div class="line">	   (else z))))</div></pre></td></tr></table></figure>
+<p>4.练习1.4这个函数首先判断b是否大于0，根据判断结果使用加法或者减法，这也是Lisp的奇妙之出，可以将运算符作为返回值。<br>5.练习1.5<br>这个题我没有亲自试验，且从理论上分析下吧。<br>Scheme的解释器用的是应用序，所以在求表达式(test 0 (p))时首先会将(p)进行展开，可以看到p的实现时他自己，所以会进入一个无穷的递归，最终导致“死机”或者奔溃。<br>而在使用正则序时，解释器先不去求参数的值，而是将参数替换到过程中去，将过程展开，接着看展开的结果中是否还有其他过程，有的话继续展开，将过程完全展开后再进行计算，然后根据计算结果归约。<br>本题最后假设：特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。<br>所以当正则序先展开为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(if (= 0 0)</div><div class="line">     0</div><div class="line">    (p))</div></pre></td></tr></table></figure>
+<p>时，只会求if表达式中的谓词部分，根据谓词部分再判断展开那部分，这道题的if中的谓词为t，所以不会展开（p），所以时可以终止的。6.练习1.6<br>这道题类似于上一题，特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。但是自定义的函数new-if时没有这种求值规则的，所以会不断的展开sqrt-iter函数，而不会由于new-if中的条件判断而中止。<br>7.练习1.7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.99999999999999)</div><div class="line">       (&lt; (/ guess old-guess) 1.00000000000001)))</div><div class="line"></div><div class="line">(define (average x y)</div><div class="line">  (/ (+ x y) 2))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (average guess (/ x guess)))</div><div class="line"></div><div class="line">(define (sqrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (sqrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (sqrt x)</div><div class="line">  (sqrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
+<p>8.练习1.8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.9999)</div><div class="line">       (&lt; (/ guess old-guess) 1.0001)))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))</div><div class="line"></div><div class="line">(define (cbrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (cbrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (cbrt x)</div><div class="line">  (cbrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
+<p>9.练习1.9第一个是递归计算过程，因为在无法在一开始确定inc的参数，要推迟计算。<br>第二个是迭代计算过程，因为在计算的过程中只需要保存参数的值就可以了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="url">
                   别人的Emacs配置1
                 </a>
@@ -1775,148 +1898,6 @@ HWorld::~HWorld()
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="url">
-                  CODE 144. Insertion Sort List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-27T19:56:00+08:00" content="2013-11-27">
-              2013-11-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" class="leancloud_visitors" data-flag-title="CODE 144. Insertion Sort List">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>###<br>Sort a linked list using insertion sort.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">insertionSortList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ListNode node = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode tmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != tmp) &#123;</div><div class="line">		ListNode next = tmp.next;</div><div class="line">		<span class="keyword">if</span> (node.next == <span class="keyword">null</span>) &#123;</div><div class="line">			tmp.next = node.next;</div><div class="line">			node.next = tmp;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			ListNode tmpNode = node;</div><div class="line">			<span class="keyword">while</span> (<span class="keyword">null</span> != tmpNode.next &amp;&amp; tmpNode.next.val &lt;= tmp.val) &#123;</div><div class="line">				tmpNode = tmpNode.next;</div><div class="line">			&#125;</div><div class="line">			tmp.next = tmpNode.next;</div><div class="line">			tmpNode.next = tmp;</div><div class="line">		&#125;</div><div class="line">		tmp = next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> node.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1962,7 +1943,7 @@ HWorld::~HWorld()
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">313</span>
+              <span class="site-state-item-count">314</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1970,7 +1951,7 @@ HWorld::~HWorld()
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1979,7 +1960,7 @@ HWorld::~HWorld()
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
