@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
+  <meta name="keywords" content="jerkybible, 行走的轮子, java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, qt, opencv, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
 
 
 
@@ -279,6 +279,248 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/08/2014-01-08-练习1.18-练习1.22/" itemprop="url">
+                  练习1.18-练习1.22
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-08T21:33:00+08:00" content="2014-01-08">
+              2014-01-08
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/08/2014-01-08-练习1.18-练习1.22/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/08/2014-01-08-练习1.18-练习1.22/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/08/2014-01-08-练习1.18-练习1.22/" class="leancloud_visitors" data-flag-title="练习1.18-练习1.22">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.练习1.18</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (*-iter a b n)</div><div class="line">  (cond ((= n 0) a)</div><div class="line">	((even? n) (*-iter a (double b) (halve n)))</div><div class="line">	(else (*-iter (+ a b) b (- n 1)))))</div><div class="line"></div><div class="line">(define (* b n)</div><div class="line">  (*-iter 0 b n))</div></pre></td></tr></table></figure>
+<p>Lisp真是强大啊，连 *-iter这种函数名也可以使用！！！<br>2.练习1.19</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p=p2+q2</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">q=q2+2pq</div></pre></td></tr></table></figure>
+<p>完整的函数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(define (next-p p q)</div><div class="line">  (+ (square p) (square q)))</div><div class="line"></div><div class="line">(define (next-q p q)</div><div class="line">  (+ (square q) (* 2 (* p q))))</div><div class="line"></div><div class="line">(define (fib-iter a b p q count)</div><div class="line">  (cond ((= 0 count) b)</div><div class="line">	((even? count) (fib-iter a</div><div class="line">				 b</div><div class="line">				 (next-p p q)</div><div class="line">				 (next-q p q)</div><div class="line">				 (/ count 2)))</div><div class="line">	(else (fib-iter (+ (* b q) (* a q) (* a p))</div><div class="line">			(+ (* b p) (* a q))</div><div class="line">			p</div><div class="line">			q</div><div class="line">			(- count 1)))))</div></pre></td></tr></table></figure>
+<p>3.练习1.20</p>
+<p>应用序4次,第一次算,但是gcd( 2 0)不算,if判断后就直接返回a,下面不会执行;<br>正则序18次,<br>正则代换后,则第n层的a b两个参数对应的remainder的次数分别为a(n), b(n),<br>则: a(n) = b(n-1);b(n)=a(n-1)+b(n-1)+1;a(0)=0,b(0)=0<br>总共5层,由于每层的if判断进行了计算,再加上最后一层的a是计算了的,所以最后的结果是:b(0)+b(1)+b(2)+b(3)+b(4)+a(4)=18<br>按照我的理解：<br>这道题使用正则序展开的时候会先展开gcd，展开的函数中会有多个remiander函数；使用应用序展开时，会先计算remainder，然后才会展开gcd。<br>看了很多别人的答案，对于正则序的展开并不是很清楚，我一开始认为也是5次，后来发现不对，我现在的想法是，在if的时候求值，在其他地方正常展开。<br>4.练习1.21<br>199，1999，7<br>5.练习1.22<br>这道题中，我将(runtime)函数，改为(real-time-clock);<br>计算结果如下：<br>1000的时间消耗为1；<br>10000的时间消耗为2；<br>100000的时间消耗为3；<br>1000000的时间消耗为8；<br>10000000的时间消耗为24。<br>可一看到，在1000-100000之间的时间的增长阶小于根10，而从100000到10000000之间的时间增长阶与根10相似。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/07/2014-01-07-练习1.10-练习1.17/" itemprop="url">
+                  练习1.10-练习1.17
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-07T20:47:00+08:00" content="2014-01-07">
+              2014-01-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/07/2014-01-07-练习1.10-练习1.17/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/07/2014-01-07-练习1.10-练习1.17/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/07/2014-01-07-练习1.10-练习1.17/" class="leancloud_visitors" data-flag-title="练习1.10-练习1.17">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.练习1.10<br>这个是阿克曼函数，真的很牛，花了我很长时间。<br>表达式的求值就不说了。<br>(define (f n) (A 0 n)) ——-2n<br>(define (g n) (A 1 n))——-2的n次方<br>(define (h n) (A 2 n))——-n个2的次方，例如：(h 4)表示为2的2次方的2次方的2次方<br>2.练习1.11<br>递归计算过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (f1 n)</div><div class="line">  (if (&lt; n 3)</div><div class="line">      n</div><div class="line">      (+ (f1 (- n 1))</div><div class="line">	 (* 2 (f1 (- n 2)))</div><div class="line">	 (* 3 (f1 (- n 3))))))</div></pre></td></tr></table></figure>
+<p>迭代计算过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (f2 n)</div><div class="line">  (f2-iter 2 1 0 3 n))</div><div class="line"></div><div class="line">(define (f2-iter a b c num n)</div><div class="line">  (cond ((&lt; n 3) n)</div><div class="line">	((&gt; num n) a)</div><div class="line">	(else (f2-iter (+ a</div><div class="line">			  (* 2 b)</div><div class="line">			  (* 3 c))</div><div class="line">		       a b (+ num 1) n))))</div></pre></td></tr></table></figure>
+<p>解释一下迭代计算过程吧，利用a b c 三个数字保存临时的数据，num表示目前计算的状态，当num&gt;n时，表示已经求得的结果在a中。<br>下面的结果是<a href="http://blog.csdn.net/keyboardota/article/details/10564653" target="_blank" rel="external">别人的例子</a>，不是有多好，只是给我很大的启发，参数的移动可以增强程序的灵活性，不错！！我得记住这一点。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (myf-iter a b c n)</div><div class="line">  (format #t &quot;Caculating n, n is ~S, a is ~S, b is ~S, c is ~S ~%&quot; n a b c)</div><div class="line">  (if (= n 0)</div><div class="line">      a</div><div class="line">  (myf-iter b c ( + (* 3 a) (* 2 b) c) (- n 1))))</div><div class="line"></div><div class="line">(define (newf n)</div><div class="line">  (myf-iter 0 1 2 n))</div></pre></td></tr></table></figure>
+<p>3.练习1.12</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (yanghui row col)</div><div class="line">  (cond ((&gt; col row) -1)</div><div class="line">	((or (= 1 col) (= row col)) 1)</div><div class="line">	(else (+ (yanghui (- row 1) (- col 1))</div><div class="line">		 (yanghui (- row 1) col)))))</div></pre></td></tr></table></figure>
+<p>row表示第几行，col表示第row行的第几个数数字。当col为row行的第1个或者最后一个数的时候，结果为1；否则，结果为row－1行的col－1的数加上row－1行的col的数。4.练习1.13<br>不知道证明的对不对，对0和1的求值略去。<br>假设在n-1和n时，满足方程，代入n＋1的方程 Φn ＋Φn －1=Φn ＋1，接着证明(Υn＋Υn-1)/根5小于0.5，上式可变为Υn-1(Υ+1)/根5，可知Υn-1/根5小于0.5，而(Υ+1)/根5明显小于1，所以这个式子小于0.5，所以根据数学归纳法。。。<br>5.练习1.14<br>2的11次？<br>6.练习1.15<br>都是logn？<br>7.练习1.16</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (fast-expt-iter a b n)</div><div class="line">  (cond ((= n 1) (* a b))</div><div class="line">	((not (even? n)) (fast-expt-iter (* a b) b (- n 1)))</div><div class="line">       	(else (fast-expt-iter a (square b) (/ n 2)))))</div><div class="line"></div><div class="line">(define (fast-expt b n)</div><div class="line">  (fast-expt-iter 1 b n))</div></pre></td></tr></table></figure>
+<p>通过这道题，我总结到了，在目前的lisp学习中，主要是递归过程，所以应该在最开始的时候将出口留好，而不是放在随后的过程中。<br>8.练习1.17</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (* a b)</div><div class="line">  (cond ((= b 1) a)</div><div class="line">	((even? b) (double (* a (halve b))))</div><div class="line">	(else (+ a (* a (- b 1))))))</div></pre></td></tr></table></figure>
+<p>这道题，额，没考虑b为0的时候，看来测试用例做的不够全面啊。改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (* a b)</div><div class="line">  (cond ((= b 0) 0)</div><div class="line">	((even? b) (double (* a (halve b))))</div><div class="line">	(else (+ a (* a (- b 1))))))</div></pre></td></tr></table></figure>
+<p>即可！不过貌似也没考虑正负数什么了，说白了就是练习，理解这种“折半”的计算方式。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1612,292 +1854,6 @@ HWorld::~HWorld()
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" itemprop="url">
-                  CODE 147. Evaluate Reverse Polish Notation
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-28T22:23:00+08:00" content="2013-11-28">
-              2013-11-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" class="leancloud_visitors" data-flag-title="CODE 147. Evaluate Reverse Polish Notation">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Evaluate the value of an arithmetic expression in <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation" target="_blank" rel="external">Reverse Polish Notation</a>.<br>Valid operators are <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>.<br> Each operand may be an integer or another expression.<br>Some examples:</p>
-<pre><code>[&quot;2&quot;, &quot;1&quot;, &quot;+&quot;, &quot;3&quot;, &quot;*&quot;] -&gt; ((2 + 1) * 3) -&gt; 9
-[&quot;4&quot;, &quot;13&quot;, &quot;5&quot;, &quot;/&quot;, &quot;+&quot;] -&gt; (4 + (13 / 5)) -&gt; 6
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(String[] tokens)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Stack&lt;Integer&gt; numbers = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">		<span class="keyword">for</span> (String token : tokens) &#123;</div><div class="line">			<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>) || token.equals(<span class="string">"-"</span>) || token.equals(<span class="string">"*"</span>)</div><div class="line">					|| token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">				<span class="keyword">int</span> number2 = numbers.pop();</div><div class="line">				<span class="keyword">int</span> number1 = numbers.pop();</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>)) &#123;</div><div class="line">					numbers.push(number1 + number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"-"</span>)) &#123;</div><div class="line">					numbers.push(number1 - number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"*"</span>)) &#123;</div><div class="line">					numbers.push(number1 * number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">					numbers.push(number1 / number2);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				numbers.push(Integer.valueOf(token));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> numbers.pop();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="url">
-                  CODE 146. Max Points on a Line
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-28T22:16:00+08:00" content="2013-11-28">
-              2013-11-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" class="leancloud_visitors" data-flag-title="CODE 146. Max Points on a Line">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given n points<br> on a 2D plane, find the maximum number of points that lie on the same straight line.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPoints</span><span class="params">(Point[] points)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line"></div><div class="line">	Map&lt;Float, Integer&gt; kmap = <span class="keyword">new</span> HashMap&lt;Float, Integer&gt;();</div><div class="line">	<span class="keyword">int</span> size = points.length;</div><div class="line">	<span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> sum_cloumn = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (size &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> size;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">		sum_cloumn = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> add = <span class="number">1</span>;</div><div class="line">		kmap.clear();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (j == i) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x == points[j].x &amp;&amp; points[i].y == points[j].y) &#123;</div><div class="line">				add++;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">float</span> k = <span class="number">0</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x != points[j].x) &#123;</div><div class="line">				k = (<span class="keyword">float</span>) (points[j].y - points[i].y)</div><div class="line">						/ (points[j].x - points[i].x);</div><div class="line">				<span class="keyword">if</span> (kmap.containsKey(k)) &#123;</div><div class="line">					kmap.put(k, kmap.get(k) + <span class="number">1</span>);</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					kmap.put(k, <span class="number">1</span>);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				sum_cloumn++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (Float f : kmap.keySet()) &#123;</div><div class="line">			<span class="keyword">if</span> (kmap.get(f) &gt; sum_cloumn) &#123;</div><div class="line">				sum_cloumn = kmap.get(f);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		sum_cloumn += add;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (sum_cloumn &gt; total) &#123;</div><div class="line">			total = sum_cloumn;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1943,7 +1899,7 @@ HWorld::~HWorld()
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">314</span>
+              <span class="site-state-item-count">316</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1951,7 +1907,7 @@ HWorld::~HWorld()
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1960,7 +1916,7 @@ HWorld::~HWorld()
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1998,6 +1954,24 @@ HWorld::~HWorld()
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lqcode.com/" title="李琼写文章的地方" target="_blank">李琼写文章的地方</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
       </section>

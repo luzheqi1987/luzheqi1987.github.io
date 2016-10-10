@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
+  <meta name="keywords" content="jerkybible, 行走的轮子, java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, qt, opencv, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
 
 
 
@@ -279,6 +279,298 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="url">
+                  Spring MVC 之 View，ViewResolver
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-06T11:35:14+08:00" content="2015-06-06">
+              2015-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/06/Spring MVC 之 View，ViewResolver/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/06/Spring MVC 之 View，ViewResolver/" class="leancloud_visitors" data-flag-title="Spring MVC 之 View，ViewResolver">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>一、概念理解</p>
+<p>View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">View</span> </span>&#123;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，其值为响应状态码</span></div><div class="line">    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() + &amp;quot;.responseStatus&amp;quot;;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，前一篇文章用到了该变量，它的对应值是请求路径中的变量，及@PathVariable</span></div><div class="line">    <span class="comment">//注解的变量</span></div><div class="line">    String PATH_VARIABLES = View.class.getName() + &amp;quot;.pathVariables&amp;quot;;</div><div class="line">    <span class="comment">//该视图的ContentType</span></div><div class="line">    <span class="function">String <span class="title">getContentType</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//渲染该视图</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, HttpServletResponse response)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   该接口只有两个方法定义，分别表明该视图的ContentType和如何被渲染。Spring中提供了丰富的视图支持，几乎包含所有你想得到的，并且Spring的视图拓展性很好，你可以轻松实现自己的视图。</p>
+<p>ViewResolver — ViewResolver接口定义了如何通过view 名称来解析对应View实例的行为，它的定义相当简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ViewResolver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function">View <span class="title">resolveViewName</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>该接口只有一个方法，通过view name 解析出View。同样Spring提供了丰富的ViewResolver实现用来解析不同的View：<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/Spring MVC 之 View，ViewResolver/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="url">
+                  Spring MVC 之 @RequestMapping（2）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-04T09:03:25+08:00" content="2015-06-04">
+              2015-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/04/Spring MVC 之 RequestMapping（2）/" class="leancloud_visitors" data-flag-title="Spring MVC 之 @RequestMapping（2）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>一、从头开始</p>
+<p>   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">        HttpServletRequest processedRequest = request;</div><div class="line">        HandlerExecutionChain mappedHandler = null;</div><div class="line">        AsyncExecutionChain asyncChain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        try &#123;</div><div class="line">            ModelAndView mv = null;</div><div class="line">            Exception dispatchException = null;</div><div class="line">            try &#123;</div><div class="line">                processedRequest = checkMultipart(request);</div><div class="line">                // 确定当前请求的处理器（HandlerExecutionChain 包含Handler和Interceptor列表）</div><div class="line">                mappedHandler = getHandler(processedRequest, false);</div><div class="line">                if (mappedHandler == null || mappedHandler.getHandler() == null) &#123;</div><div class="line">                    noHandlerFound(processedRequest, response);//404异常</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                // 确定当前请求的处理器适配器</div><div class="line">                HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());</div><div class="line">                //......省略诸多代码......</div><div class="line">                // 调用处理处理器方法，返回ModelAndView对象</div><div class="line">                mv = ha.handle(processedRequest, response, mappedHandler.getHandler());</div><div class="line">            &#125;//处理返回结果</div><div class="line">        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>  下面展开getHandler是怎么做的：
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1499,305 +1791,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（三）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-11T02:45:38+08:00" content="2015-05-11">
-              2015-05-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（三）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
-<p>接上篇日志<a href="http://www.bugpointer.com/archives/505.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（二）</a>继续。</p>
-<p>上篇提到了主要的初始化函数refresh，函数源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">            <span class="comment">// 为了刷新准备上下文</span></div><div class="line">            prepareRefresh();</div><div class="line"></div><div class="line">            <span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">            <span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">            prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">                postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">                invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">                registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中消息源</span></div><div class="line">                initMessageSource();</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">                initApplicationEventMulticaster();</div><div class="line"></div><div class="line">                <span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">                onRefresh();</div><div class="line"></div><div class="line">                <span class="comment">// 检查监听器bean并注册 </span></div><div class="line">                registerListeners();</div><div class="line"></div><div class="line">                <span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">                finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 发布相应的事件</span></div><div class="line">                finishRefresh();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">                logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">                <span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">                destroyBeans();</div><div class="line"></div><div class="line">                <span class="comment">// Reset 'active' flag.</span></div><div class="line">                cancelRefresh(ex);</div><div class="line"></div><div class="line">                <span class="comment">// Propagate exception to caller.</span></div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>先把prepareRefresh的代码贴出来。这段代码主要功能是初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Prepare this context for refreshing, setting its startup date and</div><div class="line">	 * active flag as well as performing any initialization of property sources.</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">prepareRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.startupDate = System.currentTimeMillis();</div><div class="line"></div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.activeMonitor) &#123;</div><div class="line">			<span class="keyword">this</span>.active = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">			logger.info(&amp;quot;Refreshing &amp;quot; + <span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Initialize any placeholder property sources in the context environment</span></div><div class="line">		initPropertySources();</div><div class="line"></div><div class="line">		<span class="comment">// Validate that all properties marked as required are resolvable</span></div><div class="line">		<span class="comment">// see ConfigurablePropertyResolver#setRequiredProperties</span></div><div class="line">		getEnvironment().validateRequiredProperties();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>这块基本是数据准备功能， 目前这一块没有实际用到。<br>接着我们看比较重要的一步<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div></pre></td></tr></table></figure></p>
-<p>先展开obtainFreshBeanFactory函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Tell the subclass to refresh the internal bean factory.</div><div class="line">         * 使用子类完成内部bean factory</div><div class="line">	 * <span class="doctag">@return</span> the fresh BeanFactory instance</div><div class="line">	 * <span class="doctag">@see</span> #refreshBeanFactory()</div><div class="line">	 * <span class="doctag">@see</span> #getBeanFactory()</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> ConfigurableListableBeanFactory <span class="title">obtainFreshBeanFactory</span><span class="params">()</span> </span>&#123;</div><div class="line">		refreshBeanFactory();</div><div class="line">		ConfigurableListableBeanFactory beanFactory = getBeanFactory();</div><div class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">			logger.debug(&amp;quot;Bean factory <span class="keyword">for</span> &amp;quot; + getDisplayName() + &amp;quot;: &amp;quot; + beanFactory);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> beanFactory;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>我们主要看refreshBeanFactory()这一步,分为以下步骤：<br>1. 如果有bean factory，删除之；<br>2. 新建一个bean factory；<br>3. 设置一个序列化Id；<br>4. 使用的上下文自定义内部bean factory；<br>5. 加载bean 定义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * This implementation performs an actual refresh of this context's underlying</div><div class="line">	 * bean factory, shutting down the previous bean factory (if any) and</div><div class="line">	 * initializing a fresh bean factory for the next phase of the context's lifecycle.</div><div class="line">	 */</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">refreshBeanFactory</span><span class="params">()</span> <span class="keyword">throws</span> BeansException </span>&#123;</div><div class="line">		<span class="keyword">if</span> (hasBeanFactory()) &#123;</div><div class="line">			destroyBeans();</div><div class="line">			closeBeanFactory();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			DefaultListableBeanFactory beanFactory = createBeanFactory();</div><div class="line">			beanFactory.setSerializationId(getId());</div><div class="line">			customizeBeanFactory(beanFactory);</div><div class="line">			loadBeanDefinitions(beanFactory);</div><div class="line">			<span class="keyword">synchronized</span> (<span class="keyword">this</span>.beanFactoryMonitor) &#123;</div><div class="line">				<span class="keyword">this</span>.beanFactory = beanFactory;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(&amp;quot;I/O error parsing bean definition source <span class="keyword">for</span> &amp;quot; + getDisplayName(), ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>现在看一下第5步，加载bean定义，其实现如下。可以看到，这一步将beanFactory传入XmlBeanDefinitionReader的构造函数，新建一个XmlBeanDefinitionReader对象，然后对其环境进行设置。其中Environment表示当前应用程序运行的环境接口；ResourceLoader表示加载资源策略接口；EntityResolver表示实体解析接口。最后初始化XmlBeanDefinitionReader对象，然后使用这个对象加载bean 定义。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * Loads the bean definitions via an XmlBeanDefinitionReader.</div><div class="line">	 * <span class="doctag">@see</span> org.springframework.beans.factory.xml.XmlBeanDefinitionReader</div><div class="line">	 * <span class="doctag">@see</span> #initBeanDefinitionReader</div><div class="line">	 * <span class="doctag">@see</span> #loadBeanDefinitions</div><div class="line">	 */</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadBeanDefinitions</span><span class="params">(DefaultListableBeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException, IOException </span>&#123;</div><div class="line">		<span class="comment">// Create a new XmlBeanDefinitionReader for the given BeanFactory.</span></div><div class="line">		XmlBeanDefinitionReader beanDefinitionReader = <span class="keyword">new</span> XmlBeanDefinitionReader(beanFactory);</div><div class="line"></div><div class="line">		<span class="comment">// Configure the bean definition reader with this context's</span></div><div class="line">		<span class="comment">// resource loading environment.</span></div><div class="line">		beanDefinitionReader.setEnvironment(<span class="keyword">this</span>.getEnvironment());</div><div class="line">		beanDefinitionReader.setResourceLoader(<span class="keyword">this</span>);</div><div class="line">		beanDefinitionReader.setEntityResolver(<span class="keyword">new</span> ResourceEntityResolver(<span class="keyword">this</span>));</div><div class="line"></div><div class="line">		<span class="comment">// Allow a subclass to provide custom initialization of the reader,</span></div><div class="line">		<span class="comment">// then proceed with actually loading the bean definitions.</span></div><div class="line">		initBeanDefinitionReader(beanDefinitionReader);</div><div class="line">		loadBeanDefinitions(beanDefinitionReader);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>再看下一步，这个方法比较好理解，就是使用已有的配置资源或者配置文件进行加载，当前没有配置资源，所以只使用配置文件进行加载。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用XmlBeanDefinitionReader实例加载bean定义</div><div class="line">	 * <span class="doctag">@param</span> reader the XmlBeanDefinitionReader to use</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">loadBeanDefinitions</span><span class="params">(XmlBeanDefinitionReader reader)</span> <span class="keyword">throws</span> BeansException, IOException </span>&#123;</div><div class="line">		Resource[] configResources = getConfigResources();</div><div class="line">		<span class="keyword">if</span> (configResources != <span class="keyword">null</span>) &#123;</div><div class="line">			reader.loadBeanDefinitions(configResources);</div><div class="line">		&#125;</div><div class="line">		String[] configLocations = getConfigLocations();</div><div class="line">		<span class="keyword">if</span> (configLocations != <span class="keyword">null</span>) &#123;</div><div class="line">			reader.loadBeanDefinitions(configLocations);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>来看reader.loadBeanDefinitions(configLocations);这一步。这一步看起来很复杂，但最主要的还是loadBeanDefinitions(resources)这一步。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用配置文件加载bean定义	</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(String location, Set&amp;lt;Resource&amp;gt; actualResources)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">		ResourceLoader resourceLoader = getResourceLoader();</div><div class="line">		<span class="keyword">if</span> (resourceLoader == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">					&amp;quot;Cannot <span class="keyword">import</span> bean definitions from location [&amp;quot; + location + &amp;quot;]: no ResourceLoader available&amp;quot;);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (resourceLoader <span class="keyword">instanceof</span> ResourcePatternResolver) &#123;</div><div class="line">			<span class="comment">// Resource pattern matching available.</span></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				Resource[] resources = ((ResourcePatternResolver) resourceLoader).getResources(location);</div><div class="line">				<span class="keyword">int</span> loadCount = loadBeanDefinitions(resources);</div><div class="line">				<span class="keyword">if</span> (actualResources != <span class="keyword">null</span>) &#123;</div><div class="line">					<span class="keyword">for</span> (Resource resource : resources) &#123;</div><div class="line">						actualResources.add(resource);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">					logger.debug(&amp;quot;Loaded &amp;quot; + loadCount + &amp;quot; bean definitions from location pattern [&amp;quot; + location + &amp;quot;]&amp;quot;);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">return</span> loadCount;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">				<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(</div><div class="line">						&amp;quot;Could not resolve bean definition resource pattern [&amp;quot; + location + &amp;quot;]&amp;quot;, ex);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="comment">// Can only load single resources by absolute URL.</span></div><div class="line">			Resource resource = resourceLoader.getResource(location);</div><div class="line">			<span class="keyword">int</span> loadCount = loadBeanDefinitions(resource);</div><div class="line">			<span class="keyword">if</span> (actualResources != <span class="keyword">null</span>) &#123;</div><div class="line">				actualResources.add(resource);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">				logger.debug(&amp;quot;Loaded &amp;quot; + loadCount + &amp;quot; bean definitions from location [&amp;quot; + location + &amp;quot;]&amp;quot;);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">return</span> loadCount;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>下一回展开loadBeanDefinitions(resources)。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-09T10:22:48+08:00" content="2015-05-09">
-              2015-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
-<p>接上一篇文章 <a href="http://www.bugpointer.com/archives/491.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（一）</a></p>
-<p>在运行到下面语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(&amp;quot;bean.xml&amp;quot;);<span class="comment">// 读取bean.xml中的内容</span></div></pre></td></tr></table></figure></p>
-<p>该构造函数首先进入下面ClassPathXmlApplicationContext类中这段代码。代码中configLocations为我们的配置文件，及[bean.xml]；refresh表示是否刷新，这里为true，表示刷新配置；parent表示上级上下文，这里为null表示没有上级上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用上一级上下文创建新的ClassPathXmlApplicationContext,</div><div class="line">	 * 从XML中加载定义</div><div class="line">	 * <span class="doctag">@param</span> configLocations 资源地址列表</div><div class="line">	 * <span class="doctag">@param</span> refresh 是否刷新上下文,</div><div class="line">	 * <span class="doctag">@param</span> parent 上一级上下文</div><div class="line">	 */</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassPathXmlApplicationContext</span><span class="params">(String[] configLocations, <span class="keyword">boolean</span> refresh, ApplicationContext parent)</span></span></div><div class="line">			<span class="keyword">throws</span> BeansException &#123;			</div><div class="line">		<span class="comment">//parent = null;</span></div><div class="line">		<span class="comment">//refresh= true;</span></div><div class="line">		<span class="comment">//configLocations=[bean.xml];</span></div><div class="line">		<span class="keyword">super</span>(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		<span class="keyword">if</span> (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>下面是抽象函数AbstractRefreshableConfigApplicationContext中setConfigLocations方法。该方法为设置配置文件，及将[bean.xml]设置为本地的this.configLocations属性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 为应用的上下文设置配置地址.</div><div class="line">	 * 如果没有设置,会使用默认的配置</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setConfigLocations</span><span class="params">(String[] locations)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (locations != <span class="keyword">null</span>) &#123;</div><div class="line">			Assert.noNullElements(locations, &amp;quot;Config locations must not be <span class="keyword">null</span>&amp;quot;);</div><div class="line">			<span class="keyword">this</span>.configLocations = <span class="keyword">new</span> String[locations.length];</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; locations.length; i++) &#123;</div><div class="line">				<span class="keyword">this</span>.configLocations[i] = resolvePath(locations[i]).trim();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">this</span>.configLocations = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-<p>接着是refresh函数，该函数在AbstractApplicationContext类中，代码如下。可以看到该函数一共分为以下几步：<br>1. 为了刷新准备上下文；<br>2. 利用子类完成内部bean factory的刷新；<br>3. 使用本地上下文准备bean factory；<br>4. 允许在上下文子类中完成bean factory后处理；<br>5. 调用上下文注册的bean factory处理器；<br>6. 注册拦截bean创建的bean处理器；<br>7. 初始化上下文中消息源；<br>8. 初始化上下文中的事件多播；<br>9. 在特定上下文子类中初始化其他特殊bean；<br>10. 检查监听器bean并注册；<br>11. 实例化所有剩余(non-lazy-init)单例；<br>12. 发布相应的事件。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">			<span class="comment">// 为了刷新准备上下文</span></div><div class="line">			prepareRefresh();</div><div class="line"></div><div class="line">			<span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">			<span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">			prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">				postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">				invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">				registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 初始化上下文中消息源</span></div><div class="line">				initMessageSource();</div><div class="line"></div><div class="line">				<span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">				initApplicationEventMulticaster();</div><div class="line"></div><div class="line">				<span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">				onRefresh();</div><div class="line"></div><div class="line">				<span class="comment">// 检查监听器bean并注册 </span></div><div class="line">				registerListeners();</div><div class="line"></div><div class="line">				<span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">				finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 发布相应的事件</span></div><div class="line">				finishRefresh();</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">				logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">				<span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">				destroyBeans();</div><div class="line"></div><div class="line">				<span class="comment">// Reset 'active' flag.</span></div><div class="line">				cancelRefresh(ex);</div><div class="line"></div><div class="line">				<span class="comment">// Propagate exception to caller.</span></div><div class="line">				<span class="keyword">throw</span> ex;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>这里的每一步可能都很繁琐，鉴于我也是第一次看这些代码，还是慢慢进行分析吧，先到这里。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1843,7 +1836,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">314</span>
+              <span class="site-state-item-count">316</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1851,7 +1844,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1860,7 +1853,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1898,6 +1891,24 @@
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lqcode.com/" title="李琼写文章的地方" target="_blank">李琼写文章的地方</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
       </section>

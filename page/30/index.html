@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
+  <meta name="keywords" content="jerkybible, 行走的轮子, java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, qt, opencv, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
 
 
 
@@ -279,6 +279,303 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/09/24/Linux引导流程解析03/" itemprop="url">
+                  Linux引导流程解析03
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-09-24T23:26:29+08:00" content="2012-09-24">
+              2012-09-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/09/24/Linux引导流程解析03/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/24/Linux引导流程解析03/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/09/24/Linux引导流程解析03/" class="leancloud_visitors" data-flag-title="Linux引导流程解析03">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.GRUB配置与应用</p>
+<p>GRUB的配置文件默认为 /boot/grub/grub.conf</p>
+<p>软链接：ls -l /etc/grub.conf</p>
+<p>GRUB配置：<strong><span style="color: #000000;">defaulf</span></strong>定义缺省启动系统</p>
+<p><strong><span style="color: #000000;">                         timeout</span></strong>定义缺省等待时间</p>
+<p><strong><span style="color: #000000;">                         splashimage</span></strong>定义GRUB界面图片，(hd0,0)，hd表示硬盘，0表示第一个，逗号后表示第几个分区</p>
+<p><strong><span style="color: #000000;">                         hiddenmenu</span></strong>隐藏菜单</p>
+<p><strong>                         title</strong>定义菜单项名称</p>
+<p><strong><span style="color: #000000;">                         root</span></strong>设置GRUB的根设备及内核所在的分区</p>
+<p><strong><span style="color: #000000;">                         kernel</span></strong>定义内核文件所在位置</p>
+<p><strong>                         initrd</strong>命令加载镜像文件</p>
+<p>功能键：</p>
+<p><strong><span style="color: #000000;">              e：</span></strong>编辑当前的启动菜单项</p>
+<p><strong><span style="color: #000000;">              c：</span></strong>进入GRUB的命令行方式</p>
+<p><strong><span style="color: #000000;">              b：</span></strong>其中当前的菜单项</p>
+<p><strong>              d：</strong>删除当前行</p>
+<p><strong><span style="color: #000000;">              Esc：</span></strong>返回GRUB启动菜单界面，取消对当前菜单项所做的任何修改</p>
+<p>案例：</p>
+<p>1）root密码忘记，计入单用户模式重新设置root密码，方法如下：开机进入GRUB界面，按e进入编辑行模式，选中kernel行，再次按e键，在新的界面的最后一行输入1或s，然后按b键即可进入单用户模式。</p>
+<p>2）设置GRUB密码，使用GRUB自带的grub-md5-crypt，编辑GRUB配置文件，加入下行：password –md5 <strong><strong><strong><strong><strong><strong><strong><strong><strong>*</strong></strong></strong></strong></strong></strong></strong></strong></strong></p>
+<p>3）GRUB修复，当开机后进入GRUB界面，但没有菜单，只剩下一个grub&gt;提示符，解决办法：不写了</p>
+<p>&nbsp;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/09/19/Linux引导流程解析02/" itemprop="url">
+                  Linux引导流程解析02
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-09-19T23:35:19+08:00" content="2012-09-19">
+              2012-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/09/19/Linux引导流程解析02/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/19/Linux引导流程解析02/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/09/19/Linux引导流程解析02/" class="leancloud_visitors" data-flag-title="Linux引导流程解析02">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1. 查看排除#的行，grep -v(排除匹配) “^#” /etc/inittab | more</p>
+<p>2.man inittab，inittab文件剖析，在inittab中，所有条目采取以下格式：</p>
+<p><span style="color: #000000;"> <strong>   id：runlevels：action：process</strong></span></p>
+<p><span style="color: #000000;">    <strong>id：</strong>标识符，一般为两位数字或字母</span></p>
+<p><span style="color: #000000;">    <strong>runlevels：</strong>指定运行级别，可以指定多个</span></p>
+<p><span style="color: #000000;">   <strong>action：</strong>指定运行状态</span></p>
+<p><span style="color: #000000;">   <strong>process：</strong>指定要运行的脚本/命令</span></p>
+<p>3. action常用常用取值：</p>
+<p><span style="color: #000000;"><strong>    initdefault：</strong>指定系统缺省启动的运行级别</span></p>
+<p><span style="color: #000000;"><strong>    sysinit：</strong>系统启动执行process中指定的命令</span></p>
+<p><span style="color: #000000;"><strong>    wait：</strong>执行process中指定的命令，并等其结束在运行其他命令</span></p>
+<p><span style="color: #000000;"><strong>    once：</strong>执行process中指定的命令，不等待其结束</span></p>
+<p><span style="color: #000000;"><strong>    ctrlaltdel：</strong>按下Ctrl+Alt+Del时执行process指定的命令</span></p>
+<p>4.设置自启动程序</p>
+<p><span style="color: #000000;"><strong>    ln -s </strong></span> 生成软链接</p>
+<p><strong><span style="color: #000000;">    chkconfig ：</span></strong>chkconfig –levels 2345 mysqld on；chkconfig –list mysqld</p>
+<p><strong><span style="color: #000000;">    ntsysv：</span></strong>ntsysv –level 3</p>
+<p>5. dmesg：dmesg | grep eth0</p>
+<p>6.日志存放路径：/var/log；常用的是messages</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1562,288 +1859,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" itemprop="url">
-                  OpenCV HOG+SVM 分类器训练与检测
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-05T21:27:58+08:00" content="2012-09-05">
-              2012-09-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenCV</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" class="leancloud_visitors" data-flag-title="OpenCV HOG+SVM 分类器训练与检测">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>先从检测说起。</strong></p>
-<p>现有的OpenCV版本中有完整的基于HOG+SVM的检测代码，主要用到HOGDescriptor这个类。两个关键函数：</p>
-<p> hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());<span style="color: #339966;">//导入分类器，默认采用的是Dalal提出的算法模型，其实是svm训练得到的支持向量</span></p>
-<p> hog.detectMultiScale(img, found, 0, Size(8,8), Size(32,32), 1.05, 2);<span style="color: #339966;">//多尺度遍历，可以检测一定范围内的行人目标，当然现有的模型是基于64*128行人大小的，所以对中小目标检测效果不佳</span></p>
-<p>在程序框架建立过程中，问题没有出现多少，毕竟熟能生巧，意外的收获是：opencv众所周知地没有注释难以看懂，但是对于一个可执行程序，都用一个函数来说明程序实现功能，在一定程度上缓和我对opencv的反感吧。其实opencv的代码风格其他方面真的很好，今后可以借鉴之。先列举其一吧：</p>
-<p>void help()<br>{<br> printf(<br>  <span style="color: #800080;"> “\nDemonstrate the use of the HoG descriptor using\n”</span><br><span style="color: #800080;">   “  HOGDescriptor::hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());\n”</span><br><span style="color: #800080;">   “Usage:\n”</span><br><span style="color: #00ffff;"><span style="color: #800080;">   “./peopledetect (&lt;image_filename&gt; | &lt;image_list&gt;.txt)\n\n”</span> <span style="color: #000000;">);</span></span><br>}</p>
-<p><strong>再来说训练。</strong></p>
-<p>不同于Cascade，opencv中没有专门对hog特征的svm的训练，必须自己按照需要，选择特征算子和分类器，这里我先选了hog和svm(与latent svm 区分)。在调试过程中出现了很多bug，变量找不到定义（包含头文件）、无法解析的外部符号Link 2019 （找到函数的实现文件），这些问题也都一一解决了。我不得不再吐槽一下，像这种无注释源文件的真心没辙，网上百度、google都有可能找不到解决方案，还得一个个include和添加cpp去实验，以后写代码一定好写好注释，方便别人阅读嘛。</p>
-<p>总结一下：</p>
-<ul>
-<li>项目属性中除了包含core、imgproc、highgui等常用的lib和头文件，在此情况下（训练和检测）要包含ml（machine learning）和objdetect（object detect）的lib和头文件。</li>
-<li>工程文件中还要用到/opencv2.0/modules/objdetect/src下面的inner_functions.cpp文件，用在需要线性插值的地方。<br>&nbsp;</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/04/Linux应用与发展（下）/" itemprop="url">
-                  Linux应用与发展（下）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-04T23:44:55+08:00" content="2012-09-04">
-              2012-09-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/04/Linux应用与发展（下）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/04/Linux应用与发展（下）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/04/Linux应用与发展（下）/" class="leancloud_visitors" data-flag-title="Linux应用与发展（下）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.Linux系统结构</p>
-<p>图形界面                 Shell命令                   系统调用<br>用户————&gt;应用层———-&gt;Shell层—————&gt;内核层-&gt;硬件</p>
-<p>2.X Window 是个协议，类似于TCP/IP</p>
-<p>1）独立于操作系统；可以不安装，挂了!=Linux挂了，可以换，安装多个</p>
-<p>2）网络特性；</p>
-<p>3）原代码免费。</p>
-<p>3. Linux应用领域</p>
-<p>1）电子政务</p>
-<p>2）网络应用 基于LAMP的网站论坛及B/S架构应用；基于Linux的负载均衡和集群；基于Linux的防火墙及代理服务器</p>
-<p>3）嵌入式应用 生物特征识别系统；智能卡系统；掌上电脑、手机、信息家电；路由器、机顶盒、数码相机、mp4</p>
-<p>4）科学运算 5）办公应用（OpenOffice）6）娱乐应用等</p>
-<p>4. 搭建学习环境，<span style="color: #ff0000;">选择命令行方式学习！！！</span></p>
-<p>留意系统的提示信息；尝试自己检查或实验以找到答案</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1889,7 +1904,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">314</span>
+              <span class="site-state-item-count">316</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1897,7 +1912,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1906,7 +1921,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1944,6 +1959,24 @@
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lqcode.com/" title="李琼写文章的地方" target="_blank">李琼写文章的地方</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
       </section>

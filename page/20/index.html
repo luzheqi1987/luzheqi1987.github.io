@@ -69,7 +69,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
+  <meta name="keywords" content="jerkybible, 行走的轮子, java, c, c++, python, ruby, sicp, hexo, next, spring, ffmpeg, blog, qt, opencv, 博客, 音频, 视频, 编码, 解码, 编解码, 迁移, 轮子, 转" />
 
 
 
@@ -279,6 +279,290 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/03/2013-11-03-CODE 104 Divide Two Integers/" itemprop="url">
+                  CODE 104. Divide Two Integers
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-03T16:35:00+08:00" content="2013-11-03">
+              2013-11-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/03/2013-11-03-CODE 104 Divide Two Integers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/03/2013-11-03-CODE 104 Divide Two Integers/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/03/2013-11-03-CODE 104 Divide Two Integers/" class="leancloud_visitors" data-flag-title="CODE 104. Divide Two Integers">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Divide two integers without using multiplication, division and mod operator.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (divisor == <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> dividend;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (divisor == -<span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> -dividend;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(divisor) == <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">int</span> number = dividend &gt;&gt; <span class="number">1</span>;</div><div class="line">		<span class="keyword">if</span> (divisor &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> -number;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> number;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">long</span> ldividend = <span class="number">0L</span>;</div><div class="line">	<span class="keyword">long</span> ldivisor = <span class="number">0L</span>;</div><div class="line">	<span class="keyword">boolean</span> isDividendFuShu = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">boolean</span> isDivisorFuShu = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">if</span> (divisor &lt; <span class="number">0</span>) &#123;</div><div class="line">		isDivisorFuShu = <span class="keyword">true</span>;</div><div class="line">		ldivisor = Math.abs((<span class="keyword">long</span>) divisor);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		ldivisor = divisor;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (dividend &lt; <span class="number">0</span>) &#123;</div><div class="line">		isDividendFuShu = <span class="keyword">true</span>;</div><div class="line">		ldividend = Math.abs((<span class="keyword">long</span>) dividend);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		ldividend = dividend;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">long</span> start = <span class="number">0l</span>;</div><div class="line">	<span class="keyword">long</span> end = ldividend;</div><div class="line">	<span class="keyword">while</span> (start &lt; end - <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">long</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">long</span> tmpNumber = add(mid, ldivisor);</div><div class="line">		<span class="keyword">if</span> (tmpNumber &lt; ldividend) &#123;</div><div class="line">			start = mid;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmpNumber &gt; ldividend) &#123;</div><div class="line">			end = mid;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> ((isDividendFuShu &amp;&amp; !isDivisorFuShu)</div><div class="line">					|| (!isDividendFuShu &amp;&amp; isDivisorFuShu)) &#123;</div><div class="line">				<span class="keyword">return</span> -(<span class="keyword">int</span>) mid;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">return</span> (<span class="keyword">int</span>) mid;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ((isDividendFuShu &amp;&amp; !isDivisorFuShu)</div><div class="line">			|| (!isDividendFuShu &amp;&amp; isDivisorFuShu)) &#123;</div><div class="line">		<span class="keyword">return</span> -(<span class="keyword">int</span>) start;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">int</span>) start;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="title">add</span><span class="params">(<span class="keyword">long</span> p, <span class="keyword">long</span> num)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="number">0</span> == p) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">long</span> tmp = add(p &gt;&gt; <span class="number">1</span>, num) &lt;&lt; <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> ((p &amp; <span class="number">1</span>) != <span class="number">0</span>) &#123;</div><div class="line">		tmp += num;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> tmp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/03/2013-11-03-CODE 103 Substring with Concatenation of All Words/" itemprop="url">
+                  CODE 103. Substring with Concatenation of All Words
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-03T14:28:00+08:00" content="2013-11-03">
+              2013-11-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/03/2013-11-03-CODE 103 Substring with Concatenation of All Words/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/03/2013-11-03-CODE 103 Substring with Concatenation of All Words/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/03/2013-11-03-CODE 103 Substring with Concatenation of All Words/" class="leancloud_visitors" data-flag-title="CODE 103. Substring with Concatenation of All Words">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>You are given a string, S, and a list of words, L, that are all of the same length. Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening<br> characters.<br>For example, given:<br>S: <code>&quot;barfoothefoobarman&quot;</code><br>L: <code>[&quot;foo&quot;, &quot;bar&quot;]</code><br>You should return the indices: <code>[0,9]</code>.<br>(order does not matter).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">findSubstring</span><span class="params">(String S, String[] L)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	Map&lt;String, Integer&gt; wordMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">	ArrayList&lt;Integer&gt; starts = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">int</span> wordLength = L[<span class="number">0</span>].length();</div><div class="line">	<span class="keyword">int</span> wordNumber = L.length;</div><div class="line">	<span class="keyword">int</span> allLength = wordLength * wordNumber;</div><div class="line">	<span class="keyword">for</span> (String l : L) &#123;</div><div class="line">		<span class="keyword">if</span> (wordMap.containsKey(l)) &#123;</div><div class="line">			<span class="keyword">int</span> num = wordMap.get(l);</div><div class="line">			wordMap.put(l, num + <span class="number">1</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			wordMap.put(l, <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= S.length() - allLength; i++) &#123;</div><div class="line">		Map&lt;String, Integer&gt; tmpWordMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</div><div class="line">		<span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = i, curWordNum = <span class="number">0</span>; curWordNum &lt; wordNumber; k += wordLength, curWordNum++) &#123;</div><div class="line">			String tmpStr = S.substring(k, k + wordLength);</div><div class="line">			<span class="keyword">if</span> (tmpWordMap.containsKey(tmpStr)) &#123;</div><div class="line">				<span class="keyword">int</span> number = tmpWordMap.get(tmpStr);</div><div class="line">				tmpWordMap.put(tmpStr, number + <span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				tmpWordMap.put(tmpStr, <span class="number">1</span>);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (!wordMap.containsKey(tmpStr)</div><div class="line">					|| tmpWordMap.get(tmpStr) &gt; wordMap.get(tmpStr)) &#123;</div><div class="line">				flag = <span class="keyword">false</span>;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (flag) &#123;</div><div class="line">			starts.add(i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> starts;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1426,302 +1710,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/28/2013-10-28-CODE 93 Combination Sum II/" itemprop="url">
-                  CODE 93. Combination Sum II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-28T21:30:00+08:00" content="2013-10-28">
-              2013-10-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/28/2013-10-28-CODE 93 Combination Sum II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/28/2013-10-28-CODE 93 Combination Sum II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/28/2013-10-28-CODE 93 Combination Sum II/" class="leancloud_visitors" data-flag-title="CODE 93. Combination Sum II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers<br> sums to T.<br>Each number in C may only be used once in the combination.<br>Note:</p>
-<ul>
-<li>All numbers (including target) will be positive integers.</li>
-<li>Elements in a combination (a1, a2,<br>… , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤<br>… ≤ ak).</li>
-<li>The solution set must not contain duplicate combinations.</li>
-</ul>
-<p>For example, given candidate set <code>10,1,2,7,6,1,5</code> and<br> target <code>8</code>,<br>A solution set is:<br><code>[1, 7]</code><br><code>[1, 2, 5]</code><br><code>[2, 6]</code><br><code>[1, 1, 6]</code> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combinationSum2(<span class="keyword">int</span>[] candidates,</div><div class="line">		<span class="keyword">int</span> target) &#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	Arrays.sort(candidates);</div><div class="line">	<span class="keyword">return</span> dfs(candidates, target, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; dfs(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> sum,</div><div class="line">		<span class="keyword">int</span> i) &#123;</div><div class="line">	<span class="keyword">if</span> (i &gt;= candidates.length) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index * candidates[i] &lt;= target &amp;&amp; index &lt;= <span class="number">1</span>; index++) &#123;</div><div class="line">		<span class="keyword">int</span> tmpsum = sum + index * candidates[i];</div><div class="line">		<span class="keyword">if</span> (tmpsum == target) &#123;</div><div class="line">			ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; index; m++) &#123;</div><div class="line">				result.add(<span class="number">0</span>, candidates[i]);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (!results.contains(result)) &#123;</div><div class="line">				results.add(result);</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmpsum &lt; target) &#123;</div><div class="line">			ArrayList&lt;ArrayList&lt;Integer&gt;&gt; tmpResults = dfs(candidates,</div><div class="line">					target, tmpsum, i + <span class="number">1</span>);</div><div class="line">			<span class="keyword">for</span> (ArrayList&lt;Integer&gt; tmpResult : tmpResults) &#123;</div><div class="line">				ArrayList&lt;Integer&gt; newResult = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">				newResult.addAll(tmpResult);</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; index; m++) &#123;</div><div class="line">					newResult.add(<span class="number">0</span>, candidates[i]);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (!results.contains(newResult)) &#123;</div><div class="line">					results.add(newResult);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/28/2013-10-28-CODE 94 Combination Sum/" itemprop="url">
-                  CODE 94. Combination Sum
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-28T21:11:00+08:00" content="2013-10-28">
-              2013-10-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/28/2013-10-28-CODE 94 Combination Sum/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/28/2013-10-28-CODE 94 Combination Sum/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/28/2013-10-28-CODE 94 Combination Sum/" class="leancloud_visitors" data-flag-title="CODE 94. Combination Sum">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums<br> to T.<br>The same repeated number may be chosen from C unlimited number of times.<br>Note:</p>
-<ul>
-<li>All numbers (including target) will be positive integers.</li>
-<li>Elements in a combination (a1, a2,<br>… , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤<br>… ≤ ak).</li>
-<li>The solution set must not contain duplicate combinations.</li>
-</ul>
-<p>For example, given candidate set <code>2,3,6,7</code> and target <code>7</code>,<br>A solution set is:<br><code>[7]</code><br><code>[2, 2, 3]</code> </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates,</div><div class="line">		<span class="keyword">int</span> target) &#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	Arrays.sort(candidates);</div><div class="line">	<span class="keyword">return</span> dfs(candidates, target, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; dfs(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> sum,</div><div class="line">		<span class="keyword">int</span> i) &#123;</div><div class="line">	<span class="keyword">if</span> (i &gt;= candidates.length) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index * candidates[i] &lt;= target; index++) &#123;</div><div class="line">		<span class="keyword">int</span> tmpsum = sum + index * candidates[i];</div><div class="line">		<span class="keyword">if</span> (tmpsum == target) &#123;</div><div class="line">			ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; index; m++) &#123;</div><div class="line">				result.add(<span class="number">0</span>, candidates[i]);</div><div class="line">			&#125;</div><div class="line">			results.add(result);</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (tmpsum &lt; target) &#123;</div><div class="line">			ArrayList&lt;ArrayList&lt;Integer&gt;&gt; tmpResults = dfs(candidates,</div><div class="line">					target, tmpsum, i + <span class="number">1</span>);</div><div class="line">			<span class="keyword">for</span> (ArrayList&lt;Integer&gt; tmpResult : tmpResults) &#123;</div><div class="line">				ArrayList&lt;Integer&gt; newResult = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">				newResult.addAll(tmpResult);</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; index; m++) &#123;</div><div class="line">					newResult.add(<span class="number">0</span>, candidates[i]);</div><div class="line">				&#125;</div><div class="line">				results.add(newResult);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1767,7 +1755,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">314</span>
+              <span class="site-state-item-count">316</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1775,7 +1763,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1784,7 +1772,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1822,6 +1810,24 @@
         
 
         
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lqcode.com/" title="李琼写文章的地方" target="_blank">李琼写文章的地方</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+            </ul>
+          </div>
         
 
       </section>
