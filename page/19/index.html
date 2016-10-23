@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/19/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/19/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/19/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/19/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,521 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" itemprop="url">
+                  CODE 117. Longest Common Prefix
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-09T22:28:00+08:00" content="2013-11-09">
+              2013-11-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" class="leancloud_visitors" data-flag-title="CODE 117. Longest Common Prefix">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/'>CODE 117. Longest Common Prefix</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">longestCommonPrefix</span><span class="params">(String[] strs)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == strs || <span class="number">0</span> == strs.length) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">1</span> == strs.length) &#123;</div><div class="line">		<span class="keyword">return</span> strs[<span class="number">0</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> maxIndex = strs[<span class="number">0</span>].length() - <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (maxIndex &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">char</span>[] cs = strs[<span class="number">0</span>].toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; strs.length; i++) &#123;</div><div class="line">		<span class="keyword">char</span>[] ss = strs[i].toCharArray();</div><div class="line">		<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span> (j &lt; cs.length &amp;&amp; j &lt; ss.length &amp;&amp; j &lt;= maxIndex</div><div class="line">				&amp;&amp; cs[j] == ss[j]) &#123;</div><div class="line">			j++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (j &gt; maxIndex) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		maxIndex = j - <span class="number">1</span>;</div><div class="line">		<span class="keyword">if</span> (maxIndex &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> strs[<span class="number">0</span>].substring(<span class="number">0</span>, maxIndex + <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/09/2013-11-09-CODE 114 4Sum/" itemprop="url">
+                  CODE 114. 4Sum
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-09T21:15:00+08:00" content="2013-11-09">
+              2013-11-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/09/2013-11-09-CODE 114 4Sum/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/09/2013-11-09-CODE 114 4Sum/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/09/2013-11-09-CODE 114 4Sum/" class="leancloud_visitors" data-flag-title="CODE 114. 4Sum">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/09/2013-11-09-CODE 114 4Sum/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/09/2013-11-09-CODE 114 4Sum/'>CODE 114. 4Sum</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an array S of n integers, are there elements a, b, c, and d in S such<br> that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.<br>Note:</p>
+<ul>
+<li>Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)</li>
+<li>The solution set must not contain duplicate quadruplets.</li>
+</ul>
+<pre><code>For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
+
+A solution set is:
+(-1,  0, 0, 1)
+(-2, -1, 1, 2)
+(-2,  0, 0, 2)
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; fourSum(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target) &#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (num.length &lt;= <span class="number">3</span>) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	Arrays.sort(num);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length - <span class="number">3</span>; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">3</span>; j &lt; num.length; j++) &#123;</div><div class="line">			<span class="keyword">int</span> sum = num[i] + num[j];</div><div class="line">			<span class="keyword">int</span> start = i + <span class="number">1</span>;</div><div class="line">			<span class="keyword">int</span> end = j - <span class="number">1</span>;</div><div class="line">			<span class="keyword">while</span> (start &lt; end) &#123;</div><div class="line">				<span class="keyword">if</span> (num[start] + num[end] &gt; target - sum) &#123;</div><div class="line">					<span class="keyword">while</span> (start &lt; end &amp;&amp; num[end - <span class="number">1</span>] == num[end]) &#123;</div><div class="line">						end--;</div><div class="line">					&#125;</div><div class="line">					end--;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num[start] + num[end] &lt; target - sum) &#123;</div><div class="line">					<span class="keyword">while</span> (start &lt; end &amp;&amp; num[start + <span class="number">1</span>] == num[start]) &#123;</div><div class="line">						start++;</div><div class="line">					&#125;</div><div class="line">					start++;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">					result.add(num[i]);</div><div class="line">					result.add(num[start]);</div><div class="line">					result.add(num[end]);</div><div class="line">					result.add(num[j]);</div><div class="line">					<span class="keyword">if</span> (!results.contains(result)) &#123;</div><div class="line">						results.add(result);</div><div class="line">					&#125;</div><div class="line">					start++;</div><div class="line">					end--;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">while</span> (i &lt; num.length - <span class="number">3</span> &amp;&amp; num[i + <span class="number">1</span>] == num[i]) &#123;</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/" itemprop="url">
+                  CODE 115. 3Sum Closest
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-08T22:32:00+08:00" content="2013-11-08">
+              2013-11-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/08/2013-11-08-CODE 115 3Sum Closest/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/" class="leancloud_visitors" data-flag-title="CODE 115. 3Sum Closest">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/08/2013-11-08-CODE 115 3Sum Closest/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/08/2013-11-08-CODE 115 3Sum Closest/'>CODE 115. 3Sum Closest</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have<br> exactly one solution.<br>        For example, given array S = {-1 2 1 -4}, and target = 1.</p>
+<pre><code>The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (num.length &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	Arrays.sort(num);</div><div class="line">	<span class="keyword">int</span> targetClosest = Integer.MAX_VALUE;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length - <span class="number">2</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> sum = num[i];</div><div class="line">		<span class="keyword">int</span> start = i + <span class="number">1</span>;</div><div class="line">		<span class="keyword">int</span> end = num.length - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start &lt; end) &#123;</div><div class="line">			<span class="keyword">if</span> (targetClosest == Integer.MAX_VALUE</div><div class="line">					|| (Math.abs(num[start] + num[end] + sum - target) &lt; Math</div><div class="line">							.abs(targetClosest - target))) &#123;</div><div class="line">				targetClosest = num[start] + num[end] + sum;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (num[start] + num[end] &gt; target - sum) &#123;</div><div class="line">				<span class="keyword">while</span> (start &lt; end &amp;&amp; num[end - <span class="number">1</span>] == num[end]) &#123;</div><div class="line">					end--;</div><div class="line">				&#125;</div><div class="line">				end--;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num[start] + num[end] &lt; target - sum) &#123;</div><div class="line">				<span class="keyword">while</span> (start &lt; end &amp;&amp; num[start + <span class="number">1</span>] == num[start]) &#123;</div><div class="line">					start++;</div><div class="line">				&#125;</div><div class="line">				start++;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">return</span> target;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">while</span> (i &lt; num.length - <span class="number">2</span> &amp;&amp; num[i + <span class="number">1</span>] == num[i]) &#123;</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> targetClosest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/08/2013-11-08-CODE 116 3Sum/" itemprop="url">
                   CODE 116. 3Sum
                 </a>
@@ -373,7 +888,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -392,7 +908,32 @@
       
         
           
-            <p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c =<br> 0? Find all unique triplets in the array which gives the sum of zero.<br>Note:</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/08/2013-11-08-CODE 116 3Sum/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/08/2013-11-08-CODE 116 3Sum/'>CODE 116. 3Sum</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c =<br> 0? Find all unique triplets in the array which gives the sum of zero.<br>Note:</p>
 <ul>
 <li>Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)</li>
 <li>The solution set must not contain duplicate triplets.</li>
@@ -524,7 +1065,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -543,7 +1085,32 @@ A solution set is:
       
         
           
-            <p>Given a digit string, return all possible letter combinations that the number could represent.<br>A mapping of digit to letters (just like on the telephone buttons) is given below.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt=""><br>    Input:Digit string “23”<br>    Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 113 Letter Combinations of a Phone Number/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 113 Letter Combinations of a Phone Number/'>CODE 113. Letter Combinations of a Phone Number</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a digit string, return all possible letter combinations that the number could represent.<br>A mapping of digit to letters (just like on the telephone buttons) is given below.<br><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt=""><br>    Input:Digit string “23”<br>    Output: [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf”].</p>
 <p>Note:<br>Although the above answer is in lexicographical order, your answer could be in any order you want.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">char</span>[][] cdigits = &#123; &#123; <span class="string">' '</span> &#125;, &#123;&#125;, &#123; <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span> &#125;,</div><div class="line">		&#123; <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span> &#125;, &#123; <span class="string">'g'</span>, <span class="string">'h'</span>, <span class="string">'i'</span> &#125;, &#123; <span class="string">'j'</span>, <span class="string">'k'</span>, <span class="string">'l'</span> &#125;,</div><div class="line">		&#123; <span class="string">'m'</span>, <span class="string">'n'</span>, <span class="string">'o'</span> &#125;, &#123; <span class="string">'p'</span>, <span class="string">'q'</span>, <span class="string">'r'</span>, <span class="string">'s'</span> &#125;, &#123; <span class="string">'t'</span>, <span class="string">'u'</span>, <span class="string">'v'</span> &#125;,</div><div class="line">		&#123; <span class="string">'w'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span> &#125; &#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">letterCombinations</span><span class="params">(String digits)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == digits || <span class="string">""</span>.equals(digits)) &#123;</div><div class="line">		ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		String str = <span class="string">""</span>;</div><div class="line">		results.add(str);</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dfs(digits, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">ArrayList&lt;String&gt; <span class="title">dfs</span><span class="params">(String digits, <span class="keyword">int</span> i)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (i &gt;= digits.length()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> a = Character.digit(digits.charAt(i), <span class="number">10</span>);</div><div class="line">	<span class="keyword">if</span> (<span class="number">1</span> == a) &#123;</div><div class="line">		<span class="keyword">return</span> dfs(digits, i + <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cdigits[a].length; j++) &#123;</div><div class="line">		<span class="keyword">char</span> c = cdigits[a][j];</div><div class="line">		ArrayList&lt;String&gt; tmps = dfs(digits, i + <span class="number">1</span>);</div><div class="line">		<span class="keyword">if</span> (tmps.isEmpty()) &#123;</div><div class="line">			results.add(<span class="keyword">new</span> StringBuilder().append(c).toString());</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">for</span> (String str : tmps) &#123;</div><div class="line">				str = c + str;</div><div class="line">				results.add(<span class="keyword">new</span> String(str));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
@@ -667,7 +1234,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -686,7 +1254,32 @@ A solution set is:
       
         
           
-            <p>Given a linked list, remove the nth node from the end of list and return its head.<br>For example,<br>       Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 112 Remove Nth Node From End of List/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 112 Remove Nth Node From End of List/'>CODE 112. Remove Nth Node From End of List</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a linked list, remove the nth node from the end of list and return its head.<br>For example,<br>       Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</p>
 <pre><code>After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.
 </code></pre><p>Note:<br>Given n will always be valid.<br>Try to do this in one pass.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (n &lt; <span class="number">1</span> || <span class="keyword">null</span> == head) &#123;</div><div class="line">		<span class="keyword">return</span> head;</div><div class="line">	&#125;</div><div class="line">	ListNode pre = head;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= n &amp;&amp; <span class="keyword">null</span> != pre; i++) &#123;</div><div class="line">		pre = pre.next;</div><div class="line">	&#125;</div><div class="line">	ListNode last = head;</div><div class="line">	ListNode preLast = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != pre) &#123;</div><div class="line">		pre = pre.next;</div><div class="line">		preLast = last;</div><div class="line">		last = last.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != preLast) &#123;</div><div class="line">		preLast.next = last.next;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (i == n + <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> head.next;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> head;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -811,7 +1404,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -830,7 +1424,32 @@ A solution set is:
       
         
           
-            <p>Given a string containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>,<br> determine if the input string is valid.<br>The brackets must close in the correct order, <code>&quot;()&quot;</code> and <code>&quot;()[]{}&quot;</code> are<br> all valid but <code>&quot;(]&quot;</code> and <code>&quot;([)]&quot;</code> are<br> not.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 111 Valid Parentheses/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/06/2013-11-06-CODE 111 Valid Parentheses/'>CODE 111. Valid Parentheses</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a string containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>,<br> determine if the input string is valid.<br>The brackets must close in the correct order, <code>&quot;()&quot;</code> and <code>&quot;()[]{}&quot;</code> are<br> all valid but <code>&quot;(]&quot;</code> and <code>&quot;([)]&quot;</code> are<br> not.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">char</span>[] ss = s.toCharArray();</div><div class="line">	Stack&lt;Character&gt; stack = <span class="keyword">new</span> Stack&lt;Character&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">char</span> c : ss) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="string">'('</span> == c || <span class="string">'&#123;'</span> == c || <span class="string">'['</span> == c) &#123;</div><div class="line">			stack.add(c);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> (stack.isEmpty()) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (<span class="string">')'</span> == c &amp;&amp; stack.pop() != <span class="string">'('</span>) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">']'</span> == c &amp;&amp; stack.pop() != <span class="string">'['</span>) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">'&#125;'</span> == c &amp;&amp; stack.pop() != <span class="string">'&#123;'</span>) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (stack.isEmpty()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -953,7 +1572,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -972,7 +1592,32 @@ A solution set is:
       
         
           
-            <p>###<br>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br><code>&quot;((()))&quot;, &quot;(()())&quot;, &quot;(())()&quot;, &quot;()(())&quot;, &quot;()()()&quot;</code></p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/05/2013-11-05-CODE 110 Generate Parentheses/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/05/2013-11-05-CODE 110 Generate Parentheses/'>CODE 110. Generate Parentheses</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>###<br>Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.<br>For example, given n = 3, a solution set is:<br><code>&quot;((()))&quot;, &quot;(()())&quot;, &quot;(())()&quot;, &quot;()(())&quot;, &quot;()()()&quot;</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="comment">// (()) ()()</span></div><div class="line">	<span class="keyword">return</span> dfs(<span class="number">0</span>, n, n);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">ArrayList&lt;String&gt; <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> right, <span class="keyword">int</span> left, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="number">0</span> == left) &#123;</div><div class="line">		ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		String str = <span class="string">""</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - right; i++) &#123;</div><div class="line">			str += <span class="string">")"</span>;</div><div class="line">		&#125;</div><div class="line">		results.add(str);</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n - left - right; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= <span class="number">1</span>; j++) &#123;</div><div class="line">			ArrayList&lt;String&gt; strs = dfs(i + right, left - j, n);</div><div class="line">			<span class="keyword">for</span> (String str : strs) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= j; k++) &#123;</div><div class="line">					str = <span class="string">"("</span> + str;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; i; k++) &#123;</div><div class="line">					str = <span class="string">")"</span> + str;</div><div class="line">				&#125;</div><div class="line">				results.add(<span class="keyword">new</span> String(str));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -1095,7 +1740,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1114,7 +1760,32 @@ A solution set is:
       
         
           
-            <p>Merge k sorted<br> linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/05/2013-11-05-CODE 109 Merge k Sorted Lists/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/05/2013-11-05-CODE 109 Merge k Sorted Lists/'>CODE 109. Merge k Sorted Lists</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Merge k sorted<br> linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span><span class="params">(ArrayList&lt;ListNode&gt; lists)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == lists || lists.isEmpty()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dfs(lists, <span class="number">0</span>, lists.size() - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">ListNode <span class="title">dfs</span><span class="params">(ArrayList&lt;ListNode&gt; lists, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (start == end) &#123;</div><div class="line">		<span class="keyword">return</span> lists.get(start);</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (end &gt; start &amp;&amp; end == start + <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> merge2Lists(lists.get(start), lists.get(end));</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">	ListNode left = dfs(lists, start, mid);</div><div class="line">	ListNode right = dfs(lists, mid + <span class="number">1</span>, end);</div><div class="line">	<span class="keyword">return</span> merge2Lists(left, right);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">ListNode <span class="title">merge2Lists</span><span class="params">(ListNode first, ListNode second)</span> </span>&#123;</div><div class="line">	ListNode tmpF = first;</div><div class="line">	ListNode tmpS = second;</div><div class="line">	ListNode newNode = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode tmpN = newNode;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != tmpF &amp;&amp; <span class="keyword">null</span> != tmpS) &#123;</div><div class="line">		<span class="keyword">if</span> (tmpS.val &gt;= tmpF.val) &#123;</div><div class="line">			tmpN.next = tmpF;</div><div class="line">			tmpF = tmpF.next;</div><div class="line">			tmpN = tmpN.next;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			ListNode node = <span class="keyword">new</span> ListNode(tmpS.val);</div><div class="line">			tmpN.next = node;</div><div class="line">			tmpS = tmpS.next;</div><div class="line">			tmpN = tmpN.next;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != tmpS) &#123;</div><div class="line">		tmpN.next = tmpS;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != tmpF) &#123;</div><div class="line">		tmpN.next = tmpF;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> newNode.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -1237,7 +1908,8 @@ A solution set is:
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1256,434 +1928,33 @@ A solution set is:
       
         
           
-            <p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given <code>1-&gt;2-&gt;3-&gt;4</code>, you should return the list as <code>2-&gt;1-&gt;4-&gt;3</code>.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/04/2013-11-04-CODE 108 Swap Nodes in Pairs/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/04/2013-11-04-CODE 108 Swap Nodes in Pairs/'>CODE 108. Swap Nodes in Pairs</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a linked list, swap every two adjacent nodes and return its head.<br>For example,<br>Given <code>1-&gt;2-&gt;3-&gt;4</code>, you should return the list as <code>2-&gt;1-&gt;4-&gt;3</code>.<br>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">swapPairs</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ListNode newHead = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode tmpHead = newHead;</div><div class="line">	ListNode tmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != tmp &amp;&amp; <span class="keyword">null</span> != tmp.next) &#123;</div><div class="line">		ListNode first = tmp;</div><div class="line">		ListNode second = tmp.next;</div><div class="line">		tmp = second.next;</div><div class="line">		tmpHead.next = second;</div><div class="line">		tmpHead.next.next = first;</div><div class="line">		tmpHead = tmpHead.next.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != tmp) &#123;</div><div class="line">		tmpHead.next = tmp;</div><div class="line">		tmpHead = tmpHead.next;</div><div class="line">	&#125;</div><div class="line">	tmpHead.next = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">return</span> newHead.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/04/2013-11-04-CODE 107 Reverse Nodes in k-Group/" itemprop="url">
-                  CODE 107. Reverse Nodes in k-Group
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-04T20:19:00+08:00" content="2013-11-04">
-              2013-11-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/04/2013-11-04-CODE 107 Reverse Nodes in k-Group/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/04/2013-11-04-CODE 107 Reverse Nodes in k-Group/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/04/2013-11-04-CODE 107 Reverse Nodes in k-Group/" class="leancloud_visitors" data-flag-title="CODE 107. Reverse Nodes in k-Group">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.<br>If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.<br>You may not alter the values in the nodes, only nodes itself may be changed.<br>Only constant memory is allowed.<br>For example,<br>Given this linked list: <code>1-&gt;2-&gt;3-&gt;4-&gt;5</code><br>For k = 2, you should return: <code>2-&gt;1-&gt;4-&gt;3-&gt;5</code><br>For k = 3, you should return: <code>3-&gt;2-&gt;1-&gt;4-&gt;5</code><br>``</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseKGroup</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ListNode tmpHead = head;</div><div class="line">	Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">	<span class="keyword">int</span> number = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (tmpHead != <span class="keyword">null</span>) &#123;</div><div class="line">		ListNode tmp = tmpHead;</div><div class="line">		<span class="keyword">while</span> (tmp != <span class="keyword">null</span> &amp;&amp; number &lt;= k) &#123;</div><div class="line">			stack.push(tmp.val);</div><div class="line">			tmp = tmp.next;</div><div class="line">			number++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (number &gt; k) &#123;</div><div class="line">			<span class="keyword">while</span> (!stack.isEmpty()) &#123;</div><div class="line">				tmpHead.val = stack.pop();</div><div class="line">				tmpHead = tmpHead.next;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		tmpHead = tmp;</div><div class="line">		number = <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/04/2013-11-04-CODE 106 Remove Duplicates from Sorted Array/" itemprop="url">
-                  CODE 106. Remove Duplicates from Sorted Array
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-04T19:43:00+08:00" content="2013-11-04">
-              2013-11-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/04/2013-11-04-CODE 106 Remove Duplicates from Sorted Array/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/04/2013-11-04-CODE 106 Remove Duplicates from Sorted Array/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/04/2013-11-04-CODE 106 Remove Duplicates from Sorted Array/" class="leancloud_visitors" data-flag-title="CODE 106. Remove Duplicates from Sorted Array">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.<br>Do not allocate extra space for another array, you must do this in place with constant memory.<br>For example,<br>Given input array A = <code>[1,1,2]</code>,<br>Your function should return length = <code>2</code>, and A is now <code>[1,2]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		<span class="keyword">if</span> (A.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> length = A.length;</div><div class="line">		<span class="keyword">int</span> cur = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> nxt = <span class="number">1</span>;</div><div class="line">		<span class="keyword">for</span> (; nxt &lt; A.length; nxt++) &#123;</div><div class="line">			<span class="keyword">if</span> (A[nxt] != A[nxt - <span class="number">1</span>]) &#123;</div><div class="line">				A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">				cur++;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				length--;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">		<span class="keyword">return</span> length;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/03/2013-11-03-CODE 105 Remove Element/" itemprop="url">
-                  CODE 105. Remove Element
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-03T18:59:00+08:00" content="2013-11-03">
-              2013-11-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/03/2013-11-03-CODE 105 Remove Element/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/03/2013-11-03-CODE 105 Remove Element/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/03/2013-11-03-CODE 105 Remove Element/" class="leancloud_visitors" data-flag-title="CODE 105. Remove Element">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array and a value, remove all instances of that value in place and return the new length.<br>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> elem)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ArrayList&lt;Integer&gt; removeIndex = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (A[i] == elem) &#123;</div><div class="line">			removeIndex.add(i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = removeIndex.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		<span class="keyword">int</span> tmp = removeIndex.get(i);</div><div class="line">		<span class="keyword">if</span> (tmp == A.length - removeIndex.size() + i) &#123;</div><div class="line">			A[tmp] = <span class="number">0</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			A[tmp] = A[A.length - removeIndex.size() + i];</div><div class="line">			A[A.length - removeIndex.size() + i] = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> A.length - removeIndex.size();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1757,7 +2028,7 @@ A solution set is:
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1765,7 +2036,7 @@ A solution set is:
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1774,7 +2045,7 @@ A solution set is:
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

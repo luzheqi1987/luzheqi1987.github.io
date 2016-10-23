@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/12/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/12/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/12/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/12/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,457 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/24/2014-11-24-用pdb调试OpenStack/" itemprop="url">
+                  用pdb调试OpenStack
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-24T13:17:00+08:00" content="2014-11-24">
+              2014-11-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/24/2014-11-24-用pdb调试OpenStack/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/24/2014-11-24-用pdb调试OpenStack/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/24/2014-11-24-用pdb调试OpenStack/" class="leancloud_visitors" data-flag-title="用pdb调试OpenStack">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.csdn.net/epugv/article/details/13512247" target="_blank" rel="external">点击打开链接</a></p>
+<ol>
+<li>创建文件creds：</li>
+</ol>
+<p>exportSERVICE_TOKEN=xxx(3中输入的密码)<br>exportOS_TENANT_NAME=admin<br>exportOS_USERNAME=admin<br>export OS_PASSWORD=xxx<br>exportOS_AUTH_URL=<a href="http://localhost:5000/v2.0/" target="_blank" rel="external">http://localhost:5000/v2.0/</a><br>exportSERVICE_ENDPOINT=<a href="http://localhost:35357/v2.0" target="_blank" rel="external">http://localhost:35357/v2.0</a><br>source creds就可以使用openstack了</p>
+<ol>
+<li>若想更改已安装的组件，再./stack.sh即可</li>
+</ol>
+<h3 id="Pdb调试Havana过程"><a href="#Pdb调试Havana过程" class="headerlink" title="Pdb调试Havana过程"></a>Pdb调试Havana过程</h3><ol>
+<li>修改代码<br>在需要调试的地方加入：<br>import pdb; pdb.set_trace()(以在nova/compute/api.py:get_all()中加入pdb为例)</li>
+<li>重启服务<br>在相应的screen中用ctrl+c终止当前进程，然后按向上的方向键，就会出现启动服务的命令，按enter服务就起来了。</li>
+<li>开始调试：<br><img src="/images/pdb_start_debug.png" alt=""></li>
+</ol>
+<p>显示有两个screen<br>screen –x stack<br>进入如下界面：<br><img src="/images/pdb_screen.png" alt=""></p>
+<p>最下一行表示，每一个进程都有一个screen。带*号的表示当前的screen，可以同时按下ctrl+a+8和ctrl+a+2分别前进和后退，来切换不同的screen.</p>
+<ol>
+<li><p>在0$中输入nova list；切换到4$ n-api:<br><img src="/images/pdb_nova.png" alt=""></p>
+</li>
+<li><p>开始使用pdb进行调试<br><img src="/images/pdb_debug_step.png" alt=""></p>
+</li>
+<li><p>物理机重启后，可使用rejoin-stack.sh启动openstack服务</p>
+</li>
+<li>ctrl+a+shift+”, 可以选择screen , 主要就不需要通过ctrl + a  or ctrl + p 来回切换了：）。</li>
+</ol>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="http://blog.csdn.net/hackerain/article/details/8373597" target="_blank" rel="external">使用pdb调试openstack (How to debug openstackusing pdb )</a></li>
+<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" target="_blank" rel="external">linux screen 命令详解</a></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line">ADMIN_PASSWORD=password</div><div class="line">MYSQL_PASSWORD=stackdb</div><div class="line">RABBIT_PASSWORD=stackqueue</div><div class="line">SERVICE_PASSWORD=$ADMIN_PASSWORD</div><div class="line">#enable_service rally</div><div class="line">SERVICE_TOKEN=password</div><div class="line"></div><div class="line">## vnc</div><div class="line"></div><div class="line">#enable_service n-spice</div><div class="line">#enable_service n-novnc</div><div class="line">#enable_service n-xvnc</div><div class="line"></div><div class="line">#GIT_BASE=https://code.csdn.net</div><div class="line"># Reclone each time</div><div class="line">#RECLONE=yes</div><div class="line">RECLONE=no</div><div class="line"></div><div class="line">## For Keystone</div><div class="line">KEYSTONE_TOKEN_FORMAT=PKI</div><div class="line"></div><div class="line">## For Swift</div><div class="line">#SWIFT_REPLICAS=1</div><div class="line">#SWIFT_HASH=011688b44136573e209e</div><div class="line"></div><div class="line"># Enable Logging</div><div class="line">LOGFILE=/opt/stack/logs/stack.sh.log</div><div class="line">VERBOSE=True</div><div class="line">LOG_COLOR=True</div><div class="line">SCREEN_LOGDIR=/opt/stack/logs</div><div class="line"></div><div class="line"># Pre-requisite</div><div class="line">ENABLED_SERVICES=rabbit,mysql,key</div><div class="line"></div><div class="line">## If you want ZeroMQ instead of RabbitMQ (don&apos;t forget to un-declare &apos;rabbit&apos; from the pre-requesite)</div><div class="line">#ENABLED_SERVICES+=,-rabbit,-qpid,zeromq</div><div class="line"></div><div class="line">## If you want Qpid instead of RabbitMQ (don&apos;t forget to un-declare &apos;rabbit&apos; from the pre-requesite)</div><div class="line">#ENABLED_SERVICES+=,-rabbit,-zeromq,qpid</div><div class="line"></div><div class="line"># Horizon (Dashboard UI) - (always use the trunk)</div><div class="line">ENABLED_SERVICES+=,horizon</div><div class="line">HORIZON_REPO=https://github.com/openstack/horizon</div><div class="line">HORIZON_BRANCH=master</div><div class="line"></div><div class="line"># Nova - Compute Service</div><div class="line">ENABLED_SERVICES+=,n-api,n-crt,n-obj,n-cpu,n-cond,n-sch</div><div class="line"></div><div class="line">######vnc</div><div class="line">ENABLED_SERVICES+=,n-novnc,n-xvnc</div><div class="line"></div><div class="line"></div><div class="line">#jjIMAGE_URLS+=&quot;,https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img&quot;</div><div class="line">#IMAGE_URLS+=&quot;,http://172.28.0.1/image/cirros-0.3.0-x86_64-disk.img&quot;</div><div class="line"></div><div class="line"></div><div class="line"># Nova Network - If you don&apos;t want to use Neutron and need a simple network setup (old good stuff!)</div><div class="line">#ENABLED_SERVICES+=,n-net</div><div class="line"></div><div class="line">## Nova Cells</div><div class="line">#ENABLED_SERVICES+=,n-cell</div><div class="line"></div><div class="line"># Glance - Image Service</div><div class="line">ENABLED_SERVICES+=,g-api,g-reg</div><div class="line"></div><div class="line"># Swift - Object Storage</div><div class="line">#ENABLED_SERVICES+=,s-proxy,s-object,s-container,s-account</div><div class="line"></div><div class="line"># Neutron - Networking Service</div><div class="line"># If Neutron is not declared the old good nova-network will be used</div><div class="line">ENABLED_SERVICES+=,q-svc,q-agt,q-dhcp,q-l3,q-meta,neutron</div><div class="line"></div><div class="line">## Neutron - Load Balancing</div><div class="line">ENABLED_SERVICES+=,q-lbaas</div><div class="line"></div><div class="line">## Neutron - VPN as a Service</div><div class="line">ENABLED_SERVICES+=,q-vpn</div><div class="line"></div><div class="line">## Neutron - Firewall as a Service</div><div class="line">ENABLED_SERVICES+=,q-fwaas</div><div class="line"></div><div class="line"># VLAN configuration</div><div class="line">#Q_PLUGIN=ml2</div><div class="line">#ENABLE_TENANT_VLANS=True</div><div class="line"></div><div class="line"># GRE tunnel configuration</div><div class="line">Q_PLUGIN=ml2</div><div class="line">ENABLE_TENANT_TUNNELS=True</div><div class="line"></div><div class="line"># VXLAN tunnel configuration</div><div class="line">#Q_PLUGIN=ml2</div><div class="line">#Q_ML2_TENANT_NETWORK_TYPE=vxlan   </div><div class="line"></div><div class="line"># Cinder - Block Device Service</div><div class="line">VOLUME_GROUP=&quot;cinder-volumes&quot;</div><div class="line">ENABLED_SERVICES+=,cinder,c-api,c-vol,c-sch,c-bak</div><div class="line"></div><div class="line"># Heat - Orchestration Service</div><div class="line">ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng</div><div class="line">#IMAGE_URLS+=&quot;,http://fedorapeople.org/groups/heat/prebuilt-jeos-images/F17-x86_64-cfntools.qcow2&quot;</div><div class="line"></div><div class="line"># Ceilometer - Metering Service (metering + alarming)</div><div class="line">#ENABLED_SERVICES+=,ceilometer-acompute,ceilometer-acentral,ceilometer-collector,ceilometer-api</div><div class="line">#ENABLED_SERVICES+=,ceilometer-alarm-notify,ceilometer-alarm-eval</div><div class="line"></div><div class="line"># Apache fronted for WSGI</div><div class="line">#APACHE_ENABLED_SERVICES+=keystone,swift</div><div class="line">APACHE_ENABLED_SERVICES+=keystone</div></pre></td></tr></table></figure>
+<p>以上为localrc文件，用于devstack安装时的配置文件，用git clone一份devstack的源码，将localrc文件copy过去，然后./stack，就可以了。</p>
+<ol>
+<li>创建文件creds：<br>exportSERVICE_TOKEN=xxx(3中输入的密码)<br>exportOS_TENANT_NAME=admin<br>exportOS_USERNAME=admin<br>export OS_PASSWORD=xxx<br>exportOS_AUTH_URL=<a href="http://localhost:5000/v2.0/" target="_blank" rel="external">http://localhost:5000/v2.0/</a><br>exportSERVICE_ENDPOINT=<a href="http://localhost:35357/v2.0" target="_blank" rel="external">http://localhost:35357/v2.0</a><br>source creds就可以使用openstack了</li>
+<li>若想更改已安装的组件，再./stack.sh即可</li>
+</ol>
+<p>###<a href=""></a>Pdb调试Havana过程</p>
+<ol>
+<li>修改代码<br>在需要调试的地方加入：<br>import pdb; pdb.set_trace()(以在nova/compute/api.py:get_all()中加入pdb为例)</li>
+<li>重启服务<br>在相应的screen中用ctrl+c终止当前进程，然后按向上的方向键，就会出现启动服务的命令，按enter服务就起来了。</li>
+<li>开始调试：<br><img src="http://img.blog.csdn.net/20131029182240546?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZXB1Z3Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></li>
+</ol>
+<p>显示有两个screen<br>screen –x stack<br>进入如下界面：<br><img src="http://img.blog.csdn.net/20131029182325031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZXB1Z3Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>最下一行表示，每一个进程都有一个screen。带*号的表示当前的screen，可以同时按下ctrl+a+8和ctrl+a+2分别前进和后退，来切换不同的screen.</p>
+<ol>
+<li><p>在0$中输入nova list；切换到4$ n-api:<br><img src="http://img.blog.csdn.net/20131029182451625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZXB1Z3Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+</li>
+<li><p>开始使用pdb进行调试<br><img src="http://img.blog.csdn.net/20131029182519906?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZXB1Z3Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+</li>
+<li><p>物理机重启后，可使用rejoin-stack.sh启动openstack服务</p>
+</li>
+<li>ctrl+a+shift+”, 可以选择screen , 主要就不需要通过ctrl + a  or ctrl + p 来回切换了：）。</li>
+</ol>
+<p>###<a href=""></a>参考资料<br>1.<a href="http://blog.csdn.net/hackerain/article/details/8373597" target="_blank" rel="external">使用pdb调试openstack<br> (How to debug openstackusing pdb )</a><br><a href="http://blog.csdn.net/hackerain/article/details/8373597" target="_blank" rel="external">http://blog.csdn.net/hackerain/article/details/8373597</a></p>
+<ol>
+<li><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" target="_blank" rel="external">linux screen 命令详解</a><br><a href="http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html" target="_blank" rel="external">http://www.cnblogs.com/mchina/archive/2013/01/30/2880680.html</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/24/2014-11-24-Python 调试 PDB/" itemprop="url">
+                  [转]Python 调试 PDB
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-24T13:15:00+08:00" content="2014-11-24">
+              2014-11-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/24/2014-11-24-Python 调试 PDB/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/24/2014-11-24-Python 调试 PDB/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/24/2014-11-24-Python 调试 PDB/" class="leancloud_visitors" data-flag-title="[转]Python 调试 PDB">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.163.com/gjx0619@126/blog/static/12740839320114995947700/" target="_blank" rel="external">点击打开链接</a><br>在python中使用pdb模块可以进行调试<br>import pdb<br>pdb.set_trace()</p>
+<p>也可以使用python -m pdb mysqcript.py这样的方式</p>
+<p>(Pdb) 会自动停在第一行，等待调试,这时你可以看看 帮助<br>(Pdb) h<br>    说明下这几个关键 命令</p>
+<blockquote>
+<p>断点设置<br>   (Pdb)b  10 #断点设置在本py的第10行<br>   或(Pdb)b  ots.py:20 #断点设置到 ots.py第20行<br>   删除断点（Pdb）b #查看断点编号<br>            (Pdb)cl 2 #删除第2个断点</p>
+<p>运行<br>    (Pdb)n #单步运行<br>    (Pdb)s #细点运行 也就是会下到，方法<br>    (Pdb)c #跳到下个断点<br>查看<br>    (Pdb)p param #查看当前 变量值<br>    (Pdb)l #查看运行到某处代码<br>    (Pdb)a #查看全部栈内变量<br>    (Pdb)w 列出目前call stack 中的所在层。<br>    (Pdb)d 在call stack中往下移一层<br>    (Pdb)u 在call stack中往上移一层。如果在上移一层之后按下 n ,则会在上移之后的一层执行下一个叙述,之前的 function call 就自动返回。<br>    (Pdb)cl 清除指定的断点。如果没有带参数,则清除所有断点。<br>    (Pdb)disable 取消所有断点的功能,但仍然保留这些断点。<br>    (Pdb)enable 恢复断点的功能。<br>    (Pdb)ignore 设定断点的忽略次数。如果没指定 count,其初始 为 0。当 count 为 0 时,断点会正常动作。若有指定 count,则每次执行到该中断, count 就少 1,直到 count 数为 0。<br>    (Pdb)condition bpnumber [condition]<br>    (Pdb)j(ump) lineNo. 跳到某行执行。只有在 call stack 的最底部才能作用。<br>    (Pdb)l  列出目前所在档案中的位置。连续地 l 命令会一直列到档案结尾,可以使用指定行数或范围来打印。<br>    (Pdb)pp 和 p 命令类似,但是使用 pprint module(没用过 pprint,详情请参考 Python Library Reference)。<br>    (Pdb)alias 以一个”别名”代替”一群除错命令”,有点类似 c/c++ 的 macro(详情请参考 Python Library Reference)。<br>    (Pdb)unalias 取消某个 alias。<br>    (Pdb)[!]statement 在目前的环境(context)中执行叙述。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/21/2014-11-21-Python中的__getitem__和__setitem__特殊方法/" itemprop="url">
+                  Python中的__getitem__和__setitem__特殊方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-21T11:01:00+08:00" content="2014-11-21">
+              2014-11-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/21/2014-11-21-Python中的__getitem__和__setitem__特殊方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/21/2014-11-21-Python中的__getitem__和__setitem__特殊方法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/21/2014-11-21-Python中的__getitem__和__setitem__特殊方法/" class="leancloud_visitors" data-flag-title="Python中的__getitem__和__setitem__特殊方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在Nova的源码中，基本上所有的类都继承NovaObject，这些类可以直接以a[key]=value的方式给对象增加新的属性并且通过a[key]的方式获取对象属性，这是因为在NovaObject中实现了两个方法<strong>getitem</strong>和<strong>setitem</strong>。<br>下面是NovaObject的部分源码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NovaObject</span><span class="params">(object)</span>:</span></div><div class="line">    ...</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self, name)</span>:</span></div><div class="line">        <span class="string">"""For backwards-compatibility with dict-based objects.</span></div><div class="line"></div><div class="line">        NOTE(danms): May be removed in the future.</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> getattr(self, name)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__setitem__</span><span class="params">(self, name, value)</span>:</span></div><div class="line">        <span class="string">"""For backwards-compatibility with dict-based objects.</span></div><div class="line"></div><div class="line">        NOTE(danms): May be removed in the future.</div><div class="line">        """</div><div class="line">        setattr(self, name, value)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/19/2014-11-19-Python.Paste指南之Deploy(1)-概念/" itemprop="url">
                   Python.Paste指南之Deploy(1)-概念
                 </a>
@@ -361,7 +812,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -580,7 +1032,8 @@ Paste Deployment是一种机制，通过loadapp函数和一个配置文件或者
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -833,7 +1286,8 @@ httpd.serve_forever()
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -980,7 +1434,8 @@ httpd.serve_forever()
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1123,7 +1578,8 @@ httpd.serve_forever()
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1254,7 +1710,8 @@ httpd.serve_forever()
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1384,7 +1841,8 @@ httpd.serve_forever()
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1411,365 +1869,6 @@ httpd.serve_forever()
 <li><p>Cinder(未测试在Docker中的使用)<br>1）在cinder.conf中iscsi_helper=tgtdadm</p>
 </li>
 </ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/02/07/2014-02-07-练习2.73-练习2.74/" itemprop="url">
-                  练习2.73-练习2.74
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-02-07T17:03:00+08:00" content="2014-02-07">
-              2014-02-07
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/02/07/2014-02-07-练习2.73-练习2.74/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/07/2014-02-07-练习2.73-练习2.74/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/02/07/2014-02-07-练习2.73-练习2.74/" class="leancloud_visitors" data-flag-title="练习2.73-练习2.74">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.练习2.73<br>a<br>没有必要<br>b</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (insert-sum-proc)</div><div class="line">  (define (deriv-sum exp var)</div><div class="line">    (make-sum (deriv (car exp) var)</div><div class="line">              (deriv (cadr exp) var)))</div><div class="line">  (put &apos;deriv &apos;+ deriv-sum)</div><div class="line">  &apos;done)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (insert-mult-proc)</div><div class="line">  (define (deriv-mult exp var)</div><div class="line">    (make-sum</div><div class="line">     (make-product (car exp)</div><div class="line">                   (deriv (cadr exp) var))</div><div class="line">     (make-product (deriv (car exp) var)</div><div class="line">                   (cadr exp))))</div><div class="line">  (put &apos;deriv &apos;* deriv-mult)</div><div class="line">  &apos;done)</div></pre></td></tr></table></figure>
-<p>cd<br>改变put和get的顺序<br>2.练习2.74<br>a</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">;;提供分支机构的名称，即brcanch</div><div class="line">(define (get-record branch name)</div><div class="line">  (cond ((null? branch) false)</div><div class="line">        ((null? name) false)</div><div class="line">        (else ((get &apos;get-record branch) name))))</div></pre></td></tr></table></figure>
-<p>b</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">;;提供分支机构的名称,即brcanch</div><div class="line">(define (get-salary branch name)</div><div class="line">  (cond ((null? branch) false)</div><div class="line">        ((null? name) false)</div><div class="line">        (else ((get &apos;get-salary branch) name))))</div></pre></td></tr></table></figure>
-<p>c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-employee-record name branchs)</div><div class="line">  (if (null? branchs)</div><div class="line">      false</div><div class="line">      (let ((record ((get &apos;get-record (branch-name (car branchs))) name)))</div><div class="line">        (if (null? record)</div><div class="line">            (find-employee-record name (cdr branchs))</div><div class="line">            record))))</div></pre></td></tr></table></figure>
-<p>d将新人事的方法注册到表中，即put进去。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/23/2014-01-23-练习2.53-练习2.56/" itemprop="url">
-                  练习2.53-练习2.56
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-23T19:10:00+08:00" content="2014-01-23">
-              2014-01-23
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/23/2014-01-23-练习2.53-练习2.56/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/23/2014-01-23-练习2.53-练习2.56/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/23/2014-01-23-练习2.53-练习2.56/" class="leancloud_visitors" data-flag-title="练习2.53-练习2.56">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.练习2.53</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&apos;(a b c)</div><div class="line">&apos;((george))</div><div class="line">&apos;((y1 y2))</div><div class="line">&apos;(y1 y2)</div><div class="line">#f</div><div class="line">#f</div><div class="line">&apos;(red shoes blue socks)</div></pre></td></tr></table></figure>
-<p>2.练习2.54</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (equal? s1 s2)</div><div class="line">    (cond ((and (null? s1) (null? s2)) true)</div><div class="line">          ((or (null? s1) (null? s2)) false)</div><div class="line">          (else (let ((per-s1 (car s1))</div><div class="line">                      (per-s2 (car s2))</div><div class="line">                      (rest-s1 (cdr s1))</div><div class="line">                      (rest-s2 (cdr s2)))</div><div class="line">                  (cond ((and (not (pair? per-s1))</div><div class="line">                              (not (pair? per-s2)))</div><div class="line">                         (and true </div><div class="line">                              (equal? rest-s1 rest-s2)))</div><div class="line">                        ((and (pair? per-s1) </div><div class="line">                              (pair? per-s2))</div><div class="line">                         (and (equal? per-s1 per-s2)</div><div class="line">                              (equal? rest-s1 rest-s2)))</div><div class="line">                        (else false))))))</div></pre></td></tr></table></figure>
-<p>3.练习2.55<br>4.练习2.56</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (exponentiation? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;**)))</div><div class="line"></div><div class="line">(define (base x)</div><div class="line">  (cadr x))</div><div class="line"></div><div class="line">(define (exponent x)</div><div class="line">  (caddr x))</div><div class="line"></div><div class="line">(define (make-exponentiation base exp)</div><div class="line">  (cond ((=number? exp 0) 1)</div><div class="line">        ((=number? exp 1) base)</div><div class="line">        ((=number? base 1) base)</div><div class="line">        (else (list &apos;** base exp))))</div></pre></td></tr></table></figure>
-<p>5.练习2.57</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;+)))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (cadr s))</div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (if (null? (cdddr s))</div><div class="line">      (caddr s)</div><div class="line">      (cons &apos;+ (cddr s))))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;*)))</div><div class="line"></div><div class="line">(define (multiplier p) (cadr p))</div><div class="line"></div><div class="line">(define (multiplicand p)</div><div class="line">  (if (null? (cdddr p))</div><div class="line">      (caddr p)</div><div class="line">      (cons &apos;* (cddr p))))</div></pre></td></tr></table></figure>
-<p>6.练习2.58A.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (and (pair? x) (eq? (cadr x) &apos;+)))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (car s))</div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (caddr s))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (and (pair? x) (eq? (cadr x) &apos;*)))</div><div class="line"></div><div class="line">(define (multiplier p) (car p))</div><div class="line"></div><div class="line">(define (multiplicand p) (caddr p))</div></pre></td></tr></table></figure>
-<p>B.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (if (null? x)</div><div class="line">      false</div><div class="line">      (or (eq? (car x) &apos;+) (sum? (cdr x)))))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (define (addend-iter result s1)</div><div class="line">    (if (eq? (car s1) &apos;+) </div><div class="line">        result</div><div class="line">        (addend-iter (append result (list (car s1))) (cdr s1))))</div><div class="line">  (let ((res (addend-iter &apos;() s)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line">    </div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (define (augend-iter s1)</div><div class="line">    (if (eq? (car s1) &apos;+)</div><div class="line">        (cdr s1)</div><div class="line">        (augend-iter (cdr s1))))</div><div class="line">  (let ((res (augend-iter s)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (if (null? x)</div><div class="line">      false</div><div class="line">      (if (eq? (car x) &apos;+)</div><div class="line">          false</div><div class="line">          (or (not (eq? (car x) &apos;*))(product? (cdr x))))))</div><div class="line"></div><div class="line">(define (multiplier p)</div><div class="line">  (define (multiplier-iter result p1)</div><div class="line">    (if (eq? (car p1) &apos;*)</div><div class="line">        result</div><div class="line">        (multiplier-iter (append result (list (car p1))) (cdr p1))))</div><div class="line">  (let ((res (multiplier-iter &apos;() p)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line"></div><div class="line">(define (multiplicand p)</div><div class="line">  (define (last-part p2)</div><div class="line">            (if (eq? (car p2) &apos;*)</div><div class="line">                (cdr p2)</div><div class="line">                (last-part (cdr p2))))</div><div class="line">  (let ((res (last-part p)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/22/2014-01-22-练习2.48-练习2.51/" itemprop="url">
-                  练习2.48-练习2.51
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-22T19:12:00+08:00" content="2014-01-22">
-              2014-01-22
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/22/2014-01-22-练习2.48-练习2.51/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/22/2014-01-22-练习2.48-练习2.51/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/22/2014-01-22-练习2.48-练习2.51/" class="leancloud_visitors" data-flag-title="练习2.48-练习2.51">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.练习2.48</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-segment start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-segment seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-segment seg)</div><div class="line">  (cdr seg))</div></pre></td></tr></table></figure>
-<p>2.练习2.49</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">(require (planet &quot;sicp.ss&quot; (&quot;soegaard&quot; &quot;sicp.plt&quot; 2 1)))</div><div class="line"> </div><div class="line">(define one 1.0)</div><div class="line"> </div><div class="line">(define origin (make-vect 0 0))</div><div class="line"> </div><div class="line">(define lower-right (make-vect one 0))</div><div class="line"> </div><div class="line">(define upper-left (make-vect 0 one))</div><div class="line"> </div><div class="line">(define upper-right (make-vect one one))</div><div class="line"></div><div class="line">(define (outline frame)</div><div class="line">  ((segments-&gt;painter (list (make-segment origin lower-right)</div><div class="line">                            (make-segment lower-right upper-right)</div><div class="line">                            (make-segment upper-right upper-left)</div><div class="line">                            (make-segment upper-left origin)))</div><div class="line">   frame))</div><div class="line"></div><div class="line">(define seg1 (make-segment origin upper-right))</div><div class="line"></div><div class="line">(define seg2 (make-segment upper-left lower-right))</div><div class="line"></div><div class="line"></div><div class="line">(define (diamond frame)</div><div class="line">  ((segments-&gt;painter (list (make-segment (make-vect 0 0.5) (make-vect 0.5 0))</div><div class="line">                            (make-segment (make-vect 0.5 0) (make-vect 0.99 0.5))</div><div class="line">                            (make-segment (make-vect 0.99 0.5) (make-vect 0.5 0.99))</div><div class="line">                            (make-segment (make-vect 0.5 0.99) (make-vect 0 0.5))))</div><div class="line">   frame))</div><div class="line">(define (wave frame)</div><div class="line">  ((segments-&gt;painter (list</div><div class="line">                      (make-segment (make-vect 0.4 1.0)      ; 头部左上</div><div class="line">                                    (make-vect 0.35 0.85))</div><div class="line">                      (make-segment (make-vect 0.35 0.85)    ; 头部左下</div><div class="line">                                    (make-vect 0.4 0.64))</div><div class="line">                      (make-segment (make-vect 0.4 0.65)     ; 左肩</div><div class="line">                                    (make-vect 0.25 0.65))</div><div class="line">                      (make-segment (make-vect 0.25 0.65)    ; 左手臂上部</div><div class="line">                                    (make-vect 0.15 0.6))</div><div class="line">                      (make-segment (make-vect 0.15 0.6)     ; 左手上部</div><div class="line">                                    (make-vect 0.0 0.85))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.0 0.65)     ; 左手下部</div><div class="line">                                    (make-vect 0.15 0.35))</div><div class="line">                      (make-segment (make-vect 0.15 0.35)    ; 左手臂下部</div><div class="line">                                    (make-vect 0.25 0.6))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.25 0.6)     ; 左边身体</div><div class="line">                                    (make-vect 0.35 0.5))</div><div class="line">                      (make-segment (make-vect 0.35 0.5)     ; 左腿外侧</div><div class="line">                                    (make-vect 0.25 0.0))</div><div class="line">                      (make-segment (make-vect 0.6 1.0)      ; 头部右上</div><div class="line">                                    (make-vect 0.65 0.85))</div><div class="line">                      (make-segment (make-vect 0.65 0.85)    ; 头部右下</div><div class="line">                                    (make-vect 0.6 0.65))</div><div class="line">                      (make-segment (make-vect 0.6 0.65)     ; 右肩</div><div class="line">                                    (make-vect 0.75 0.65))</div><div class="line">                      (make-segment (make-vect 0.75 0.65)    ; 右手上部</div><div class="line">                                    (make-vect 1.0 0.3))</div><div class="line"></div><div class="line">                      (make-segment (make-vect 1.0 0.15)     ; 右手下部</div><div class="line">                                    (make-vect 0.6 0.5))</div><div class="line">                      (make-segment (make-vect 0.6 0.5)      ; 右腿外侧</div><div class="line">                                    (make-vect 0.75 0.0))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.4 0.0)      ; 左腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.6 0.0)      ; 右腿内侧</div><div class="line">                                    (make-vect 0.5 0.3)))</div><div class="line">                     )</div><div class="line">   frame))</div></pre></td></tr></table></figure>
-<p>3.练习2.50</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(define (flip-horiz-my painter)</div><div class="line">  ((transform-painter (make-vect 1.0 0.0)</div><div class="line">                      (make-vect 0.0 0.0)</div><div class="line">                      (make-vect 1.0 1.0))</div><div class="line">   painter))</div><div class="line"></div><div class="line">(define (contrarotate180 painter)</div><div class="line">  ((transform-painter (make-vect 1.0 1.0)</div><div class="line">                      (make-vect 0.0 1.0)</div><div class="line">                      (make-vect 1.0 0.0))</div><div class="line">   painter))</div><div class="line"></div><div class="line"></div><div class="line">(define (contrarotate270 painter)</div><div class="line">  ((transform-painter (make-vect 0.0 1.0)</div><div class="line">                      (make-vect 0.0 0.0)</div><div class="line">                      (make-vect 1.0 1.0))</div><div class="line">   painter))</div></pre></td></tr></table></figure>
-<p>4.练习2.51</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(define (below-my painter1 painter2)</div><div class="line">  (let ((split-point (make-vect 0.0 0.5)))</div><div class="line">    (let ((paint-up </div><div class="line">           ((transform-painter (make-vect 0.0 0.0)</div><div class="line">                               (make-vect 1.0 0.0)</div><div class="line">                               split-point)</div><div class="line">             painter1))</div><div class="line">          (paint-down</div><div class="line">           ((transform-painter split-point</div><div class="line">                              (make-vect 1.0 0.5)</div><div class="line">                              (make-vect 0.0 1.0))</div><div class="line">            painter2)))</div><div class="line">    (lambda (frame)</div><div class="line">      (paint-up frame)</div><div class="line">      (paint-down frame)))))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">(paint (below-my einstein einstein))</div><div class="line"></div><div class="line">(paint (rotate90 (beside (rotate270 einstein) (rotate270 einstein))))</div></pre></td></tr></table></figure>
-<p>5.练习2.52</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">(define (wave frame)</div><div class="line">  ((segments-&gt;painter (list</div><div class="line">                      (make-segment (make-vect 0.4 1.0)      ; 头部左上</div><div class="line">                                    (make-vect 0.35 0.85))</div><div class="line">                      (make-segment (make-vect 0.35 0.85)    ; 头部左下</div><div class="line">                                    (make-vect 0.4 0.64))</div><div class="line">                      (make-segment (make-vect 0.4 0.65)     ; 左肩</div><div class="line">                                    (make-vect 0.25 0.65))</div><div class="line">                      (make-segment (make-vect 0.25 0.65)    ; 左手臂上部</div><div class="line">                                    (make-vect 0.15 0.6))</div><div class="line">                      (make-segment (make-vect 0.15 0.6)     ; 左手上部</div><div class="line">                                    (make-vect 0.0 0.85))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.0 0.65)     ; 左手下部</div><div class="line">                                    (make-vect 0.15 0.35))</div><div class="line">                      (make-segment (make-vect 0.15 0.35)    ; 左手臂下部</div><div class="line">                                    (make-vect 0.25 0.6))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.25 0.6)     ; 左边身体</div><div class="line">                                    (make-vect 0.35 0.5))</div><div class="line">                      (make-segment (make-vect 0.35 0.5)     ; 左腿外侧</div><div class="line">                                    (make-vect 0.25 0.0))</div><div class="line">                      (make-segment (make-vect 0.6 1.0)      ; 头部右上</div><div class="line">                                    (make-vect 0.65 0.85))</div><div class="line">                      (make-segment (make-vect 0.65 0.85)    ; 头部右下</div><div class="line">                                    (make-vect 0.6 0.65))</div><div class="line">                      (make-segment (make-vect 0.6 0.65)     ; 右肩</div><div class="line">                                    (make-vect 0.75 0.65))</div><div class="line">                      (make-segment (make-vect 0.75 0.65)    ; 右手上部</div><div class="line">                                    (make-vect 1.0 0.3))</div><div class="line"></div><div class="line">                      (make-segment (make-vect 1.0 0.15)     ; 右手下部</div><div class="line">                                    (make-vect 0.6 0.5))</div><div class="line">                      (make-segment (make-vect 0.6 0.5)      ; 右腿外侧</div><div class="line">                                    (make-vect 0.75 0.0))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.4 0.0)      ; 左腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.6 0.0)      ; 右腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.5 0.75)      ; 笑脸左</div><div class="line">                                    (make-vect 0.45 0.8))</div><div class="line">                      (make-segment (make-vect 0.5 0.75)      ; 笑脸右</div><div class="line">                                    (make-vect 0.55 0.8)))</div><div class="line">                     )</div><div class="line">   frame))</div><div class="line"></div><div class="line">(define (up-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((smaller (up-split painter (- n 1))))</div><div class="line">        (below painter (below smaller smaller)))))</div><div class="line"></div><div class="line">(define (right-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((smaller (right-split painter (- n 1))))</div><div class="line">        (beside painter (below smaller smaller)))))</div><div class="line"></div><div class="line"></div><div class="line">(define (beside-same-painter painter)</div><div class="line">  (beside painter painter))</div><div class="line"></div><div class="line">(define (below-same-painter painter)</div><div class="line">  (below painter painter))</div><div class="line"></div><div class="line">(define (corner-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((up (up-split painter (- n 1)))</div><div class="line">            (right (right-split painter (- n 1))))</div><div class="line">        (let ((top-left (beside-same-painter up))</div><div class="line">              (bottom-right (below-same-painter right))</div><div class="line">              (corner (corner-split painter (- n 1))))</div><div class="line">          (beside (below painter top-left)</div><div class="line">                  (below bottom-right corner))))))</div><div class="line"></div><div class="line">(define (square-list painter n)</div><div class="line">  (let ((quarter (corner-split (flip-horiz painter) n)))</div><div class="line">    (let ((half (beside (flip-horiz quarter) quarter)))</div><div class="line">      (below (flip-vert half) half))))</div></pre></td></tr></table></figure>
 
           
         
@@ -1843,7 +1942,7 @@ httpd.serve_forever()
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1851,7 +1950,7 @@ httpd.serve_forever()
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1860,7 +1959,7 @@ httpd.serve_forever()
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

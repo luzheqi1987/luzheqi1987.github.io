@@ -85,25 +85,31 @@
 
 
 
-<meta name="description" content="手码不易，转载请注明：BUG指南
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
 接上一篇文章 Spring 使用简单Demo进行源码调试（一）
 在运行到下面语句1ApplicationContext ctx = new ClassPathXmlApplicationContext(&amp;amp;quot;bean.xml&amp;amp;quot;);// 读取bean.xml中的内容
-该构造函数首先进入下面ClassPathXmlApplication">
+该构造函数首先进入下面ClassPathX">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring 使用简单Demo进行源码调试（二）">
-<meta property="og:url" content="http://yoursite.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="手码不易，转载请注明：BUG指南
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
 接上一篇文章 Spring 使用简单Demo进行源码调试（一）
 在运行到下面语句1ApplicationContext ctx = new ClassPathXmlApplicationContext(&amp;amp;quot;bean.xml&amp;amp;quot;);// 读取bean.xml中的内容
-该构造函数首先进入下面ClassPathXmlApplication">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+该构造函数首先进入下面ClassPathX">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring 使用简单Demo进行源码调试（二）">
-<meta name="twitter:description" content="手码不易，转载请注明：BUG指南
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
 接上一篇文章 Spring 使用简单Demo进行源码调试（一）
 在运行到下面语句1ApplicationContext ctx = new ClassPathXmlApplicationContext(&amp;amp;quot;bean.xml&amp;amp;quot;);// 读取bean.xml中的内容
-该构造函数首先进入下面ClassPathXmlApplication">
+该构造函数首先进入下面ClassPathX">
 
 
 
@@ -132,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/"/>
 
   <title> Spring 使用简单Demo进行源码调试（二） | 行走的轮子 </title>
 </head>
@@ -378,7 +384,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -395,10 +402,35 @@
       
 
       
-        <p>手码不易，转载请注明：<a href="http://www.bugpointer.com/" target="_blank" rel="external">BUG指南</a></p>
-<p>接上一篇文章 <a href="http://www.bugpointer.com/archives/491.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（一）</a></p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/'>Spring 使用简单Demo进行源码调试（二）</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>接上一篇文章 <a href="http://blog.jerkybible.com/2015/05/08/Spring 使用简单Demo进行源码调试（一）/">Spring 使用简单Demo进行源码调试（一）</a></p>
 <p>在运行到下面语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(&amp;quot;bean.xml&amp;quot;);<span class="comment">// 读取bean.xml中的内容</span></div></pre></td></tr></table></figure></p>
 <p>该构造函数首先进入下面ClassPathXmlApplicationContext类中这段代码。代码中configLocations为我们的配置文件，及[bean.xml]；refresh表示是否刷新，这里为true，表示刷新配置；parent表示上级上下文，这里为null表示没有上级上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 使用上一级上下文创建新的ClassPathXmlApplicationContext,</div><div class="line">	 * 从XML中加载定义</div><div class="line">	 * <span class="doctag">@param</span> configLocations 资源地址列表</div><div class="line">	 * <span class="doctag">@param</span> refresh 是否刷新上下文,</div><div class="line">	 * <span class="doctag">@param</span> parent 上一级上下文</div><div class="line">	 */</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassPathXmlApplicationContext</span><span class="params">(String[] configLocations, <span class="keyword">boolean</span> refresh, ApplicationContext parent)</span></span></div><div class="line">			<span class="keyword">throws</span> BeansException &#123;			</div><div class="line">		<span class="comment">//parent = null;</span></div><div class="line">		<span class="comment">//refresh= true;</span></div><div class="line">		<span class="comment">//configLocations=[bean.xml];</span></div><div class="line">		<span class="keyword">super</span>(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		<span class="keyword">if</span> (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>下面是抽象函数AbstractRefreshableConfigApplicationContext中setConfigLocations方法。该方法为设置配置文件，及将[bean.xml]设置为本地的this.configLocations属性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">	 * 为应用的上下文设置配置地址.</div><div class="line">	 * 如果没有设置,会使用默认的配置</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setConfigLocations</span><span class="params">(String[] locations)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (locations != <span class="keyword">null</span>) &#123;</div><div class="line">			Assert.noNullElements(locations, &amp;quot;Config locations must not be <span class="keyword">null</span>&amp;quot;);</div><div class="line">			<span class="keyword">this</span>.configLocations = <span class="keyword">new</span> String[locations.length];</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; locations.length; i++) &#123;</div><div class="line">				<span class="keyword">this</span>.configLocations[i] = resolvePath(locations[i]).trim();</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">this</span>.configLocations = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
 <p>接着是refresh函数，该函数在AbstractApplicationContext类中，代码如下。可以看到该函数一共分为以下几步：<br>1. 为了刷新准备上下文；<br>2. 利用子类完成内部bean factory的刷新；<br>3. 使用本地上下文准备bean factory；<br>4. 允许在上下文子类中完成bean factory后处理；<br>5. 调用上下文注册的bean factory处理器；<br>6. 注册拦截bean创建的bean处理器；<br>7. 初始化上下文中消息源；<br>8. 初始化上下文中的事件多播；<br>9. 在特定上下文子类中初始化其他特殊bean；<br>10. 检查监听器bean并注册；<br>11. 实例化所有剩余(non-lazy-init)单例；<br>12. 发布相应的事件。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">			<span class="comment">// 为了刷新准备上下文</span></div><div class="line">			prepareRefresh();</div><div class="line"></div><div class="line">			<span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">			<span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">			prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">			<span class="keyword">try</span> &#123;</div><div class="line">				<span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">				postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">				invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">				registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 初始化上下文中消息源</span></div><div class="line">				initMessageSource();</div><div class="line"></div><div class="line">				<span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">				initApplicationEventMulticaster();</div><div class="line"></div><div class="line">				<span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">				onRefresh();</div><div class="line"></div><div class="line">				<span class="comment">// 检查监听器bean并注册 </span></div><div class="line">				registerListeners();</div><div class="line"></div><div class="line">				<span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">				finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">				<span class="comment">// 发布相应的事件</span></div><div class="line">				finishRefresh();</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">				logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">				<span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">				destroyBeans();</div><div class="line"></div><div class="line">				<span class="comment">// Reset 'active' flag.</span></div><div class="line">				cancelRefresh(ex);</div><div class="line"></div><div class="line">				<span class="comment">// Propagate exception to caller.</span></div><div class="line">				<span class="keyword">throw</span> ex;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
@@ -464,7 +496,7 @@
         <div class="ds-share flat" data-thread-key="2015/05/09/Spring 使用简单Demo进行源码调试（二）/"
      data-title="Spring 使用简单Demo进行源码调试（二）"
      data-content=""
-     data-url="http://yoursite.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">
+     data-url="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -492,7 +524,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/05/09/Spring 使用简单Demo进行源码调试（二）/"
-           data-title="Spring 使用简单Demo进行源码调试（二）" data-url="http://yoursite.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">
+           data-title="Spring 使用简单Demo进行源码调试（二）" data-url="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">
       </div>
     
   </div>
@@ -537,7 +569,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -545,7 +577,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -554,7 +586,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

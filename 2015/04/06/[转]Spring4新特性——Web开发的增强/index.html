@@ -89,11 +89,11 @@
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转]Spring4新特性——Web开发的增强">
-<meta property="og:url" content="http://yoursite.com/2015/04/06/[转]Spring4新特性——Web开发的增强/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Web开发的增强/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1989381
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]Spring4新特性——Web开发的增强">
 <meta name="twitter:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1989381
@@ -126,7 +126,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/04/06/[转]Spring4新特性——Web开发的增强/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Web开发的增强/"/>
 
   <title> [转]Spring4新特性——Web开发的增强 | 行走的轮子 </title>
 </head>
@@ -372,7 +372,8 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -390,7 +391,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
       
         <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
 <p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
 <pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
@@ -471,7 +472,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
         <div class="ds-share flat" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/"
      data-title="[转]Spring4新特性——Web开发的增强"
      data-content=""
-     data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Web开发的增强/">
+     data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Web开发的增强/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -499,7 +500,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/"
-           data-title="[转]Spring4新特性——Web开发的增强" data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Web开发的增强/">
+           data-title="[转]Spring4新特性——Web开发的增强" data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Web开发的增强/">
       </div>
     
   </div>
@@ -544,7 +545,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -552,7 +553,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -561,7 +562,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

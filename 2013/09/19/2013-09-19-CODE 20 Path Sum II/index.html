@@ -85,16 +85,31 @@
 
 
 
-<meta name="description" content="1234567891011121314151617181920212223242526272829303132public ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; pathSum(TreeNode root, int sum) &amp;#123;	// Start typing your Java solution below	// DO NOT write">
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/访问原文「CODE 20. Path Sum II」
+
+(function() {
+  Element.prototype.remove = function">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CODE 20. Path Sum II">
-<meta property="og:url" content="http://yoursite.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132public ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; pathSum(TreeNode root, int sum) &amp;#123;	// Start typing your Java solution below	// DO NOT write">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/访问原文「CODE 20. Path Sum II」
+
+(function() {
+  Element.prototype.remove = function">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CODE 20. Path Sum II">
-<meta name="twitter:description" content="1234567891011121314151617181920212223242526272829303132public ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; pathSum(TreeNode root, int sum) &amp;#123;	// Start typing your Java solution below	// DO NOT write">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/访问原文「CODE 20. Path Sum II」
+
+(function() {
+  Element.prototype.remove = function">
 
 
 
@@ -123,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/"/>
 
   <title> CODE 20. Path Sum II | 行走的轮子 </title>
 </head>
@@ -369,7 +384,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -386,7 +402,32 @@
       
 
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; pathSum(TreeNode root, <span class="keyword">int</span> sum) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> paths;</div><div class="line">	&#125;</div><div class="line">	dfs(paths, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), root, <span class="number">0</span>, sum);</div><div class="line">	<span class="keyword">return</span> paths;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths,</span></span></div><div class="line">		ArrayList&lt;Integer&gt; path, TreeNode root, <span class="keyword">int</span> current, <span class="keyword">int</span> sum) &#123;</div><div class="line">	<span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (current + root.val == sum) &#123;</div><div class="line">			path.add(root.val);</div><div class="line">			ArrayList&lt;Integer&gt; pathCopy = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			pathCopy.addAll(path);</div><div class="line">			paths.add(pathCopy);</div><div class="line">			path.remove(path.size() - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	path.add(root.val);</div><div class="line">	current += root.val;</div><div class="line">	<span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">		dfs(paths, path, root.left, current, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</div><div class="line">		dfs(paths, path, root.right, current, sum);</div><div class="line">	&#125;</div><div class="line">	path.remove(path.size() - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/'>CODE 20. Path Sum II</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; pathSum(TreeNode root, <span class="keyword">int</span> sum) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> paths;</div><div class="line">	&#125;</div><div class="line">	dfs(paths, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), root, <span class="number">0</span>, sum);</div><div class="line">	<span class="keyword">return</span> paths;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; paths,</span></span></div><div class="line">		ArrayList&lt;Integer&gt; path, TreeNode root, <span class="keyword">int</span> current, <span class="keyword">int</span> sum) &#123;</div><div class="line">	<span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (current + root.val == sum) &#123;</div><div class="line">			path.add(root.val);</div><div class="line">			ArrayList&lt;Integer&gt; pathCopy = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			pathCopy.addAll(path);</div><div class="line">			paths.add(pathCopy);</div><div class="line">			path.remove(path.size() - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	path.add(root.val);</div><div class="line">	current += root.val;</div><div class="line">	<span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">		dfs(paths, path, root.left, current, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</div><div class="line">		dfs(paths, path, root.right, current, sum);</div><div class="line">	&#125;</div><div class="line">	path.remove(path.size() - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.<br>For example:<br>Given the below binary tree and <code>sum = 22</code>,                  5<br>                 / \<br>                4   8<br>               /   / \<br>              11  13  4<br>             /  \    / \<br>            7    2  5   1</p>
 <p>return</p>
 <pre><code>[
@@ -454,7 +495,7 @@
         <div class="ds-share flat" data-thread-key="2013/09/19/2013-09-19-CODE 20 Path Sum II/"
      data-title="CODE 20. Path Sum II"
      data-content=""
-     data-url="http://yoursite.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/">
+     data-url="http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -482,7 +523,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2013/09/19/2013-09-19-CODE 20 Path Sum II/"
-           data-title="CODE 20. Path Sum II" data-url="http://yoursite.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/">
+           data-title="CODE 20. Path Sum II" data-url="http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 20 Path Sum II/">
       </div>
     
   </div>
@@ -527,7 +568,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -535,7 +576,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -544,7 +585,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

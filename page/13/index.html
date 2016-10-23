@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/13/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/13/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/13/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/13/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,443 @@
             
               
                 
+                <a class="post-title-link" href="/2014/02/07/2014-02-07-练习2.73-练习2.74/" itemprop="url">
+                  练习2.73-练习2.74
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-02-07T17:03:00+08:00" content="2014-02-07">
+              2014-02-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/02/07/2014-02-07-练习2.73-练习2.74/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/02/07/2014-02-07-练习2.73-练习2.74/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/02/07/2014-02-07-练习2.73-练习2.74/" class="leancloud_visitors" data-flag-title="练习2.73-练习2.74">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/02/07/2014-02-07-练习2.73-练习2.74/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/02/07/2014-02-07-练习2.73-练习2.74/'>练习2.73-练习2.74</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.73<br>a<br>没有必要<br>b</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (insert-sum-proc)</div><div class="line">  (define (deriv-sum exp var)</div><div class="line">    (make-sum (deriv (car exp) var)</div><div class="line">              (deriv (cadr exp) var)))</div><div class="line">  (put &apos;deriv &apos;+ deriv-sum)</div><div class="line">  &apos;done)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (insert-mult-proc)</div><div class="line">  (define (deriv-mult exp var)</div><div class="line">    (make-sum</div><div class="line">     (make-product (car exp)</div><div class="line">                   (deriv (cadr exp) var))</div><div class="line">     (make-product (deriv (car exp) var)</div><div class="line">                   (cadr exp))))</div><div class="line">  (put &apos;deriv &apos;* deriv-mult)</div><div class="line">  &apos;done)</div></pre></td></tr></table></figure>
+<p>cd<br>改变put和get的顺序<br>2.练习2.74<br>a</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">;;提供分支机构的名称，即brcanch</div><div class="line">(define (get-record branch name)</div><div class="line">  (cond ((null? branch) false)</div><div class="line">        ((null? name) false)</div><div class="line">        (else ((get &apos;get-record branch) name))))</div></pre></td></tr></table></figure>
+<p>b</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">;;提供分支机构的名称,即brcanch</div><div class="line">(define (get-salary branch name)</div><div class="line">  (cond ((null? branch) false)</div><div class="line">        ((null? name) false)</div><div class="line">        (else ((get &apos;get-salary branch) name))))</div></pre></td></tr></table></figure>
+<p>c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-employee-record name branchs)</div><div class="line">  (if (null? branchs)</div><div class="line">      false</div><div class="line">      (let ((record ((get &apos;get-record (branch-name (car branchs))) name)))</div><div class="line">        (if (null? record)</div><div class="line">            (find-employee-record name (cdr branchs))</div><div class="line">            record))))</div></pre></td></tr></table></figure>
+<p>d将新人事的方法注册到表中，即put进去。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/23/2014-01-23-练习2.53-练习2.56/" itemprop="url">
+                  练习2.53-练习2.56
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-23T19:10:00+08:00" content="2014-01-23">
+              2014-01-23
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/23/2014-01-23-练习2.53-练习2.56/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/23/2014-01-23-练习2.53-练习2.56/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/23/2014-01-23-练习2.53-练习2.56/" class="leancloud_visitors" data-flag-title="练习2.53-练习2.56">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/23/2014-01-23-练习2.53-练习2.56/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/23/2014-01-23-练习2.53-练习2.56/'>练习2.53-练习2.56</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.53</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&apos;(a b c)</div><div class="line">&apos;((george))</div><div class="line">&apos;((y1 y2))</div><div class="line">&apos;(y1 y2)</div><div class="line">#f</div><div class="line">#f</div><div class="line">&apos;(red shoes blue socks)</div></pre></td></tr></table></figure>
+<p>2.练习2.54</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (equal? s1 s2)</div><div class="line">    (cond ((and (null? s1) (null? s2)) true)</div><div class="line">          ((or (null? s1) (null? s2)) false)</div><div class="line">          (else (let ((per-s1 (car s1))</div><div class="line">                      (per-s2 (car s2))</div><div class="line">                      (rest-s1 (cdr s1))</div><div class="line">                      (rest-s2 (cdr s2)))</div><div class="line">                  (cond ((and (not (pair? per-s1))</div><div class="line">                              (not (pair? per-s2)))</div><div class="line">                         (and true </div><div class="line">                              (equal? rest-s1 rest-s2)))</div><div class="line">                        ((and (pair? per-s1) </div><div class="line">                              (pair? per-s2))</div><div class="line">                         (and (equal? per-s1 per-s2)</div><div class="line">                              (equal? rest-s1 rest-s2)))</div><div class="line">                        (else false))))))</div></pre></td></tr></table></figure>
+<p>3.练习2.55<br>4.练习2.56</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (exponentiation? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;**)))</div><div class="line"></div><div class="line">(define (base x)</div><div class="line">  (cadr x))</div><div class="line"></div><div class="line">(define (exponent x)</div><div class="line">  (caddr x))</div><div class="line"></div><div class="line">(define (make-exponentiation base exp)</div><div class="line">  (cond ((=number? exp 0) 1)</div><div class="line">        ((=number? exp 1) base)</div><div class="line">        ((=number? base 1) base)</div><div class="line">        (else (list &apos;** base exp))))</div></pre></td></tr></table></figure>
+<p>5.练习2.57</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;+)))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (cadr s))</div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (if (null? (cdddr s))</div><div class="line">      (caddr s)</div><div class="line">      (cons &apos;+ (cddr s))))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (and (pair? x) (eq? (car x) &apos;*)))</div><div class="line"></div><div class="line">(define (multiplier p) (cadr p))</div><div class="line"></div><div class="line">(define (multiplicand p)</div><div class="line">  (if (null? (cdddr p))</div><div class="line">      (caddr p)</div><div class="line">      (cons &apos;* (cddr p))))</div></pre></td></tr></table></figure>
+<p>6.练习2.58A.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (and (pair? x) (eq? (cadr x) &apos;+)))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (car s))</div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (caddr s))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (and (pair? x) (eq? (cadr x) &apos;*)))</div><div class="line"></div><div class="line">(define (multiplier p) (car p))</div><div class="line"></div><div class="line">(define (multiplicand p) (caddr p))</div></pre></td></tr></table></figure>
+<p>B.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">(define (sum? x)</div><div class="line">  (if (null? x)</div><div class="line">      false</div><div class="line">      (or (eq? (car x) &apos;+) (sum? (cdr x)))))</div><div class="line"></div><div class="line">(define (addend s)</div><div class="line">  (define (addend-iter result s1)</div><div class="line">    (if (eq? (car s1) &apos;+) </div><div class="line">        result</div><div class="line">        (addend-iter (append result (list (car s1))) (cdr s1))))</div><div class="line">  (let ((res (addend-iter &apos;() s)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line">    </div><div class="line"></div><div class="line">(define (augend s)</div><div class="line">  (define (augend-iter s1)</div><div class="line">    (if (eq? (car s1) &apos;+)</div><div class="line">        (cdr s1)</div><div class="line">        (augend-iter (cdr s1))))</div><div class="line">  (let ((res (augend-iter s)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line"></div><div class="line">(define (product? x)</div><div class="line">  (if (null? x)</div><div class="line">      false</div><div class="line">      (if (eq? (car x) &apos;+)</div><div class="line">          false</div><div class="line">          (or (not (eq? (car x) &apos;*))(product? (cdr x))))))</div><div class="line"></div><div class="line">(define (multiplier p)</div><div class="line">  (define (multiplier-iter result p1)</div><div class="line">    (if (eq? (car p1) &apos;*)</div><div class="line">        result</div><div class="line">        (multiplier-iter (append result (list (car p1))) (cdr p1))))</div><div class="line">  (let ((res (multiplier-iter &apos;() p)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div><div class="line"></div><div class="line">(define (multiplicand p)</div><div class="line">  (define (last-part p2)</div><div class="line">            (if (eq? (car p2) &apos;*)</div><div class="line">                (cdr p2)</div><div class="line">                (last-part (cdr p2))))</div><div class="line">  (let ((res (last-part p)))</div><div class="line">    (if (= (length res) 1)</div><div class="line">        (car res)</div><div class="line">        res)))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/22/2014-01-22-练习2.48-练习2.51/" itemprop="url">
+                  练习2.48-练习2.51
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-22T19:12:00+08:00" content="2014-01-22">
+              2014-01-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/22/2014-01-22-练习2.48-练习2.51/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/22/2014-01-22-练习2.48-练习2.51/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/22/2014-01-22-练习2.48-练习2.51/" class="leancloud_visitors" data-flag-title="练习2.48-练习2.51">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/22/2014-01-22-练习2.48-练习2.51/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/22/2014-01-22-练习2.48-练习2.51/'>练习2.48-练习2.51</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.48</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-segment start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-segment seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-segment seg)</div><div class="line">  (cdr seg))</div></pre></td></tr></table></figure>
+<p>2.练习2.49</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line">(require (planet &quot;sicp.ss&quot; (&quot;soegaard&quot; &quot;sicp.plt&quot; 2 1)))</div><div class="line"> </div><div class="line">(define one 1.0)</div><div class="line"> </div><div class="line">(define origin (make-vect 0 0))</div><div class="line"> </div><div class="line">(define lower-right (make-vect one 0))</div><div class="line"> </div><div class="line">(define upper-left (make-vect 0 one))</div><div class="line"> </div><div class="line">(define upper-right (make-vect one one))</div><div class="line"></div><div class="line">(define (outline frame)</div><div class="line">  ((segments-&gt;painter (list (make-segment origin lower-right)</div><div class="line">                            (make-segment lower-right upper-right)</div><div class="line">                            (make-segment upper-right upper-left)</div><div class="line">                            (make-segment upper-left origin)))</div><div class="line">   frame))</div><div class="line"></div><div class="line">(define seg1 (make-segment origin upper-right))</div><div class="line"></div><div class="line">(define seg2 (make-segment upper-left lower-right))</div><div class="line"></div><div class="line"></div><div class="line">(define (diamond frame)</div><div class="line">  ((segments-&gt;painter (list (make-segment (make-vect 0 0.5) (make-vect 0.5 0))</div><div class="line">                            (make-segment (make-vect 0.5 0) (make-vect 0.99 0.5))</div><div class="line">                            (make-segment (make-vect 0.99 0.5) (make-vect 0.5 0.99))</div><div class="line">                            (make-segment (make-vect 0.5 0.99) (make-vect 0 0.5))))</div><div class="line">   frame))</div><div class="line">(define (wave frame)</div><div class="line">  ((segments-&gt;painter (list</div><div class="line">                      (make-segment (make-vect 0.4 1.0)      ; 头部左上</div><div class="line">                                    (make-vect 0.35 0.85))</div><div class="line">                      (make-segment (make-vect 0.35 0.85)    ; 头部左下</div><div class="line">                                    (make-vect 0.4 0.64))</div><div class="line">                      (make-segment (make-vect 0.4 0.65)     ; 左肩</div><div class="line">                                    (make-vect 0.25 0.65))</div><div class="line">                      (make-segment (make-vect 0.25 0.65)    ; 左手臂上部</div><div class="line">                                    (make-vect 0.15 0.6))</div><div class="line">                      (make-segment (make-vect 0.15 0.6)     ; 左手上部</div><div class="line">                                    (make-vect 0.0 0.85))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.0 0.65)     ; 左手下部</div><div class="line">                                    (make-vect 0.15 0.35))</div><div class="line">                      (make-segment (make-vect 0.15 0.35)    ; 左手臂下部</div><div class="line">                                    (make-vect 0.25 0.6))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.25 0.6)     ; 左边身体</div><div class="line">                                    (make-vect 0.35 0.5))</div><div class="line">                      (make-segment (make-vect 0.35 0.5)     ; 左腿外侧</div><div class="line">                                    (make-vect 0.25 0.0))</div><div class="line">                      (make-segment (make-vect 0.6 1.0)      ; 头部右上</div><div class="line">                                    (make-vect 0.65 0.85))</div><div class="line">                      (make-segment (make-vect 0.65 0.85)    ; 头部右下</div><div class="line">                                    (make-vect 0.6 0.65))</div><div class="line">                      (make-segment (make-vect 0.6 0.65)     ; 右肩</div><div class="line">                                    (make-vect 0.75 0.65))</div><div class="line">                      (make-segment (make-vect 0.75 0.65)    ; 右手上部</div><div class="line">                                    (make-vect 1.0 0.3))</div><div class="line"></div><div class="line">                      (make-segment (make-vect 1.0 0.15)     ; 右手下部</div><div class="line">                                    (make-vect 0.6 0.5))</div><div class="line">                      (make-segment (make-vect 0.6 0.5)      ; 右腿外侧</div><div class="line">                                    (make-vect 0.75 0.0))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.4 0.0)      ; 左腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.6 0.0)      ; 右腿内侧</div><div class="line">                                    (make-vect 0.5 0.3)))</div><div class="line">                     )</div><div class="line">   frame))</div></pre></td></tr></table></figure>
+<p>3.练习2.50</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(define (flip-horiz-my painter)</div><div class="line">  ((transform-painter (make-vect 1.0 0.0)</div><div class="line">                      (make-vect 0.0 0.0)</div><div class="line">                      (make-vect 1.0 1.0))</div><div class="line">   painter))</div><div class="line"></div><div class="line">(define (contrarotate180 painter)</div><div class="line">  ((transform-painter (make-vect 1.0 1.0)</div><div class="line">                      (make-vect 0.0 1.0)</div><div class="line">                      (make-vect 1.0 0.0))</div><div class="line">   painter))</div><div class="line"></div><div class="line"></div><div class="line">(define (contrarotate270 painter)</div><div class="line">  ((transform-painter (make-vect 0.0 1.0)</div><div class="line">                      (make-vect 0.0 0.0)</div><div class="line">                      (make-vect 1.0 1.0))</div><div class="line">   painter))</div></pre></td></tr></table></figure>
+<p>4.练习2.51</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(define (below-my painter1 painter2)</div><div class="line">  (let ((split-point (make-vect 0.0 0.5)))</div><div class="line">    (let ((paint-up </div><div class="line">           ((transform-painter (make-vect 0.0 0.0)</div><div class="line">                               (make-vect 1.0 0.0)</div><div class="line">                               split-point)</div><div class="line">             painter1))</div><div class="line">          (paint-down</div><div class="line">           ((transform-painter split-point</div><div class="line">                              (make-vect 1.0 0.5)</div><div class="line">                              (make-vect 0.0 1.0))</div><div class="line">            painter2)))</div><div class="line">    (lambda (frame)</div><div class="line">      (paint-up frame)</div><div class="line">      (paint-down frame)))))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">(paint (below-my einstein einstein))</div><div class="line"></div><div class="line">(paint (rotate90 (beside (rotate270 einstein) (rotate270 einstein))))</div></pre></td></tr></table></figure>
+<p>5.练习2.52</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">(define (wave frame)</div><div class="line">  ((segments-&gt;painter (list</div><div class="line">                      (make-segment (make-vect 0.4 1.0)      ; 头部左上</div><div class="line">                                    (make-vect 0.35 0.85))</div><div class="line">                      (make-segment (make-vect 0.35 0.85)    ; 头部左下</div><div class="line">                                    (make-vect 0.4 0.64))</div><div class="line">                      (make-segment (make-vect 0.4 0.65)     ; 左肩</div><div class="line">                                    (make-vect 0.25 0.65))</div><div class="line">                      (make-segment (make-vect 0.25 0.65)    ; 左手臂上部</div><div class="line">                                    (make-vect 0.15 0.6))</div><div class="line">                      (make-segment (make-vect 0.15 0.6)     ; 左手上部</div><div class="line">                                    (make-vect 0.0 0.85))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.0 0.65)     ; 左手下部</div><div class="line">                                    (make-vect 0.15 0.35))</div><div class="line">                      (make-segment (make-vect 0.15 0.35)    ; 左手臂下部</div><div class="line">                                    (make-vect 0.25 0.6))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.25 0.6)     ; 左边身体</div><div class="line">                                    (make-vect 0.35 0.5))</div><div class="line">                      (make-segment (make-vect 0.35 0.5)     ; 左腿外侧</div><div class="line">                                    (make-vect 0.25 0.0))</div><div class="line">                      (make-segment (make-vect 0.6 1.0)      ; 头部右上</div><div class="line">                                    (make-vect 0.65 0.85))</div><div class="line">                      (make-segment (make-vect 0.65 0.85)    ; 头部右下</div><div class="line">                                    (make-vect 0.6 0.65))</div><div class="line">                      (make-segment (make-vect 0.6 0.65)     ; 右肩</div><div class="line">                                    (make-vect 0.75 0.65))</div><div class="line">                      (make-segment (make-vect 0.75 0.65)    ; 右手上部</div><div class="line">                                    (make-vect 1.0 0.3))</div><div class="line"></div><div class="line">                      (make-segment (make-vect 1.0 0.15)     ; 右手下部</div><div class="line">                                    (make-vect 0.6 0.5))</div><div class="line">                      (make-segment (make-vect 0.6 0.5)      ; 右腿外侧</div><div class="line">                                    (make-vect 0.75 0.0))</div><div class="line">                      </div><div class="line">                      (make-segment (make-vect 0.4 0.0)      ; 左腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.6 0.0)      ; 右腿内侧</div><div class="line">                                    (make-vect 0.5 0.3))</div><div class="line">                      (make-segment (make-vect 0.5 0.75)      ; 笑脸左</div><div class="line">                                    (make-vect 0.45 0.8))</div><div class="line">                      (make-segment (make-vect 0.5 0.75)      ; 笑脸右</div><div class="line">                                    (make-vect 0.55 0.8)))</div><div class="line">                     )</div><div class="line">   frame))</div><div class="line"></div><div class="line">(define (up-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((smaller (up-split painter (- n 1))))</div><div class="line">        (below painter (below smaller smaller)))))</div><div class="line"></div><div class="line">(define (right-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((smaller (right-split painter (- n 1))))</div><div class="line">        (beside painter (below smaller smaller)))))</div><div class="line"></div><div class="line"></div><div class="line">(define (beside-same-painter painter)</div><div class="line">  (beside painter painter))</div><div class="line"></div><div class="line">(define (below-same-painter painter)</div><div class="line">  (below painter painter))</div><div class="line"></div><div class="line">(define (corner-split painter n)</div><div class="line">  (if (= n 0)</div><div class="line">      painter</div><div class="line">      (let ((up (up-split painter (- n 1)))</div><div class="line">            (right (right-split painter (- n 1))))</div><div class="line">        (let ((top-left (beside-same-painter up))</div><div class="line">              (bottom-right (below-same-painter right))</div><div class="line">              (corner (corner-split painter (- n 1))))</div><div class="line">          (beside (below painter top-left)</div><div class="line">                  (below bottom-right corner))))))</div><div class="line"></div><div class="line">(define (square-list painter n)</div><div class="line">  (let ((quarter (corner-split (flip-horiz painter) n)))</div><div class="line">    (let ((half (beside (flip-horiz quarter) quarter)))</div><div class="line">      (below (flip-vert half) half))))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="url">
                   练习2.21-练习2.35
                 </a>
@@ -342,7 +779,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -361,7 +799,32 @@
       
         
           
-            <p>1.练习2.21</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/'>练习2.21-练习2.35</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.21</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (square-list items)</div><div class="line">  (if (null? items)</div><div class="line">      &apos;()</div><div class="line">      (cons (square (car items)) (square-list (cdr items)))))</div><div class="line"></div><div class="line">(define (square-list items)</div><div class="line">  (map (lambda (x) (square x)) items))</div></pre></td></tr></table></figure>
 <p>2.练习2.22<br>3.练习2.23</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (for-each f items)</div><div class="line">  (define (iter f items)</div><div class="line">    (if (null? items)</div><div class="line">	true</div><div class="line">	(begin</div><div class="line">	  (f (car items))</div><div class="line">	  (iter f (cdr items)))))</div><div class="line">  (iter f items))</div></pre></td></tr></table></figure>
@@ -478,7 +941,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -497,7 +961,32 @@
       
         
           
-            <p>1.练习1.23<br>改后的代码如下：</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/'>练习1.23-练习1.30</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习1.23<br>改后的代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (find-divisor-better n a)</div><div class="line">  (cond ((&gt; (square a) n) n)</div><div class="line">	((divides?-better n a) a)</div><div class="line">	(else (find-divisor-better n (next-2 a)))))</div><div class="line"></div><div class="line">(define (next-2 n)</div><div class="line">  (if (= 2 n)</div><div class="line">      (+ 1 n)</div><div class="line">      (+ 2 n)))</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-min-prime-since-better n start-time number)</div><div class="line">  (cond ((= number 0) (display-info start-time (real-time-clock)))</div><div class="line">	((prime? n) (begin</div><div class="line">		      (format #t &quot;~S~%&quot; n)</div><div class="line">		      (find-min-prime-since-better (+ n (next-plus n)) start-time (- number 1))))</div><div class="line">	(else (find-min-prime-since-better (+ n (next-plus n)) start-time number)))</div><div class="line">  #f)</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (next-plus n)</div><div class="line">  (if (even? n)</div><div class="line">      1</div><div class="line">      2))</div></pre></td></tr></table></figure>
@@ -596,7 +1085,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -615,7 +1105,32 @@
       
         
           
-            <p>1.练习2.41</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/'>练习2.41-练习2.47</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.41</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(define (seprate-except x except)</div><div class="line">  (filter (lambda (couple) </div><div class="line">            (let ((first (car couple))</div><div class="line">                  (second (cadr couple)))</div><div class="line">            (and (not (= first except))</div><div class="line">                 (not (= second except))</div><div class="line">                 (not (= first second)))))</div><div class="line">          (map (lambda (n) (list n (- x n)))</div><div class="line">               (enumerate-interval 1 (- x 1)))</div><div class="line">          )</div><div class="line">  )</div><div class="line"></div><div class="line">(define (flatmap proc seq)</div><div class="line">  (accumulate append &apos;() (map proc seq)))</div><div class="line"></div><div class="line">(define (seprate-to-three n)</div><div class="line">  (flatmap (lambda (x) </div><div class="line">             (map (lambda (y) (cons x y)) </div><div class="line">                  (seprate-except (- n x) x)))</div><div class="line">           (enumerate-interval 1 (- n 1)))</div><div class="line">  )</div></pre></td></tr></table></figure>
 <p>2.练习2.42</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(define empty-board '())</div><div class="line"></div><div class="line">(define (adjoin-position new-row k rest-of-queens)</div><div class="line">  (cons (list k new-row) rest-of-queens))</div><div class="line"></div><div class="line">(define (safe? k positions)</div><div class="line">  (define (check-safe col row rest-positions)</div><div class="line">    (if (null? rest-positions)</div><div class="line">        true</div><div class="line">        (let ((first-position-col (car (car rest-positions)))</div><div class="line">              (first-position-row (cadr (car rest-positions)))</div><div class="line">              (remain-positions (cdr rest-positions)))</div><div class="line">          (and (not (= col first-position-col))</div><div class="line">               (not (= row first-position-row))</div><div class="line">               (not (= (abs (- col first-position-col))</div><div class="line">                       (abs (- row first-position-row))))</div><div class="line">               (check-safe col row remain-positions)))))</div><div class="line">  (if (null? positions)</div><div class="line">      true</div><div class="line">      (let ((col (car (car positions)))</div><div class="line">            (row (cadr (car positions)))</div><div class="line">            (rest (cdr positions)))</div><div class="line">        (if (null? rest)</div><div class="line">            true</div><div class="line">            (check-safe col row rest)))))</div></pre></td></tr></table></figure>
@@ -716,7 +1231,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -735,7 +1251,32 @@
       
         
           
-            <p>1.练习2.11</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/17/2014-01-17-练习2.11-练习2.20/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/17/2014-01-17-练习2.11-练习2.20/'>练习2.11-练习2.20</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.11</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(define (mul-interval x y)</div><div class="line">  (let ((x1 (lower-bound x))</div><div class="line">	(x2 (upper-bound x))</div><div class="line">	(y1 (lower-bound y))</div><div class="line">	(y2 (upper-bound y)))</div><div class="line">    (let</div><div class="line">	((zzx (and (&gt;= x1 0) (&gt;= x2 0)))</div><div class="line">	 (zzy (and (&gt;= y1 0) (&gt;= y2 0)))</div><div class="line">	 (fzx (and (&lt; x1 0) (&gt;= x2 0)))</div><div class="line">	 (fzy (and (&lt; y1 0) (&gt;= y2 0)))</div><div class="line">	 (ffx (and (&lt; x1 0) (&lt; x2 0)))</div><div class="line">	 (ffy (and (&lt; y1 0) (&lt; y2 0))))</div><div class="line">      (cond (zzy (cond (zzx (make-interval (* x1 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (* x1 y2) (* x2 y2)))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x2 y1)))))</div><div class="line">	    (fzy (cond (zzx (make-interval (* x2 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (min (* x1 y2) (* x2 y1))</div><div class="line">					   (max (* x1 y1) (* x2 y2))))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x1 y1)))))</div><div class="line">	    (ffy (cond (zzx (make-interval (* x2 y1) (* x1 y2)))</div><div class="line">		       (fzx (make-interval (* x2 y1) (* x1 y1)))</div><div class="line">		       (ffx (make-interval (* x2 y2) (* x1 y1)))))))))</div></pre></td></tr></table></figure>
 <p>2.练习2.12</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(define (mul-interval x y)</div><div class="line">  (let ((x1 (lower-bound x))</div><div class="line">	(x2 (upper-bound x))</div><div class="line">	(y1 (lower-bound y))</div><div class="line">	(y2 (upper-bound y)))</div><div class="line">    (let</div><div class="line">	((zzx (and (&gt;= x1 0) (&gt;= x2 0)))</div><div class="line">	 (zzy (and (&gt;= y1 0) (&gt;= y2 0)))</div><div class="line">	 (fzx (and (&lt; x1 0) (&gt;= x2 0)))</div><div class="line">	 (fzy (and (&lt; y1 0) (&gt;= y2 0)))</div><div class="line">	 (ffx (and (&lt; x1 0) (&lt; x2 0)))</div><div class="line">	 (ffy (and (&lt; y1 0) (&lt; y2 0))))</div><div class="line">      (cond (zzy (cond (zzx (make-interval (* x1 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (* x1 y2) (* x2 y2)))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x2 y1)))))</div><div class="line">	    (fzy (cond (zzx (make-interval (* x2 y1) (* x2 y2)))</div><div class="line">		       (fzx (make-interval (min (* x1 y2) (* x2 y1))</div><div class="line">					   (max (* x1 y1) (* x2 y2))))</div><div class="line">		       (ffx (make-interval (* x1 y2) (* x1 y1)))))</div><div class="line">	    (ffy (cond (zzx (make-interval (* x2 y1) (* x1 y2)))</div><div class="line">		       (fzx (make-interval (* x2 y1) (* x1 y1)))</div><div class="line">		       (ffx (make-interval (* x2 y2) (* x1 y1)))))))))</div></pre></td></tr></table></figure>
@@ -837,7 +1378,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -856,7 +1398,32 @@
       
         
           
-            <p>1.练习2.2</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/'>练习2.2-练习2.10</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (make-segment start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-segment seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-segment seg)</div><div class="line">  (cdr seg))</div><div class="line"></div><div class="line">(define (make-point x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (x-point p)</div><div class="line">  (car p))</div><div class="line"></div><div class="line">(define (y-point p)</div><div class="line">  (cdr p))</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (midpoint-segment seg)</div><div class="line">  (make-point (/ (+ (x-point (start-segment seg))</div><div class="line">		    (x-point (end-segment seg))) 2)</div><div class="line">	      (/ (+ (y-point (start-segment seg))</div><div class="line">		    (y-point (end-segment seg))) 2)))</div></pre></td></tr></table></figure>
 <p>2.练习2.3首次定义：</p>
@@ -969,7 +1536,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -988,7 +1556,32 @@
       
         
           
-            <p>1.练习2.1</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/'>练习2.1</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.1</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (check-pos-neg a b)</div><div class="line">  (or (and (not (&lt; a 0)) (&gt; b 0))</div><div class="line">      (and (not (&gt; a 0)) (&lt; b 0))))</div><div class="line"></div><div class="line">(define (make-rat n d)</div><div class="line">  (let ((g (gcd (abs n) (abs d)))</div><div class="line">	(posi (check-pos-neg n d)))</div><div class="line">    (cons (/ (if posi</div><div class="line">		 (abs n)</div><div class="line">		 (- (abs n)))</div><div class="line">	     g)</div><div class="line">	  (/ (abs d) g))))</div></pre></td></tr></table></figure>
 
           
@@ -1080,7 +1673,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1099,7 +1693,32 @@
       
         
           
-            <p>1.练习1.40</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/'>练习1.40-练习1.46</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习1.40</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (cubic a b c)</div><div class="line">  (define (cube x)</div><div class="line">    (* x x x))</div><div class="line">  (lambda (x)</div><div class="line">    (+ (cube x)</div><div class="line">       (* a (square x))</div><div class="line">       (* b x)</div><div class="line">       c)))</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (newtons-method g guess)</div><div class="line">  (fixed-point (newton-transform g) guess))</div><div class="line"></div><div class="line">(newtons-method (cubic 1 0 0) 1)</div></pre></td></tr></table></figure>
 <p>2.练习1.41</p>
@@ -1113,384 +1732,6 @@
 <p>6.练习1.45也是没有简化</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (average-dump-time n)</div><div class="line">  (floor (/ (log n) (log 2))))</div><div class="line"></div><div class="line">(define (cifanggen x n)</div><div class="line">  (define (product term a next b)</div><div class="line">    (if (&gt; a b)</div><div class="line">	1</div><div class="line">	(* (term a)</div><div class="line">	   (product term (next a) next b)))) </div><div class="line">  (define (cifang x n)</div><div class="line">    (product (lambda (i) x)</div><div class="line">	     1</div><div class="line">	     (lambda (i) (+ i 1))</div><div class="line">	     n))</div><div class="line">  (fixed-point ((repeated average-dump (average-dump-time n)) (lambda (i) (/ x (cifang i (- n 1)))))</div><div class="line">	       n))</div></pre></td></tr></table></figure>
 <p>7.练习1.46<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (iterative-improve good-enough? improve)</div><div class="line">   (lambda (a) (if (good-enough? a (improve a))</div><div class="line">		   (improve a)</div><div class="line">		   ((iterative-improve good-enough? improve) (improve a)))))</div><div class="line"></div><div class="line">(define (fixed-point f guess)</div><div class="line">  (define (good-enough1? a b)</div><div class="line">    (let ((tolerance 0.000001))</div><div class="line">      (&lt; (abs (- a b)) tolerance)))</div><div class="line">  ((iterative-improve good-enough1? f) guess))</div><div class="line"></div><div class="line">(define (sqrt n)</div><div class="line">  (fixed-point (lambda (y) (/ (+ y (/ n y)) 2))</div><div class="line">	       1.0))</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/11/2014-01-11-练习1.35-练习1-38/" itemprop="url">
-                  练习1.35-练习1-38
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-11T23:07:00+08:00" content="2014-01-11">
-              2014-01-11
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/11/2014-01-11-练习1.35-练习1-38/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/11/2014-01-11-练习1.35-练习1-38/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/11/2014-01-11-练习1.35-练习1-38/" class="leancloud_visitors" data-flag-title="练习1.35-练习1-38">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.练习1.35</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(fixed-point (lambda (x) (+ 1 (/ 1 x))) 1.0)</div></pre></td></tr></table></figure>
-<p>2.练习1.36不用平均阻尼方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(fixed-point-display (lambda (x) (/ (log 1000) (log x))) 2.0)</div></pre></td></tr></table></figure>
-<p>结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">2.</div><div class="line">9.965784284662087</div><div class="line">3.004472209841214</div><div class="line">6.279195757507157</div><div class="line">3.759850702401539</div><div class="line">5.215843784925895</div><div class="line">4.182207192401397</div><div class="line">4.8277650983445906</div><div class="line">4.387593384662677</div><div class="line">4.671250085763899</div><div class="line">4.481403616895052</div><div class="line">4.6053657460929</div><div class="line">4.5230849678718865</div><div class="line">4.577114682047341</div><div class="line">4.541382480151454</div><div class="line">4.564903245230833</div><div class="line">4.549372679303342</div><div class="line">4.559606491913287</div><div class="line">4.552853875788271</div><div class="line">4.557305529748263</div><div class="line">4.554369064436181</div><div class="line">4.556305311532999</div><div class="line">4.555028263573554</div><div class="line">4.555870396702851</div><div class="line">4.555315001192079</div><div class="line">4.5556812635433275</div><div class="line">4.555439715736846</div><div class="line">4.555599009998291</div><div class="line">4.555493957531389</div><div class="line">4.555563237292884</div><div class="line">4.555517548417651</div><div class="line">4.555547679306398</div><div class="line">4.555527808516254</div><div class="line">4.555540912917957</div><div class="line">;Value: 4.555532270803653</div></pre></td></tr></table></figure>
-<p>平均阻尼的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(fixed-point-display (lambda (x) (/ (+ (/ (log 1000) (log x)) x) 2.0)) 2.0)</div></pre></td></tr></table></figure>
-<p>结果是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">2.</div><div class="line">5.9828921423310435</div><div class="line">4.922168721308343</div><div class="line">4.628224318195455</div><div class="line">4.568346513136242</div><div class="line">4.5577305909237005</div><div class="line">4.555909809045131</div><div class="line">4.555599411610624</div><div class="line">4.5555465521473675</div><div class="line">;Value: 4.555537551999825</div></pre></td></tr></table></figure>
-<p>3.练习1.37a）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (cont-frac n d k)</div><div class="line">  (define (cont-prac-recur n d a k)</div><div class="line">    (if (= a k)</div><div class="line">	(/ (n k) (d k))</div><div class="line">	(/ (n a) (+ (d a) (cont-prac-recur n d (+ a 1) k)))))</div><div class="line">  (cont-prac-recur n d 1 k))</div></pre></td></tr></table></figure>
-<p>k为11时得到的近似值具有十进制的4位精度b）<br>迭代计算过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (cont-frac n d k)</div><div class="line">  (define (cont-prac-iter a result)</div><div class="line">    (cond ((= a k) (cont-prac-iter (- a 1) (/ (n k) (d k))))</div><div class="line">	  ((= a 0) result)</div><div class="line">	  (else (cont-prac-iter (- a 1) (/ (n a) (+ result (d a)))))))</div><div class="line">  (cont-prac-iter k 0))</div></pre></td></tr></table></figure>
-<p>4.练习1.38</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (dfc-k k)</div><div class="line">  (+ (cont-frac (lambda (i) 1.0)</div><div class="line">(lambda (i) (if (= (remainder i 3) 2)</div><div class="line">(* (+ (floor (/ i 3)) 1) 2)</div><div class="line">1))</div><div class="line">k</div><div class="line">) 2))</div></pre></td></tr></table></figure>
-<p>5.练习1.39</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (tan-cf x k)</div><div class="line">  (cont-frac (lambda (i) (if (= i 1)</div><div class="line">			     x</div><div class="line">			     (- 0 (square x))))</div><div class="line">	     (lambda (i) (+ (* (- i 1) 2) 1))</div><div class="line">	     k</div><div class="line">	     ))</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/10/2014-01-10-练习1.31-练习1.34/" itemprop="url">
-                  练习1.31-练习1.34
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-10T19:19:00+08:00" content="2014-01-10">
-              2014-01-10
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/10/2014-01-10-练习1.31-练习1.34/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/10/2014-01-10-练习1.31-练习1.34/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/10/2014-01-10-练习1.31-练习1.34/" class="leancloud_visitors" data-flag-title="练习1.31-练习1.34">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近对于Lisp的强大和高深还是深有体会的，可以将函数作为参数进行调用，这样在很大的程度上可以提高函数的抽象性，即将具有公共模式的函数进行抽象。例如在SICP中，首先将累加和的过程进行了抽象，然后在累加和的基础上抽象出了累乘积，进而又发现了累加和与累乘积的共同点，进一步抽象成了一个叫做accumulate的函数，这个函数的是这样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(accumulate combiner null-value term a next b)</div></pre></td></tr></table></figure>
-<p>其中combiner为被组合项的组合方式，例如在累加和中可以是“+”，在累乘积中可以是“*”，null-value为默认值，在累加和中为0累乘积中为1，term为函数f，例如在求cube的积分时，f为cube，a为初始值，next为下一次取得值，b为取值的上限。最后在accumulate函数的基础上加上了对数据的filter使得整个过程更加抽象更加一般。<br>1.练习1.31<br>a）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (product-recur term a next b)</div><div class="line">  (if (&gt; a b)</div><div class="line">      1</div><div class="line">      (* (term a)</div><div class="line">	 (product-recur term (next a) next b))))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (factorial-recur n)</div><div class="line">  (define (self n)</div><div class="line">    n)</div><div class="line">  (define (plus-1 n)</div><div class="line">    (+ n 1))</div><div class="line">  (if (= n 0)</div><div class="line">      1</div><div class="line">      (product-recur self 1 plus-1 n)))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(define (pi-recur n)</div><div class="line">  (define (even? n)</div><div class="line">    (= (remainder n 2) 0))</div><div class="line">  (define (item n)</div><div class="line">    (if (even? n)</div><div class="line">	(/ (+ 2 n) (+ 1 n))</div><div class="line">	(/ (+ 1 n) (+ 2 n))))</div><div class="line">  (define (next-1 n)</div><div class="line">    (+ n 1.0))</div><div class="line">  (* 4.0</div><div class="line">     (product-recur item 1.0 next-1 n)))</div></pre></td></tr></table></figure>
-<p>b）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (product-iter term a next b)</div><div class="line">  (define (iter a result)</div><div class="line">    (if (&gt; a b)</div><div class="line">	result</div><div class="line">	(iter (next a) (* (term a) result))))</div><div class="line">  (iter a 1))</div></pre></td></tr></table></figure>
-<p>2.练习1.32a）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define  (accumulate combiner null-value term a next b)</div><div class="line">  (if (&gt; a b)</div><div class="line">      null-value</div><div class="line">      (combiner (term a)</div><div class="line">		(accumulate combiner null-value term (next a) next b))))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sum-accumulate term a next b)</div><div class="line">  (accumulate + 0 term a next b))</div><div class="line"></div><div class="line">(define (product-accumulate term a next b)</div><div class="line">  (accumulate-iter * 1 term a next b))</div></pre></td></tr></table></figure>
-<p>b）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define  (accumulate-iter combiner null-value term a next b)</div><div class="line">  (define (iter a result)</div><div class="line">    (if (&gt; a b)</div><div class="line">	result</div><div class="line">	(iter (next a) (combiner result (term a)))))</div><div class="line">  (iter a null-value))</div></pre></td></tr></table></figure>
-<p>3.练习1.33</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (filtered-accumulate filter combiner null-value term a next b)</div><div class="line">  (define (iter a result)</div><div class="line">    (cond ((&gt; a b) result)</div><div class="line">	  ((filter a) (iter (next a) (combiner (term a) result)))</div><div class="line">	  (else (iter (next a) result))))</div><div class="line">  (iter a null-value))</div></pre></td></tr></table></figure>
-<p>a）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (prime-sum a b)</div><div class="line">  (define (next-1 a)</div><div class="line">    (+ a 1))</div><div class="line">  (define (self a)</div><div class="line">    a)</div><div class="line">  (filtered-accumulate prime? + 0 self a next-1 b))</div></pre></td></tr></table></figure>
-<p>b）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (GCD-1-product n)</div><div class="line">  (define (GCD-1-n? a)</div><div class="line">    (= (GCD a n) 1))</div><div class="line">  (define (next-1 a)</div><div class="line">    (+ a 1))</div><div class="line">  (define (self a)</div><div class="line">    a)</div><div class="line">  (filtered-accumulate GCD-1-n? * 1 self 1 next-1 (- n 1)))</div></pre></td></tr></table></figure>
-<p>4.练习1.34可以这么解释(f f)-&gt;(f 2)-&gt;(2 2)，最后由于2这个函数没有定义，所以报错结束。</p>
-<p>网上发现了这个<a href="http://sicp.readthedocs.org/en/latest/index.html" target="_blank" rel="external">点击打开链接</a>，很不错，貌似是一些人做的项目，目的是解答SICP上的所有题，貌似很久没有更新了，但以后做了题还是可以和这个上面已有的解答对对了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/09/2014-01-09-练习1.23-练习1.30/" itemprop="url">
-                  练习1.23-练习1.30
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-09T21:05:00+08:00" content="2014-01-09">
-              2014-01-09
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/09/2014-01-09-练习1.23-练习1.30/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/09/2014-01-09-练习1.23-练习1.30/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/09/2014-01-09-练习1.23-练习1.30/" class="leancloud_visitors" data-flag-title="练习1.23-练习1.30">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.练习1.23<br>改后的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (find-divisor-better n a)</div><div class="line">  (cond ((&gt; (square a) n) n)</div><div class="line">	((divides?-better n a) a)</div><div class="line">	(else (find-divisor-better n (next-2 a)))))</div><div class="line"></div><div class="line">(define (next-2 n)</div><div class="line">  (if (= 2 n)</div><div class="line">      (+ 1 n)</div><div class="line">      (+ 2 n)))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-min-prime-since-better n start-time number)</div><div class="line">  (cond ((= number 0) (display-info start-time (real-time-clock)))</div><div class="line">	((prime? n) (begin</div><div class="line">		      (format #t &quot;~S~%&quot; n)</div><div class="line">		      (find-min-prime-since-better (+ n (next-plus n)) start-time (- number 1))))</div><div class="line">	(else (find-min-prime-since-better (+ n (next-plus n)) start-time number)))</div><div class="line">  #f)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (next-plus n)</div><div class="line">  (if (even? n)</div><div class="line">      1</div><div class="line">      2))</div></pre></td></tr></table></figure>
-<p>电脑跑这些代码的时候，没有固定的运行时间，一直在变。不过结果是改后的基本是没改前的0.5，也可能0.6左右。<br>2.练习1.24<br>代码就不贴出来了，只是将上一题中的判断是否为素数的方法改为费马方法。<br>在检测接近1000000的素数和接近1000的素数时，接近1000000的素数在时间上应该为(log1000000)=6应该大于接近1000的3的素数检查，比值为2:1，实验中计算从1000和1000000开始的1000个素数，1000开始的时间为695，而从1000000开始的时间为1470，比值接近于1:2， 与假设基本相同。<br>但是在<a href="http://www.codesky.net/article/200501/54364.html" target="_blank" rel="external">帖子</a>，那我猜，可能是64位和32位的不同了。<br>3.练习1.25<br>先求次方的结果会导致一个很大的数求余数，这样的时间消耗会很大。<br>4.练习1.26<br>不使用square的结果是每次减半的expmod操作没有了简版的效果，所以时间复杂度会变回O(n) 。<br>5.练习1.27</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (try-it a n)</div><div class="line">    (= (expmod a n n) a))</div><div class="line"></div><div class="line">(define (carmichael-test n number)</div><div class="line">  (cond ((= number 0) true)</div><div class="line">	((try-it number n) (carmichael-test n (- number 1)))</div><div class="line">	(else false)))</div><div class="line"></div><div class="line">(define (car-prime? n)</div><div class="line">  (carmichael-text n (- n 1)))</div></pre></td></tr></table></figure>
-<p>6.练习1.28</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(define (new-expmod base exp m)</div><div class="line">  (define tmpbase 100)</div><div class="line">  (cond ((= exp 0) 1)</div><div class="line">	((even? exp) (begin</div><div class="line">		      (set! tmpbase (new-expmod base (/ exp 2) m))</div><div class="line">		      (if (and (not (= tmpbase (- m 1)))</div><div class="line">			       (not (= tmpbase 1))</div><div class="line">			       (= (remainder (square tmpbase)</div><div class="line">					       m) 1))</div><div class="line">			   0</div><div class="line">			   (remainder (square tmpbase)</div><div class="line">					 m))))</div><div class="line">	(else (remainder (* base (new-expmod base (- exp 1) m))</div><div class="line">			 m))))</div><div class="line">(define (new-try-it n a)</div><div class="line">  (new-expmod a (- n 1) n))</div><div class="line"></div><div class="line"></div><div class="line">(define (new-fermat-test n start)</div><div class="line">  (cond ((= start 1) true)</div><div class="line">	((= (new-try-it n start) 0) false)</div><div class="line">	(else (new-fermat-test n (- start 1)))))</div><div class="line"></div><div class="line">(define (really-prime? n)</div><div class="line"> (new-fermat-test n (if (even? n)</div><div class="line">			(/ n 2)</div><div class="line">			(/ (- n 1) 2))))</div></pre></td></tr></table></figure>
-<p>没有进行优化，但本身也有可能会有更好的方法吧。。。<br>7.练习1.29</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">(define (xps f a b n)</div><div class="line">  (define h</div><div class="line">    (/ (- b a) n))</div><div class="line">  (define (f1 k)</div><div class="line">    (f (+ a (* k h))))</div><div class="line">  (define (f2 k)</div><div class="line">    (if (or (= k 0) (= k n))</div><div class="line">	(f1 k)</div><div class="line">	(if (even? k)</div><div class="line">	    (* 2 (f1 k))</div><div class="line">	    (* 4 (f1 k)))))</div><div class="line">  (define (add-h x)</div><div class="line">    (+ x 1))</div><div class="line">  (* (/ h 3)</div><div class="line">     (sum f2 0 add-h n)))</div></pre></td></tr></table></figure>
-<p>8.练习1.30</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (sum term a next b)</div><div class="line">  (define (iter a result)</div><div class="line">    (if (&gt; a b)</div><div class="line">	result</div><div class="line">	(iter (next a) (+ (term a) result))))</div><div class="line">  (iter a 0))</div></pre></td></tr></table></figure>
 
           
         
@@ -1564,7 +1805,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1572,7 +1813,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1581,7 +1822,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

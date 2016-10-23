@@ -89,11 +89,11 @@
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转]Spring4新特性——Groovy Bean定义DSL">
-<meta property="og:url" content="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1991830
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]Spring4新特性——Groovy Bean定义DSL">
 <meta name="twitter:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1991830
@@ -126,7 +126,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"/>
 
   <title> [转]Spring4新特性——Groovy Bean定义DSL | 行走的轮子 </title>
 </head>
@@ -372,7 +372,8 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -390,7 +391,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
       
         <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1991830" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1991830</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>Spring4支持使用Groovy DSL来进行Bean定义配置，其类似于XML，不过因为是Groovy DSL，可以实现任何复杂的语法配置，但是对于配置，我们需要那么复杂吗？本着学习的态度试用了下其Groovy DSL定义Bean，其主要缺点：<br>1、DSL语法规则不足，需要其后续维护；<br>2、编辑器的代码补全需要跟进，否则没有代码补全，写这个很痛苦；<br>3、出错提示不友好，排错难；<br>4、当前对于一些配置还是需要XML的支持，所以还不是100%的纯Groovy DSL；<br>5、目前对整个Spring生态支持还是不够的，比如Web，需要观望。</p>
 <p>其优点就是其本质是Groovy脚本，所以可以做非常复杂的配置，如果以上问题能够解决，其也是一个不错的选择。在Groovy中的话使用这种配置感觉不会有什么问题，但是在纯Java开发环境下也是有它，给我的感觉是这个功能其目的是去推广它的groovy。比较怀疑它的动机。</p>
 <p>接下来我们来看看Spring配置的发展：<br>Spring 2时代是XML风格配置  可以参考《跟我学Spring3》的前几章<br>Spring 3时代引入注解风格配置  可以参考《跟我学Spring3》的第12章<br>Spring 4时代引入Groovy DSL风格来配置 后续讲解</p>
@@ -546,7 +547,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
         <div class="ds-share flat" data-thread-key="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"
      data-title="[转]Spring4新特性——Groovy Bean定义DSL"
      data-content=""
-     data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
+     data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -574,7 +575,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/"
-           data-title="[转]Spring4新特性——Groovy Bean定义DSL" data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
+           data-title="[转]Spring4新特性——Groovy Bean定义DSL" data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">
       </div>
     
   </div>
@@ -619,7 +620,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -627,7 +628,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -636,7 +637,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

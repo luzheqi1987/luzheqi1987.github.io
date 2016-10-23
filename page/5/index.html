@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/5/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/5/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/5/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,829 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/" itemprop="url">
+                  [转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T05:04:04+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1990081" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1990081</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>在之前的《跟我学SpringMVC》中的《第七章 注解式控制器的数据验证、类型转换及格式化》中已经介绍过SpringMVC集成Bean Validation 1.0（JSR-303），目前Bean Validation最新版本是Bean Validation 1.1（JSR-349），新特性可以到官网查看，笔者最喜欢的两个特性是：跨参数验证（比如密码和确认密码的验证）和支持在消息中使用EL表达式，其他的还有如方法参数/返回值验证、CDI和依赖注入、分组转换等。对于方法参数/返回值验证，大家可以参阅《Spring3.1 对Bean Validation规范的新支持(方法级别验证) 》。</p>
+<p>Bean Validation 1.1当前实现是Hibernate validator 5，且spring4才支持。接下来我们从以下几个方法讲解Bean Validation 1.1，当然不一定是新特性：<br> 集成Bean Validation 1.1到SpringMVC<br> 分组验证、分组顺序及级联验证<br> 消息中使用EL表达式<br> 方法参数/返回值验证<br> 自定义验证规则<br> 类级别验证器<br> 脚本验证器<br> cross-parameter，跨参数验证<br>混合类级别验证器和跨参数验证器<br>组合多个验证注解<br>本地化<br>因为大多数时候验证都配合web框架使用，而且很多朋友都咨询过如分组/跨参数验证，所以本文介绍下这些，且是和SpringMVC框架集成的例子，其他使用方式（比如集成到JPA中）可以参考其官方文档：<br>规范：<a href="http://beanvalidation.org/1.1/spec/" target="_blank" rel="external">http://beanvalidation.org/1.1/spec/</a><br>hibernate validator文档：<a href="http://hibernate.org/validator/" target="_blank" rel="external">http://hibernate.org/validator/</a> </p>
+<p> 1、集成Bean Validation 1.1到SpringMVC<br>1.1、项目搭建<br>首先添加hibernate validator 5依赖：<br>[java]<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;<br>    &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;<br>    &lt;version&gt;5.0.2.Final&lt;/version&gt;<br>&lt;/dependency&gt;  [/java]<br>如果想在消息中使用EL表达式，请确保EL表达式版本是 2.2或以上，如使用Tomcat6，请到Tomcat7中拷贝相应的EL jar包到Tomcat6中。<br>[java]<br>&lt;dependency&gt;<br>    &lt;groupId&gt;javax.el&lt;/groupId&gt;<br>    &lt;artifactId&gt;javax.el-api&lt;/artifactId&gt;<br>    &lt;version&gt;2.2.4&lt;/version&gt;<br>    &lt;scope&gt;provided&lt;/scope&gt;<br>&lt;/dependency&gt;  [/java]<br>请确保您使用的Web容器有相应版本的el jar包。</p>
+<p>对于其他POM依赖请下载附件中的项目参考。</p>
+<p>1.2、Spring MVC配置文件（spring-mvc.xml）：<br>[java]<br>&lt;!– 指定自己定义的validator –&gt;<br>&lt;mvc:annotation-driven validator=&quot;validator&quot;/&gt;  </p>
+<p>&lt;!– 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册–&gt;<br>&lt;bean id=&quot;validator&quot; class=&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;&gt;<br>    &lt;property name=&quot;providerClass&quot; value=&quot;org.hibernate.validator.HibernateValidator&quot;/&gt;<br>    &lt;!– 如果不加默认到 使用classpath下的 ValidationMessages.properties –&gt;<br>    &lt;property name=&quot;validationMessageSource&quot; ref=&quot;messageSource&quot;/&gt;<br>&lt;/bean&gt;  </p>
+<p>&lt;!– 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） –&gt;<br>&lt;bean id=&quot;messageSource&quot; class=&quot;org.springframework.context.support.ReloadableResourceBundleMessageSource&quot;&gt;<br>    &lt;property name=&quot;basenames&quot;&gt;<br>        &lt;list&gt;<br>            &lt;!– 在web环境中一定要定位到classpath 否则默认到当前web应用下找  –&gt;<br>            &lt;value&gt;classpath:messages&lt;/value&gt;<br>            &lt;value&gt;classpath:org/hibernate/validator/ValidationMessages&lt;/value&gt;<br>        &lt;/list&gt;<br>    &lt;/property&gt;<br>    &lt;property name=&quot;useCodeAsDefaultMessage&quot; value=&quot;false&quot;/&gt;<br>    &lt;property name=&quot;defaultEncoding&quot; value=&quot;UTF-8&quot;/&gt;<br>    &lt;property name=&quot;cacheSeconds&quot; value=&quot;60&quot;/&gt;<br>&lt;/bean&gt;  [/java]<br>此处主要把bean validation的消息查找委托给spring的messageSource。</p>
+<p>1.3、实体验证注解：<br>[java]<br>public class User implements Serializable {<br>    @NotNull(message = &quot;{user.id.null}&quot;)<br>    private Long id;  </p>
+<pre><code>@NotEmpty(message = &amp;quot;{user.name.null}&amp;quot;)  
+@Length(min = 5, max = 20, message = &amp;quot;{user.name.length.illegal}&amp;quot;)  
+@Pattern(regexp = &amp;quot;[a-zA-Z]{5,20}&amp;quot;, message = &amp;quot;{user.name.illegal}&amp;quot;)  
+private String name;  
+
+@NotNull(message = &amp;quot;{user.password.null}&amp;quot;)  
+private String password;  
+</code></pre><p>} [/java]<br>对于验证规则可以参考官方文档，或者《第七章 注解式控制器的数据验证、类型转换及格式化》。</p>
+<p>1.4、错误消息文件messages.properties：<br>[java]<br>user.id.null=用户编号不能为空<br>user.name.null=用户名不能为空<br>user.name.length.illegal=用户名长度必须在5到20之间<br>user.name.illegal=用户名必须是字母<br>user.password.null=密码不能为空<br>[/java]<br>1.5、控制器<br>[java]<br>@Controller<br>public class UserController {  </p>
+<pre><code>@RequestMapping(&amp;quot;/save&amp;quot;)  
+public String save(@Valid User user, BindingResult result) {  
+    if(result.hasErrors()) {  
+        return &amp;quot;error&amp;quot;;  
+    }  
+    return &amp;quot;success&amp;quot;;  
+}  
+</code></pre><p>}<br>[/java]<br>1.6、错误页面：<br>[java]<br>&lt;spring:hasBindErrors name=&quot;user&quot;&gt;<br>    &lt;c:if test=&quot;${errors.fieldErrorCount &gt; 0}&quot;&gt;<br>        字段错误：&lt;br/&gt;<br>        &lt;c:forEach items=&quot;${errors.fieldErrors}&quot; var=&quot;error&quot;&gt;<br>            &lt;spring:message var=&quot;message&quot; code=&quot;${error.code}&quot; arguments=&quot;${error.arguments}&quot; text=&quot;${error.defaultMessage}&quot;/&gt;<br>            ${error.field}——${message}&lt;br/&gt;<br>        &lt;/c:forEach&gt;<br>    &lt;/c:if&gt;  </p>
+<pre><code>&amp;lt;c:if test=&amp;quot;${errors.globalErrorCount &amp;gt; 0}&amp;quot;&amp;gt;  
+    全局错误：&amp;lt;br/&amp;gt;  
+    &amp;lt;c:forEach items=&amp;quot;${errors.globalErrors}&amp;quot; var=&amp;quot;error&amp;quot;&amp;gt;  
+        &amp;lt;spring:message var=&amp;quot;message&amp;quot; code=&amp;quot;${error.code}&amp;quot; arguments=&amp;quot;${error.arguments}&amp;quot; text=&amp;quot;${error.defaultMessage}&amp;quot;/&amp;gt;  
+        &amp;lt;c:if test=&amp;quot;${not empty message}&amp;quot;&amp;gt;  
+            ${message}&amp;lt;br/&amp;gt;  
+        &amp;lt;/c:if&amp;gt;  
+    &amp;lt;/c:forEach&amp;gt;  
+&amp;lt;/c:if&amp;gt;  
+</code></pre><p>&lt;/spring:hasBindErrors&gt;<br>[/java]<br>大家以后可以根据这个做通用的错误消息显示规则。比如我前端页面使用validationEngine显示错误消息，那么我可以定义一个tag来通用化错误消息的显示：<a href="https://github.com/zhangkaitao/es/blob/master/web/src/main/webapp/WEB-INF/tags/showFieldError.tag" target="_blank" rel="external">showFieldError.tag</a>。  </p>
+<p>1.7、测试<br>输入如：<a href="http://localhost:9080/spring4/save?name=123" target="_blank" rel="external">http://localhost:9080/spring4/save?name=123</a> ， 我们得到如下错误：<br>[java]<br>name——用户名必须是字母<br>name——用户名长度必须在5到20之间<br>password——密码不能为空<br>id——用户编号不能为空<br>[/java]<br>基本的集成就完成了。</p>
+<p>如上测试有几个小问题：<br>1、错误消息顺序，大家可以看到name的错误消息顺序不是按照书写顺序的，即不确定；<br>2、我想显示如：用户名【zhangsan】必须在5到20之间；其中我们想动态显示：用户名、min，max；而不是写死了；<br>3、我想在修改的时候只验证用户名，其他的不验证怎么办。<br>接下来我们挨着试试吧。</p>
+<p>2、分组验证及分组顺序<br>如果我们想在新增的情况验证id和name，而修改的情况验证name和password，怎么办？ 那么就需要分组了。<br>首先定义分组接口：<br>[java]<br>public interface First {<br>}  </p>
+<p>public interface Second {<br>}  [/java]<br>分组接口就是两个普通的接口，用于标识，类似于java.io.Serializable。</p>
+<p>接着我们使用分组接口标识实体：<br>[java]<br>public class User implements Serializable {  </p>
+<pre><code>@NotNull(message = &amp;quot;{user.id.null}&amp;quot;, groups = {First.class})  
+private Long id;  
+
+@Length(min = 5, max = 20, message = &amp;quot;{user.name.length.illegal}&amp;quot;, groups = {Second.class})  
+@Pattern(regexp = &amp;quot;[a-zA-Z]{5,20}&amp;quot;, message = &amp;quot;{user.name.illegal}&amp;quot;, groups = {Second.class})  
+private String name;  
+
+@NotNull(message = &amp;quot;{user.password.null}&amp;quot;, groups = {First.class, Second.class})  
+private String password;  
+</code></pre><p>}<br>[/java]<br>验证时使用如：<br>[java]<br>@RequestMapping(&quot;/save&quot;)<br>public String save(@Validated({Second.class}) User user, BindingResult result) {<br>    if(result.hasErrors()) {<br>        return &quot;error&quot;;<br>    }<br>    return &quot;success&quot;;<br>}  [/java]<br>即通过@Validate注解标识要验证的分组；如果要验证两个的话，可以这样@Validated({First.class, Second.class})。</p>
+<p>接下来我们来看看通过分组来指定顺序；还记得之前的错误消息吗？ user.name会显示两个错误消息，而且顺序不确定；如果我们先验证一个消息；如果不通过再验证另一个怎么办？可以通过@GroupSequence指定分组验证顺序：</p>
+<p>[java]<br>@GroupSequence({First.class, Second.class, User.class})<br>public class User implements Serializable {<br>    private Long id;  </p>
+<pre><code>@Length(min = 5, max = 20, message = &amp;quot;{user.name.length.illegal}&amp;quot;, groups = {First.class})  
+@Pattern(regexp = &amp;quot;[a-zA-Z]{5,20}&amp;quot;, message = &amp;quot;{user.name.illegal}&amp;quot;, groups = {Second.class})  
+private String name;  
+
+private String password;  
+</code></pre><p>} [/java]<br>通过@GroupSequence指定验证顺序：先验证First分组，如果有错误立即返回而不会验证Second分组，接着如果First分组验证通过了，那么才去验证Second分组，最后指定User.class表示那些没有分组的在最后。这样我们就可以实现按顺序验证分组了。</p>
+<p>另一个比较常见的就是级联验证：<br>如：<br>[java]<br>public class User {  </p>
+<pre><code>@Valid   
+@ConvertGroup(from=First.class, to=Second.class)  
+private Organization o;  
+</code></pre><p>} [/java]<br> 1、级联验证只要在相应的字段上加@Valid即可，会进行级联验证；@ConvertGroup的作用是当验证o的分组是First时，那么验证o的分组是Second，即分组验证的转换。</p>
+<p>3、消息中使用EL表达式<br>假设我们需要显示如：用户名[NAME]长度必须在[MIN]到[MAX]之间，此处大家可以看到，我们不想把一些数据写死，如NAME、MIN、MAX；此时我们可以使用EL表达式。</p>
+<p>如：<br>[java]<br>@Length(min = 5, max = 20, message = &quot;{user.name.length.illegal}&quot;, groups = {First.class})  [/java]<br>错误消息：<br>[java]<br>user.name.length.illegal=用户名长度必须在{min}到{max}之间  [/java]</p>
+<p>其中我们可以使用{验证注解的属性}得到这些值；如{min}得到@Length中的min值；其他的也是类似的。</p>
+<p>到此，我们还是无法得到出错的那个输入值，如name=zhangsan。此时就需要EL表达式的支持，首先确定引入EL jar包且版本正确。然后使用如：<br>[java]<br>user.name.length.illegal=用户名[${validatedValue}]长度必须在5到20之间  [/java]<br>使用如EL表达式：${validatedValue}得到输入的值，如zhangsan。当然我们还可以使用如${min &gt; 1 ? ‘大于1’ : ‘小于等于1’}，及在EL表达式中也能拿到如@Length的min等数据。</p>
+<p>另外我们还可以拿到一个java.util.Formatter类型的formatter变量进行格式化：<br>[java]<br>${formatter.format(&quot;%04d&quot;, min)}<br>[/java]<br>4、方法参数/返回值验证<br>这个可以参考《Spring3.1 对Bean Validation规范的新支持(方法级别验证) 》，概念是类似的，具体可以参考Bean Validation 文档。</p>
+<p>5、自定义验证规则<br>有时候默认的规则可能还不够，有时候还需要自定义规则，比如屏蔽关键词验证是非常常见的一个功能，比如在发帖时帖子中不允许出现admin等关键词。</p>
+<p>1、定义验证注解<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import javax.validation.Constraint;<br>import javax.validation.Payload;<br>import java.lang.annotation.Documented;<br>import java.lang.annotation.Retention;<br>import java.lang.annotation.Target;<br>import static java.lang.annotation.ElementType.<em>;<br>import static java.lang.annotation.RetentionPolicy.</em>;<br>/** </p>
+<ul>
+<li>&lt;p&gt;User: Zhang Kaitao </li>
+<li>&lt;p&gt;Date: 13-12-15 </li>
+<li>&lt;p&gt;Version: 1.0<br>*/  </li>
+</ul>
+<p>@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })<br>@Retention(RUNTIME)<br>//指定验证器<br>@Constraint(validatedBy = ForbiddenValidator.class)<br>@Documented<br>public @interface Forbidden {  </p>
+<pre><code>//默认错误消息  
+String message() default &amp;quot;{forbidden.word}&amp;quot;;  
+
+//分组  
+Class&amp;lt;?&amp;gt;[] groups() default { };  
+
+//负载  
+Class&amp;lt;? extends Payload&amp;gt;[] payload() default { };  
+
+//指定多个时使用  
+@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })  
+@Retention(RUNTIME)  
+@Documented  
+@interface List {  
+    Forbidden[] value();  
+}  
+</code></pre><p>}<br>[/java]<br>2、 定义验证器<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;<br>import org.springframework.beans.factory.annotation.Autowired;<br>import org.springframework.context.ApplicationContext;<br>import org.springframework.util.StringUtils;  </p>
+<p>import javax.validation.ConstraintValidator;<br>import javax.validation.ConstraintValidatorContext;<br>import java.io.Serializable;  </p>
+<p>/** </p>
+<ul>
+<li>&lt;p&gt;User: Zhang Kaitao </li>
+<li>&lt;p&gt;Date: 13-12-15 </li>
+<li><p>&lt;p&gt;Version: 1.0<br>*/<br>public class ForbiddenValidator implements ConstraintValidator&lt;Forbidden, String&gt; {  </p>
+<p> private String[] forbiddenWords = {&quot;admin&quot;};  </p>
+<p> @Override<br> public void initialize(Forbidden constraintAnnotation) {  </p>
+<pre><code>//初始化，得到注解数据  
+</code></pre><p> }  </p>
+<p> @Override<br> public boolean isValid(String value, ConstraintValidatorContext context) {  </p>
+<pre><code>if(StringUtils.isEmpty(value)) {  
+    return true;  
+}  
+
+for(String word : forbiddenWords) {  
+    if(value.contains(word)) {  
+        return false;//验证失败  
+    }  
+}  
+return true;  
+</code></pre><p> }<br>} [/java]<br>验证器中可以使用spring的依赖注入，如注入：@Autowired  private ApplicationContext ctx; </p>
+</li>
+</ul>
+<p>3、使用<br>[java]<br>public class User implements Serializable {<br>    @Forbidden()<br>    private String name;<br>}<br>[/java]<br>4、当我们在提交name中含有admin的时候会输出错误消息：<br>[java]<br>forbidden.word=您输入的数据中有非法关键词<br>[/java]<br>问题来了，哪个词是非法的呢？bean validation 和 hibernate validator都没有提供相应的api提供这个数据，怎么办呢？通过跟踪代码，发现一种不是特别好的方法：我们可以覆盖org.hibernate.validator.internal.metadata.descriptor.ConstraintDescriptorImpl实现（即复制一份代码放到我们的src中），然后覆盖buildAnnotationParameterMap方法；<br>[java]<br>private Map&lt;String, Object&gt; buildAnnotationParameterMap(Annotation annotation) {<br>    ……<br>    //将Collections.unmodifiableMap( parameters );替换为如下语句<br>    return parameters;<br>} [/java]<br> 即允许这个数据可以修改；然后在ForbiddenValidator中：<br>[java]<br>for(String word : forbiddenWords) {<br>    if(value.contains(word)) {<br>        ((ConstraintValidatorContextImpl)context).getConstraintDescriptor().getAttributes().put(&quot;word&quot;, word);<br>        return false;//验证失败<br>    }<br>} [/java]<br>通过((ConstraintValidatorContextImpl)context).getConstraintDescriptor().getAttributes().put(“word”, word);添加自己的属性；放到attributes中的数据可以通过${} 获取。然后消息就可以变成：<br>[java]<br>forbidden.word=您输入的数据中有非法关键词【{word}】  [/java]<br>这种方式不是很友好，但是可以解决我们的问题。</p>
+<p>典型的如密码、确认密码的场景，非常常用；如果没有这个功能我们需要自己写代码来完成；而且经常重复自己。接下来看看bean validation 1.1如何实现的。</p>
+<p>6、类级别验证器<br>6.1、定义验证注解<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import javax.validation.Constraint;<br>import javax.validation.Payload;<br>import javax.validation.constraints.NotNull;<br>import java.lang.annotation.Documented;<br>import java.lang.annotation.Retention;<br>import java.lang.annotation.Target;<br>import static java.lang.annotation.ElementType.<em>;<br>import static java.lang.annotation.RetentionPolicy.</em>;<br>/** </p>
+<ul>
+<li>&lt;p&gt;User: Zhang Kaitao </li>
+<li>&lt;p&gt;Date: 13-12-15 </li>
+<li>&lt;p&gt;Version: 1.0<br>*/  </li>
+</ul>
+<p>@Target({ TYPE, ANNOTATION_TYPE})<br>@Retention(RUNTIME)<br>//指定验证器<br>@Constraint(validatedBy = CheckPasswordValidator.class)<br>@Documented<br>public @interface CheckPassword {  </p>
+<pre><code>//默认错误消息  
+String message() default &amp;quot;&amp;quot;;  
+
+//分组  
+Class&amp;lt;?&amp;gt;[] groups() default { };  
+
+//负载  
+Class&amp;lt;? extends Payload&amp;gt;[] payload() default { };  
+
+//指定多个时使用  
+@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })  
+@Retention(RUNTIME)  
+@Documented  
+@interface List {  
+    CheckPassword[] value();  
+}  
+</code></pre><p>} [/java]<br>6.2、 定义验证器<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import com.sishuok.spring4.entity.User;<br>import org.springframework.util.StringUtils;  </p>
+<p>import javax.validation.ConstraintValidator;<br>import javax.validation.ConstraintValidatorContext;  </p>
+<p>/** </p>
+<ul>
+<li>&lt;p&gt;User: Zhang Kaitao </li>
+<li>&lt;p&gt;Date: 13-12-15 </li>
+<li><p>&lt;p&gt;Version: 1.0<br>*/<br>public class CheckPasswordValidator implements ConstraintValidator&lt;CheckPassword, User&gt; {  </p>
+<p> @Override<br> public void initialize(CheckPassword constraintAnnotation) {<br> }  </p>
+<p> @Override<br> public boolean isValid(User user, ConstraintValidatorContext context) {  </p>
+<pre><code>if(user == null) {  
+    return true;  
+}  
+
+//没有填密码  
+if(!StringUtils.hasText(user.getPassword())) {  
+    context.disableDefaultConstraintViolation();  
+    context.buildConstraintViolationWithTemplate(&amp;quot;{password.null}&amp;quot;)  
+            .addPropertyNode(&amp;quot;password&amp;quot;)  
+            .addConstraintViolation();  
+    return false;  
+}  
+
+if(!StringUtils.hasText(user.getConfirmation())) {  
+    context.disableDefaultConstraintViolation();  
+    context.buildConstraintViolationWithTemplate(&amp;quot;{password.confirmation.null}&amp;quot;)  
+            .addPropertyNode(&amp;quot;confirmation&amp;quot;)  
+            .addConstraintViolation();  
+    return false;  
+}  
+
+//两次密码不一样  
+if (!user.getPassword().trim().equals(user.getConfirmation().trim())) {  
+    context.disableDefaultConstraintViolation();  
+    context.buildConstraintViolationWithTemplate(&amp;quot;{password.confirmation.error}&amp;quot;)  
+            .addPropertyNode(&amp;quot;confirmation&amp;quot;)  
+            .addConstraintViolation();  
+    return false;  
+}  
+return true;  
+</code></pre><p> }<br>}  [/java]<br>其中我们通过disableDefaultConstraintViolation禁用默认的约束；然后通过buildConstraintViolationWithTemplate(消息模板)/addPropertyNode(所属属性)/addConstraintViolation定义我们自己的约束。</p>
+</li>
+</ul>
+<p>6.3、使用<br>[java]<br>@CheckPassword()<br>public class User implements Serializable {<br>} [/java]<br> 放到类头上即可。</p>
+<p>7、通过脚本验证<br>[java]<br>@ScriptAssert(script = &quot;_this.password==_this.confirmation&quot;, lang = &quot;javascript&quot;, alias = &quot;_this&quot;, message = &quot;{password.confirmation.error}&quot;)<br>public class User implements Serializable {<br>}  [/java]<br>通过脚本验证是非常简单而且强大的，lang指定脚本语言（请参考javax.script.ScriptEngineManager JSR-223），alias是在脚本验证中User对象的名字，但是大家会发现一个问题：错误消息怎么显示呢？ 在springmvc 中会添加到全局错误消息中，这肯定不是我们想要的，我们改造下吧。</p>
+<p>7.1、定义验证注解<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import org.hibernate.validator.internal.constraintvalidators.ScriptAssertValidator;  </p>
+<p>import java.lang.annotation.Documented;<br>import java.lang.annotation.Retention;<br>import java.lang.annotation.Target;<br>import javax.validation.Constraint;<br>import javax.validation.Payload;  </p>
+<p>import static java.lang.annotation.ElementType.TYPE;<br>import static java.lang.annotation.RetentionPolicy.RUNTIME;  </p>
+<p>@Target({ TYPE })<br>@Retention(RUNTIME)<br>@Constraint(validatedBy = {PropertyScriptAssertValidator.class})<br>@Documented<br>public @interface PropertyScriptAssert {  </p>
+<pre><code>String message() default &amp;quot;{org.hibernate.validator.constraints.ScriptAssert.message}&amp;quot;;  
+
+Class&amp;lt;?&amp;gt;[] groups() default { };  
+
+Class&amp;lt;? extends Payload&amp;gt;[] payload() default { };  
+
+String lang();  
+
+String script();  
+
+String alias() default &amp;quot;_this&amp;quot;;  
+
+String property();  
+
+@Target({ TYPE })  
+@Retention(RUNTIME)  
+@Documented  
+public @interface List {  
+    PropertyScriptAssert[] value();  
+}  
+</code></pre><p>}  [/java]<br>和ScriptAssert没什么区别，只是多了个property用来指定出错后给实体的哪个属性。</p>
+<p>7.2、验证器<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>import javax.script.ScriptException;<br>import javax.validation.ConstraintDeclarationException;<br>import javax.validation.ConstraintValidator;<br>import javax.validation.ConstraintValidatorContext;  </p>
+<p>import com.sishuok.spring4.validator.PropertyScriptAssert;<br>import org.hibernate.validator.constraints.ScriptAssert;<br>import org.hibernate.validator.internal.util.Contracts;<br>import org.hibernate.validator.internal.util.logging.Log;<br>import org.hibernate.validator.internal.util.logging.LoggerFactory;<br>import org.hibernate.validator.internal.util.scriptengine.ScriptEvaluator;<br>import org.hibernate.validator.internal.util.scriptengine.ScriptEvaluatorFactory;  </p>
+<p>import static org.hibernate.validator.internal.util.logging.Messages.MESSAGES;  </p>
+<p>public class PropertyScriptAssertValidator implements ConstraintValidator&lt;PropertyScriptAssert, Object&gt; {  </p>
+<pre><code>private static final Log log = LoggerFactory.make();  
+
+private String script;  
+private String languageName;  
+private String alias;  
+private String property;  
+private String message;  
+
+public void initialize(PropertyScriptAssert constraintAnnotation) {  
+    validateParameters( constraintAnnotation );  
+
+    this.script = constraintAnnotation.script();  
+    this.languageName = constraintAnnotation.lang();  
+    this.alias = constraintAnnotation.alias();  
+    this.property = constraintAnnotation.property();  
+    this.message = constraintAnnotation.message();  
+}  
+
+public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {  
+
+    Object evaluationResult;  
+    ScriptEvaluator scriptEvaluator;  
+
+    try {  
+        ScriptEvaluatorFactory evaluatorFactory = ScriptEvaluatorFactory.getInstance();  
+        scriptEvaluator = evaluatorFactory.getScriptEvaluatorByLanguageName( languageName );  
+    }  
+    catch ( ScriptException e ) {  
+        throw new ConstraintDeclarationException( e );  
+    }  
+
+    try {  
+        evaluationResult = scriptEvaluator.evaluate( script, value, alias );  
+    }  
+    catch ( ScriptException e ) {  
+        throw log.getErrorDuringScriptExecutionException( script, e );  
+    }  
+
+    if ( evaluationResult == null ) {  
+        throw log.getScriptMustReturnTrueOrFalseException( script );  
+    }  
+    if ( !( evaluationResult instanceof Boolean ) ) {  
+        throw log.getScriptMustReturnTrueOrFalseException(  
+                script,  
+                evaluationResult,  
+                evaluationResult.getClass().getCanonicalName()  
+        );  
+    }  
+
+    if(Boolean.FALSE.equals(evaluationResult)) {  
+        constraintValidatorContext.disableDefaultConstraintViolation();  
+        constraintValidatorContext  
+                .buildConstraintViolationWithTemplate(message)  
+                .addPropertyNode(property)  
+                .addConstraintViolation();  
+    }  
+
+    return Boolean.TRUE.equals( evaluationResult );  
+}  
+
+private void validateParameters(PropertyScriptAssert constraintAnnotation) {  
+    Contracts.assertNotEmpty( constraintAnnotation.script(), MESSAGES.parameterMustNotBeEmpty( &amp;quot;script&amp;quot; ) );  
+    Contracts.assertNotEmpty( constraintAnnotation.lang(), MESSAGES.parameterMustNotBeEmpty( &amp;quot;lang&amp;quot; ) );  
+    Contracts.assertNotEmpty( constraintAnnotation.alias(), MESSAGES.parameterMustNotBeEmpty( &amp;quot;alias&amp;quot; ) );  
+    Contracts.assertNotEmpty( constraintAnnotation.property(), MESSAGES.parameterMustNotBeEmpty( &amp;quot;property&amp;quot; ) );  
+    Contracts.assertNotEmpty( constraintAnnotation.message(), MESSAGES.parameterMustNotBeEmpty( &amp;quot;message&amp;quot; ) );  
+}  
+</code></pre><p>}[/java]<br>和之前的类级别验证器类似，就不多解释了，其他代码全部拷贝自org.hibernate.validator.internal.constraintvalidators.ScriptAssertValidator。</p>
+<p>7.3、使用<br>[java]<br>@PropertyScriptAssert(property = &quot;confirmation&quot;, script = &quot;_this.password==_this.confirmation&quot;, lang = &quot;javascript&quot;, alias = &quot;_this&quot;, message = &quot;{password.confirmation.error}&quot;)  [/java]<br>和之前的区别就是多了个property，用来指定出错时给哪个字段。 这个相对之前的类级别验证器更通用一点。</p>
+<p>8、cross-parameter，跨参数验证<br>直接看示例；</p>
+<p>8.1、首先注册MethodValidationPostProcessor，起作用请参考<a href="http://jinnianshilongnian.iteye.com/blog/1495594" target="_blank" rel="external">《Spring3.1 对Bean Validation规范的新支持(方法级别验证) 》</a><br>[java]<br>&lt;bean class=&quot;org.springframework.validation.beanvalidation.MethodValidationPostProcessor&quot;&gt;<br>    &lt;property name=&quot;validator&quot; ref=&quot;validator&quot;/&gt;<br>&lt;/bean&gt;<br>[/java]<br>8.2、Service<br>[java]<br>@Validated<br>@Service<br>public class UserService {  </p>
+<pre><code>@CrossParameter  
+public void changePassword(String password, String confirmation) {  
+
+}  
+</code></pre><p>} [/java]<br>通过@Validated注解UserService表示该类中有需要进行方法参数/返回值验证；   @CrossParameter注解方法表示要进行跨参数验证；即验证password和confirmation是否相等。</p>
+<p>8.3、验证注解<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>//省略import  </p>
+<p>@Constraint(validatedBy = CrossParameterValidator.class)<br>@Target({ METHOD, CONSTRUCTOR, ANNOTATION_TYPE })<br>@Retention(RUNTIME)<br>@Documented<br>public @interface CrossParameter {  </p>
+<pre><code>String message() default &amp;quot;{password.confirmation.error}&amp;quot;;  
+Class&amp;lt;?&amp;gt;[] groups() default { };  
+Class&amp;lt;? extends Payload&amp;gt;[] payload() default { };  
+</code></pre><p>}<br>[/java]<br>8.4、验证器<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>//省略import  </p>
+<p>@SupportedValidationTarget(ValidationTarget.PARAMETERS)<br>public class CrossParameterValidator implements ConstraintValidator&lt;CrossParameter, Object[]&gt; {  </p>
+<pre><code>@Override  
+public void initialize(CrossParameter constraintAnnotation) {  
+}  
+
+@Override  
+public boolean isValid(Object[] value, ConstraintValidatorContext context) {  
+    if(value == null || value.length != 2) {  
+        throw new IllegalArgumentException(&amp;quot;must have two args&amp;quot;);  
+    }  
+    if(value[0] == null || value[1] == null) {  
+        return true;  
+    }  
+    if(value[0].equals(value[1])) {  
+        return true;  
+    }  
+    return false;  
+}  
+</code></pre><p>}[/java]<br>其中@SupportedValidationTarget(ValidationTarget.PARAMETERS)表示验证参数； value将是参数列表。 </p>
+<p>8.5、使用<br>[java]<br>@RequestMapping(&quot;/changePassword&quot;)<br>public String changePassword(<br>        @RequestParam(&quot;password&quot;) String password,<br>        @RequestParam(&quot;confirmation&quot;) String confirmation, Model model) {<br>    try {<br>        userService.changePassword(password, confirmation);<br>    } catch (ConstraintViolationException e) {<br>        for(ConstraintViolation violation : e.getConstraintViolations()) {<br>            System.out.println(violation.getMessage());<br>        }<br>    }<br>    return &quot;success&quot;;<br>}[/java]<br>调用userService.changePassword方法，如果验证失败将抛出ConstraintViolationException异常，然后得到ConstraintViolation，调用getMessage即可得到错误消息；然后到前台显示即可。</p>
+<p>从以上来看，不如之前的使用方便，需要自己对错误消息进行处理。 下一节我们也写个脚本方式的跨参数验证器。</p>
+<p>9、混合类级别验证器和跨参数验证器<br>9.1、验证注解<br>[java]<br>package com.sishuok.spring4.validator;  </p>
+<p>//省略import  </p>
+<p>@Constraint(validatedBy = {<br>        CrossParameterScriptAssertClassValidator.class,<br>        CrossParameterScriptAssertParameterValidator.class<br>})<br>@Target({ TYPE, FIELD, PARAMETER, METHOD, CONSTRUCTOR, ANNOTATION_TYPE })<br>@Retention(RUNTIME)<br>@Documented<br>public @interface CrossParameterScriptAssert {<br>    String message() default &quot;error&quot;;<br>    Class&lt;?&gt;[] groups() default { };<br>    Class&lt;? extends Payload&gt;[] payload() default { };<br>    String script();<br>    String lang();<br>    String alias() default &quot;_this&quot;;<br>    String property() default &quot;&quot;;<br>    ConstraintTarget validationAppliesTo() default ConstraintTarget.IMPLICIT;<br>}<br>[/java]<br>此处我们通过@Constraint指定了两个验证器，一个类级别的，一个跨参数的。validationAppliesTo指定为ConstraintTarget.IMPLICIT，表示隐式自动判断。</p>
+<p>9.2、验证器<br>请下载源码查看</p>
+<p>9.3、使用<br>9.3.1、类级别使用<br>[java]<br>@CrossParameterScriptAssert(property = &quot;confirmation&quot;, script = &quot;_this.password==_this.confirmation&quot;, lang = &quot;javascript&quot;, alias = &quot;_this&quot;, message = &quot;{password.confirmation.error}&quot;)  [/java]<br>指定property即可，其他和之前的一样。<br>9.3.2、跨参数验证<br>[java]<br>@CrossParameterScriptAssert(script = &quot;args[0] == args[1]&quot;, lang = &quot;javascript&quot;, alias = &quot;args&quot;, message = &quot;{password.confirmation.error}&quot;)<br>public void changePassword(String password, String confirmation) {  </p>
+<p>}  [/java]<br>通过args[0]==args[1] 来判断是否相等。</p>
+<p>这样，我们的验证注解就自动适应两种验证规则了。  </p>
+<p>10、组合验证注解<br>有时候，可能有好几个注解需要一起使用，此时就可以使用组合验证注解<br>[java]<br>@Target({ FIELD})<br>@Retention(RUNTIME)<br>@Documented<br>@NotNull(message = &quot;{user.name.null}&quot;)<br>@Length(min = 5, max = 20, message = &quot;{user.name.length.illegal}&quot;)<br>@Pattern(regexp = &quot;[a-zA-Z]{5,20}&quot;, message = &quot;{user.name.length.illegal}&quot;)<br>@Constraint(validatedBy = { })<br>public @interface Composition {<br>    String message() default &quot;&quot;;<br>    Class&lt;?&gt;[] groups() default { };<br>    Class&lt;? extends Payload&gt;[] payload() default { };<br>}  [/java]<br>这样我们验证时只需要：<br>[java]<br>@Composition()<br>private String name;[/java]<br>简洁多了。 </p>
+<p>11、本地化<br>即根据不同的语言选择不同的错误消息显示。<br>1、本地化解析器<br>[java]<br>&lt;bean id=&quot;localeResolver&quot; class=&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot;&gt;<br>    &lt;property name=&quot;cookieName&quot; value=&quot;locale&quot;/&gt;<br>    &lt;property name=&quot;cookieMaxAge&quot; value=&quot;-1&quot;/&gt;<br>    &lt;property name=&quot;defaultLocale&quot; value=&quot;zh_CN&quot;/&gt;<br>&lt;/bean&gt; [/java]<br>此处使用cookie存储本地化信息，当然也可以选择其他的，如Session存储。</p>
+<p>2、设置本地化信息的拦截器<br>[java]<br>&lt;mvc:interceptors&gt;<br>    &lt;bean class=&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;&gt;<br>        &lt;property name=&quot;paramName&quot; value=&quot;language&quot;/&gt;<br>    &lt;/bean&gt;<br>&lt;/mvc:interceptors&gt;  [/java]<br>即请求参数中通过language设置语言。</p>
+<p>3、消息文件<br><img src="http://dl2.iteye.com/upload/attachment/0092/1724/318b49d8-4039-3524-ae09-31ed784a1dc4.jpg" alt=""></p>
+<p>4、 浏览器输入<br><a href="http://localhost:9080/spring4/changePassword?password=1&amp;confirmation=2&amp;language=en_US" target="_blank" rel="external">http://localhost:9080/spring4/changePassword?password=1&amp;confirmation=2&amp;language=en_US</a></p>
+<p>到此，我们已经完成大部分Bean Validation的功能实验了。对于如XML配置、编程式验证API的使用等对于我们使用SpringMVC这种web环境用处不大，所以就不多介绍了，有兴趣可以自己下载官方文档学习。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/" itemprop="url">
+                  [转]Spring4新特性——更好的Java泛型操作API
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:21:58+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——更好的Java泛型操作API">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1993608" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1993608</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>随着泛型用的越来越多，获取泛型实际类型信息的需求也会出现，如果用原生API，需要很多步操作才能获取到泛型，比如：<br>[java]<br>ParameterizedType parameterizedType =<br>    (ParameterizedType) ABService.class.getGenericInterfaces()[0];<br>Type genericType = parameterizedType.getActualTypeArguments()[1];<br>[/java]<br>Spring提供的ResolvableType API，提供了更加简单易用的泛型操作支持，如：<br>[java]<br>ResolvableType resolvableType1 = ResolvableType.forClass(ABService.class);<br>resolvableType1.as(Service.class).getGeneric(1).resolve()<br>[/java]<br>对于获取更复杂的泛型操作ResolvableType更加简单。</p>
+<p>假设我们的API是：<br>[java]<br>public interface Service&lt;N, M&gt; {<br>}  </p>
+<p>@org.springframework.stereotype.Service<br>public class ABService implements Service&lt;A, B&gt; {<br>}  </p>
+<p>@org.springframework.stereotype.Service<br>public class CDService implements Service&lt;C, D&gt; {<br>}<br>[/java]<br>如上泛型类非常简单。 </p>
+<p>1、得到类型的泛型信息<br>[java]<br>ResolvableType resolvableType1 = ResolvableType.forClass(ABService.class);  [/java]<br>通过如上API，可以得到类型的ResolvableType，如果类型被Spring AOP进行了CGLIB代理，请使用ClassUtils.getUserClass(ABService.class)得到原始类型。</p>
+<p>可以通过如下得到泛型参数的第1个位置（从0开始）的类型信息<br>[java]<br>resolvableType1.getInterfaces()[0].getGeneric(1).resolve()  [/java]<br>因为我们泛型信息放在 Service<a, b=""> 上，所以需要resolvableType1.getInterfaces()[0]得到；</a,></p>
+<p>通过getGeneric（泛型参数索引）得到某个位置的泛型；<br>resolve()把实际泛型参数解析出来</p>
+<p>2、得到字段级别的泛型信息<br>假设我们的字段如下：<br>[java]<br>@Autowired<br> private Service&lt;A, B&gt; abService;<br> @Autowired<br> private Service&lt;C, D&gt; cdService;  </p>
+<p> private List&lt;List&lt;String&gt;&gt; list;  </p>
+<p> private Map&lt;String, Map&lt;String, Integer&gt;&gt; map;  </p>
+<p> private List&lt;String&gt;[] array;<br>[/java]<br>通过如下API可以得到字段级别的ResolvableType<br>[java]<br>ResolvableType resolvableType2 =<br>                ResolvableType.forField(ReflectionUtils.findField(GenricInjectTest.class, &quot;cdService&quot;));<br>[/java]<br>然后通过如下API得到Service<c, d="">的第0个位置上的泛型实参类型，即C<br>[java]<br>resolvableType2.getGeneric(0).resolve()<br>[/java]<br>比如 List<list<string>&gt; list;是一种嵌套的泛型用例，我们可以通过如下操作获取String类型：<br>[java]<br>ResolvableType resolvableType3 =<br>                ResolvableType.forField(ReflectionUtils.findField(GenricInjectTest.class, &quot;list&quot;));<br>resolvableType3.getGeneric(0).getGeneric(0).resolve();<br>[/java]<br>更简单的写法<br>[java]<br>resolvableType3.getGeneric(0, 0).resolve(); //List&lt;List&lt;String&gt;&gt; 即String<br>[/java]<br>比如Map<string, map<string,="" integer="">&gt; map;我们想得到Integer，可以使用：<br>[java]<br>ResolvableType resolvableType4 =<br>                ResolvableType.forField(ReflectionUtils.findField(GenricInjectTest.class, &quot;map&quot;));<br>resolvableType4.getGeneric(1).getGeneric(1).resolve();  [/java]<br>更简单的写法<br>[java]<br>resolvableType4.getGeneric(1, 1).resolve()<br>[/java]<br>3、得到方法返回值的泛型信息<br>假设我们的方法如下：<br>[java]<br>private HashMap&lt;String, List&lt;String&gt;&gt; method() {<br>    return null;<br>}<br>[/java]<br>得到Map中的List中的String泛型实参：<br>[java]<br>ResolvableType resolvableType5 =<br>                ResolvableType.forMethodReturnType(ReflectionUtils.findMethod(GenricInjectTest.class, &quot;method&quot;));<br>resolvableType5.getGeneric(1, 0).resolve();<br>[/java]<br>4、得到构造器参数的泛型信息<br>假设我们的构造器如下：<br>[java]<br>public Const(List&lt;List&lt;String&gt;&gt; list, Map&lt;String, Map&lt;String, Integer&gt;&gt; map) {<br>} [/java]<br>我们可以通过如下方式得到第1个参数（ Map<string, map<string,="" integer="">&gt;）中的Integer：<br>[java]<br>ResolvableType resolvableType6 =<br>                ResolvableType.forConstructorParameter(ClassUtils.getConstructorIfAvailable(Const.class, List.class, Map.class), 1);<br>resolvableType6.getGeneric(1, 0).resolve();<br>[/java]<br>5、得到数组组件类型的泛型信息<br>如对于private List<string>[] array; 可以通过如下方式获取List的泛型实参String：<br>[java]<br>ResolvableType resolvableType7 =<br>                ResolvableType.forField(ReflectionUtils.findField(GenricInjectTest.class, &quot;array&quot;));<br>resolvableType7.isArray();//判断是否是数组<br>resolvableType7.getComponentType().getGeneric(0).resolve();<br>[/java]<br>6、自定义泛型类型<br>[java]<br>ResolvableType resolvableType8 = ResolvableType.forClassWithGenerics(List.class, String.class);<br>        ResolvableType resolvableType9 = ResolvableType.forArrayComponent(resolvableType8);<br>resolvableType9.getComponentType().getGeneric(0).resolve();<br>ResolvableType.forClassWithGenerics(List.class, String.class)相当于创建一个List&lt;String&gt;类型；<br>ResolvableType.forArrayComponent(resolvableType8);：相当于创建一个List&lt;String&gt;[]数组；<br>resolvableType9.getComponentType().getGeneric(0).resolve()：得到相应的泛型信息；<br>[/java]<br>7、泛型等价比较：<br>[java]<br>resolvableType7.isAssignableFrom(resolvableType9)<br>[/java]<br>如下创建一个List<integer>[]数组，与之前的List<string>[]数组比较，将返回false。<br>[java]<br>ResolvableType resolvableType10 = ResolvableType.forClassWithGenerics(List.class, Integer.class);<br>ResolvableType resolvableType11= ResolvableType.forArrayComponent(resolvableType10);<br>resolvableType11.getComponentType().getGeneric(0).resolve();<br>resolvableType7.isAssignableFrom(resolvableType11);<br>[/java]<br>从如上操作可以看出其泛型操作功能十分完善，尤其在嵌套的泛型信息获取上相当简洁。目前整个Spring4环境都使用这个API来操作泛型信息。</string></integer></string></string,></string,></list<string></c,></p>
+<p>如之前说的泛型注入：Spring4新特性——泛型限定式依赖注入，通过在依赖注入时使用如下类实现：<br>GenericTypeAwareAutowireCandidateResolver<br>QualifierAnnotationAutowireCandidateResolver<br>ContextAnnotationAutowireCandidateResolver</p>
+<p>还有如Spring的核心BeanWrapperImpl，以及整个Spring/SpringWevMVC的泛型操作都是替换为这个API了：GenericCollectionTypeResolver和GenericTypeResolver都直接委托给ResolvableType这个API。</p>
+<p>所以大家以后对泛型操作可以全部使用这个API了，非常好用。测试用例请参考<a href="https://github.com/zhangkaitao/spring4-showcase/blob/master/spring4-others/src/test/java/com/sishuok/spring4/generic/GenricInjectTest.java" target="_blank" rel="external">GenricInjectTest.java</a>。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/" itemprop="url">
+                  [转]Spring4新特性——JSR310日期时间API的支持
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:15:24+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——JSR310日期时间API的支持">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1994164" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1994164</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>JSR-310规范提供一个新的和改进的Java日期与时间API。从2007投票到2013年11月发布公共Review版本已经好多年了，会在Java8中包含，可以下载OpenJDK早期发布版本试用（Win XP不支持）：</p>
+<p><a href="https://jdk8.java.net/download.html" target="_blank" rel="external">https://jdk8.java.net/download.html</a></p>
+<p>JSR 310规范领导者Stephen Colebourne就是joda-time作者，其主要思想也是借鉴了joda-time，而不是直接把joda-time移植到Java平台中，API是类似的，但做了改进，具体的改进请参考其2009年的一篇文章和InfoQ对他的采访：<br><a href="http://blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html" target="_blank" rel="external">http://blog.joda.org/2009/11/why-jsr-310-isn-joda-time_4941.html</a><br><a href="http://www.infoq.com/cn/news/2010/05/jsr-310" target="_blank" rel="external">http://www.infoq.com/cn/news/2010/05/jsr-310</a><br><a href="http://blog.joda.org/2010/12/what-about-jsr-310_153.html" target="_blank" rel="external">http://blog.joda.org/2010/12/what-about-jsr-310_153.html</a></p>
+<p>规范请前往如下地址下载：<br><a href="https://jcp.org/en/jsr/detail?id=310" target="_blank" rel="external">https://jcp.org/en/jsr/detail?id=310</a></p>
+<p>JSR310 日期与时间规范主要API如下：<br>Clock<br>时钟，类似于钟表的概念，提供了如系统时钟、固定时钟、特定时区的时钟<br>[java]<br>//时钟提供给我们用于访问某个特定 时区的 瞬时时间、日期 和 时间的。<br>Clock c1 = Clock.systemUTC(); //系统默认UTC时钟（当前瞬时时间 System.currentTimeMillis()）<br>System.out.println(c1.millis()); //每次调用将返回当前瞬时时间（UTC）  </p>
+<p>Clock c2 = Clock.systemDefaultZone(); //系统默认时区时钟（当前瞬时时间）  </p>
+<p>Clock c31 = Clock.system(ZoneId.of(&quot;Europe/Paris&quot;)); //巴黎时区<br>System.out.println(c31.millis()); //每次调用将返回当前瞬时时间（UTC）  </p>
+<p>Clock c32 = Clock.system(ZoneId.of(&quot;Asia/Shanghai&quot;));//上海时区<br>System.out.println(c32.millis());//每次调用将返回当前瞬时时间（UTC）  </p>
+<p>Clock c4 = Clock.fixed(Instant.now(), ZoneId.of(&quot;Asia/Shanghai&quot;));//固定上海时区时钟<br>System.out.println(c4.millis());<br>Thread.sleep(1000);<br>System.out.println(c4.millis()); //不变 即时钟时钟在那一个点不动  </p>
+<p>Clock c5 = Clock.offset(c1, Duration.ofSeconds(2)); //相对于系统默认时钟两秒的时钟<br>System.out.println(c1.millis());<br>System.out.println(c5.millis());<br>[/java] </p>
+<p>Instant<br>瞬时时间，等价于以前的System.currentTimeMillis()<br>[java]<br>//瞬时时间 相当于以前的System.currentTimeMillis()<br>Instant instant1 = Instant.now();<br>System.out.println(instant1.getEpochSecond());//精确到秒 得到相对于1970-01-01 00:00:00 UTC的一个时间<br>System.out.println(instant1.toEpochMilli()); //精确到毫秒  </p>
+<p>Clock clock1 = Clock.systemUTC(); //获取系统UTC默认时钟<br>Instant instant2 = Instant.now(clock1);//得到时钟的瞬时时间<br>System.out.println(instant2.toEpochMilli());  </p>
+<p>Clock clock2 = Clock.fixed(instant1, ZoneId.systemDefault()); //固定瞬时时间时钟<br>Instant instant3 = Instant.now(clock2);//得到时钟的瞬时时间<br>System.out.println(instant3.toEpochMilli());//equals instant1<br>[/java]<br>LocalDateTime、LocalDate、LocalTime<br>提供了对java.util.Date的替代，另外还提供了新的DateTimeFormatter用于对格式化/解析的支持<br>[java]<br>//使用默认时区时钟瞬时时间创建 Clock.systemDefaultZone() –&gt;即相对于 ZoneId.systemDefault()默认时区<br>LocalDateTime now = LocalDateTime.now();<br>System.out.println(now);  </p>
+<p>//自定义时区<br>LocalDateTime now2= LocalDateTime.now(ZoneId.of(&quot;Europe/Paris&quot;));<br>System.out.println(now2);//会以相应的时区显示日期  </p>
+<p>//自定义时钟<br>Clock clock = Clock.system(ZoneId.of(&quot;Asia/Dhaka&quot;));<br>LocalDateTime now3= LocalDateTime.now(clock);<br>System.out.println(now3);//会以相应的时区显示日期  </p>
+<p>//不需要写什么相对时间 如java.util.Date 年是相对于1900 月是从0开始<br>//2013-12-31 23:59<br>LocalDateTime d1 = LocalDateTime.of(2013, 12, 31, 23, 59);  </p>
+<p>//年月日 时分秒 纳秒<br>LocalDateTime d2 = LocalDateTime.of(2013, 12, 31, 23, 59,59, 11);  </p>
+<p>//使用瞬时时间 + 时区<br>Instant instant = Instant.now();<br>LocalDateTime d3 = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());<br>System.out.println(d3);  </p>
+<p>//解析String—&gt;LocalDateTime<br>LocalDateTime d4 = LocalDateTime.parse(&quot;2013-12-31T23:59&quot;);<br>System.out.println(d4);  </p>
+<p>LocalDateTime d5 = LocalDateTime.parse(&quot;2013-12-31T23:59:59.999&quot;);//999毫秒 等价于999000000纳秒<br>System.out.println(d5);  </p>
+<p>//使用DateTimeFormatter API 解析 和 格式化<br>DateTimeFormatter formatter = DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd HH:mm:ss&quot;);<br>LocalDateTime d6 = LocalDateTime.parse(&quot;2013/12/31 23:59:59&quot;, formatter);<br>System.out.println(formatter.format(d6));  </p>
+<p>//时间获取<br>System.out.println(d6.getYear());<br>System.out.println(d6.getMonth());<br>System.out.println(d6.getDayOfYear());<br>System.out.println(d6.getDayOfMonth());<br>System.out.println(d6.getDayOfWeek());<br>System.out.println(d6.getHour());<br>System.out.println(d6.getMinute());<br>System.out.println(d6.getSecond());<br>System.out.println(d6.getNano());<br>//时间增减<br>LocalDateTime d7 = d6.minusDays(1);<br>LocalDateTime d8 = d7.plus(1, IsoFields.QUARTER_YEARS);  </p>
+<p>//LocalDate 即年月日 无时分秒<br>//LocalTime即时分秒 无年月日<br>//API和LocalDateTime类似就不演示了<br>[/java]<br>ZonedDateTime<br>带有时区的date-time 存储纳秒、时区和时差（避免与本地date-time歧义）；API和LocalDateTime类似，只是多了时差(如2013-12-20T10:35:50.711+08:00[Asia/Shanghai])<br>[java]<br>//即带有时区的date-time 存储纳秒、时区和时差（避免与本地date-time歧义）。<br>//API和LocalDateTime类似，只是多了时差(如2013-12-20T10:35:50.711+08:00[Asia/Shanghai])<br>ZonedDateTime now = ZonedDateTime.now();<br>System.out.println(now);  </p>
+<p>ZonedDateTime now2= ZonedDateTime.now(ZoneId.of(&quot;Europe/Paris&quot;));<br>System.out.println(now2);  </p>
+<p>//其他的用法也是类似的 就不介绍了  </p>
+<p>ZonedDateTime z1 = ZonedDateTime.parse(&quot;2013-12-31T23:59:59Z[Europe/Paris]&quot;);<br>System.out.println(z1);<br>[/java] </p>
+<p>Duration<br>表示两个瞬时时间的时间段 </p>
+<p>[java]<br>//表示两个瞬时时间的时间段<br>Duration d1 = Duration.between(Instant.ofEpochMilli(System.currentTimeMillis() - 12323123), Instant.now());<br>//得到相应的时差<br>System.out.println(d1.toDays());<br>System.out.println(d1.toHours());<br>System.out.println(d1.toMinutes());<br>System.out.println(d1.toMillis());<br>System.out.println(d1.toNanos());  </p>
+<p>//1天时差 类似的还有如ofHours()<br>Duration d2 = Duration.ofDays(1);<br>System.out.println(d2.toDays());<br>[/java] </p>
+<p>Chronology<br>用于对年历系统的支持，是java.util.Calendar的替代者<br>[java]<br>//提供对java.util.Calendar的替换，提供对年历系统的支持<br>Chronology c  = HijrahChronology.INSTANCE;<br>ChronoLocalDateTime d = c.localDateTime(LocalDateTime.now());<br>System.out.println(d);<br>[/java]<br>其他<br>如果提供了年、年月、月日、周期的API支持<br>[java]<br>Year year = Year.now();<br>YearMonth yearMonth = YearMonth.now();<br>MonthDay monthDay = MonthDay.now();  </p>
+<p>System.out.println(year);//年<br>System.out.println(yearMonth); //年-月<br>System.out.println(monthDay); // 月-日  </p>
+<p>//周期，如表示10天前  3年5个月钱<br>Period period1 = Period.ofDays(10);<br>System.out.println(period1);<br>Period period2 = Period.of(3, 5, 0);<br>System.out.println(period2);<br>[/java]<br>代码示例请参考：TimeTest.java</p>
+<p>从以上来看，JSR310提供了更好、更强大的、更易使用的API。另外有三篇对joda-time和jsr310 使用的介绍文章：<br><a href="http://www.codedata.com.tw/java/jodatime-jsr310-1-date-calendar/" target="_blank" rel="external">http://www.codedata.com.tw/java/jodatime-jsr310-1-date-calendar/</a><br><a href="http://www.codedata.com.tw/java/jodatime-jsr310-2-time-abc/" target="_blank" rel="external">http://www.codedata.com.tw/java/jodatime-jsr310-2-time-abc/</a><br><a href="http://www.codedata.com.tw/java/jodatime-jsr310-3-using-jodatime/" target="_blank" rel="external">http://www.codedata.com.tw/java/jodatime-jsr310-3-using-jodatime/</a></p>
+<p>spring4提供了对jsr310的支持，只要能发现如java.time.LocalDate，DefaultFormattingConversionService就会自动注册对jsr310的支持；对于ConversionService请参考：<br>SpringMVC数据格式化——第七章 注解式控制器的数据验证、类型转换及格式化——跟着开涛学SpringMVC </p>
+<p>我们只需要在实体/Bean上使用DateTimeFormat注解：<br>[java]<br>@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)<br>private LocalDateTime dateTime;  </p>
+<p>@DateTimeFormat(pattern = &quot;yyyy-MM-dd&quot;)<br>private LocalDate date;  </p>
+<p>@DateTimeFormat(pattern = &quot;HH:mm:ss&quot;)<br>private LocalTime time;<br>[/java]<br>比如我们在springmvc中：<br>[java]<br>@RequestMapping(&quot;/test&quot;)<br>public String test(@ModelAttribute(&quot;entity&quot;) Entity entity) {<br>    return &quot;test&quot;;<br>}<br>[/java]<br>当前端页面请求：<br>localhost:9080/spring4/test?dateTime=2013-11-11 11:11:11&amp;date=2013-11-11&amp;time=12:12:12<br>会自动进行类型转换。</p>
+<p>另外spring4也提供了对TimeZone的支持；比如在springmvc中注册了LocaleContextResolver相应实现的话（如CookieLocaleResolver），我们就可以使用如下两种方式得到相应的TimeZone：<br>RequestContextUtils.getTimeZone(request)<br>LocaleContextHolder.getTimeZone()</p>
+<p>不过目前的缺点是不能像Local那样自动的根据当前请求得到相应的TimeZone，如果需要这种功能需要覆盖相应的如CookieLocaleResolver中的如下方法来得到：<br>[java]<br>protected TimeZone determineDefaultTimeZone(HttpServletRequest request) {<br>    return getDefaultTimeZone();<br>}<br>[/java]<br>另外还提供了DateTimeContextHolder，其用于线程绑定DateTimeContext；而DateTimeContext提供了如：Chronology、ZoneId、DateTimeFormatter等上下文数据，如果需要这种上下文信息的话，可以使用这个API进行绑定。比如在进行日期格式化时，就会去查找相应的DateTimeFormatter，因此如果想自定义相应的格式化格式，那么使用DateTimeContextHolder绑定即可。</p>
+<p>源代码请参考github项目：spring4-datetime-jsr310 </p>
+<p>spring4只是简单的对jsr310提供了相应的支持，没有太多的增强。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/" itemprop="url">
                   [转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进
                 </a>
@@ -373,7 +1196,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -393,7 +1217,7 @@
         
           
             <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1995111" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1995111</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>一、注解方面的改进<br>spring4对注解API和ApplicationContext获取注解Bean做了一点改进。<br>获取注解的注解，如@Service是被@Compent注解的注解，可以通过如下方式获取@Componet注解实例：<br>[java]<br>Annotation service = AnnotationUtils.findAnnotation(ABService.class, org.springframework.stereotype.Service.class);<br>Annotation component = AnnotationUtils.getAnnotation(service, org.springframework.stereotype.Component.class);<br>[/java]<br>获取重复注解：<br>比如在使用hibernate validation时，我们想在一个方法上加相同的注解多个，需要使用如下方式：<br>[java]<br>@Length.List(<br>        value = {<br>                @Length(min = 1, max = 2, groups = A.class),<br>                @Length(min = 3, max = 4, groups = B.class)<br>        }<br>)<br>public void test() {  [/java]<br>可以通过如下方式获取@Length：<br>[java]<br>Method method = ClassUtils.getMethod(AnnotationUtilsTest.class, &quot;test&quot;);<br>Set&lt;Length&gt; set = AnnotationUtils.getRepeatableAnnotation(method, Length.List.class, Length.class);<br>[/java]<br>当然，如果你使用Java8，那么本身就支持重复注解，比如spring的任务调度注解，<br>[java]<br>@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})<br>@Retention(RetentionPolicy.RUNTIME)<br>@Documented<br>@Repeatable(Schedules.class)<br>public @interface Scheduled {<br>[/java]<br>[java]<br>@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})<br>@Retention(RetentionPolicy.RUNTIME)<br>@Documented<br>public @interface Schedules {  </p>
 <pre><code>Scheduled[] value();  
 </code></pre><p>}<br>[/java]<br>这样的话，我们可以直接同时注解相同的多个注解：<br>[java]<br>@Scheduled(cron = &quot;123&quot;)<br>@Scheduled(cron = &quot;234&quot;)<br>public void test<br>[/java]<br>但是获取的时候还是需要使用如下方式：<br>[java]<br>AnnotationUtils.getRepeatableAnnotation(ClassUtils.getMethod(TimeTest.class, &quot;test&quot;), Schedules.class, Scheduled.class)<br>[/java]<br>ApplicationContext和BeanFactory提供了直接通过注解获取Bean的方法：<br>[java]<br>@Test<br>public void test() {<br>    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();<br>    ctx.register(GenericConfig.class);<br>    ctx.refresh();  </p>
@@ -589,7 +1413,8 @@ System.out.println(
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -609,7 +1434,7 @@ System.out.println(
         
           
             <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1991830" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1991830</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>Spring4支持使用Groovy DSL来进行Bean定义配置，其类似于XML，不过因为是Groovy DSL，可以实现任何复杂的语法配置，但是对于配置，我们需要那么复杂吗？本着学习的态度试用了下其Groovy DSL定义Bean，其主要缺点：<br>1、DSL语法规则不足，需要其后续维护；<br>2、编辑器的代码补全需要跟进，否则没有代码补全，写这个很痛苦；<br>3、出错提示不友好，排错难；<br>4、当前对于一些配置还是需要XML的支持，所以还不是100%的纯Groovy DSL；<br>5、目前对整个Spring生态支持还是不够的，比如Web，需要观望。</p>
 <p>其优点就是其本质是Groovy脚本，所以可以做非常复杂的配置，如果以上问题能够解决，其也是一个不错的选择。在Groovy中的话使用这种配置感觉不会有什么问题，但是在纯Java开发环境下也是有它，给我的感觉是这个功能其目的是去推广它的groovy。比较怀疑它的动机。</p>
 <p>接下来我们来看看Spring配置的发展：<br>Spring 2时代是XML风格配置  可以参考《跟我学Spring3》的前几章<br>Spring 3时代引入注解风格配置  可以参考《跟我学Spring3》的第12章<br>Spring 4时代引入Groovy DSL风格来配置 后续讲解</p>
@@ -825,7 +1650,8 @@ message(String, &amp;quot;hello&amp;quot;) {}
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -845,7 +1671,7 @@ message(String, &amp;quot;hello&amp;quot;) {}
         
           
             <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
 <p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
 <pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
@@ -986,7 +1812,8 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1006,7 +1833,7 @@ System.out.println(&amp;quot;==no wait&amp;quot;);
         
           
             <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989379" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989379</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>1、Map依赖注入：<br>[java]<br>@Autowired<br>private Map&lt;String, BaseService&gt; map;<br>[/java]<br>这样会注入：key是bean名字；value就是所有实现了BaseService的Bean，假设使用上一篇的例子，则会得到：<br>[java]<br>{organizationService=com.sishuok.spring4.service.OrganizationService@617029, userService=com.sishuok.spring4.service.UserService@10ac73b}<br>[/java]</p>
 <p>2、List/数组注入：<br>[java]<br>@Autowired<br>private List&lt;BaseService&gt; list;<br>[/java]<br> 这样会注入所有实现了BaseService的Bean；但是顺序是不确定的，如果我们想要按照某个顺序获取；在Spring4中可以使用@Order或实现Ordered接口来实现，如：<br>[java]<br>@Order(value = 1)<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>这种方式在一些需要多态的场景下是非常有用的。</p>
 <p>3、@Lazy可以延迟依赖注入：<br>[java]<br>@Lazy<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>[java]<br>@Lazy<br>@Autowired<br>private UserService userService;<br>[/java]<br> 我们可以把@Lazy放在@Autowired之上，即依赖注入也是延迟的；当我们调用userService时才会注入。即延迟依赖注入到使用时。同样适用于@Bean。</p>
@@ -1161,7 +1988,8 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1181,7 +2009,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         
           
             <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
 <p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
 <p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
@@ -1319,7 +2147,8 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1338,7 +2167,32 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
       
         
           
-            <p> 一、SpringMVC使用@ResponseBody时返回json的日期格式</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/'>SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p> 一、SpringMVC使用@ResponseBody时返回json的日期格式</p>
 <pre><code> @ResponseBody 返回json字符串的核心类是org.springframework.http.converter.json.MappingJacksonHttpMessageConverter，它使用了Jackson 这个开源的第三方类库。主要是以下两个jar包：jackson-core-asl-1.6.4.jar；jackson-mapper-asl-1.6.4.jar。
 出现问题： 使用@ResponseBody时返回json字符串的日期格式。Date类型属性默认返回一个Long型的时间戳，怎样能够返回自定义的日期格式？
 解决方案：目前有两种方式实现,
@@ -1474,7 +2328,8 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1514,524 +2369,6 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
 </code></pre><p>&lt;/beans&gt;<br>[/xml]<br>这里可以看到我所有的页面引用到/styles/**的资源都从/static_resources/css里面进行查找。 </p>
 <p>页面的一段静态资源访问的代码。<br>[html]<br>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;<a href="http://java.sun.com/jstl/core&quot;%&amp;gt" target="_blank" rel="external">http://java.sun.com/jstl/core&quot;%&amp;gt</a>;<br>&lt;HTML&gt;<br>&lt;HEAD&gt;<br>  &lt;TITLE&gt; ABCDEFG &lt;/TITLE&gt;<br>&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;&lt;c:url value=’/styles/siteboard.css’/&gt;&quot;&gt;<br>…<br>…<br>…<br>[/html]</p>
 <p>可能这个标签的真谛就是为了引用资源的访问不会类似CONTROLLER一样被拦截，区分出关注的资源的访问，一般我们在springMVC里面的拦截都会配置为”/“，拦截所有的。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" itemprop="url">
-                  [转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-05T14:42:33+08:00" content="2015-04-05">
-              2015-04-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" class="leancloud_visitors" data-flag-title="[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>2．1、Spring Web MVC是什么<br>Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。</p>
-<p>另外还有一种基于组件的、事件驱动的Web框架在此就不介绍了，如Tapestry、JSF等。</p>
-<p>Spring Web MVC也是服务到工作者模式的实现，但进行可优化。前端控制器是DispatcherServlet；应用控制器其实拆为处理器映射器(Handler Mapping)进行处理器管理和视图解析器(View Resolver)进行视图管理；页面控制器/动作/处理器为Controller接口（仅包含ModelAndView handleRequest(request, response) 方法）的实现（也可以是任何的POJO类）；支持本地化（Locale）解析、主题（Theme）解析及文件上传等；提供了非常灵活的数据验证、格式化和数据绑定机制；提供了强大的约定大于配置（惯例优先原则）的契约式编程支持。<br>2．2、Spring Web MVC能帮我们做什么<br>√让我们能非常简单的设计出干净的Web层和薄薄的Web层；<br>√进行更简洁的Web层的开发；<br>√天生与Spring框架集成（如IoC容器、AOP等）；<br>√提供强大的约定大于配置的契约式编程支持；<br>√能简单的进行Web层的单元测试；<br>√支持灵活的URL到页面控制器的映射；<br>√非常容易与其他视图技术集成，如Velocity、FreeMarker等等，因为模型数据不放在特定的API里，而是放在一个Model里（Map数据结构实现，因此很容易被其他框架使用）；<br>√非常灵活的数据验证、格式化和数据绑定机制，能使用任何对象进行数据绑定，不必实现特定框架的API；<br>√提供一套强大的JSP标签库，简化JSP开发；<br>√支持灵活的本地化、主题等解析；<br>√更加简单的异常处理；<br>√对静态资源的支持；<br>√支持Restful风格。<br>2．3、Spring Web MVC架构<br>Spring Web MVC框架也是一个基于请求驱动的Web框架，并且也使用了前端控制器模式来进行设计，再根据请求映射规则分发给相应的页面控制器（动作/处理器）进行处理。首先让我们整体看一下Spring Web MVC处理请求的流程：</p>
-<p>2.3.1、Spring Web MVC处理请求的流程<br>如图2-1<br><img src="http://sishuok.com/forum/upload/2012/7/14/529024df9d2b0d1e62d8054a86d866c9__1.JPG" alt=""><br>图2-1<br>具体执行步骤如下：<br>1、  首先用户发送请求————&gt;前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图2-1中的1、2步骤；<br>2、  页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；图2-1中的3、4、5步骤；<br>3、  前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图2-1中的步骤6、7；<br>4、  前端控制器再次收回控制权，将响应返回给用户，图2-1中的步骤8；至此整个结束。</p>
-<p>问题：<br>1、  请求如何给前端控制器？<br>2、  前端控制器如何根据请求信息选择页面控制器进行功能处理？<br>3、  如何支持多种页面控制器呢？<br>4、  如何页面控制器如何使用业务对象？<br>5、  页面控制器如何返回模型数据？<br>6、  前端控制器如何根据页面控制器返回的逻辑视图名选择具体的视图进行渲染？<br>7、  不同的视图技术如何使用相应的模型数据？</p>
-<p>首先我们知道有如上问题，那这些问题如何解决呢？请让我们先继续，在后边依次回答。</p>
-<p>2.3.2、Spring Web MVC架构<br>1、Spring Web MVC核心架构图，如图2-2<br><img src="http://sishuok.com/forum/upload/2012/7/14/57ea9e7edeebd5ee2ec0cf27313c5fb6__2.JPG" alt=""><br>图2-2<br>架构图对应的DispatcherServlet核心代码如下：</p>
-<p>[java]<br>//前端控制器分派方法<br>protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {<br>        HttpServletRequest processedRequest = request;<br>        HandlerExecutionChain mappedHandler = null;<br>        int interceptorIndex = -1;  </p>
-<pre><code>try {  
-    ModelAndView mv;  
-    boolean errorView = false;  
-
-    try {  
-           //检查是否是请求是否是multipart（如文件上传），如果是将通过MultipartResolver解析  
-        processedRequest = checkMultipart(request);  
-           //步骤2、请求到处理器（页面控制器）的映射，通过HandlerMapping进行映射  
-        mappedHandler = getHandler(processedRequest, false);  
-        if (mappedHandler == null || mappedHandler.getHandler() == null) {  
-            noHandlerFound(processedRequest, response);  
-            return;  
-        }  
-           //步骤3、处理器适配，即将我们的处理器包装成相应的适配器（从而支持多种类型的处理器）  
-        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());  
-
-          // 304 Not Modified缓存支持  
-        //此处省略具体代码  
-
-        // 执行处理器相关的拦截器的预处理（HandlerInterceptor.preHandle）  
-        //此处省略具体代码  
-
-        // 步骤4、由适配器执行处理器（调用处理器相应功能处理方法）  
-        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());  
-
-        // Do we need view name translation?  
-        if (mv != null &amp;amp;&amp;amp; !mv.hasView()) {  
-            mv.setViewName(getDefaultViewName(request));  
-        }  
-
-        // 执行处理器相关的拦截器的后处理（HandlerInterceptor.postHandle）  
-        //此处省略具体代码  
-    }  
-    catch (ModelAndViewDefiningException ex) {  
-        logger.debug(&amp;quot;ModelAndViewDefiningException encountered&amp;quot;, ex);  
-        mv = ex.getModelAndView();  
-    }  
-    catch (Exception ex) {  
-        Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);  
-        mv = processHandlerException(processedRequest, response, handler, ex);  
-        errorView = (mv != null);  
-    }  
-
-    //步骤5 步骤6、解析视图并进行视图的渲染  
-</code></pre><p>//步骤5 由ViewResolver解析View（viewResolver.resolveViewName(viewName, locale)）<br>//步骤6 视图在渲染时会把Model传入（view.render(mv.getModelInternal(), request, response);）<br>            if (mv != null &amp;&amp; !mv.wasCleared()) {<br>                render(mv, processedRequest, response);<br>                if (errorView) {<br>                    WebUtils.clearErrorRequestAttributes(request);<br>                }<br>            }<br>            else {<br>                if (logger.isDebugEnabled()) {<br>                    logger.debug(&quot;Null ModelAndView returned to DispatcherServlet with name ‘&quot; + getServletName() +<br>                            &quot;’: assuming HandlerAdapter completed request handling&quot;);<br>                }<br>            }  </p>
-<pre><code>        // 执行处理器相关的拦截器的完成后处理（HandlerInterceptor.afterCompletion）  
-        //此处省略具体代码  
-
-    catch (Exception ex) {  
-        // Trigger after-completion for thrown exception.  
-        triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);  
-        throw ex;  
-    }  
-    catch (Error err) {  
-        ServletException ex = new NestedServletException(&amp;quot;Handler processing failed&amp;quot;, err);  
-        // Trigger after-completion for thrown exception.  
-        triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);  
-        throw ex;  
-    }  
-
-    finally {  
-        // Clean up any resources used by a multipart request.  
-        if (processedRequest != request) {  
-            cleanupMultipart(processedRequest);  
-        }  
-    }  
-}  
-</code></pre><p>[/java]<br>核心架构的具体流程步骤如下：<br>1、  首先用户发送请求——&gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制；<br>2、  DispatcherServlet——&gt;HandlerMapping， HandlerMapping将会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器）对象，通过这种策略模式，很容易添加新的映射策略；<br>3、  DispatcherServlet——&gt;HandlerAdapter，HandlerAdapter将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；<br>4、  HandlerAdapter——&gt;处理器功能处理方法的调用，HandlerAdapter将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；并返回一个ModelAndView对象（包含模型数据、逻辑视图名）；<br>5、  ModelAndView的逻辑视图名——&gt; ViewResolver， ViewResolver将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；<br>6、  View——&gt;渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；<br>7、返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。</p>
-<p>此处我们只是讲了核心流程，没有考虑拦截器、本地解析、文件上传解析等，后边再细述。</p>
-<p>到此，再来看我们前边提出的问题： </p>
-<p>1、  请求如何给前端控制器？这个应该在web.xml中进行部署描述，在HelloWorld中详细讲解。<br>2、  前端控制器如何根据请求信息选择页面控制器进行功能处理？ 我们需要配置HandlerMapping进行映射<br>3、  如何支持多种页面控制器呢？配置HandlerAdapter从而支持多种类型的页面控制器<br>4、  如何页面控制器如何使用业务对象？可以预料到，肯定利用Spring IoC容器的依赖注入功能<br>5、  页面控制器如何返回模型数据？使用ModelAndView返回<br>6、  前端控制器如何根据页面控制器返回的逻辑视图名选择具体的视图进行渲染？ 使用ViewResolver进行解析<br>7、  不同的视图技术如何使用相应的模型数据？ 因为Model是一个Map数据结构，很容易支持其他视图技术</p>
-<p>在此我们可以看出具体的核心开发步骤：<br>1、  DispatcherServlet在web.xml中的部署描述，从而拦截请求到Spring Web MVC<br>2、  HandlerMapping的配置，从而将请求映射到处理器<br>3、  HandlerAdapter的配置，从而支持多种类型的处理器<br>4、  ViewResolver的配置，从而将逻辑视图名解析为具体视图技术<br>5、处理器（页面控制器）的配置，从而进行功能处理</p>
-<p>上边的开发步骤我们会在Hello World中详细验证。</p>
-<p>2．4、Spring Web MVC优势<br>1、清晰的角色划分：前端控制器（DispatcherServlet）、请求到处理器映射（HandlerMapping）、处理器适配器（HandlerAdapter）、视图解析器（ViewResolver）、处理器或页面控制器（Controller）、验证器（   Validator）、命令对象（Command  请求参数绑定到的对象就叫命令对象）、表单对象（Form Object 提供给表单展示和提交到的对象就叫表单对象）。<br>2、分工明确，而且扩展点相当灵活，可以很容易扩展，虽然几乎不需要；<br>3、由于命令对象就是一个POJO，无需继承框架特定API，可以使用命令对象直接作为业务对象；<br>4、和Spring 其他框架无缝集成，是其它Web框架所不具备的；<br>5、可适配，通过HandlerAdapter可以支持任意的类作为处理器；<br>6、可定制性，HandlerMapping、ViewResolver等能够非常简单的定制；<br>7、功能强大的数据验证、格式化、绑定机制；<br>8、利用Spring提供的Mock对象能够非常简单的进行Web层单元测试；<br>9、本地化、主题的解析的支持，使我们更容易进行国际化和主题的切换。<br>10、强大的JSP标签库，使JSP编写更容易。<br>………………还有比如RESTful风格的支持、简单的文件上传、约定大于配置的契约式编程支持、基于注解的零配置支持等等。</p>
-<p>到此我们已经简单的了解了Spring Web MVC，接下来让我们来个实例来具体使用下这个框架。<br>2．5、Hello World入门<br>2.5.1、准备开发环境和运行环境：<br>☆开发工具：eclipse<br>☆运行环境：tomcat6.0.20<br>☆工程：动态web工程（springmvc-chapter2）<br>☆spring框架下载：<br>spring-framework-3.1.1.RELEASE-with-docs.zip<br>☆依赖jar包：<br>1、  Spring框架jar包：<br>为了简单，将spring-framework-3.1.1.RELEASE-with-docs.zip/dist/下的所有jar包拷贝到项目的WEB-INF/lib目录下；<br>2、  Spring框架依赖的jar包：<br>需要添加Apache commons logging日志，此处使用的是commons.logging-1.1.1.jar；<br>需要添加jstl标签库支持，此处使用的是jstl-1.1.2.jar和standard-1.1.2.jar；<br>2.5.2、前端控制器的配置<br>在我们的web.xml中添加如下配置：</p>
-<p>[xml]<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;chapter2&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>&lt;/servlet&gt;<br>&lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;chapter2&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>[/xml]<br>load-on-startup：表示启动容器时初始化该Servlet；<br>url-pattern：表示哪些请求交给Spring Web MVC处理， “/” 是用来定义默认servlet映射的。也可以如“*.html”表示拦截所有以html为扩展名的请求。</p>
-<p>自此请求已交给Spring Web MVC框架处理，因此我们需要配置Spring的配置文件，默认DispatcherServlet会加载WEB-INF/[DispatcherServlet的Servlet名字]-servlet.xml配置文件。本示例为WEB-INF/ chapter2-servlet.xml。</p>
-<p>2.5.3、在Spring配置文件中配置HandlerMapping、HandlerAdapter<br>具体配置在WEB-INF/ chapter2-servlet.xml文件中：</p>
-<p>[xml]<br>&lt;!– HandlerMapping –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot;/&gt;  </p>
-<p>&lt;!– HandlerAdapter –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&quot;/&gt;<br>[/xml]<br>BeanNameUrlHandlerMapping：表示将请求的URL和Bean名字映射，如URL为 “上下文/hello”，则Spring配置文件必须有一个名字为“/hello”的Bean，上下文默认忽略。<br>SimpleControllerHandlerAdapter：表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean可以作为Spring Web MVC中的处理器。如果需要其他类型的处理器可以通过实现HadlerAdapter来解决。<br>2.5.4、在Spring配置文件中配置ViewResolver<br>具体配置在WEB-INF/ chapter2-servlet.xml文件中：</p>
-<p>[xml]<br>&lt;!– ViewResolver –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlView&quot;/&gt;<br>    &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;<br>    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;<br>&lt;/bean&gt;<br>[/xml]<br>InternalResourceViewResolver：用于支持Servlet、JSP视图解析；<br>    viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包；<br>    prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀），比如传进来的逻辑视图名为hello，则该该jsp视图页面应该存放在“WEB-INF/jsp/hello.jsp”；</p>
-<p>2.5.5、开发处理器/页面控制器</p>
-<p>[java]<br>package cn.javass.chapter2.web.controller;<br>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;<br>import org.springframework.web.servlet.ModelAndView;<br>import org.springframework.web.servlet.mvc.Controller;<br>public class HelloWorldController implements Controller {<br>    @Override<br>    public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {<br>       //1、收集参数、验证参数<br>       //2、绑定参数到命令对象<br>       //3、将命令对象传入业务对象进行业务处理<br>       //4、选择下一个页面<br>       ModelAndView mv = new ModelAndView();<br>       //添加模型数据 可以是任意的POJO对象<br>       mv.addObject(&quot;message&quot;, &quot;Hello World!&quot;);<br>       //设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面<br>       mv.setViewName(&quot;hello&quot;);<br>       return mv;<br>    }<br>}<br>[/java]<br>org.springframework.web.servlet.mvc.Controller：页面控制器/处理器必须实现Controller接口，注意别选错了；后边我们会学习其他的处理器实现方式；<br>public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) ：功能处理方法，实现相应的功能处理，比如收集参数、验证参数、绑定参数到命令对象、将命令对象传入业务对象进行业务处理、最后返回ModelAndView对象；<br>ModelAndView：包含了视图要实现的模型数据和逻辑视图名；“mv.addObject(“message”, “Hello World!”);<br>”表示添加模型数据，此处可以是任意POJO对象；“mv.setViewName(“hello”);”表示设置逻辑视图名为“hello”，视图解析器会将其解析为具体的视图，如前边的视图解析器InternalResourceVi。wResolver会将其解析为“WEB-INF/jsp/hello.jsp”。</p>
-<p>我们需要将其添加到Spring配置文件(WEB-INF/chapter2-servlet.xml)，让其接受Spring IoC容器管理:<br>[xml]<br>&lt;!– 处理器 –&gt;<br>&lt;bean name=&quot;/hello&quot; class=&quot;cn.javass.chapter2.web.controller.HelloWorldController&quot;/&gt;  </p>
-<p>name=&quot;/hello&quot;：前边配置的BeanNameUrlHandlerMapping，表示如过请求的URL为 “上下文/hello”，则将会交给该Bean进行处理。<br>[/xml]<br>2.5.6、开发视图页面<br>创建 /WEB-INF/jsp/hello.jsp视图页面：</p>
-<p>[html]<br>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;<br>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;<a href="http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt" target="_blank" rel="external">http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt</a>;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;<br>&lt;title&gt;Hello World&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>${message}<br>&lt;/body&gt;<br>&lt;/html&gt;<br>[/html]<br>${message}：表示显示由HelloWorldController处理器传过来的模型数据。<br>2.5.6、启动服务器运行测试<br>通过请求：<a href="http://localhost:9080/springmvc-chapter2/hello，如果页面输出“Hello" target="_blank" rel="external">http://localhost:9080/springmvc-chapter2/hello，如果页面输出“Hello</a> World! ”就表明我们成功了！</p>
-<p>2.5.7、运行流程分析<br>如图2-3</p>
-<p>图2-3<br>运行步骤：<br>1、  首先用户发送请求<a href="http://localhost:9080/springmvc-chapter2/hello——&gt;web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；" target="_blank" rel="external">http://localhost:9080/springmvc-chapter2/hello——&gt;web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；</a><br>2、  DispatcherServlet——&gt;BeanNameUrlHandlerMapping进行请求到处理的映射，BeanNameUrlHandlerMapping将“/hello”路径直接映射到名字为“/hello”的Bean进行处理，即HelloWorldController，BeanNameUrlHandlerMapping将其包装为HandlerExecutionChain（只包括HelloWorldController处理器，没有拦截器）；<br>3、  DispatcherServlet——&gt; SimpleControllerHandlerAdapter，SimpleControllerHandlerAdapter将HandlerExecutionChain中的处理器（HelloWorldController）适配为SimpleControllerHandlerAdapter；<br>4、  SimpleControllerHandlerAdapter——&gt; HelloWorldController处理器功能处理方法的调用，SimpleControllerHandlerAdapter将会调用处理器的handleRequest方法进行功能处理，该处理方法返回一个ModelAndView给DispatcherServlet；<br>5、  hello（ModelAndView的逻辑视图名）——&gt;InternalResourceViewResolver， InternalResourceViewResolver使用JstlView，具体视图页面在/WEB-INF/jsp/hello.jsp；<br>6、  JstlView（/WEB-INF/jsp/hello.jsp）——&gt;渲染，将在处理器传入的模型数据(message=HelloWorld！)在视图中展示出来；<br>7、  返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。</p>
-<p>到此HelloWorld就完成了，步骤是不是有点多？而且回忆下我们主要进行了如下配置：</p>
-<p>1、  前端控制器DispatcherServlet；<br>2、  HandlerMapping<br>3、  HandlerAdapter<br>4、  ViewResolver<br>5、  处理器/页面控制器<br>6、  视图</p>
-<p>因此，接下来几章让我们详细看看这些配置，先从DispatcherServlet开始吧。</p>
-<p>2．6、POST中文乱码解决方案<br>spring Web MVC框架提供了org.springframework.web.filter.CharacterEncodingFilter用于解决POST方式造成的中文乱码问题，具体配置如下：</p>
-<p>[xml]<br>&lt;filter&gt;<br>    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;<br>    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;<br>    &lt;init-param&gt;<br>        &lt;param-name&gt;encoding&lt;/param-name&gt;<br>        &lt;param-value&gt;utf-8&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>&lt;/filter&gt;<br>&lt;filter-mapping&gt;<br>    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;<br>    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br>&lt;/filter-mapping&gt;<br>[/xml]<br>以后我们项目及所有页面的编码均为UTF-8。</p>
-<p>2.7、Spring3.1新特性<br>一、Spring2.5之前，我们都是通过实现Controller接口或其实现来定义我们的处理器类。</p>
-<p>二、Spring2.5引入注解式处理器支持，通过@Controller 和 @RequestMapping注解定义我们的处理器类。并且提供了一组强大的注解：</p>
-<p>需要通过处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter来开启支持@Controller 和 @RequestMapping注解的处理器。</p>
-<p>@Controller：用于标识是处理器类；<br>@RequestMapping：请求到处理器功能方法的映射规则；<br>@RequestParam：请求参数到处理器功能处理方法的方法参数上的绑定；<br>@ModelAttribute：请求参数到命令对象的绑定；<br>@SessionAttributes：用于声明session级别存储的属性，放置在处理器类上，通常列出模型属性（如@ModelAttribute）对应的名称，则这些属性会透明的保存到session中；<br>@InitBinder：自定义数据绑定注册支持，用于将请求参数转换到命令对象属性的对应类型；</p>
-<p>三、Spring3.0引入RESTful架构风格支持(通过@PathVariable注解和一些其他特性支持),且又引入了更多的注解支持：<br>@CookieValue：cookie数据到处理器功能处理方法的方法参数上的绑定；<br>@RequestHeader：请求头（header）数据到处理器功能处理方法的方法参数上的绑定；<br>@RequestBody：请求的body体的绑定（通过HttpMessageConverter进行类型转换）；<br>@ResponseBody：处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）；<br>@ResponseStatus：定义处理器功能处理方法/异常处理器返回的状态码和原因；<br>@ExceptionHandler：注解式声明异常处理器；<br>@PathVariable：请求URI中的模板变量部分到处理器功能处理方法的方法参数上的绑定，从而支持RESTful架构风格的URI；</p>
-<p>四、还有比如：<br>JSR-303验证框架的无缝支持（通过@Valid注解定义验证元数据）；<br>使用Spring 3开始的ConversionService进行类型转换（PropertyEditor依然有效），支持使用@NumberFormat 和 @DateTimeFormat来进行数字和日期的格式化；<br>HttpMessageConverter（Http输入/输出转换器，比如JSON、XML等的数据输出转换器）；<br>ContentNegotiatingViewResolver，内容协商视图解析器，它还是视图解析器，只是它支持根据请求信息将同一模型数据以不同的视图方式展示（如json、xml、html等），RESTful架构风格中很重要的概念（同一资源，多种表现形式）；<br>Spring 3 引入 一个  mvc XML的命名空间用于支持mvc配置，包括如：<br>    <mvc:annotation-driven>：<br>      自动注册基于注解风格的处理器需要的DefaultAnnotationHandlerMapping、AnnotationMethodHandlerAdapter<br>      支持Spring3的ConversionService自动注册<br>      支持JSR-303验证框架的自动探测并注册（只需把JSR-303实现放置到classpath）<br>      自动注册相应的HttpMessageConverter（用于支持@RequestBody  和 @ResponseBody）（如XML输入输出转换器（只需将JAXP实现放置到classpath）、JSON输入输出转换器（只需将Jackson实现放置到classpath））等。<br>    <mvc:interceptors>：注册自定义的处理器拦截器；<br>    <mvc:view-controller>：和ParameterizableViewController类似，收到相应请求后直接选择相应的视图；<br>    <mvc:resources>：逻辑静态资源路径到物理静态资源路径的支持；<br>    <mvc:default-servlet-handler>：当在web.xml 中DispatcherServlet使用<url-pattern>/</url-pattern> 映射时，能映射静态资源（当Spring Web MVC框架没有处理请求对应的控制器时（如一些静态资源），转交给默认的Servlet来响应静态文件，否则报404找不到资源错误，）。</mvc:default-servlet-handler></mvc:resources></mvc:view-controller></mvc:interceptors></mvc:annotation-driven></p>
-<p>……等等。</p>
-<p>五、Spring3.1新特性：<br>对Servlet 3.0的全面支持。</p>
-<p>@EnableWebMvc：用于在基于Java类定义Bean配置中开启MVC支持，和XML中的<mvc:annotation-driven>功能一样；</mvc:annotation-driven></p>
-<p>新的@Contoller和@RequestMapping注解支持类：处理器映射RequestMappingHandlerMapping 和 处理器适配器RequestMappingHandlerAdapter组合来代替Spring2.5开始的处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter，提供更多的扩展点，它们之间的区别我们在处理器映射一章介绍。</p>
-<p>新的@ExceptionHandler 注解支持类：ExceptionHandlerExceptionResolver来代替Spring3.0的AnnotationMethodHandlerExceptionResolver，在异常处理器一章我们再详细讲解它们的区别。</p>
-<p>@RequestMapping的”consumes” 和 “produces” 条件支持：用于支持@RequestBody 和 @ResponseBody，<br>1consumes指定请求的内容是什么类型的内容，即本处理方法消费什么类型的数据，如consumes=”application/json”表示JSON类型的内容，Spring会根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换；<br>2produces指定生产什么类型的内容，如produces=”application/json”表示JSON类型的内容，Spring的根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换，Spring会根据相应的HttpMessageConverter进行模型数据（返回值）到JSON响应内容的转换<br>3以上内容，本章第×××节详述。</p>
-<p>URI模板变量增强：URI模板变量可以直接绑定到@ModelAttribute指定的命令对象、@PathVariable方法参数在视图渲染之前被合并到模型数据中（除JSON序列化、XML混搭场景下）。</p>
-<p>@Validated：JSR-303的javax.validation.Valid一种变体（非JSR-303规范定义的，而是Spring自定义的），用于提供对Spring的验证器（org.springframework.validation.Validator）支持，需要Hibernate Validator 4.2及更高版本支持；</p>
-<p>@RequestPart：提供对“multipart/form-data”请求的全面支持，支持Servlet 3.0文件上传（javax.servlet.http.Part）、支持内容的HttpMessageConverter（即根据请求头的Content-Type，来判断内容区数据是什么类型，如JSON、XML，能自动转换为命令对象），比@RequestParam更强大（只能对请求参数数据绑定，key-alue格式），而@RequestPart支持如JSON、XML内容区数据的绑定；详见本章的第×××节；</p>
-<p>Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当进入另一个请求时作为该请求的输入，典型场景如重定向（POST-REDIRECT-GET模式，1、POST时将下一次需要的数据放在FlashMap；2、重定向；3、通过GET访问重定向的地址，此时FlashMap会把1放到FlashMap的数据取出放到请求中，并从FlashMap中删除；从而支持在两次请求之间保存数据并防止了重复表单提交）。<br>Spring Web MVC提供FlashMapManager用于管理FlashMap，默认使用SessionFlashMapManager，即数据默认存储在session中。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" itemprop="url">
-                  spring4.1.x源码GroovyDynamicElementReader报错问题解决
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-05T12:12:56+08:00" content="2015-04-05">
-              2015-04-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" class="leancloud_visitors" data-flag-title="spring4.1.x源码GroovyDynamicElementReader报错问题解决">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从github上下载spring4源码后，只有spring-bean-groovy项目报错，提示GroovyDynamicElementReader这个类不存在。<br>解决方式为安装一个eclipse的groovy插件。</p>
-<p>在eclipse的Help-&gt;Eclipse Marketplace中，搜索groovy然后安装，如下图：</p>
-<p><img src="/images/groovy1-206x300.png" alt="groovy1"><br><img src="/images/groovy2-207x300.png" alt="groovy2"></p>
-<p>安装完成后clean一下spring-bean-groovy项目就OK了。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/03/C++中得运算符重载/" itemprop="url">
-                  C++中得运算符重载
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-03T11:56:20+08:00" content="2015-04-03">
-              2015-04-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/03/C++中得运算符重载/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/03/C++中得运算符重载/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/03/C++中得运算符重载/" class="leancloud_visitors" data-flag-title="C++中得运算符重载">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>(一) C++不允许用户自己定义新的运算符，只能对已有的C++运算符进行重载。<br>(二) C++允许重载的运算符C++中绝大部分的运算符允许重载.<br>不能重载的运算符只有5个：<br>(1) 成员访问运算符.<br>(2) 作用域运算符∷<br>(3) 条件运算符?:<br>(4) 成员指针运算符<em><br>(5) 编译预处理命令的开始符号#<br>(三) 重载不能改变运算符运算对象(即操作数)的个数。<br>(四) 重载不能改变运算符的优先级别。<br>(五) 重载运算符的函数不能有默认的参数，否则就改变了运算符参数个数<br>(六) 重载的运算符必须和用户定义的自定义类型的对象一起使用，其参数至少应有一个是类对象(或类对象的引用)。也就是说，参数不能全部是C++的标准类型，以防止用户修改用于标准类型数据的运算符的性质。<br>(七) 用于类对象的运算符一般必须重载，但有两个例外，运算符“=”和“&amp;”不必用户重载。<br>① 赋值运算符(=)可以用于每一个类对象，可以利用它在同类对象之间相互赋值。<br>② 地址运算符&amp;也不必重载，它能返回类对象在内存中的起始地址。<br>// 前面已经说过，C++内置运算符只能计算内置的数据类型 。所以当我们要使用自定义类型时 就必须要进行重载..<br>总之，当C++语言原有的一个运算符被重载之后，它原先所具有的语义并没有消失，只相当于针对一个特定的类定义了一个新的运算符。<br>运算符重载可以使用成员函数和友元函数两种形式。可以参考以下的经验：<br>(1)只能使用成员函数重载的运算符有：=、()、[]、-&gt;、new、delete。<br>(2)单目运算符最好重载为成员函数。<br>(3) 对于复合的赋值运算符如+=、-=、</em>=、/=、&amp;=、!=、~=、%=、&gt;&gt;=、&lt;&lt;=建议重载为成员函数。<br>(4) 对于其它运算符，建议重载为友元函数。</p>
 
           
         
@@ -2105,7 +2442,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2113,7 +2450,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -2122,7 +2459,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

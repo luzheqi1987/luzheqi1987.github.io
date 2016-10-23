@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/7/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/7/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/7/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/7/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,441 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/26/用Java进行3DES加密解/" itemprop="url">
+                  用Java进行3DES加密解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-26T10:46:53+08:00" content="2015-03-26">
+              2015-03-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/26/用Java进行3DES加密解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/26/用Java进行3DES加密解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/26/用Java进行3DES加密解/" class="leancloud_visitors" data-flag-title="用Java进行3DES加密解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近一个合作商提出使用3DES交换数据，本来他们有现成的代码，可惜只有.net版本，我们的服务器都是Linux，而且应用都是Java。于是对照他们提供的代码改了一个Java的版本出来，主要是不熟悉3DES，折腾了一天，终于搞定。</p>
+<p>所谓3DES，就是把DES做三次，当然不是简单地DES DES DES就行了，中途有些特定的排列。这个我可不关心，呵呵，我的目的是使用它。</p>
+<p>在网上搜索了一下3DES，找到很少资料。经过朋友介绍，找到GNU Crypto和Bouncy Castle两个Java扩充包，里面应该有3DES的实现吧。</p>
+<p>从GNU Crypto入手，找到一个TripleDES的实现类，发现原来3DES还有一个名字叫DESede，在网上搜索TripleDES和DESede，呵呵，终于发现更多的资料了。</p>
+<p>Java的安全API始终那么难用，先创建一个cipher看看算法在不在吧<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div></pre></td></tr></table></figure></p>
+<p>如果没有抛异常的话，就证明这个算法是有效的</p>
+<p>突然想看看JDK有没有内置DESede，于是撇开Crypto，直接测试，发现可以正确运行。在jce.jar里面找到相关的类，JDK内置了。</p>
+<p>于是直接用DES的代码来改&amp;测试，最后代码变成这样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SecureRandom sr = <span class="keyword">new</span> SecureRandom();</div><div class="line">DESedeKeySpec dks = <span class="keyword">new</span> DESedeKeySpec(PASSWORD_CRYPT_KEY.getBytes());</div><div class="line">SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">SecretKey securekey = keyFactory.generateSecret(dks);</div><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">cipher.init(Cipher.ENCRYPT_MODE, securekey, sr);</div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> String(Hex.encodeHex(cipher.doFinal(str.getBytes())));</div></pre></td></tr></table></figure>
+<p>需要留意的是，要使用DESede的Spec、Factory和Cipher才行</p>
+<p>事情还没完结，合作商给过来的除了密钥之外，还有一个IV向量。搜索了一下，发现有一个IvParameterSpec类，于是代码变成这样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SecureRandom sr = <span class="keyword">new</span> SecureRandom();</div><div class="line">DESedeKeySpec dks = <span class="keyword">new</span> DESedeKeySpec(PASSWORD_CRYPT_KEY.getBytes());</div><div class="line">SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">SecretKey securekey = keyFactory.generateSecret(dks);</div><div class="line">IvParameterSpec iv = <span class="keyword">new</span> IvParameterSpec(PASSWORD_IV.getBytes());</div><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">cipher.init(Cipher.ENCRYPT_MODE, securekey, iv, sr);</div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> String(Hex.encodeHex(cipher.doFinal(str.getBytes())));</div></pre></td></tr></table></figure>
+<p>但是，运行报错了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.security.InvalidAlgorithmParameterException: ECB mode cannot use IV</div></pre></td></tr></table></figure>
+<p>ECB是什么呢？我的代码完全没有写ECB什么的</p>
+<p>又上网搜索，结果把DES的来龙去脉都搞清楚了</p>
+<p><a href="http://www.tropsoft.com/strongenc/des.htm" target="_blank" rel="external">http://www.tropsoft.com/strongenc/des.htm</a></p>
+<p>ECB是其中一种字串分割方式，除了DES以外，其他加密方式也会使用这种分割方式的，而Java默认产生的DES算法就是用ECB方法，ECB不需要向量，当然也就不支持向量了</p>
+<p>除了ECB，DES还支持CBC、CFB、OFB，而3DES只支持ECB和CBC两种</p>
+<p><a href="http://www.tropsoft.com/strongenc/des3.htm" target="_blank" rel="external">http://www.tropsoft.com/strongenc/des3.htm</a></p>
+<p>CBC支持并且必须有向量，具体算法这里就不说了。合作商给的.net代码没有声明CBC模式，似乎是.net默认的方式就是CBC的</p>
+<p>于是把模式改成CBC</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede/CBC/PKCS5Padding&amp;quot;);</div></pre></td></tr></table></figure>
+<p>成功运行了</p>
+<p>后话：</p>
+<p>搜索的过程中，找到一个不错的讨论</p>
+<p><a href="http://www.lslnet.com/linux/dosc1/21/linux-197579.htm" target="_blank" rel="external">http://www.lslnet.com/linux/dosc1/21/linux-197579.htm</a> 在CBC（不光是DES算法）模式下，iv通过随机数（或伪随机）机制产生是一种比较常见的方法。iv的作用主要是用于产生密文的第一个block，以使最终生成的密文产生差异（明文相同的情况下），使密码攻击变得更为困难，除此之外iv并无其它用途。因此iv通过随机方式产生是一种十分简便、有效的途径。此外，在IPsec中采用了DES-CBC作为缺省的加密方式，其使用的iv是通讯包的时间戳。从原理上来说，这与随机数机制并无二致。</p>
+<p>看来，向量的作用其实就是salt</p>
+<p>最大的好处是，可以令到即使相同的明文，相同的密钥，能产生不同的密文</p>
+<p>例如，我们用DES方式在数据保存用户密码的时候，可以另外增加一列，把向量同时保存下来，并且每次用不同的向量。这样的好处是，即使两个用户的密码是一样的，数据库保存的密文，也会不一样，就能降低猜测的可能性</p>
+<p>另外一种用法，就是类似IPsec的做法，两部主机互传数据，保证两部机的时钟同步的前提下（可以取样到分钟或更高的单位避免偏差），用时钟的变化值作为向量，就能增加被sniffer数据的解密难度</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/26/[转]使用JAVA实现AES加密/" itemprop="url">
+                  [转]使用JAVA实现AES加密
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-26T10:44:13+08:00" content="2015-03-26">
+              2015-03-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/26/[转]使用JAVA实现AES加密/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/26/[转]使用JAVA实现AES加密/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/26/[转]使用JAVA实现AES加密/" class="leancloud_visitors" data-flag-title="[转]使用JAVA实现AES加密">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.csdn.net/hbcui1984/article/details/5201247" target="_blank" rel="external">原文地址</a><br>1. 因子<br>       上次介绍了《JAVA实现AES加密》，中间提到近些年DES使用越来越少，原因就在于其使用56位密钥，比较容易被破解，近些年来逐渐被AES替代，AES已经变成目前对称加密中最流行算法之一；AES可以使用128、192、和256位密钥，并且用128位分组加密和解密数据。本文就简单介绍如何通过JAVA实现AES加密。<br>2. JAVA实现<br>闲话少许，掠过AES加密原理及算法，关于这些直接搜索专业网站吧，我们直接看JAVA的具体实现。<br>2.1 加密<br>代码有详细解释，不多废话。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 加密</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> content 需要加密的内容</div><div class="line"> * <span class="doctag">@param</span> password  加密密码</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encrypt(String content, String password) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;           </div><div class="line">                KeyGenerator kgen = KeyGenerator.getInstance(&amp;quot;AES&amp;quot;);</div><div class="line">                kgen.init(<span class="number">128</span>, <span class="keyword">new</span> SecureRandom(password.getBytes()));</div><div class="line">                SecretKey secretKey = kgen.generateKey();</div><div class="line">                <span class="keyword">byte</span>[] enCodeFormat = secretKey.getEncoded();</div><div class="line">                SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(enCodeFormat, &amp;quot;AES&amp;quot;);</div><div class="line">                Cipher cipher = Cipher.getInstance(&amp;quot;AES&amp;quot;);<span class="comment">// 创建密码器</span></div><div class="line">                <span class="keyword">byte</span>[] byteContent = content.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;);</div><div class="line">                cipher.init(Cipher.ENCRYPT_MODE, key);<span class="comment">// 初始化</span></div><div class="line">                <span class="keyword">byte</span>[] result = cipher.doFinal(byteContent);</div><div class="line">                <span class="keyword">return</span> result; <span class="comment">// 加密</span></div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.2 解密<br>代码有详细注释，不多废话<br>注意：解密的时候要传入byte数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**解密 </span></div><div class="line"> * <span class="doctag">@param</span> content  待解密内容 </div><div class="line"> * <span class="doctag">@param</span> password 解密密钥 </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decrypt(<span class="keyword">byte</span>[] content, String password) &#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">                 KeyGenerator kgen = KeyGenerator.getInstance(&amp;quot;AES&amp;quot;);  </div><div class="line">                 kgen.init(<span class="number">128</span>, <span class="keyword">new</span> SecureRandom(password.getBytes()));  </div><div class="line">                 SecretKey secretKey = kgen.generateKey();  </div><div class="line">                 <span class="keyword">byte</span>[] enCodeFormat = secretKey.getEncoded();  </div><div class="line">                 SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(enCodeFormat, &amp;quot;AES&amp;quot;);              </div><div class="line">                 Cipher cipher = Cipher.getInstance(&amp;quot;AES&amp;quot;);<span class="comment">// 创建密码器  </span></div><div class="line">                cipher.init(Cipher.DECRYPT_MODE, key);<span class="comment">// 初始化  </span></div><div class="line">                <span class="keyword">byte</span>[] result = cipher.doFinal(content);  </div><div class="line">                <span class="keyword">return</span> result; <span class="comment">// 加密  </span></div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.3 测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">String content = &amp;quot;test&amp;quot;;  </div><div class="line">String password = &amp;quot;<span class="number">12345678</span>&amp;quot;;  </div><div class="line"><span class="comment">//加密  </span></div><div class="line">System.out.println(&amp;quot;加密前：&amp;quot; + content);  </div><div class="line"><span class="keyword">byte</span>[] encryptResult = encrypt(content, password);  </div><div class="line"><span class="keyword">try</span> &#123;  </div><div class="line">        String encryptResultStr = <span class="keyword">new</span> String(encryptResult,&amp;quot;utf-<span class="number">8</span>&amp;quot;);  </div><div class="line">        <span class="comment">//解密  </span></div><div class="line">        <span class="keyword">byte</span>[] decryptResult = decrypt(encryptResultStr.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;),password);  </div><div class="line">        System.out.println(&amp;quot;解密后：&amp;quot; + <span class="keyword">new</span> String(decryptResult));  </div><div class="line">&#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;  </div><div class="line">        e.printStackTrace();  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>则，系统会报出如下异常：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">javax.crypto.IllegalBlockSizeException: Input length must be multiple of <span class="number">16</span> when decrypting with padded cipher</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.AESCipher.engineDoFinal(DashoA13*..)</div><div class="line">        at javax.crypto.Cipher.doFinal(DashoA13*..)</div></pre></td></tr></table></figure></p>
+<p>这主要是因为加密后的byte数组是不能强制转换成字符串的，换言之：字符串和byte数组在这种情况下不是互逆的；要避免这种情况，我们需要做一些修订，可以考虑将二进制数据转换成十六进制表示，主要有如下两个方法：</p>
+<p>2.4.1将二进制转换成16进制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**将二进制转换成16进制 </span></div><div class="line"> * <span class="doctag">@param</span> buf </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">parseByte2HexStr</span><span class="params">(<span class="keyword">byte</span> buf[])</span> </span>&#123;  </div><div class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; buf.length; i++) &#123;  </div><div class="line">                String hex = Integer.toHexString(buf[i] &amp;amp; <span class="number">0xFF</span>);  </div><div class="line">                <span class="keyword">if</span> (hex.length() == <span class="number">1</span>) &#123;  </div><div class="line">                        hex = <span class="string">'0'</span> + hex;  </div><div class="line">                &#125;  </div><div class="line">                sb.append(hex.toUpperCase());  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> sb.toString();  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.4.2 将16进制转换为二进制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**将16进制转换为二进制 </span></div><div class="line"> * <span class="doctag">@param</span> hexStr </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] parseHexStr2Byte(String hexStr) &#123;  </div><div class="line">        <span class="keyword">if</span> (hexStr.length() &amp;lt; <span class="number">1</span>)  </div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">        <span class="keyword">byte</span>[] result = <span class="keyword">new</span> <span class="keyword">byte</span>[hexStr.length()/<span class="number">2</span>];  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&amp;lt; hexStr.length()/<span class="number">2</span>; i++) &#123;  </div><div class="line">                <span class="keyword">int</span> high = Integer.parseInt(hexStr.substring(i*<span class="number">2</span>, i*<span class="number">2</span>+<span class="number">1</span>), <span class="number">16</span>);  </div><div class="line">                <span class="keyword">int</span> low = Integer.parseInt(hexStr.substring(i*<span class="number">2</span>+<span class="number">1</span>, i*<span class="number">2</span>+<span class="number">2</span>), <span class="number">16</span>);  </div><div class="line">                result[i] = (<span class="keyword">byte</span>) (high * <span class="number">16</span> + low);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> result;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后，我们再修订以上测试代码，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">String content = &amp;quot;test&amp;quot;;  </div><div class="line">String password = &amp;quot;<span class="number">12345678</span>&amp;quot;;  </div><div class="line"><span class="comment">//加密  </span></div><div class="line">System.out.println(&amp;quot;加密前：&amp;quot; + content);  </div><div class="line"><span class="keyword">byte</span>[] encryptResult = encrypt(content, password);  </div><div class="line">String encryptResultStr = parseByte2HexStr(encryptResult);  </div><div class="line">System.out.println(&amp;quot;加密后：&amp;quot; + encryptResultStr);  </div><div class="line"><span class="comment">//解密  </span></div><div class="line"><span class="keyword">byte</span>[] decryptFrom = parseHexStr2Byte(encryptResultStr);  </div><div class="line"><span class="keyword">byte</span>[] decryptResult = decrypt(decryptFrom,password);  </div><div class="line">System.out.println(&amp;quot;解密后：&amp;quot; + <span class="keyword">new</span> String(decryptResult));</div></pre></td></tr></table></figure></p>
+<p>测试结果如下：<br>加密前：test<br>加密后：73C58BAFE578C59366D8C995CD0B9D6D<br>解密后：test</p>
+<p>2.5 另外一种加密方式<br>还有一种加密方式，大家可以参考如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** </span></div><div class="line">      * 加密 </div><div class="line">      * </div><div class="line">      * <span class="doctag">@param</span> content 需要加密的内容 </div><div class="line">      * <span class="doctag">@param</span> password  加密密码 </div><div class="line">      * <span class="doctag">@return</span> </div><div class="line">      */  </div><div class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encrypt2(String content, String password) &#123;  </div><div class="line">             <span class="keyword">try</span> &#123;  </div><div class="line">                     SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(password.getBytes(), &amp;quot;AES&amp;quot;);  </div><div class="line">                     Cipher cipher = Cipher.getInstance(&amp;quot;AES/ECB/NoPadding&amp;quot;);  </div><div class="line">                     <span class="keyword">byte</span>[] byteContent = content.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;);  </div><div class="line">                     cipher.init(Cipher.ENCRYPT_MODE, key);<span class="comment">// 初始化  </span></div><div class="line">                     <span class="keyword">byte</span>[] result = cipher.doFinal(byteContent);  </div><div class="line">                     <span class="keyword">return</span> result; <span class="comment">// 加密  </span></div><div class="line">             &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125;  </div><div class="line">             <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">     &#125;</div></pre></td></tr></table></figure></p>
+<p>这种加密方式有两种限制<br>密钥必须是16位的<br>待加密内容的长度必须是16的倍数，如果不是16的倍数，就会出如下异常：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">javax.crypto.IllegalBlockSizeException: Input length not multiple of <span class="number">16</span> bytes</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.a(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.AESCipher.engineDoFinal(DashoA13*..)</div><div class="line">        at javax.crypto.Cipher.doFinal(DashoA13*..)</div></pre></td></tr></table></figure></p>
+<p>要解决如上异常，可以通过补全传入加密内容等方式进行避免。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="url">
+                  [转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-25T02:52:51+08:00" content="2015-03-25">
+              2015-03-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" class="leancloud_visitors" data-flag-title="[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://wjlvivid.iteye.com/blog/2017955" target="_blank" rel="external">原文地址</a></p>
+<p>输入“33/12/2011”，用SimpleDateFormat parse()方法,转化为Date(2012,01,02).这样处理相当“33/12/2011”是正常输入，如果需要”33/12/2011”报错，即把”33/12/2011”当作错误格式，刚开始自己写了段逻辑判断：</p>
+<p>把转成的日期再反转回来，再比较是否一致，即使用format方法再转换成字符串，和传入的那个串作比较，如果不相等，则证明传入的那个日期格式是错误的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getDestDateStrFromSrcDateStr</span><span class="params">(String dateStr,</span></span></div><div class="line">        String srcDateFormat, String descDateFormat)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">final</span> SimpleDateFormat src_sdf = <span class="keyword">new</span> SimpleDateFormat(srcDateFormat);</div><div class="line">        <span class="keyword">final</span> Date date = src_sdf.parse(dateStr);</div><div class="line"></div><div class="line">        <span class="comment">//把转成的日期再反转回来，再比较是否一致</span></div><div class="line">        <span class="keyword">if</span> (srcDateFormat.length() != dateStr.length()</div><div class="line">                || !dateStr.equals(src_sdf.format(date)))</div><div class="line">        &#123;</div><div class="line">            LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                    srcDateFormat,</div><div class="line">                    dateStr);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                    ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//把转成的date类型转换为目标格式日期字符串（yyyyMMdd)</span></div><div class="line">        <span class="keyword">final</span> SimpleDateFormat dest_sdf = <span class="keyword">new</span> SimpleDateFormat(</div><div class="line">                descDateFormat);</div><div class="line">        LOGGER.info(&amp;quot;the converted dest date str:&#123;&#125;&amp;quot;</div><div class="line">                + dest_sdf.format(date));</div><div class="line">        <span class="keyword">return</span> dest_sdf.format(date);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (java.text.ParseException e)</div><div class="line">    &#123;</div><div class="line">        LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                srcDateFormat,</div><div class="line">                dateStr);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总觉得这种方法显得很笨拙，后来找找API，发现有一个方法：setLenient(false)可以直接使用。哎~何必费这么大劲呢<br>测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.text.DateFormat;</div><div class="line"><span class="keyword">import</span> java.text.ParseException;</div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ParseException </span>&#123;</div><div class="line">		DateFormat format = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;dd/MM/yyyy&amp;quot;);</div><div class="line">		format.setLenient(<span class="keyword">false</span>);</div><div class="line">		Date date = format.parse(&amp;quot;<span class="number">33</span>/<span class="number">12</span>/<span class="number">2011</span>&amp;quot;);</div><div class="line">		System.out.println(date);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/25/Linux下DateFormat的parse方法出现ParseException异常/" itemprop="url">
                   Linux下DateFormat的parse方法出现ParseException异常
                 </a>
@@ -361,7 +796,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -492,7 +928,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -622,7 +1059,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -886,7 +1324,8 @@ public List&amp;lt;User&amp;gt; list();
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1014,7 +1453,8 @@ public List&amp;lt;User&amp;gt; list();
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1143,7 +1583,8 @@ public List&amp;lt;User&amp;gt; list();
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1277,7 +1718,8 @@ public List&amp;lt;User&amp;gt; list();
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1297,403 +1739,6 @@ public List&amp;lt;User&amp;gt; list();
         
           
             <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">计算离当前日期之前或之后任意天的日期 </div><div class="line"><span class="comment">/** </span></div><div class="line">* 日期计算 </div><div class="line">* </div><div class="line">* <span class="doctag">@author</span> zhangmingxue </div><div class="line">* </div><div class="line">*/ </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputeDateUtils</span> </span>&#123; </div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离当前日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(<span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(); </div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date beginDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      beginDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> beginDate; </div><div class="line">  &#125; </div><div class="line"></div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离beginDate日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(Date beginDate, <span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    Calendar beginCal=Calendar.getInstance(); </div><div class="line">    beginCal.setTime(beginDate); </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(beginCal.get(Calendar.YEAR),beginCal.get(Calendar.MONTH),beginCal.get(Calendar.DATE));</div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date endDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      endDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> endDate; </div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法题（五）——时针 分针重合/" itemprop="url">
-                  经典算法题（五）——时针 分针重合
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:29:02+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法题（五）——时针 分针重合/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（五）——时针 分针重合/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法题（五）——时针 分针重合/" class="leancloud_visitors" data-flag-title="经典算法题（五）——时针 分针重合">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、<br>时针旋转1周，即12小时内，时针和分针重合了11次，且连续两次重合相隔的时间相同；<br>所以可计算：60*12/11 = 720/11（分钟）<br>即：下次重合的时间是 1 点 60/11 分 ；<br>最少经过 720/11 分钟，时针和分针就能重合一次。</p>
-<p>2、<br>还能解决的问题，如：<br>最少经过多长时间，时针和分针就能在同一直线上一次。<br>连续两次重合过程中，时针和分针在同一直线上的情况出现两次，夹角分别是0°和180°；<br>所以可求得：最少经过 360/11 分钟，时针和分针就能在同一直线上一次。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/百度笔试题/" itemprop="url">
-                  百度笔试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:28:08+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/百度笔试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/百度笔试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/百度笔试题/" class="leancloud_visitors" data-flag-title="百度笔试题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1，当前计算机系统一般会采用层次结构存储数据，请介绍下典型计算机存储系统一般分为哪几个层次，为什么采用分层存储数据能有效提高程序的执行效率？（10分）</p>
-<p>所谓存储系统的层次结构，就是把各种不同存储容量、存取速度和价格的存储器按层次结构组成多层存储器，并通过管理软件和辅助硬件有机组合成统一的整体，使所存放的程序和数据按层次分布在各种存储器中。目前，在计算机系统中通常采用三级层次结构来构成存储系统，主要由高速缓冲存储器Cache、主存储器和辅助存储器组成。<br>存储系统多级层次结构中，由上向下分三级，其容量逐渐增大，速度逐级降低，成本则逐次减少。整个结构又可以看成两个层次：它们分别是主存一辅存层次和cache一主存层次。这个层次系统中的每一种存储器都不再是孤立的存储器，而是一个有机的整体。它们在辅助硬件和计算机操作系统的管理下，可把主存一辅存层次作为一个存储整体，形成的可寻址存储空间比主存储器空间大得多。由于辅存容量大，价格低，使得存储系统的整体平均价格降低。由于Cache的存取速度可以和CPU的工作速度相媲美，故cache一主存层次可以缩小主存和cPu之间的速度差距，从整体上提高存储器系统的存取速度。尽管Cache成本高，但由于容量较小，故不会使存储系统的整体价格增加很多。<br>综上所述，一个较大的存储系统是由各种不同类型的存储设备构成，是一个具有多级层次结构的存储系统。该系统既有与CPU相近的速度，又有极大的容量，而成本又是较低的。其中高速缓存解决了存储系统的速度问题，辅助存储器则解决了存储系统的容量问题。采用多级层次结构的存储器系统可以有效的解决存储器的速度、容量和价格之间的矛盾。<br>2，Unix/Linux系统中僵尸进程是如何产生的？有什么危害？如何避免？(10分)</p>
-<p>一个进程在调用exit命令结束自己的生命的时候，其实它并没有真正的被销毁，而是留下一个称为僵尸进程（Zombie）的数据结构（系统调用exit，它的作用是使进程退出，但也仅仅限于将一个正常的进程变成一个僵尸进程，并不能将其完全销毁）。<br>在Linux进程的状态中，僵尸进程是非常特殊的一种，它已经放弃了几乎所有内存空间，没有任何可执行代码，也不能被调度，仅仅在进程列表中保留一个位置，记载该进程的退出状态等信息供其他进程收集，除此之外，僵尸进程不再占有任何内存空间。它需要它的父进程来为它收尸，如果他的父进程没安装SIGCHLD信号处理函数调用wait或waitpid()等待子进程结束，又没有显式忽略该信号，那么它就一直保持僵尸状态，如果这时父进程结束了，那么init进程自动会接手这个子进程，为它收尸，它还是能被清除的。但是如果如果父进程是一个循环，不会结束，那么子进程就会一直保持僵尸状态，这就是为什么系统中有时会有很多的僵尸进程。</p>
-<p>避免zombie的方法：<br>1)在SVR4中，如果调用signal或sigset将SIGCHLD的配置设置为忽略,则不会产生僵死子进程。另外,使用SVR4版的sigaction,则可设置SA_NOCLDWAIT标志以避免子进程 僵死。<br>Linux中也可使用这个，在一个程序的开始调用这个函数 signal(SIGCHLD,SIG_IGN);<br>2)调用fork两次。<br>3)用waitpid等待子进程返回.</p>
-<p>3，简述Unix/Linux系统中使用socket库编写服务器端程序的流程，请分别用对应的socket通信函数表示(10分)</p>
-<p>TCP socket通信<br>服务器端流程如下：<br>1.创建serverSocket<br>2.初始化 serverAddr（服务器地址）<br>3.将socket和serverAddr 绑定 bind<br>4.开始监听 listen<br>5.进入while循环，不断的accept接入的客户端socket，进行读写操作write和read<br>6.关闭serverSocket<br>客户端流程：<br>1.创建clientSocket<br>2.初始化 serverAddr<br>3.链接到服务器 connect<br>4.利用write和read 进行读写操作<br>5.关闭clientSocket</p>
-<p>这个列表是一个Berkeley套接字API库提供的函数或者方法的概要：<br>socket() 创建一个新的确定类型的套接字，类型用一个整型数值标识，并为它分配系统资源。<br>bind() 一般用于服务器端，将一个套接字与一个套接字地址结构相关联，比如，一个指定的本地端口和IP地址。<br>listen() 用于服务器端，使一个绑定的TCP套接字进入监听状态。<br>connect() 用于客户端，为一个套接字分配一个自由的本地端口号。 如果是TCP套接字的话，它会试图获得一个新的TCP连接。<br>accept() 用于服务器端。 它接受一个从远端客户端发出的创建一个新的TCP连接的接入请求，创建一个新的套接字，与该连接相应的套接字地址相关联。<br>send()和recv(),或者write()和read(),或者recvfrom()和sendto(), 用于往/从远程套接字发送和接受数据。<br>close() 用于系统释放分配给一个套接字的资源。 如果是TCP，连接会被中断。<br>gethostbyname()和gethostbyaddr() 用于解析主机名和地址。<br>select() 用于修整有如下情况的套接字列表： 准备读，准备写或者是有错误。<br>poll() 用于检查套接字的状态。 套接字可以被测试，看是否可以写入、读取或是有错误。<br>getsockopt() 用于查询指定的套接字一个特定的套接字选项的当前值。<br>setsockopt() 用于为指定的套接字设定一个特定的套接字选项。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" itemprop="url">
-                  经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:27:31+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" class="leancloud_visitors" data-flag-title="经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>已有一个随机数发生器，生成0的概率为p,生成1的概率为1-p，求如何利用这个随机数发生器制作一个生成1~n的概率都是 1/n 的发生器</p>
-<p>制作 1 2 发生概率都是 1 / 2 的发生器，连续发生2次，则发生00,11的概率为p*p,(1-p)(1-p),发生10,01的概率都为p(1-p),在发生10时返回1，发生01时返回2，则发生1，2的概率相等</p>
-<p>制作 1 2 3 发生概率都是 1 / 3的发生器，连续发生3次，则发生001,010,100的概率都为p<em>p</em>(1-P),或者是110,101,011概率都为p<em>(1-p)</em>(1-p),则用001,010,100分别对应1,2,3返回，即可使得发生1,2,3的概率都为1/3</p>
-<p><span style="color: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 21.0599994659424px; white-space: pre-wrap;"> </span></p>
-
           
         
       
@@ -1766,7 +1811,7 @@ public List&amp;lt;User&amp;gt; list();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1774,7 +1819,7 @@ public List&amp;lt;User&amp;gt; list();
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1783,7 +1828,7 @@ public List&amp;lt;User&amp;gt; list();
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

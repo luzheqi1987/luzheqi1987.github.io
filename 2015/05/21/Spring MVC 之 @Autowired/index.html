@@ -85,24 +85,33 @@
 
 
 
-<meta name="description" content="一、准备工作
-POJO类Parent123package com.test.mvc;public class Parent &amp;#123;&amp;#125;
-Controller类HomeController1234567891011121314151617181920212223@Controllerpublic class HomeController &amp;#123;	@Autowired	Parent">
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/访问原文「Spring MVC 之 @Autowired」
+
+(function() {
+  Element.prototype.remove = function() {">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring MVC 之 @Autowired">
-<meta property="og:url" content="http://yoursite.com/2015/05/21/Spring MVC 之 @Autowired/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="一、准备工作
-POJO类Parent123package com.test.mvc;public class Parent &amp;#123;&amp;#125;
-Controller类HomeController1234567891011121314151617181920212223@Controllerpublic class HomeController &amp;#123;	@Autowired	Parent">
-<meta property="og:image" content="http://yoursite.com/images/断点在homeController-300x41.png">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/访问原文「Spring MVC 之 @Autowired」
+
+(function() {
+  Element.prototype.remove = function() {">
+<meta property="og:image" content="http://blog.jerkybible.com/images/断点在homeController-300x41.png">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring MVC 之 @Autowired">
-<meta name="twitter:description" content="一、准备工作
-POJO类Parent123package com.test.mvc;public class Parent &amp;#123;&amp;#125;
-Controller类HomeController1234567891011121314151617181920212223@Controllerpublic class HomeController &amp;#123;	@Autowired	Parent">
-<meta name="twitter:image" content="http://yoursite.com/images/断点在homeController-300x41.png">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/访问原文「Spring MVC 之 @Autowired」
+
+(function() {
+  Element.prototype.remove = function() {">
+<meta name="twitter:image" content="http://blog.jerkybible.com/images/断点在homeController-300x41.png">
 
 
 
@@ -131,7 +140,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/05/21/Spring MVC 之 @Autowired/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/"/>
 
   <title> Spring MVC 之 @Autowired | 行走的轮子 </title>
 </head>
@@ -377,7 +386,8 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -394,13 +404,38 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
       
 
       
-        <p>一、准备工作</p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/'>Spring MVC 之 @Autowired</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>一、准备工作</p>
 <p>POJO类Parent<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.test.mvc;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>Controller类HomeController<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Controller</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> </span>&#123;</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	Parent parent;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(HomeController.class);</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * Simply selects the home view to render by returning its name.</div><div class="line">	 */</div><div class="line">	<span class="meta">@RequestMapping</span>(value = &amp;quot;/&amp;quot;, method = RequestMethod.GET)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">home</span><span class="params">(Locale locale, Model model)</span> </span>&#123;</div><div class="line">		logger.info(&amp;quot;Welcome home! The client locale is &#123;&#125;. &amp;quot;, locale);</div><div class="line">		logger.info(parent.toString());		</div><div class="line">		Date date = <span class="keyword">new</span> Date();</div><div class="line">		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);		</div><div class="line">		String formattedDate = dateFormat.format(date);		</div><div class="line">		model.addAttribute(&amp;quot;serverTime&amp;quot;, formattedDate );</div><div class="line"></div><div class="line">		<span class="keyword">return</span> &amp;quot;home&amp;quot;; </div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>root-context.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&amp;lt;bean id=&amp;quot;parent&amp;quot; class=&amp;quot;com.test.mvc.Parent&amp;quot; &amp;gt;&amp;lt;/bean&amp;gt;</div></pre></td></tr></table></figure></p>
 <p>web.xml略。</p>
 <p>二、回忆</p>
-<p>在<a href="http://www.bugpointer.com/archives/521.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试（六）</a>这篇文章中介绍了bean参数的赋值，AutoWired也是在这个地方实现自动加载的。首先展开文章中的doCreateBean。这里省略了很多代码。首先看pplyMergedBeanDefinitionPostProcessors这个方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">doCreateBean</span><span class="params">(<span class="keyword">final</span> String beanName, <span class="keyword">final</span> RootBeanDefinition mbd, <span class="keyword">final</span> Object[] args)</span> </span>&#123;</div><div class="line">	<span class="comment">// Instantiate the bean.</span></div><div class="line">	BeanWrapper instanceWrapper = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">if</span> (mbd.isSingleton()) &#123;</div><div class="line">		instanceWrapper = <span class="keyword">this</span>.factoryBeanInstanceCache.remove(beanName);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//.......</span></div><div class="line">        <span class="comment">//.......</span></div><div class="line">	<span class="keyword">synchronized</span> (mbd.postProcessingLock) &#123;</div><div class="line">		<span class="keyword">if</span> (!mbd.postProcessed) &#123;</div><div class="line">			applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);</div><div class="line"> 			mbd.postProcessed = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//......</span></div><div class="line">        <span class="comment">//......</span></div><div class="line">	<span class="comment">// Initialize the bean instance.</span></div><div class="line">	Object exposedObject = bean;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		populateBean(beanName, mbd, instanceWrapper);</div><div class="line">		<span class="keyword">if</span> (exposedObject != <span class="keyword">null</span>) &#123;</div><div class="line">			exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">		<span class="keyword">if</span> (ex <span class="keyword">instanceof</span> BeanCreationException &amp;amp;&amp;amp; beanName.equals(((BeanCreationException) ex).getBeanName())) &#123;</div><div class="line">			<span class="keyword">throw</span> (BeanCreationException) ex;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Initialization of bean failed&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//......</span></div><div class="line">        <span class="comment">//......</span></div><div class="line">	<span class="comment">// Register bean as disposable.</span></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		registerDisposableBeanIfNecessary(beanName, bean, mbd);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (BeanDefinitionValidationException ex) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Invalid destruction signature&amp;quot;, ex);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> exposedObject;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在<a href="http://blog.jerkybible.com/2015/05/15/Spring 使用简单Demo进行源码调试（六）/">Spring 使用简单Demo进行源码调试（六）</a>这篇文章中介绍了bean参数的赋值，AutoWired也是在这个地方实现自动加载的。首先展开文章中的doCreateBean。这里省略了很多代码。首先看pplyMergedBeanDefinitionPostProcessors这个方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">doCreateBean</span><span class="params">(<span class="keyword">final</span> String beanName, <span class="keyword">final</span> RootBeanDefinition mbd, <span class="keyword">final</span> Object[] args)</span> </span>&#123;</div><div class="line">	<span class="comment">// Instantiate the bean.</span></div><div class="line">	BeanWrapper instanceWrapper = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">if</span> (mbd.isSingleton()) &#123;</div><div class="line">		instanceWrapper = <span class="keyword">this</span>.factoryBeanInstanceCache.remove(beanName);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//.......</span></div><div class="line">        <span class="comment">//.......</span></div><div class="line">	<span class="keyword">synchronized</span> (mbd.postProcessingLock) &#123;</div><div class="line">		<span class="keyword">if</span> (!mbd.postProcessed) &#123;</div><div class="line">			applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);</div><div class="line"> 			mbd.postProcessed = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//......</span></div><div class="line">        <span class="comment">//......</span></div><div class="line">	<span class="comment">// Initialize the bean instance.</span></div><div class="line">	Object exposedObject = bean;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		populateBean(beanName, mbd, instanceWrapper);</div><div class="line">		<span class="keyword">if</span> (exposedObject != <span class="keyword">null</span>) &#123;</div><div class="line">			exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">		<span class="keyword">if</span> (ex <span class="keyword">instanceof</span> BeanCreationException &amp;amp;&amp;amp; beanName.equals(((BeanCreationException) ex).getBeanName())) &#123;</div><div class="line">			<span class="keyword">throw</span> (BeanCreationException) ex;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Initialization of bean failed&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">//......</span></div><div class="line">        <span class="comment">//......</span></div><div class="line">	<span class="comment">// Register bean as disposable.</span></div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">		registerDisposableBeanIfNecessary(beanName, bean, mbd);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (BeanDefinitionValidationException ex) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(mbd.getResourceDescription(), beanName, &amp;quot;Invalid destruction signature&amp;quot;, ex);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> exposedObject;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>断点运行到后去homeController的，后处理为AutowiredAnnotationBeanPostProcessor，如下图。<br><img src="/images/断点在homeController-300x41.png" alt="断点在homeController"><br>展开AutowiredAnnotationBeanPostProcessor中的findAutowiringMetadata方法。这一步中的重点是在buildAutowiringMetadata，构建元数据。buildAutowiringMetadata首先去缓存里面找元数据，找不到就遍历bean的和父类的字段域和方法，如果别标记为@Autowired并且不是静态的就添加到InjectionMetadata中，并添加到缓存中。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">private InjectionMetadata findAutowiringMetadata(String beanName, Class&amp;lt;?&amp;gt; clazz, PropertyValues pvs) &#123;</div><div class="line">	// 回到使用类名作为缓存键,保持自定义命令向后兼容性</div><div class="line">	String cacheKey = (StringUtils.hasLength(beanName) ? beanName : clazz.getName());</div><div class="line">	InjectionMetadata metadata = this.injectionMetadataCache.get(cacheKey);</div><div class="line">	if (InjectionMetadata.needsRefresh(metadata, clazz)) &#123;</div><div class="line">		synchronized (this.injectionMetadataCache) &#123;</div><div class="line">			metadata = this.injectionMetadataCache.get(cacheKey);</div><div class="line">			if (InjectionMetadata.needsRefresh(metadata, clazz)) &#123;</div><div class="line">				if (metadata != null) &#123;</div><div class="line">					metadata.clear(pvs);</div><div class="line">				&#125;</div><div class="line">				try &#123;</div><div class="line">                                        //构建元数据</div><div class="line">					metadata = buildAutowiringMetadata(clazz);</div><div class="line">					this.injectionMetadataCache.put(cacheKey, metadata);</div><div class="line">				&#125;</div><div class="line">				catch (NoClassDefFoundError err) &#123;</div><div class="line">					throw new IllegalStateException(&amp;quot;Failed to introspect bean class [&amp;quot; + clazz.getName() +</div><div class="line">							&amp;quot;] for autowiring metadata: could not find class that it depends on&amp;quot;, err);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return metadata;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> InjectionMetadata <span class="title">buildAutowiringMetadata</span><span class="params">(Class&amp;lt;?&amp;gt; clazz)</span> </span>&#123;</div><div class="line">	LinkedList&amp;lt;InjectionMetadata.InjectedElement&amp;gt; elements = <span class="keyword">new</span> LinkedList&amp;lt;InjectionMetadata.InjectedElement&amp;gt;();</div><div class="line">	Class&amp;lt;?&amp;gt; targetClass = clazz;</div><div class="line">	do &#123;<span class="comment">//这里一个循环，因为要考虑父类的字段和方法</span></div><div class="line">		LinkedList&amp;lt;InjectionMetadata.InjectedElement&amp;gt; currElements = <span class="keyword">new</span> LinkedList&amp;lt;InjectionMetadata.InjectedElement&amp;gt;();</div><div class="line">                <span class="comment">//这里循环字段，找到被标记为@Autowired的字段</span></div><div class="line">		<span class="keyword">for</span> (Field field : targetClass.getDeclaredFields()) &#123;</div><div class="line">			AnnotationAttributes ann = findAutowiredAnnotation(field);</div><div class="line">			<span class="keyword">if</span> (ann != <span class="keyword">null</span>) &#123;</div><div class="line">				<span class="keyword">if</span> (Modifier.isStatic(field.getModifiers())) &#123;</div><div class="line">					<span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</div><div class="line">						logger.warn(&amp;quot;Autowired annotation is not supported on <span class="keyword">static</span> fields: &amp;quot; + field);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">boolean</span> required = determineRequiredStatus(ann);</div><div class="line">                                <span class="comment">//创建AutowiredFieldElement。</span></div><div class="line">				currElements.add(<span class="keyword">new</span> AutowiredFieldElement(field, required));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">                 <span class="comment">//这里循环方法</span></div><div class="line">		<span class="keyword">for</span> (Method method : targetClass.getDeclaredMethods()) &#123;</div><div class="line">			Method bridgedMethod = BridgeMethodResolver.findBridgedMethod(method);</div><div class="line">			<span class="keyword">if</span> (!BridgeMethodResolver.isVisibilityBridgeMethodPair(method, bridgedMethod)) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line">			AnnotationAttributes ann = findAutowiredAnnotation(bridgedMethod);</div><div class="line">			<span class="keyword">if</span> (ann != <span class="keyword">null</span> &amp;amp;&amp;amp; method.equals(ClassUtils.getMostSpecificMethod(method, clazz))) &#123;</div><div class="line">				<span class="keyword">if</span> (Modifier.isStatic(method.getModifiers())) &#123;</div><div class="line">					<span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</div><div class="line">						logger.warn(&amp;quot;Autowired annotation is not supported on <span class="keyword">static</span> methods: &amp;quot; + method);</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (method.getParameterTypes().length == <span class="number">0</span>) &#123;</div><div class="line">					<span class="keyword">if</span> (logger.isWarnEnabled()) &#123;</div><div class="line">						logger.warn(&amp;quot;Autowired annotation should be used on methods with actual parameters: &amp;quot; + method);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">boolean</span> required = determineRequiredStatus(ann);</div><div class="line">				PropertyDescriptor pd = BeanUtils.findPropertyForMethod(bridgedMethod, clazz);</div><div class="line">                                <span class="comment">//创建AutowiredMethodElement。</span></div><div class="line">				currElements.add(<span class="keyword">new</span> AutowiredMethodElement(method, required, pd));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		elements.addAll(<span class="number">0</span>, currElements);</div><div class="line">		targetClass = targetClass.getSuperclass();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (targetClass != <span class="keyword">null</span> &amp;amp;&amp;amp; targetClass != Object.class);</div><div class="line"></div><div class="line">        <span class="comment">//将InjectionElement集合添加到新建的InjectionMetadata中。</span></div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> InjectionMetadata(clazz, elements);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>三、自动装载</p>
@@ -476,7 +511,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
         <div class="ds-share flat" data-thread-key="2015/05/21/Spring MVC 之 @Autowired/"
      data-title="Spring MVC 之 @Autowired"
      data-content=""
-     data-url="http://yoursite.com/2015/05/21/Spring MVC 之 @Autowired/">
+     data-url="http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -504,7 +539,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/05/21/Spring MVC 之 @Autowired/"
-           data-title="Spring MVC 之 @Autowired" data-url="http://yoursite.com/2015/05/21/Spring MVC 之 @Autowired/">
+           data-title="Spring MVC 之 @Autowired" data-url="http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/">
       </div>
     
   </div>
@@ -549,7 +584,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -557,7 +592,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -566,7 +601,7 @@ Controller类HomeController1234567891011121314151617181920212223@Controllerpubli
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

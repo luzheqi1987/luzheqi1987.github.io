@@ -89,11 +89,11 @@
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转]Spring4新特性——更好的Java泛型操作API">
-<meta property="og:url" content="http://yoursite.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1993608
 Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容器的其他改进Spring4新特性——Web开发的增强Spring4新特性——Groovy Bean定义DSLSpring4新特性——注解、脚本、任务、MVC等其他特性改进Spring4新特性——JSR310日期时间API">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]Spring4新特性——更好的Java泛型操作API">
 <meta name="twitter:description" content="原文地址 http://jinnianshilongnian.iteye.com/blog/1993608
@@ -126,7 +126,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/"/>
 
   <title> [转]Spring4新特性——更好的Java泛型操作API | 行走的轮子 </title>
 </head>
@@ -372,7 +372,8 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -390,7 +391,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
 
       
         <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1993608" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1993608</a></p>
-<p><a href="http://www.bugpointer.com/archives/420.html" target="_blank" rel="external">Spring4新特性——泛型限定式依赖注入</a><br><a href="http://www.bugpointer.com/archives/423.html" target="_blank" rel="external">Spring4新特性——核心容器的其他改进</a><br><a href="http://www.bugpointer.com/archives/425.html" target="_blank" rel="external">Spring4新特性——Web开发的增强</a><br><a href="http://www.bugpointer.com/archives/427.html" target="_blank" rel="external">Spring4新特性——Groovy Bean定义DSL</a><br><a href="http://www.bugpointer.com/archives/429.html" target="_blank" rel="external">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="http://www.bugpointer.com/archives/431.html" target="_blank" rel="external">Spring4新特性——JSR310日期时间API的支持</a><br><a href="http://www.bugpointer.com/archives/433.html" target="_blank" rel="external">Spring4新特性——更好的Java泛型操作API</a><br><a href="http://www.bugpointer.com/archives/435.html" target="_blank" rel="external">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
 <p>随着泛型用的越来越多，获取泛型实际类型信息的需求也会出现，如果用原生API，需要很多步操作才能获取到泛型，比如：<br>[java]<br>ParameterizedType parameterizedType =<br>    (ParameterizedType) ABService.class.getGenericInterfaces()[0];<br>Type genericType = parameterizedType.getActualTypeArguments()[1];<br>[/java]<br>Spring提供的ResolvableType API，提供了更加简单易用的泛型操作支持，如：<br>[java]<br>ResolvableType resolvableType1 = ResolvableType.forClass(ABService.class);<br>resolvableType1.as(Service.class).getGeneric(1).resolve()<br>[/java]<br>对于获取更复杂的泛型操作ResolvableType更加简单。</p>
 <p>假设我们的API是：<br>[java]<br>public interface Service&lt;N, M&gt; {<br>}  </p>
 <p>@org.springframework.stereotype.Service<br>public class ABService implements Service&lt;A, B&gt; {<br>}  </p>
@@ -466,7 +467,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
         <div class="ds-share flat" data-thread-key="2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/"
      data-title="[转]Spring4新特性——更好的Java泛型操作API"
      data-content=""
-     data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">
+     data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -494,7 +495,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/"
-           data-title="[转]Spring4新特性——更好的Java泛型操作API" data-url="http://yoursite.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">
+           data-title="[转]Spring4新特性——更好的Java泛型操作API" data-url="http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">
       </div>
     
   </div>
@@ -539,7 +540,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -547,7 +548,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -556,7 +557,7 @@ Spring4新特性——泛型限定式依赖注入Spring4新特性——核心容
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

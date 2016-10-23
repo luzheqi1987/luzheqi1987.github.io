@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/22/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/22/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/22/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/22/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,510 @@
             
               
                 
+                <a class="post-title-link" href="/2013/10/20/2013-10-20-CODE 86 Permutations II/" itemprop="url">
+                  CODE 86. Permutations II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-20T15:43:00+08:00" content="2013-10-20">
+              2013-10-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/20/2013-10-20-CODE 86 Permutations II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/20/2013-10-20-CODE 86 Permutations II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/20/2013-10-20-CODE 86 Permutations II/" class="leancloud_visitors" data-flag-title="CODE 86. Permutations II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/20/2013-10-20-CODE 86 Permutations II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/20/2013-10-20-CODE 86 Permutations II/'>CODE 86. Permutations II</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a collection of numbers that might contain duplicates, return all possible unique permutations.<br>For example,<br><code>[1,1,2]</code> have the following unique permutations:<br><code>[1,1,2]</code>, <code>[1,2,1]</code>,<br> and <code>[2,1,1]</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] num) &#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	ArrayList&lt;Integer&gt; numbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> n : num) &#123;</div><div class="line">		numbers.add(n);</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;(</div><div class="line">			dfs(numbers));</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Set&lt;ArrayList&lt;Integer&gt;&gt; dfs(ArrayList&lt;Integer&gt; numbers) &#123;</div><div class="line">	<span class="keyword">if</span> (numbers.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">		Set&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> HashSet&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(numbers);</div><div class="line">		results.add(result);</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	Set&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> HashSet&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	ArrayList&lt;Integer&gt; newNumbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(numbers);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.size(); i++) &#123;</div><div class="line">		Integer number = numbers.get(i);</div><div class="line">		newNumbers.remove(number);</div><div class="line">		Set&lt;ArrayList&lt;Integer&gt;&gt; res = dfs(newNumbers);</div><div class="line">		<span class="keyword">for</span> (ArrayList&lt;Integer&gt; re : res) &#123;</div><div class="line">			re.add(<span class="number">0</span>, number);</div><div class="line">			results.add(re);</div><div class="line">		&#125;</div><div class="line">		newNumbers.add(number);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/20/2013-10-20-CODE 87 Permutations/" itemprop="url">
+                  CODE 87. Permutations
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-20T15:29:00+08:00" content="2013-10-20">
+              2013-10-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/20/2013-10-20-CODE 87 Permutations/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/20/2013-10-20-CODE 87 Permutations/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/20/2013-10-20-CODE 87 Permutations/" class="leancloud_visitors" data-flag-title="CODE 87. Permutations">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/20/2013-10-20-CODE 87 Permutations/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/20/2013-10-20-CODE 87 Permutations/'>CODE 87. Permutations</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a collection of numbers, return all possible permutations.<br>For example,<br><code>[1,2,3]</code> have the following permutations:<br><code>[1,2,3]</code>, <code>[1,3,2]</code>, <code>[2,1,3]</code>, <code>[2,3,1]</code>, <code>[3,1,2]</code>,<br> and <code>[3,2,1]</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] num) &#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	ArrayList&lt;Integer&gt; numbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> n : num) &#123;</div><div class="line">		numbers.add(n);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dfs(numbers);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ArrayList&lt;ArrayList&lt;Integer&gt;&gt; dfs(ArrayList&lt;Integer&gt; numbers) &#123;</div><div class="line">	<span class="keyword">if</span> (numbers.size() &lt;= <span class="number">1</span>) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(numbers);</div><div class="line">		results.add(result);</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	ArrayList&lt;Integer&gt; newNumbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(numbers);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.size(); i++) &#123;</div><div class="line">		Integer number = numbers.get(i);</div><div class="line">		newNumbers.remove(number);</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res = dfs(newNumbers);</div><div class="line">		<span class="keyword">for</span> (ArrayList&lt;Integer&gt; re : res) &#123;</div><div class="line">			re.add(<span class="number">0</span>, number);</div><div class="line">			results.add(re);</div><div class="line">		&#125;</div><div class="line">		newNumbers.add(number);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/19/2013-10-19-CODE 85 Rotate Image/" itemprop="url">
+                  CODE 85. Rotate Image
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-19T00:28:00+08:00" content="2013-10-19">
+              2013-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/19/2013-10-19-CODE 85 Rotate Image/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/19/2013-10-19-CODE 85 Rotate Image/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/19/2013-10-19-CODE 85 Rotate Image/" class="leancloud_visitors" data-flag-title="CODE 85. Rotate Image">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/19/2013-10-19-CODE 85 Rotate Image/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/19/2013-10-19-CODE 85 Rotate Image/'>CODE 85. Rotate Image</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>You are given an n x n 2D matrix representing an image.<br>Rotate the image by 90 degrees (clockwise).<br>Follow up:<br>Could you do this in-place?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == matrix || matrix.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> roll = (matrix.length - <span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= roll; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = i; k &lt; matrix.length - i - <span class="number">1</span>; k++) &#123;</div><div class="line">			<span class="keyword">int</span> tmp = matrix[i][k];</div><div class="line">			matrix[i][k] = matrix[matrix.length - k  - <span class="number">1</span>][i];</div><div class="line">			matrix[matrix.length - k  - <span class="number">1</span>][i] = matrix[matrix.length</div><div class="line">					- i - <span class="number">1</span>][matrix.length - k  - <span class="number">1</span>];</div><div class="line">			matrix[matrix.length - i - <span class="number">1</span>][matrix.length - k - <span class="number">1</span>] = matrix[k][matrix.length</div><div class="line">					- i - <span class="number">1</span>];</div><div class="line">			matrix[k][matrix.length - i - <span class="number">1</span>] = tmp;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/10/18/2013-10-18-CODE 84 Anagrams/" itemprop="url">
                   CODE 84. Anagrams
                 </a>
@@ -373,7 +877,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -392,7 +897,32 @@
       
         
           
-            <p>Given an array of strings, return all groups of strings that are anagrams.<br>Note: All inputs will be in lower-case.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/18/2013-10-18-CODE 84 Anagrams/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/18/2013-10-18-CODE 84 Anagrams/'>CODE 84. Anagrams</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an array of strings, return all groups of strings that are anagrams.<br>Note: All inputs will be in lower-case.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">anagrams</span><span class="params">(String[] strs)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	Map&lt;String, ArrayList&lt;String&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;String, ArrayList&lt;String&gt;&gt;();</div><div class="line">	ArrayList&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (String str : strs) &#123;</div><div class="line">		<span class="keyword">char</span>[] cs = str.toCharArray();</div><div class="line">		Arrays.sort(cs);</div><div class="line">		String newStr = <span class="keyword">new</span> String(cs);</div><div class="line">		<span class="keyword">if</span> (map.containsKey(newStr)) &#123;</div><div class="line">			ArrayList&lt;String&gt; value = map.get(newStr);</div><div class="line">			value.add(str);</div><div class="line">			map.put(newStr, value);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			ArrayList&lt;String&gt; value = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">			value.add(str);</div><div class="line">			map.put(newStr, value);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (ArrayList&lt;String&gt; value : map.values()) &#123;</div><div class="line">		<span class="keyword">if</span> (value.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">			result.addAll(value);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -503,7 +1033,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -522,7 +1053,32 @@
       
         
           
-            <p><a href="http://www.lybbs.net/news_read.do?newsPath=2007/9/25/1190684628458.html" target="_blank" rel="external">http://www.lybbs.net/news_read.do?newsPath=2007/9/25/1190684628458.html</a><br> 1 引言<br>     Java的一个重要优点就是通过垃圾收集器GC （Garbage Collection）自动管理内存的回收，程序员不需要通过调用函数来释放内存。因此，很多程序员认为Java 不存在内存泄漏问题，或者认为即使有内存泄漏也不是程序的责任，而是GC 或JVM的问题。其实，这种想法是不正确的，因为Java 也存在内存泄漏，但它的表现与C++不同。如果正在开发的Java 代码要全天24 小时在服务器上运行，则内存漏洞在此处的影响就比在配置实用程序中的影响要大得多，即使最小的漏洞也会导致JVM耗尽全部可用内存。另外，在很多嵌入式系统中，内存的总量非常有限。在相反的情况下，即便程序的生存期较短，如果存在分配大量临时对象（或者若干吞噬大量内存的对象）的任何Java<br> 代码，而且当不再需要这些对象时也没有取消对它们的引用，则仍然可能达到内存极限。</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/17/2013-10-17-转一篇有关JAVA的内存泄露的文章/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/17/2013-10-17-转一篇有关JAVA的内存泄露的文章/'>转一篇有关JAVA的内存泄露的文章</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p><a href="http://www.lybbs.net/news_read.do?newsPath=2007/9/25/1190684628458.html" target="_blank" rel="external">http://www.lybbs.net/news_read.do?newsPath=2007/9/25/1190684628458.html</a><br> 1 引言<br>     Java的一个重要优点就是通过垃圾收集器GC （Garbage Collection）自动管理内存的回收，程序员不需要通过调用函数来释放内存。因此，很多程序员认为Java 不存在内存泄漏问题，或者认为即使有内存泄漏也不是程序的责任，而是GC 或JVM的问题。其实，这种想法是不正确的，因为Java 也存在内存泄漏，但它的表现与C++不同。如果正在开发的Java 代码要全天24 小时在服务器上运行，则内存漏洞在此处的影响就比在配置实用程序中的影响要大得多，即使最小的漏洞也会导致JVM耗尽全部可用内存。另外，在很多嵌入式系统中，内存的总量非常有限。在相反的情况下，即便程序的生存期较短，如果存在分配大量临时对象（或者若干吞噬大量内存的对象）的任何Java<br> 代码，而且当不再需要这些对象时也没有取消对它们的引用，则仍然可能达到内存极限。</p>
 <p>2 Java 内存回收机制<br>     Java 的内存管理就是对象的分配和释放问题。分配内存的方式多种多样，取决于该种语言的语法结构。但不论是哪一种语言的内存分配方式，最后都要返回所分配的内存块的起始地址，即返回一个指针到内存块的首地址。在Java 中所有对象都是在堆（Heap）中分配的，对象的创建通常都是采用new或者是反射的方式，但对象释放却有直接的手段，所以对象的回收都是由Java虚拟机通过垃圾收集器去完成的。这种收支两条线的方法确实简化了程序员的工作，但同时也加重了JVM的工作，这也是Java<br> 程序运行速度较慢的原因之一。因为，GC 为了能够正确释放对象，GC 必须监控每一个对象的运行状态，包括对象的申请、引用、被引用、赋值等，GC 都需要进行监控。监视对象状态是为了更加准确地、及时地释放对象，而释放对象的根本原则就是该对象不再<br>被引用。Java 使用有向图的方式进行内存管理，可以消除引用循环的问题，例如有三个对象，相互引用，只要它们和根进程不可达，那么GC 也是可以回收它们的。在Java 语言中，判断一块内存空间是否符合垃圾收集器收集标准的标准只有两个：一个是给对象赋予了空值null，以下再没有调用过，另一个是给对象赋予了新值，即重新分配了内存空间。</p>
 <p>3 Java 中的内存泄漏</p>
 <p>3.1 Java 中内存泄漏与C++的区别<br>    在Java 中，内存泄漏就是存在一些被分配的对象，这些对象有下面两个特点，首先，这些对象是可达的，即在有向图中，存在通路可以与其相连；其次，这些对象是无用的，即程序以后不会再使用这些对象。如果对象满足这两个条件，这些对象就可以判定为Java 中的内存泄漏，这些对象不会被GC 所回收，然而它却占用内存。在C++中，内存泄漏的范围更大一些。有些对象被分配了内存空间，然后却不可达，由于C++中没有GC，这些内存将永远收<br>不回来。在Java 中，这些不可达的对象都由GC 负责回收，因此程序员不需要考虑这部分的内存泄漏。通过分析，可以得知，对于C++，程序员需要自己管理边和顶点，而对于Java 程序员只需要管理边就可以了（不需要管理顶点<br>的释放）。通过这种方式，Java 提高了编程的效率。</p>
@@ -654,7 +1210,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -673,7 +1230,32 @@
       
         
           
-            <p>Implement pow(x, n).</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 83 Pow(x, n)/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 83 Pow(x, n)/'>CODE 83. Pow(x, n)</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Implement pow(x, n).</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">pow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">boolean</span> minus = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">double</span> result = x;</div><div class="line">	<span class="keyword">if</span> (Math.abs(n - <span class="number">0.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(x - <span class="number">1.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (Math.abs(x + <span class="number">1.0</span>) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1.0</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> -<span class="number">1.0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</div><div class="line">		minus = <span class="keyword">true</span>;</div><div class="line">		n = -n;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">		result *= x;</div><div class="line">		<span class="keyword">if</span> (Math.abs(result) &lt; <span class="number">1.0E-50</span>) &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (minus) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span> / result;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -796,7 +1378,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -815,7 +1398,32 @@
       
         
           
-            <p>Follow up for N-Queens problem.<br>Now, instead outputting board configurations, return the total number of distinct solutions.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt=""></p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 81 N-Queens II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 81 N-Queens II/'>CODE 81. N-Queens II</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Follow up for N-Queens problem.<br>Now, instead outputting board configurations, return the total number of distinct solutions.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt=""></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">totalNQueens</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">int</span>[] cols = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">		cols[i] = -<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> number = createNQueens(n, cols, <span class="number">0</span>);</div><div class="line">	<span class="keyword">return</span> number;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">createNQueens</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[] rows, <span class="keyword">int</span> row)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span> number = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</div><div class="line">		<span class="keyword">int</span> j;</div><div class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; row; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (rows[j] == i || (row - j == Math.abs(rows[j] - i))) &#123;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (j &lt; row) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		rows[row] = i;</div><div class="line">		<span class="keyword">if</span> (row == n - <span class="number">1</span>) &#123;</div><div class="line">			rows[row] = -<span class="number">1</span>;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">int</span> tmp = createNQueens(n, rows, row + <span class="number">1</span>);</div><div class="line">			number += tmp;</div><div class="line">		&#125;</div><div class="line">		rows[row] = -<span class="number">1</span>;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> number;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -938,7 +1546,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -957,7 +1566,32 @@
       
         
           
-            <p>The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt=""><br>Given an integer n, return all distinct solutions to the n-queens puzzle.<br>Each solution contains a distinct board configuration of the n-queens’ placement, where <code>&#39;Q&#39;</code> and <code>&#39;.&#39;</code> both<br> indicate a queen and an empty space respectively.<br>For example,<br>There exist two distinct solutions to the 4-queens puzzle:<br>    [<br>     [“.Q..”,  // Solution 1<br>      “…Q”,<br>      “Q…”,<br>      “..Q.”],</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 82 N-Queens/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/16/2013-10-16-CODE 82 N-Queens/'>CODE 82. N-Queens</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.<br><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png" alt=""><br>Given an integer n, return all distinct solutions to the n-queens puzzle.<br>Each solution contains a distinct board configuration of the n-queens’ placement, where <code>&#39;Q&#39;</code> and <code>&#39;.&#39;</code> both<br> indicate a queen and an empty space respectively.<br>For example,<br>There exist two distinct solutions to the 4-queens puzzle:<br>    [<br>     [“.Q..”,  // Solution 1<br>      “…Q”,<br>      “Q…”,<br>      “..Q.”],</p>
 <pre><code> [&quot;..Q.&quot;,  // Solution 2
   &quot;Q...&quot;,
   &quot;...Q&quot;,
@@ -1085,7 +1719,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1104,7 +1739,32 @@
       
         
           
-            <p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array <code>[−2,1,−3,4,−1,2,1,−5,4]</code>,<br>the contiguous subarray <code>[4,−1,2,1]</code> has the largest sum<br> = <code>6</code>.<br><a href="http://oj.leetcode.com/problems/maximum-subarray/#" target="_blank" rel="external">click to show more practice.</a><br>More practice:If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/13/2013-10-13-CODE 80 Maximum Subarray/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/13/2013-10-13-CODE 80 Maximum Subarray/'>CODE 80. Maximum Subarray</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.<br>For example, given the array <code>[−2,1,−3,4,−1,2,1,−5,4]</code>,<br>the contiguous subarray <code>[4,−1,2,1]</code> has the largest sum<br> = <code>6</code>.<br><a href="http://oj.leetcode.com/problems/maximum-subarray/#" target="_blank" rel="external">click to show more practice.</a><br>More practice:If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == A || A.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> max = Integer.MIN_VALUE;</div><div class="line">	<span class="keyword">int</span> tmpmax = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; A.length; i++) &#123;</div><div class="line">		tmpmax += A[i];</div><div class="line">		<span class="keyword">if</span> (tmpmax &gt; max) &#123;</div><div class="line">			max = tmpmax;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (tmpmax &lt; <span class="number">0</span>) &#123;</div><div class="line">			tmpmax = <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -1227,7 +1887,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1246,435 +1907,34 @@
       
         
           
-            <p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:<br>    [<br>     [ 1, 2, 3 ],<br>     [ 4, 5, 6 ],<br>     [ 7, 8, 9 ]<br>    ]</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/12/2013-10-12-CODE 79 Spiral Matrix/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/12/2013-10-12-CODE 79 Spiral Matrix/'>CODE 79. Spiral Matrix</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.<br>For example,<br>Given the following matrix:<br>    [<br>     [ 1, 2, 3 ],<br>     [ 4, 5, 6 ],<br>     [ 7, 8, 9 ]<br>    ]</p>
 <p>You should return <code>[1,2,3,6,9,8,7,4,5]</code>.</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralOrder(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; &amp;matrix) &#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by each test case.</span></div><div class="line">	<span class="keyword">if</span>(matrix.size() == <span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralMatrix(<span class="number">0</span>);</div><div class="line">		<span class="keyword">return</span> spiralMatrix;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> halfCol = (matrix[<span class="number">0</span>].size() - <span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">int</span> halfRow = (matrix.size() - <span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">	<span class="keyword">int</span> col = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> row = <span class="number">0</span>;</div><div class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; spiralMatrix(<span class="number">0</span>);</div><div class="line">	<span class="keyword">while</span>(row &lt;= halfRow &amp;&amp; col &lt;= halfCol)&#123;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = col; i &lt; matrix[<span class="number">0</span>].size() - col; i++)&#123;</div><div class="line">			spiralMatrix.push_back(matrix[row][i]);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = row + <span class="number">1</span>; i &lt; matrix.size() - row; i++)&#123;</div><div class="line">			spiralMatrix.push_back(matrix[i][matrix[<span class="number">0</span>].size() - col - <span class="number">1</span>]);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span>(row != matrix.size() - row - <span class="number">1</span>)&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = matrix[<span class="number">0</span>].size() - col - <span class="number">2</span>; i &gt;= col; i--)&#123;</div><div class="line">				spiralMatrix.push_back(matrix[matrix.size() - row - <span class="number">1</span>][i]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span>(col != matrix[<span class="number">0</span>].size() - col)&#123;</div><div class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> i = matrix.size() - row - <span class="number">2</span>; i &gt;= row + <span class="number">1</span>; i--)&#123;</div><div class="line">				spiralMatrix.push_back(matrix[i][col]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		row++;</div><div class="line">		col++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> spiralMatrix;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/11/2013-10-11-CODE 78 Jump Game/" itemprop="url">
-                  CODE 78. Jump Game
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-11T21:53:00+08:00" content="2013-10-11">
-              2013-10-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/11/2013-10-11-CODE 78 Jump Game/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/11/2013-10-11-CODE 78 Jump Game/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/11/2013-10-11-CODE 78 Jump Game/" class="leancloud_visitors" data-flag-title="CODE 78. Jump Game">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array of non-negative integers, you are initially positioned at the first index of the array.<br>Each element in the array represents your maximum jump length at that position.<br>Determine if you are able to reach the last index.<br>For example:<br>A = <code>[2,3,1,1,4]</code>, return <code>true</code>.<br>A = <code>[3,2,1,0,4]</code>, return <code>false</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canJump</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (A.length == <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> A[<span class="number">0</span>] &gt;= <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; A.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (A[i - <span class="number">1</span>] - <span class="number">1</span> &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			A[i] = Math.max(A[i - <span class="number">1</span>] - <span class="number">1</span>, A[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/11/2013-10-11-CODE 76 Insert Interval/" itemprop="url">
-                  CODE 76. Insert Interval
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-11T20:22:00+08:00" content="2013-10-11">
-              2013-10-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/11/2013-10-11-CODE 76 Insert Interval/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/11/2013-10-11-CODE 76 Insert Interval/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/11/2013-10-11-CODE 76 Insert Interval/" class="leancloud_visitors" data-flag-title="CODE 76. Insert Interval">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).<br>You may assume that the intervals were initially sorted according to their start times.<br>Example 1:<br>Given intervals <code>[1,3],[6,9]</code>, insert and merge <code>[2,5]</code> in<br> as <code>[1,5],[6,9]</code>.<br>Example 2:<br>Given <code>[1,2],[3,5],[6,7],[8,10],[12,16]</code>, insert and merge <code>[4,9]</code> in<br> as <code>[1,2],[3,10],[12,16]</code>.<br>This is because the new interval <code>[4,9]</code> overlaps with <code>[3,5],[6,7],[8,10]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Interval&gt; <span class="title">insert</span><span class="params">(ArrayList&lt;Interval&gt; intervals,</span></span></div><div class="line">		Interval newInterval) &#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == intervals || intervals.isEmpty()) &#123;</div><div class="line">		ArrayList&lt;Interval&gt; newIntervals = <span class="keyword">new</span> ArrayList&lt;Interval&gt;();</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != newInterval) &#123;</div><div class="line">			newIntervals.add(newInterval);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> newIntervals;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; intervals.size(); i++) &#123;</div><div class="line">		<span class="keyword">if</span> (newInterval.start &gt;= intervals.get(i).start</div><div class="line">				&amp;&amp; newInterval.start &lt;= intervals.get(i).end</div><div class="line">				&amp;&amp; newInterval.end &gt;= intervals.get(i).end) &#123;</div><div class="line">			intervals.get(i).end = newInterval.end;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (newInterval.end &gt;= intervals.get(i).start</div><div class="line">				&amp;&amp; newInterval.end &lt;= intervals.get(i).end</div><div class="line">				&amp;&amp; newInterval.start &lt;= intervals.get(i).start) &#123;</div><div class="line">			intervals.get(i).start = newInterval.start;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (newInterval.start &gt;= intervals.get(i).start</div><div class="line">				&amp;&amp; newInterval.end &lt;= intervals.get(i).end) &#123;</div><div class="line">			<span class="keyword">return</span> intervals;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (newInterval.start &lt;= intervals.get(i).start</div><div class="line">				&amp;&amp; newInterval.end &gt;= intervals.get(i).end) &#123;</div><div class="line">			intervals.get(i).start = newInterval.start;</div><div class="line">			intervals.get(i).end = newInterval.end;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (newInterval.end &lt; intervals.get(i).start) &#123;</div><div class="line">			intervals.add(i, newInterval);</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (i &gt;= intervals.size()) &#123;</div><div class="line">		intervals.add(newInterval);</div><div class="line">		<span class="keyword">return</span> intervals;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Interval&gt; newIntervals = <span class="keyword">new</span> ArrayList&lt;Interval&gt;();</div><div class="line">	Interval first = intervals.get(<span class="number">0</span>);</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; intervals.size(); i++) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == first) &#123;</div><div class="line">			first = intervals.get(i);</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &gt;= first.start</div><div class="line">				&amp;&amp; intervals.get(i).start &lt;= first.end</div><div class="line">				&amp;&amp; intervals.get(i).end &gt;= first.end) &#123;</div><div class="line">			first.end = intervals.get(i).end;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).end &gt;= first.start</div><div class="line">				&amp;&amp; intervals.get(i).end &lt;= first.end</div><div class="line">				&amp;&amp; intervals.get(i).start &lt;= first.start) &#123;</div><div class="line">			first.start = intervals.get(i).start;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &gt;= first.start</div><div class="line">				&amp;&amp; intervals.get(i).end &lt;= first.end) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &lt;= first.start</div><div class="line">				&amp;&amp; intervals.get(i).end &gt;= first.end) &#123;</div><div class="line">			first.start = intervals.get(i).start;</div><div class="line">			first.end = intervals.get(i).end;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			newIntervals.add(first);</div><div class="line">			first = <span class="keyword">null</span>;</div><div class="line">			first = intervals.get(i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != first) &#123;</div><div class="line">		newIntervals.add(first);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> newIntervals;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/10/10/2013-10-10-CODE 77 Merge Intervals/" itemprop="url">
-                  CODE 77. Merge Intervals
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-10-10T23:20:00+08:00" content="2013-10-10">
-              2013-10-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/10/10/2013-10-10-CODE 77 Merge Intervals/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/10/2013-10-10-CODE 77 Merge Intervals/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/10/10/2013-10-10-CODE 77 Merge Intervals/" class="leancloud_visitors" data-flag-title="CODE 77. Merge Intervals">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given a collection of intervals, merge all overlapping intervals.<br>For example,<br>Given <code>[1,3],[2,6],[8,10],[15,18]</code>,<br>return <code>[1,6],[8,10],[15,18]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Interval&gt; <span class="title">merge</span><span class="params">(ArrayList&lt;Interval&gt; intervals)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == intervals || intervals.isEmpty()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;Interval&gt;();</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Interval&gt; sorted = <span class="keyword">new</span> ArrayList&lt;Interval&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; intervals.size(); i++) &#123;</div><div class="line">		<span class="keyword">if</span> (sorted.isEmpty()) &#123;</div><div class="line">			sorted.add(intervals.get(i));</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">int</span> j;</div><div class="line">			<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; sorted.size(); j++) &#123;</div><div class="line">				<span class="keyword">if</span> (intervals.get(i).end &lt; sorted.get(j).start) &#123;</div><div class="line">					sorted.add(j, intervals.get(i));</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &gt;= sorted.get(j).start</div><div class="line">						&amp;&amp; intervals.get(i).start &lt;= sorted.get(j).end</div><div class="line">						&amp;&amp; intervals.get(i).end &gt;= sorted.get(j).end) &#123;</div><div class="line">					sorted.get(j).end = intervals.get(i).end;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).end &gt;= sorted.get(j).start</div><div class="line">						&amp;&amp; intervals.get(i).end &lt;= sorted.get(j).end</div><div class="line">						&amp;&amp; intervals.get(i).start &lt;= sorted.get(j).start) &#123;</div><div class="line">					sorted.get(j).start = intervals.get(i).start;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &lt;= sorted.get(j).start</div><div class="line">						&amp;&amp; intervals.get(i).end &gt;= sorted.get(j).end) &#123;</div><div class="line">					sorted.get(j).start = intervals.get(i).start;</div><div class="line">					sorted.get(j).end = intervals.get(i).end;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (intervals.get(i).start &gt;= sorted.get(j).start</div><div class="line">						&amp;&amp; intervals.get(i).end &lt;= sorted.get(j).end) &#123;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (j &gt;= sorted.size()) &#123;</div><div class="line">				sorted.add(intervals.get(i));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Interval&gt; newIntervals = <span class="keyword">new</span> ArrayList&lt;Interval&gt;();</div><div class="line">	Interval first = sorted.get(<span class="number">0</span>);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; sorted.size(); i++) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == first) &#123;</div><div class="line">			first = sorted.get(i);</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sorted.get(i).start &gt;= first.start</div><div class="line">				&amp;&amp; sorted.get(i).start &lt;= first.end</div><div class="line">				&amp;&amp; sorted.get(i).end &gt;= first.end) &#123;</div><div class="line">			first.end = sorted.get(i).end;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sorted.get(i).end &gt;= first.start</div><div class="line">				&amp;&amp; sorted.get(i).end &lt;= first.end</div><div class="line">				&amp;&amp; sorted.get(i).start &lt;= first.start) &#123;</div><div class="line">			first.start = sorted.get(i).start;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sorted.get(i).start &gt;= first.start</div><div class="line">				&amp;&amp; sorted.get(i).end &lt;= first.end) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (sorted.get(i).start &lt;= first.start</div><div class="line">				&amp;&amp; sorted.get(i).end &gt;= first.end) &#123;</div><div class="line">			first.start = sorted.get(i).start;</div><div class="line">			first.end = sorted.get(i).end;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			newIntervals.add(first);</div><div class="line">			first = <span class="keyword">null</span>;</div><div class="line">			first = sorted.get(i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != first) &#123;</div><div class="line">		newIntervals.add(first);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> newIntervals;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1748,7 +2008,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1756,7 +2016,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1765,7 +2025,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

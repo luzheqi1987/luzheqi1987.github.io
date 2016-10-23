@@ -85,16 +85,31 @@
 
 
 
-<meta name="description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/访问原文「Spring MVC 之 &amp;lt;context:component-scan/&amp;gt;」
+
+(function() {
+  Element.pr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring MVC 之 &lt;context:component-scan/>">
-<meta property="og:url" content="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/访问原文「Spring MVC 之 &amp;lt;context:component-scan/&amp;gt;」
+
+(function() {
+  Element.pr">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring MVC 之 &lt;context:component-scan/>">
-<meta name="twitter:description" content="一、ContextLoader通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/访问原文「Spring MVC 之 &amp;lt;context:component-scan/&amp;gt;」
+
+(function() {
+  Element.pr">
 
 
 
@@ -123,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/"/>
 
   <title> Spring MVC 之 &lt;context:component-scan/> | 行走的轮子 </title>
 </head>
@@ -369,7 +384,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -386,10 +402,35 @@
       
 
       
-        <p>一、ContextLoader<br>通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类，接着使用configureAndRefreshWebApplicationContext初始化这个WebApplicactionContext对象，是在configureAndRefreshWebApplicationContext方法中进行了配置文件的加载和组件的扫描。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context == <span class="keyword">null</span>) &#123;</div><div class="line">	<span class="keyword">this</span>.context = createWebApplicationContext(servletContext);</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context <span class="keyword">instanceof</span> ConfigurableWebApplicationContext) &#123;</div><div class="line">	ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) <span class="keyword">this</span>.context;</div><div class="line">	<span class="keyword">if</span> (!cwac.isActive()) &#123;</div><div class="line">		<span class="comment">// The context has not yet been refreshed -&amp;gt; provide services such as</span></div><div class="line">		<span class="comment">// setting the parent context, setting the application context id, etc</span></div><div class="line">		<span class="keyword">if</span> (cwac.getParent() == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="comment">// The context instance was injected without an explicit parent -&amp;gt;</span></div><div class="line">			<span class="comment">// determine parent for root web application context, if any.</span></div><div class="line">			ApplicationContext parent = loadParentContext(servletContext);</div><div class="line">			cwac.setParent(parent);</div><div class="line">		&#125;</div><div class="line">		configureAndRefreshWebApplicationContext(cwac, servletContext);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/'>Spring MVC 之 &lt;context:component-scan/></a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>一、ContextLoader<br>通过阅读SpringMVC的源码可知，SpringMVC的初始化在ContextLoaderListener类中的contextInitialized方法，跟一下代码发现实际上是在ContextLoader中的initWebApplicationContext方法中进行初始化。初始化的代码如下,首先会创建一个WebApplicationContext对象，然后加载父类，接着使用configureAndRefreshWebApplicationContext初始化这个WebApplicactionContext对象，是在configureAndRefreshWebApplicationContext方法中进行了配置文件的加载和组件的扫描。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context == <span class="keyword">null</span>) &#123;</div><div class="line">	<span class="keyword">this</span>.context = createWebApplicationContext(servletContext);</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span> (<span class="keyword">this</span>.context <span class="keyword">instanceof</span> ConfigurableWebApplicationContext) &#123;</div><div class="line">	ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) <span class="keyword">this</span>.context;</div><div class="line">	<span class="keyword">if</span> (!cwac.isActive()) &#123;</div><div class="line">		<span class="comment">// The context has not yet been refreshed -&amp;gt; provide services such as</span></div><div class="line">		<span class="comment">// setting the parent context, setting the application context id, etc</span></div><div class="line">		<span class="keyword">if</span> (cwac.getParent() == <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="comment">// The context instance was injected without an explicit parent -&amp;gt;</span></div><div class="line">			<span class="comment">// determine parent for root web application context, if any.</span></div><div class="line">			ApplicationContext parent = loadParentContext(servletContext);</div><div class="line">			cwac.setParent(parent);</div><div class="line">		&#125;</div><div class="line">		configureAndRefreshWebApplicationContext(cwac, servletContext);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>展开createWebApplicationContext方法。该方法初始化根WebApplicationContext，这个WebApplicationContext可以使默认的context也尅进行定制。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">protected WebApplicationContext createWebApplicationContext(ServletContext sc) &#123;</div><div class="line">	Class&amp;lt;?&amp;gt; contextClass = determineContextClass(sc);</div><div class="line">	if (!ConfigurableWebApplicationContext.class.isAssignableFrom(contextClass)) &#123;</div><div class="line">		throw new ApplicationContextException(&amp;quot;Custom context class [&amp;quot; + contextClass.getName() +</div><div class="line">				&amp;quot;] is not of type [&amp;quot; + ConfigurableWebApplicationContext.class.getName() + &amp;quot;]&amp;quot;);</div><div class="line">	&#125;</div><div class="line">	return (ConfigurableWebApplicationContext) BeanUtils.instantiateClass(contextClass);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>展开determineContextClass方法。这个方法比较简单，首先查看有没有配置CONTEXT_CLASS_PARAM这个属性，有的话使用这个属性配置的类进行加载，否则使用默认的类。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">protected Class&amp;lt;?&amp;gt; determineContextClass(ServletContext servletContext) &#123;</div><div class="line">	String contextClassName = servletContext.getInitParameter(CONTEXT_CLASS_PARAM);</div><div class="line">	if (contextClassName != null) &#123;</div><div class="line">		try &#123;</div><div class="line">			return ClassUtils.forName(contextClassName, ClassUtils.getDefaultClassLoader());</div><div class="line">		&#125;</div><div class="line">		catch (ClassNotFoundException ex) &#123;</div><div class="line">			throw new ApplicationContextException(</div><div class="line">					&amp;quot;Failed to load custom context class [&amp;quot; + contextClassName + &amp;quot;]&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else &#123;</div><div class="line">		contextClassName = defaultStrategies.getProperty(WebApplicationContext.class.getName());</div><div class="line">		try &#123;</div><div class="line">			return ClassUtils.forName(contextClassName, ContextLoader.class.getClassLoader());</div><div class="line">		&#125;</div><div class="line">		catch (ClassNotFoundException ex) &#123;</div><div class="line">			throw new ApplicationContextException(</div><div class="line">					&amp;quot;Failed to load default context class [&amp;quot; + contextClassName + &amp;quot;]&amp;quot;, ex);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>再看configureAndRefreshWebApplicationContext方法。configureAndRefreshWebApplicationContext最后的refresh方法已经在前面的<a href="http://www.bugpointer.com/archives/491.html" target="_blank" rel="external">Spring 使用简单Demo进行源码调试</a>系列文章里进行了简单的分析调试。</p>
+<p>再看configureAndRefreshWebApplicationContext方法。configureAndRefreshWebApplicationContext最后的refresh方法已经在前面的<a href="http://blog.jerkybible.com/2015/05/08/Spring 使用简单Demo进行源码调试（一）/">Spring 使用简单Demo进行源码调试（一）</a>系列文章里进行了简单的分析调试。</p>
 <p>二、 &lt;context:component-scan/&gt;<br> 我们在SpringMVC开发项目中，有的用注解和XML配置Bean,这两种都各有自己的优势，数据源配置比较经常用XML配置，控制层依赖的service比较经常用注解等（在部署时比较不会改变的），我们经常比较常用的注解有@Component是通用标注，@Controller标注web控制器，@Service标注Servicec层的服务，@Respository标注DAO层的数据访问。SpringMVC启动时怎么被自动扫描然后解析并注册到Bean工厂中去（放到DefaultListableBeanFactory中的Map<string, beandefinition=""> beanDefinitionMap中 以BeanName为key）？我们今天带着这些问题来了解分析这实现的过程，我们在分析之前先了解一下这些注解。<br>   @Controller标注web控制器，@Service标注Service层的服务，@Respository标注DAO层的数据访问。@Component是通用标注，只是定义为一个类为Bean，SpringMVC会把所有添加@Component注解的类作为使用自动扫描注入配置路径下的备选对象。@Controller、@Service\@Respository只是更加的细化，都是被@Component标注，所以我们比较不推荐使用@Component。源代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Service &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Controller &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;  </div><div class="line"></div><div class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)  </div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)  </div><div class="line"><span class="meta">@Documented</span>  </div><div class="line"><span class="meta">@Component</span>  </div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Repository &#123;  </div><div class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> &amp;quot</span>;&amp;quot;;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></string,></p>
 <p>都是有标示@Component<br> 我们在配置文件中，标示配置需要扫描哪些包下，也可以配置对某个包下不扫描，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&amp;lt;context:component-scan base-<span class="keyword">package</span>=&amp;quot;cn.test&amp;quot;&amp;gt;  </div><div class="line">        &amp;lt;context:exclude-filter type=&amp;quot;regex&amp;quot; expression=&amp;quot;cn.test.*.*.controller&amp;quot;/&amp;gt;  </div><div class="line">        &amp;lt;context:exclude-filter type=&amp;quot;regex&amp;quot; expression=&amp;quot;cn.test.*.*.controller2&amp;quot;/&amp;gt;  </div><div class="line">&amp;lt;/context:component-scan&amp;gt;</div></pre></td></tr></table></figure></p>
 <p>说明：<br>   <context:exclude-filter>指定的不扫描包，<context:exclude-filter>指定的扫描包<br>SpringMVC先读取配置文件，然后根据context:component-scan中属性base-package去扫描指定包下的class和jar文件，把标示@Controller标注web控制器，@Service标注Servicec层的服务，@Respository标注DAO层的数据访问等注解的都获取，并注册为Bean类放到Bean工厂。</context:exclude-filter></context:exclude-filter></p>
@@ -464,7 +505,7 @@
         <div class="ds-share flat" data-thread-key="2015/05/19/Spring MVC 之 contextcomponent-scan/"
      data-title="Spring MVC 之 &lt;context:component-scan/>"
      data-content=""
-     data-url="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
+     data-url="http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -492,7 +533,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/05/19/Spring MVC 之 contextcomponent-scan/"
-           data-title="Spring MVC 之 &lt;context:component-scan/>" data-url="http://yoursite.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
+           data-title="Spring MVC 之 &lt;context:component-scan/>" data-url="http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/">
       </div>
     
   </div>
@@ -537,7 +578,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -545,7 +586,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -554,7 +595,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

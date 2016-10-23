@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/32/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/32/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/32/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/32/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,433 @@
             
               
                 
+                <a class="post-title-link" href="/2012/08/20/OpenCV 级联分类器训练（1）/" itemprop="url">
+                  OpenCV 级联分类器训练（1）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-20T23:45:31+08:00" content="2012-08-20">
+              2012-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/20/OpenCV 级联分类器训练（1）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/20/OpenCV 级联分类器训练（1）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/20/OpenCV 级联分类器训练（1）/" class="leancloud_visitors" data-flag-title="OpenCV 级联分类器训练（1）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>白天的工作时间主要花在纠结于Adaboost。到底是训练样本和测试样本差异性太大，还是Adaboost本身的算法设计问题？</p>
+<p>晚上按照opencv的方法，<br>（1）利用createsamples.exe生成了正负样本，参考方法详见<br><a href="http://niopen.com/thread-24236-1-1.html" target="_blank" rel="external">http://niopen.com/thread-24236-1-1.html</a><br>（2）使用haartraining.exe训练时，cvAlloc发生错误，造成insufficient memory.具体问题未知。只好自己使用opencv提供的源码进行调试。</p>
+<p>我使用的是vs2010+opencv2.2（for 2010）。相比之前vc6.0+opencv1.0的安装，<br>相同的是<br>（1）需要设置环境变量<br>不同的是<br>（1）v1.0只需设置include，lib路径一次，便可对所有solution适用，而v2.2只要是新的solution都要设置路径。</p>
+<p>建立工程编译的过程中，遇见了visual studio 编程经常遇见的三个问题：<br>(1)无法打开文件…<br>此类问题一般是它所在的文件#include的路径不对，编译的时候找不到。<br>(2)无法创建或使用预编译头…<br>此类问题一般在对应文件的预编译属性中选择不使用预编译头即可。不过这可能是对小的工程适用（小工程编译时间在容忍的范围之内），如果将来遇到大工程，预编译头可以节省时间。<br>参考链接<a href="http://blog.csdn.net/gouki04/article/details/6219822" target="_blank" rel="external">http://blog.csdn.net/gouki04/article/details/6219822</a><br>(3)Link 2019 无法解析的外部符号<br>3种可能：<br>1. lib 文件未引入。可使用“#pragma comment(lib, “winsock.lib”) ”语句添加 lib 引用，也可在项目依赖里添加。</p>
+<p>2. 类方法的实现未加类标识。如， “CTest::Connect(void) { … }” 写成了 “Connect(void) { … }”。</p>
+<p>3. 缺少 obj 文件。在项目里添加“包含路径”：C:\curl\lib\release-dll*.obj。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/08/[转]wordpress 添加基本留言板/" itemprop="url">
+                  [转]wordpress 添加基本留言板
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-08T23:01:22+08:00" content="2012-08-08">
+              2012-08-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/08/[转]wordpress 添加基本留言板/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/08/[转]wordpress 添加基本留言板/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/08/[转]wordpress 添加基本留言板/" class="leancloud_visitors" data-flag-title="[转]wordpress 添加基本留言板">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>做一个wordpress留言板很简单，我们知道一般可以用新建一个主题名字叫“留言板”的页面，让访客以评论留言的方式来实现。但是这种方式建立的留言板，其实是一个一般主题(post)或页面(page)，因此缺乏进一步定制的功能，而且提示文字也全部是“评论”<br>要做一个可定制的留言板其实很简单，只需要5步，那就让我们开始吧:)</p>
+<p>如果你满足下列要求，请继续，</p>
+<p>你有主机文件存储权限(一般博客服务提供商可能没有提供此权限).<br>你可以以admin权限登录后台(一般都有吧)<br>你大概知道点HTML和PHP文本形式的差别(定制部分需要修修改改，当然不难，只要认得出什么是html文本，什么是php文本就及格).</p>
+<h3 id="一：制作留言板模板："><a href="#一：制作留言板模板：" class="headerlink" title="一：制作留言板模板："></a>一：制作留言板模板：</h3><p>1）找到你博客模板目录中的single.php文件（一般你的模板目录是在/wp-content/themes/博客模板名称/）；复制 single.php并重命名为guestbook.php,这样做的目的是我们希望留言板能保持博客的基本布局如：页面头部，页脚和侧边栏。因此最好的方式就是复制用来显示单篇主题的页面模板文件single.php</p>
+<p>2）用一款合适的文本编辑器（如：editplus，ultraedit，notepad2，之所以没说windows自带的notepad是因为它对UTF-8的编码方式支持不好）；打开guestbook.php 在文件头部找到如下php代码：</p>
+<p>&lt;?php get_header(); ?&gt;</p>
+<p>在此语句前加一段仅带注释语句的模板标识，这里我们将页面模板名字(Template Name)定义为Guestbook，这个名字在下面会有用到。</p>
+<p>&lt;?php<br>/<em><br>Template Name: Guestbook
+</em>/<br>?&gt;</p>
+<p>OK，简单吧，留言板的页面模板文件就做好了。</p>
+<p>3）将修改后的guestbook.php上传到博客模板目录(/wp-content/themes/博客模板名称/)下</p>
+<h3 id="二：在后台创建留言板"><a href="#二：在后台创建留言板" class="headerlink" title="二：在后台创建留言板"></a>二：在后台创建留言板</h3><p>4）以具有admin权限的帐号登录，新建一个页面，在主题名称处输入“留言板”，在内容处像往常写博客主题一样输入些内容，如：请留下宝贵意见和建议等等</p>
+<p>5）很重要的一步：在右侧页面模板(page template)处，选择刚才创建的guestbook页面模板，发布(publish)，完成。</p>
+<p>去自己的博客主页看看，根据博客模板的不同，留言板会以Tab方式或者侧栏链接的方式显示。</p>
+<h3 id="三：把留言板做的更完美"><a href="#三：把留言板做的更完美" class="headerlink" title="三：把留言板做的更完美"></a>三：把留言板做的更完美</h3><p>通过上面的5步，你已经拥有一个留言板了，但是这和新建主题/页面生成的留言板没什么区别。别急，因为我们的留言板是根据自建的guestbook页面模板生成的，所以做适当的修修改改就可以了，而且这并不会影响到其他一般主题或页面的显示</p>
+<p>1）去掉发布日期：<br>如果你不希望你的留言板主题显示如一般主题那样的发布日期，那么在guestbook.php中找到如下代码并删除。</p>
+<p>&lt;?php the_time(‘Y/m/d’) ?&gt;<br>//根据不同模板不同可能有点不同，比如可能是<br>&lt;?php the_time(‘M’) ?&gt;</p>
+<p>2）自定义“留言”样式的提示文本<br>因为其他主题或页面的评论都是用到comments.php来显示和输入评论的，不能把那些地方的“评论”也改成“留言”了。<br>因此复制一份comments.php并命名为guestcomments.php，就在guestcomments.php上修修改改吧</p>
+<p>把所有“X comments”(xxx条评论)改成“X guestbook entries”(xxx条留言)<br>把“Post Comment”(发布评论)按钮的提示改成“Sign Guestbook”(发布留言)</p>
+<p>3）最新留言显示在顶部<br>按照评论方式的留言，总是最新的留言排在最下面，如果我们希望最新的留言显示在最上面，可以这么做</p>
+<p>在guestcomments.php中找到如下代码：</p>
+<p>foreach ($comments as $comment)</p>
+<p>替换成</p>
+<p>foreach (array_reverse($comments) as $comment)</p>
+<p>好啦，自定义的留言文本和显示方式据改好了，最后别忘了把guestcomments.php上传到你的博客模板目(/wp-content/themes/博客模板名称/)下</p>
+<p>4）仅仅修改上面的2),3)；原来的guestbook.php并不知道你想启用新的留言和显示方式，所以我们还是要回到guestbook.php(不会那么快忘记这个文件吧:) )<br>找到如下代码：</p>
+<p>&lt;?php comments_template(); ?&gt;</p>
+<p>替换成</p>
+<p>&lt;?php comments_template(‘/guestcomments.php’); ?&gt;</p>
+<h3 id="四：还有什么花样吗"><a href="#四：还有什么花样吗" class="headerlink" title="四：还有什么花样吗?"></a>四：还有什么花样吗?</h3><p>因为我们用的是guestbook.php作为留言板的页面模板，相比一般主题/页面生成的留言板, 通过修改guestbook.php, 我们能获得更多的功能和提示，因为我们能在此文件中加入php语句，可以是自编的，也可以是其他插件中引用过来的函数。</p>
+<p>这也给了我们一个启示，就是通过自定义页面模板的方式，我们可以定义一个全新页面，可以保留侧栏(sidebar)，页脚(foot)，也可以不保留，然后在内容(content)部分加入自己的php代码。比如，我将Popularity Contest(主题流行程度)插件的输出函数放在自定义的页面模板中，做成一个类似于抓虾的热文(top rank)页面,由访客的浏览行为自动排序出该博客内的热门主题榜单。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" itemprop="url">
+                  OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-07T22:46:41+08:00" content="2012-08-07">
+              2012-08-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" class="leancloud_visitors" data-flag-title="OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先我一直在考虑这个属于OSGi分类还是JPA分类，后来想到这个问题的出现完全在于OSGi本身的机制问题，所以分在了OSGi类。</p>
+<p>其次，这个问题的原因不在于域是否继承序列化或者操作有误，这些地方都是没有错的。但编译器之所以报错的原因是，在写JPA配置文件（同时也是写了相应的JPA DAO操作）的bundle中，找不到相关的类。<span style="text-decoration: underline; color: #ff0000;"><strong>解决的办法是在这个bundle的MANIFEST.MF文件中加入对相应包的引用。</strong></span></p>
+<p>同时今天看了《代码大全2》的调试一章，顿时也感觉调试的技术也是博大精深。书中有以下建议：<span style="text-decoration: underline; color: #ff0000;"><strong>不要迷信编译信息。编译器总是锲而不舍地想要告诉你到底是什么出了错，但它也会掩饰自己的无赖</strong></span>。你常常只能通过在字里行间寻找蛛丝马迹们才能知道这些信息的真正含义。就如这两天碰到的这些bugs一样，编译器报错的根本原因与编译器显示出来的信息其实关系不是很大，这种时候就需要通过一些方法步骤（可以参考《代码大全2》）和经验来确定具体的问题出在哪里。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/08/05/[转]wordpress基础主题文件的组成/" itemprop="url">
                   [转]wordpress基础主题文件的组成
                 </a>
@@ -361,7 +788,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -498,7 +926,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -629,7 +1058,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -806,7 +1236,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -936,7 +1367,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1108,7 +1540,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1213,7 +1646,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1221,7 +1654,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1230,7 +1663,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

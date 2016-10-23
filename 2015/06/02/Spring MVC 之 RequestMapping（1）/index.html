@@ -85,22 +85,31 @@
 
 
 
-<meta name="description" content="一、从@AutoWaired开始
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
+一、从@AutoWaired开始
 在@AutoWaired中有下面的一段代码，其中populateBean负责属性的加载。而initializeBean完成属性属性加载后的自定义操作。
-1234567Object exposedObject = bean;        try &amp;#123;            populateBean(beanName, mbd, instanceWrappe">
+1234567Object exposedObject = bean;        try &amp;#123;            populateBean">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring MVC 之 @RequestMapping（1）">
-<meta property="og:url" content="http://yoursite.com/2015/06/02/Spring MVC 之 RequestMapping（1）/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="一、从@AutoWaired开始
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
+一、从@AutoWaired开始
 在@AutoWaired中有下面的一段代码，其中populateBean负责属性的加载。而initializeBean完成属性属性加载后的自定义操作。
-1234567Object exposedObject = bean;        try &amp;#123;            populateBean(beanName, mbd, instanceWrappe">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+1234567Object exposedObject = bean;        try &amp;#123;            populateBean">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring MVC 之 @RequestMapping（1）">
-<meta name="twitter:description" content="一、从@AutoWaired开始
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+
+一、从@AutoWaired开始
 在@AutoWaired中有下面的一段代码，其中populateBean负责属性的加载。而initializeBean完成属性属性加载后的自定义操作。
-1234567Object exposedObject = bean;        try &amp;#123;            populateBean(beanName, mbd, instanceWrappe">
+1234567Object exposedObject = bean;        try &amp;#123;            populateBean">
 
 
 
@@ -129,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/06/02/Spring MVC 之 RequestMapping（1）/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/"/>
 
   <title> Spring MVC 之 @RequestMapping（1） | 行走的轮子 </title>
 </head>
@@ -375,7 +384,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -392,7 +402,32 @@
       
 
       
-        <p>一、从@AutoWaired开始</p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/'>Spring MVC 之 @RequestMapping（1）</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>一、从@AutoWaired开始</p>
 <pre><code>在@AutoWaired中有下面的一段代码，其中populateBean负责属性的加载。而initializeBean完成属性属性加载后的自定义操作。
 </code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Object exposedObject = bean;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            populateBean(beanName, mbd, instanceWrapper);</div><div class="line">            <span class="keyword">if</span> (exposedObject != <span class="keyword">null</span>) &#123;</div><div class="line">                exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 <p>来看一下initializeBean的实现。<a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">initializeBean</span><span class="params">(<span class="keyword">final</span> String beanName, <span class="keyword">final</span> Object bean, RootBeanDefinition mbd)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (System.getSecurityManager() != <span class="keyword">null</span>) &#123;</div><div class="line">		AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&amp;lt;Object&amp;gt;() &#123;</div><div class="line">			<span class="meta">@Override</span></div><div class="line">			<span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                                <span class="comment">//这里检测当前Bean是否实现一些列Aware接口，并调用相关方法。</span></div><div class="line">				invokeAwareMethods(beanName, bean);</div><div class="line">				<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;, getAccessControlContext());</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		invokeAwareMethods(beanName, bean);</div><div class="line">	&#125;</div><div class="line">		Object wrappedBean = bean;</div><div class="line">	<span class="keyword">if</span> (mbd == <span class="keyword">null</span> || !mbd.isSynthetic()) &#123;</div><div class="line">		wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">//调用初始化方法的方法</span></div><div class="line">		invokeInitMethods(beanName, wrappedBean, mbd);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> BeanCreationException(</div><div class="line">				(mbd != <span class="keyword">null</span> ? mbd.getResourceDescription() : <span class="keyword">null</span>),</div><div class="line">				beanName, &amp;quot;Invocation of init method failed&amp;quot;, ex);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (mbd == <span class="keyword">null</span> || !mbd.isSynthetic()) &#123;</div><div class="line">		wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> wrappedBean;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -465,7 +500,7 @@
         <div class="ds-share flat" data-thread-key="2015/06/02/Spring MVC 之 RequestMapping（1）/"
      data-title="Spring MVC 之 @RequestMapping（1）"
      data-content=""
-     data-url="http://yoursite.com/2015/06/02/Spring MVC 之 RequestMapping（1）/">
+     data-url="http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -493,7 +528,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2015/06/02/Spring MVC 之 RequestMapping（1）/"
-           data-title="Spring MVC 之 @RequestMapping（1）" data-url="http://yoursite.com/2015/06/02/Spring MVC 之 RequestMapping（1）/">
+           data-title="Spring MVC 之 @RequestMapping（1）" data-url="http://blog.jerkybible.com/2015/06/02/Spring MVC 之 RequestMapping（1）/">
       </div>
     
   </div>
@@ -538,7 +573,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -546,7 +581,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -555,7 +590,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

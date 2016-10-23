@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/30/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/30/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/30/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/30/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,496 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/" itemprop="url">
+                  CODE 3. Surrounded Regions
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-09T21:30:00+08:00" content="2013-09-09">
+              2013-09-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/09/2013-09-09-CODE 3 Surrounded Regions/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/" class="leancloud_visitors" data-flag-title="CODE 3. Surrounded Regions">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/'>CODE 3. Surrounded Regions</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a 2D board containing<code>&#39;X&#39;</code>and<code>&#39;O&#39;</code>, capture all regions surrounded by<code>&#39;X&#39;</code>.<br>A region is captured by flipping all<code>&#39;O&#39;</code>s into<code>&#39;X&#39;</code>s in that surrounded region .<br>For example,<br>    X X X X<br>    X O O X<br>    X X O X<br>    X O X X</p>
+<p>After running your function, the board should be:<br>    X X X X<br>    X X X X<br>    X X X X<br>    X O X X<br>我的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == board || board.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> m = board.length;</div><div class="line">	<span class="keyword">int</span> n = board[<span class="number">0</span>].length;</div><div class="line">	Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (board[i][<span class="number">0</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(i * m);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (board[i][n - <span class="number">1</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(i * m + n - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n - <span class="number">1</span>; j++) &#123;</div><div class="line">		<span class="keyword">if</span> (board[<span class="number">0</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(j);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (board[m - <span class="number">1</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer((m - <span class="number">1</span>) * m + j);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		<span class="keyword">int</span> all = queue.poll();</div><div class="line">		<span class="keyword">int</span> x = all / m;</div><div class="line">		<span class="keyword">int</span> y = all % m;</div><div class="line">		board[x][y] = <span class="string">'L'</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = -<span class="number">1</span>; i &lt;= <span class="number">1</span>; i++) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = -<span class="number">1</span>; j &lt;= <span class="number">1</span>; j++) &#123;</div><div class="line">				<span class="keyword">if</span> (x + i &lt; <span class="number">0</span> || x + i &gt; m - <span class="number">1</span> || y + j &lt; <span class="number">0</span></div><div class="line">						|| y + j &gt; n - <span class="number">1</span> || (Math.abs(i + j) != <span class="number">1</span>)) &#123;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">int</span> tmpAll = (x + i) * m + y + j;</div><div class="line">				<span class="keyword">if</span> (board[x + i][y + j] == <span class="string">'O'</span>) &#123;</div><div class="line">					queue.offer(tmpAll);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</div><div class="line">			board[i][j] = board[i][j] == <span class="string">'L'</span> ? <span class="string">'O'</span> : <span class="string">'X'</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>主要思考如下：</p>
+<ol>
+<li>这道题首先使用了dfs完成，但这种方法使用了递归所以没有通过大数据集中大数据的测试；</li>
+<li>然后使用了bfs完成，但是同样的判断语句出现了很多次，也会导致运行时间过长，具体的问题代码如下：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == board || board.length == <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> m = board.length;</div><div class="line">	<span class="keyword">int</span> n = board[<span class="number">0</span>].length;</div><div class="line">	Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (board[i][<span class="number">0</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(i * m);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (board[i][n - <span class="number">1</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(i * m + n - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n - <span class="number">1</span>; j++) &#123;</div><div class="line">		<span class="keyword">if</span> (board[<span class="number">0</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(j);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (board[m - <span class="number">1</span>][j] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer((m - <span class="number">1</span>) * m + j);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		<span class="keyword">int</span> all = queue.poll();</div><div class="line">		<span class="keyword">int</span> x = all / m;</div><div class="line">		<span class="keyword">int</span> y = all % m;</div><div class="line">		board[x][y] = <span class="string">'L'</span>;</div><div class="line">		<span class="keyword">if</span> (x &gt; <span class="number">0</span> &amp;&amp; board[x - <span class="number">1</span>][y] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer((x - <span class="number">1</span>) * m + y);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (x &lt; m - <span class="number">1</span> &amp;&amp; board[x + <span class="number">1</span>][y] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer((x + <span class="number">1</span>) * m + y);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (y &gt; <span class="number">0</span> &amp;&amp; board[x][y - <span class="number">1</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(x * m + y - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (y &lt; n - <span class="number">1</span> &amp;&amp; board[x][y + <span class="number">1</span>] == <span class="string">'O'</span>) &#123;</div><div class="line">			queue.offer(x * m + y + <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</div><div class="line">			board[i][j] = board[i][j] == <span class="string">'L'</span> ? <span class="string">'O'</span> : <span class="string">'X'</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>具体是在while循环中有过多的if判断，这样导致运算次数多，若是将这些判断语句提到最前面则会减少运算次数；</p>
+<ol>
+<li>在leetcode上貌似直接使用dfs和bfs是不行了，必须改进，比如改为非递归或者剪枝等等。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/" itemprop="url">
+                  CODE 1. Palindrome Partitioning II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-08T15:08:00+08:00" content="2013-09-08">
+              2013-09-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/" class="leancloud_visitors" data-flag-title="CODE 1. Palindrome Partitioning II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/08/2013-09-08-CODE 1 Palindrome Partitioning II/'>CODE 1. Palindrome Partitioning II</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a string<em>s</em>, partition<em>s</em>such that every substring of the partition is a palindrome.<br>Return the minimum cuts needed for a palindrome partitioning of<em>s</em>.<br>For example, given<em>s</em>=<code>&quot;aab&quot;</code>,<br>Return<code>1</code>since the palindrome partitioning<code>[&quot;aa&quot;,&quot;b&quot;]</code>could be produced using 1 cut.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 使用动态规划计算任意两点间是否为回文</div><div class="line"> * <span class="doctag">@param</span> s 字符串</div><div class="line"> * <span class="doctag">@return</span>  最小Cut次数</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>)</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">boolean</span>[][] isPalindromes = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length()][s.length()]; <span class="comment">// 表示任意两点之间的字符串是否为回文</span></div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">		isPalindromes[i][i] = <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = s.length() - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		isPalindromes[i][i + <span class="number">1</span>] = s.charAt(i) == s.charAt(i + <span class="number">1</span>);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">2</span>; j &lt; s.length(); j++)</div><div class="line">			isPalindromes[i][j] = (s.charAt(i) == s.charAt(j)) &amp;&amp; isPalindromes[i + <span class="number">1</span>][j - <span class="number">1</span>];</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> getMinCut(s, isPalindromes);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 使用动态规划计算最小Cut次数</div><div class="line"> * <span class="doctag">@param</span> s 字符串</div><div class="line"> * <span class="doctag">@param</span> isPalindromes 表示任意两点之间的字符串是否为回文</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getMinCut</span><span class="params">(String s, <span class="keyword">boolean</span>[][] isPalindromes)</span> </span>&#123;</div><div class="line">	<span class="keyword">int</span>[] cuts = <span class="keyword">new</span> <span class="keyword">int</span>[s.length()];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = s.length() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		<span class="keyword">if</span> (isPalindromes[i][s.length() - <span class="number">1</span>]) &#123;</div><div class="line">			cuts[i] = <span class="number">0</span>;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> min = Integer.MAX_VALUE;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = s.length() - <span class="number">2</span>; j &gt;= i; j--) &#123;</div><div class="line">			<span class="keyword">if</span> (isPalindromes[i][j]) &#123;</div><div class="line">				<span class="keyword">int</span> tmp = <span class="number">1</span> + cuts[j + <span class="number">1</span>];</div><div class="line">				min = min &gt; tmp ? tmp : min;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		cuts[i] = min;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> cuts[<span class="number">0</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/09/26/Linux软件包管理（上）/" itemprop="url">
+                  Linux软件包管理（上）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-09-26T23:06:04+08:00" content="2012-09-26">
+              2012-09-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/09/26/Linux软件包管理（上）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/26/Linux软件包管理（上）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/09/26/Linux软件包管理（上）/" class="leancloud_visitors" data-flag-title="Linux软件包管理（上）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.二进制软件包管理（RPM，YUM）</p>
+<p>RPM软件包的一个例子：sudo-1.7.21pl-5.el5.i386.rpm</p>
+<p>其中包括软件名（sudo），版本号（1.7.2pl），发行号（5.el5），硬件平台（i386）</p>
+<p>（1）卸载</p>
+<p>rpm -e sudo，注意：如果其他软件包有依赖关系，卸载时会产生提示信息，可使用–nodeps强行卸载</p>
+<p>（2）安装</p>
+<p>rom -ivh sudo-1.7.2pl-5.el5.i386.rpm</p>
+<p>挂载光盘：mkdir /mnt/cdrom; mount /dev/cdrom /mnt/cdrom</p>
+<p>查询：rpm -q sudo; rpm -qa | grep samba</p>
+<p>其他指令：</p>
+<p>–excludedocs，不安装软件包的文档文件</p>
+<p>–test，只对安装进行测试，并不实际安装</p>
+<p>A.如果已经被安装，如果覆盖安装，可以再命令行上使用–replacepkgs选项</p>
+<p>B.文件冲突，若想要RPM忽略该错误信息，请使用–replacefiles命令行选项</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/09/24/Linux引导流程解析03/" itemprop="url">
                   Linux引导流程解析03
                 </a>
@@ -361,7 +851,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -511,7 +1002,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -658,7 +1150,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -791,7 +1284,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -935,7 +1429,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1089,7 +1584,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1238,7 +1734,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1367,498 +1864,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/05/排序总结/" itemprop="url">
-                  排序总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-05T23:23:38+08:00" content="2012-09-05">
-              2012-09-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/05/排序总结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/排序总结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/05/排序总结/" class="leancloud_visitors" data-flag-title="排序总结">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>排序算法有多种，总是容易混淆，在此总结一下。</p>
-<p>Input: sequence of &lt;a1 a2 … an&gt;</p>
-<p>Output: premutation of &lt;a1<code>a2</code> …an`&gt;</p>
-<ul>
-<li><strong>插入排序(Insertion Sort)</strong><br><strong>基本思想：逐个遍历数组中的每一个位置i，保证位置i之前的序列是sorted。原地排序。</strong></li>
-</ul>
-<p><strong>伪代码：</strong></p>
-<p><span style="color: #ff6600;"><strong>InsertionSort(A[])</strong></span></p>
-<p><span style="color: #ff6600;"><strong>for j &lt;- 2 to n</strong></span></p>
-<p><span style="color: #ff6600;"><strong>do key &lt;- A[j]</strong></span></p>
-<p><span style="color: #ff6600;"><strong>i &lt;- j-1</strong></span></p>
-<p><span style="color: #ff6600;"><strong>while i&gt;0 and A[i]&gt;key</strong></span></p>
-<p><span style="color: #ff6600;"><strong>do A[i+1]&lt;-A[i]</strong></span></p>
-<p><span style="color: #ff6600;"><strong>i&lt;-i-1</strong></span></p>
-<p><span style="color: #ff6600;"><strong>A[i+1]&lt;-key</strong></span></p>
-<p>8 <span style="color: #ff0000;">2</span> 4 9 3 6</p>
-<p>2 8 <span style="color: #ff0000;">4</span> 9 3 6</p>
-<p>2 4 8 <span style="color: #ff0000;">9</span> 3 6</p>
-<p>2 4 8 9 <span style="color: #ff0000;">3</span> 6</p>
-<p>2 3 4 8 9 <span style="color: #ff0000;">6</span></p>
-<p><span style="color: #000000;">2 3 4 6 8 9</span></p>
-<p><span style="color: #000000;">插入排序的时间复杂度取决于输入的规模和有序程度，规模越大、越无序，花费时间越长。这是一种原地排序，时间复杂度为o（n2）</span></p>
-<ul>
-<li><strong>合并排序（Merge Sort）</strong><br><strong>基本思想：基于分治思想。减小要解决问题的规模，递归地合并数组。归并排序非原地排序，用空间换时间，来降低时间复杂度。</strong></li>
-</ul>
-<p><strong>伪代码：</strong></p>
-<p><span style="color: #ff9900;"><strong>MergeSort(A[])</strong></span></p>
-<p><span style="color: #ff9900;"><strong>if n =1 ,done</strong></span></p>
-<p><span style="color: #ff9900;"><strong>Recursively sort A[1,…n/2] and A[n/2+1,…n]</strong></span></p>
-<p><span style="color: #ff9900;"><strong>Merge 2 sorted lists</strong></span></p>
-<p><span style="color: #333333;">Merge 步骤的复杂度o(n),T(n) = 2T(n/2)+n，故归并排序的时间复杂度为o(nlgn),在大规模输入情况下，归并排序由于插入排序。</span></p>
-<p>&nbsp;</p>
-<ul>
-<li><strong><span style="color: #333333;">快速排序（QuikSort）</span></strong><br><strong><span style="color: #333333;">基本思想：分治思想+原地排序。递归地划分数组。</span></strong></li>
-</ul>
-<p><strong><span style="color: #333333;">伪代码：</span></strong></p>
-<p><span style="color: #333333;">                          <span style="color: #ff9900;">   </span></span><span style="color: #ff9900;"><strong>QuickSort(A,p,q)</strong></span></p>
-<p><span style="color: #ff9900;"><strong>Partition (A,p,q)</strong></span></p>
-<p><span style="color: #ff9900;"><strong>x &lt;- A[p]</strong></span></p>
-<p><span style="color: #ff9900;"><strong>i &lt;- p</strong></span></p>
-<p><span style="color: #ff9900;"><strong>for j &lt;- p+1 to q</strong></span></p>
-<p><span style="color: #ff9900;"><strong>do if A[j]&lt;x</strong></span></p>
-<p><span style="color: #ff9900;"><strong>then i &lt;- i+1</strong></span></p>
-<p><span style="color: #ff9900;"><strong>echange A[i] &lt;-&gt; A[j]</strong></span></p>
-<p><span style="color: #ff9900;"><strong>echange A[p] &lt;-&gt; A[i]</strong></span></p>
-<p><span style="color: #ff9900;"><strong>return</strong></span></p>
-<p><span style="color: #ff9900;"><strong>QuickSort(A,p,r-1);</strong></span></p>
-<p><span style="color: #ff9900;"><strong>QuickSort(A,r+1,p);</strong></span></p>
-<p><span style="color: #333333;">Partition的复杂度为O(n)</span></p>
-<p><span style="color: #333333;">快排的最坏情况出现在数组已经排序好或者逆序排列，复杂度为O(n2),最好情况出现在总是选出的key值总能很好划分数组，复杂度为O(nlgn).优化的方法是随机选取key值，这样数组的输入就不在matter了。</span></p>
-<ul>
-<li><strong><span style="color: #333333;">堆排序（Heapsort）</span></strong></li>
-</ul>
-<p><strong><span style="color: #333333;">基本思想：用大根堆的特性来排列数组中的元素。时间复杂度为O(nlgn),非原地排序。</span></strong></p>
-<p><span style="color: #333333;">① 先将初始文件R[1..n]建成一个大根堆，此堆为初始的无序区</span></p>
-<div> </div>
-
-<p><span style="color: #333333;">　　② 再将关键字最大的记录R[1]（即堆顶）和无序区的最后一个记录R[n]交换，由此得到新的无序区R[1..n-1]和有序区R[n]，且满足R[1..n-1].keys≤R[n].key</span></p>
-<div> </div>
-
-<p><span style="color: #333333;">　　③由于交换后新的根R[1]可能违反堆性质，故应将当前无序区R[1..n-1]调整为堆。然后再次将R[1..n-1]中关键字最大的记录R[1]和该区间的最后一个记录R[n-1]交换，由此得到新的无序区R[1..n-2]和有序区R[n-1..n]，且仍满足关系R[1..n-2].keys≤R[n-1..n].keys，同样要将R[1..n-2]调整为堆。 </span></p>
-<p>&nbsp;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/05/Linux常用命令01/" itemprop="url">
-                  Linux常用命令01
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-05T21:47:32+08:00" content="2012-09-05">
-              2012-09-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/05/Linux常用命令01/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/Linux常用命令01/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/05/Linux常用命令01/" class="leancloud_visitors" data-flag-title="Linux常用命令01">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. 文件命名规则</p>
-<p>1）除了/之外，所有的字符都合法；</p>
-<p>2）有些字符最好不使用，如空格符、制表符、退格符和字符@#￥&amp;（）-等；</p>
-<p>3）避免使用.作为普通文件名的第一个字符（<span style="color: #ff0000;">.开头的文件表示隐藏文件</span>）；</p>
-<p>4）<span style="color: #ff0000;">大小写敏感</span>。</p>
-<p>2. 命令格式：命令 -选项 参数</p>
-<p>1）当有多个选项是，可以写在一起；</p>
-<p>2）两个特殊的目录.和..，分别代表当前目录和当前目录的父目录</p>
-<p>3. 文件处理命令</p>
-<p><span style="color: #ff0000;">     命令根据不用权限存放的路径：</span></p>
-<p><span style="color: #ff0000;">     root： /sbin; /usr/sbin</span></p>
-<p><span style="color: #ff0000;">     all users: /bin; /usr/bin</span></p>
-<p><span style="color: #ff0000;">     （bin-binary，usr-user，sbin-super binary）</span></p>
-<p><span>     命令名称：ls</span></p>
-<p><span>     命令英文原意：list</span></p>
-<p><span>     命令所在路径：/bin/ls</span></p>
-<p><span>     功能描述： 显示目录文件</span></p>
-<p><span>     语法： ls 选项[-ald] [文件或目录]</span></p>
-<p><span>                          -a 显示所有文件，包括隐藏文件</span></p>
-<p><span>                           -l 详细信息宣誓</span></p>
-<p><span>                          -d 查看目录属性</span></p>
-<p><span style="color: #ff0000;">   ll解析：</span></p>
-<p><span style="color: #ff0000;">     d     <span style="text-decoration: underline;">rwx</span>      <span style="text-decoration: underline;">rwx</span>     <span style="text-decoration: underline;"> rwx</span>            2                  root               root                                    1024                                                  12-01 20:52                    XXX</span></p>
-<p><span>                    权限                         硬链接数         所有者           所属组         文件大小（数据块block，512字节）    创建时间或最后修改时间     文件名称</span></p>
-<p><span style="color: #ff0000;">    文件类型 d 目录directory</span></p>
-<p><span style="color: #ff0000;">                      - 二进制文件</span></p>
-<p><span style="color: #ff0000;">                      l 软连接文件link</span></p>
-<p><span style="color: #ff0000;">    r-read读，w-write写，x-execute执行</span></p>
-<p><span style="color: #ff0000;">    每三个字符代表一种用户：所有者u-user，所属组g-group，其他人o-others</span></p>
-<p>&nbsp;</p>
-<p>命令名称：cd</p>
-<p>命令名称：pwd (print working directory) 查看当前目录</p>
-<p>命令名称：touch  创建空文件</p>
-<p>命令名称：mkdir  创建新目录</p>
-<p>命令名称：cp 复制文件或目录，cp -R [源文件或目录] [目的目录]</p>
-<p>命令名称：mv 移动文件、更名，mv [源文件或目录] [目的目录]</p>
-<p>命令名称：rm 删除文件， rm -r [-f(force强制删除) [文件或目录] ；rmdir 删除空目录（用的少）</p>
-<p>&nbsp;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/05/SSH远程登录Linux出现中文乱码/" itemprop="url">
-                  SSH远程登录Linux出现中文乱码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-05T21:33:29+08:00" content="2012-09-05">
-              2012-09-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/05/SSH远程登录Linux出现中文乱码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/SSH远程登录Linux出现中文乱码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/05/SSH远程登录Linux出现中文乱码/" class="leancloud_visitors" data-flag-title="SSH远程登录Linux出现中文乱码">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这个问题好像还是很普遍的，我用的是CentOS6.3，开始使用的是SSH Secure Shell远程登录，发现在查看目录的时候出现了乱码，从网上找了很久都没有解决问题。</p>
-<p>后来试了putty和SecureCRT可以解决。</p>
-<p>putty是一个轻量级的东西，在 Windoe-&gt;Translation中有一项是Remote character set，选择UTF-8，然后登陆，登陆以后输入</p>
-<p><pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;"><span style="color: #708;">export</span> <span style="color: #00f;">LANG</span><span style="color: #000;">=</span><span style="color: #a11;">“zh_CN.UTF-8”</span></pre><br>就可以了。</p>
-<p>&nbsp;</p>
-<p>SecureCRT是个稍微重量点儿的东西，登陆之后，在Options-&gt;Session Options-&gt;Terminal-&gt;Appearance中有一项是Character encoding，选择UTF-8，此时要还是不行就再输入上面的命令。</p>
-<p>&nbsp;</p>
-<p>下回再装Linux考虑使用英文的好了，就没这么多问题了。。。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1904,7 +1909,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1912,7 +1917,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1921,7 +1926,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

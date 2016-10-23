@@ -88,7 +88,7 @@
 <meta name="description" content="戒急用忍">
 <meta property="og:type" content="website">
 <meta property="og:title" content="行走的轮子">
-<meta property="og:url" content="http://yoursite.com/page/18/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/page/18/index.html">
 <meta property="og:site_name" content="行走的轮子">
 <meta property="og:description" content="戒急用忍">
 <meta name="twitter:card" content="summary">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/18/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/page/18/"/>
 
   <title> 行走的轮子 </title>
 </head>
@@ -301,6 +301,511 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/" itemprop="url">
+                  CODE 127. Longest Substring Without Repeating Characters
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-14T20:50:00+08:00" content="2013-11-14">
+              2013-11-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/" class="leancloud_visitors" data-flag-title="CODE 127. Longest Substring Without Repeating Characters">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 127 Longest Substring Without Repeating Characters/'>CODE 127. Longest Substring Without Repeating Characters</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring<br> without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == s || <span class="string">""</span>.equals(s)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Character&gt; list = <span class="keyword">new</span> ArrayList&lt;Character&gt;();</div><div class="line">	<span class="keyword">int</span> max = Integer.MIN_VALUE;</div><div class="line">	<span class="keyword">char</span>[] cs = s.toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cs.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (list.isEmpty()) &#123;</div><div class="line">			list.add(cs[i]);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">int</span> index = list.indexOf(cs[i]);</div><div class="line">			<span class="keyword">if</span> (index == -<span class="number">1</span>) &#123;</div><div class="line">				list.add(cs[i]);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= index; j++) &#123;</div><div class="line">					list.remove(<span class="number">0</span>);</div><div class="line">				&#125;</div><div class="line">				list.add(cs[i]);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (list.size() &gt; max) &#123;</div><div class="line">			max = list.size();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/14/2013-11-14-CODE 126 Add Two Numbers/" itemprop="url">
+                  CODE 126. Add Two Numbers
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-14T20:39:00+08:00" content="2013-11-14">
+              2013-11-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/14/2013-11-14-CODE 126 Add Two Numbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/14/2013-11-14-CODE 126 Add Two Numbers/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/14/2013-11-14-CODE 126 Add Two Numbers/" class="leancloud_visitors" data-flag-title="CODE 126. Add Two Numbers">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 126 Add Two Numbers/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 126 Add Two Numbers/'>CODE 126. Add Two Numbers</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.<br>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</p>
+<p>Output: 7 -&gt; 0 -&gt; 8</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ListNode cpyl1 = l1;</div><div class="line">	ListNode cpyl2 = l2;</div><div class="line">	<span class="keyword">int</span> c = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != cpyl1 &amp;&amp; <span class="keyword">null</span> != cpyl2) &#123;</div><div class="line">		<span class="keyword">int</span> tmp = cpyl1.val + cpyl2.val + c;</div><div class="line">		<span class="keyword">if</span> (tmp &gt; <span class="number">9</span>) &#123;</div><div class="line">			c = tmp / <span class="number">10</span>;</div><div class="line">		&#125;</div><div class="line">		cpyl1.val = tmp % <span class="number">10</span>;</div><div class="line">		cpyl1 = cpyl1.next;</div><div class="line">		cpyl2 = cpyl2.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (cpyl1 != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">int</span> tmp = cpyl1.val + c;</div><div class="line">		<span class="keyword">if</span> (tmp &gt; <span class="number">9</span>) &#123;</div><div class="line">			c = tmp / <span class="number">10</span>;</div><div class="line">		&#125;</div><div class="line">		cpyl1.val = tmp % <span class="number">10</span>;</div><div class="line">		cpyl1 = cpyl1.next;</div><div class="line">	&#125;</div><div class="line">	cpyl1 = l1;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != cpyl1.next) &#123;</div><div class="line">		cpyl1 = cpyl1.next;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">while</span> (cpyl2 != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">int</span> tmp = cpyl2.val + c;</div><div class="line">		<span class="keyword">if</span> (tmp &gt; <span class="number">9</span>) &#123;</div><div class="line">			c = tmp / <span class="number">10</span>;</div><div class="line">		&#125;</div><div class="line">		cpyl1.next = <span class="keyword">new</span> ListNode(tmp % <span class="number">10</span>);</div><div class="line">		cpyl1 = cpyl1.next;</div><div class="line">		cpyl2 = cpyl2.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (c != <span class="number">0</span>) &#123;</div><div class="line">		cpyl1.next = <span class="keyword">new</span> ListNode(c);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> l1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/" itemprop="url">
+                  CODE 125. Longest Palindromic Substring
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-14T20:13:00+08:00" content="2013-11-14">
+              2013-11-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/" class="leancloud_visitors" data-flag-title="CODE 125. Longest Palindromic Substring">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/14/2013-11-14-CODE 125 Longest Palindromic Substring/'>CODE 125. Longest Palindromic Substring</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a string S,<br> find the longest palindromic substring in S.<br> You may assume that the maximum length of S is<br> 1000, and there exists one unique longest palindromic substring.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == s || s.length() &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (s.length() == <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> s;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">boolean</span>[][] isPalindromic = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length()][s.length()];</div><div class="line">	<span class="keyword">char</span>[] cs = s.toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">		isPalindromic[i][i] = <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> start = -<span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> end = -<span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = s.length() - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		isPalindromic[i][i + <span class="number">1</span>] = cs[i] == cs[i + <span class="number">1</span>];</div><div class="line">		<span class="keyword">if</span> (end - start &lt; <span class="number">1</span> &amp;&amp; isPalindromic[i][i + <span class="number">1</span>]) &#123;</div><div class="line">			start = i;</div><div class="line">			end = i + <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">2</span>; j &lt; s.length(); j++) &#123;</div><div class="line">			isPalindromic[i][j] = cs[i] == cs[j]</div><div class="line">					&amp;&amp; isPalindromic[i + <span class="number">1</span>][j - <span class="number">1</span>];</div><div class="line">			<span class="keyword">if</span> (end - start &lt; j - i &amp;&amp; isPalindromic[i][j]) &#123;</div><div class="line">				start = i;</div><div class="line">				end = j;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (start == -<span class="number">1</span> &amp;&amp; end == -<span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> s.substring(<span class="number">0</span>, <span class="number">1</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> s.substring(start, end + <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/13/2013-11-13-CODE 124 ZigZag Conversion/" itemprop="url">
                   CODE 124. ZigZag Conversion
                 </a>
@@ -373,7 +878,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -392,7 +898,32 @@
       
         
           
-            <p>The string <code>&quot;PAYPALISHIRING&quot;</code> is<br> written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)<br>    P   A   H   N<br>    A P L S I I G<br>    Y   I   R</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/13/2013-11-13-CODE 124 ZigZag Conversion/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/13/2013-11-13-CODE 124 ZigZag Conversion/'>CODE 124. ZigZag Conversion</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>The string <code>&quot;PAYPALISHIRING&quot;</code> is<br> written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)<br>    P   A   H   N<br>    A P L S I I G<br>    Y   I   R</p>
 <p>And then read line by line: <code>&quot;PAHNAPLSIIGYIR&quot;</code><br>Write the code that will take a string and make this conversion given a number of rows:<br>    string convert(string text, int nRows);<br><code>convert(&quot;PAYPALISHIRING&quot;, 3)</code> should return <code>&quot;PAHNAPLSIIGYIR&quot;</code>.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">convert</span><span class="params">(String s, <span class="keyword">int</span> nRows)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span>(nRows == <span class="number">1</span>)&#123;</div><div class="line">		<span class="keyword">return</span> s;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Character&gt;&gt; charLists = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Character&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nRows; i++) &#123;</div><div class="line">		charLists.add(<span class="keyword">new</span> ArrayList&lt;Character&gt;());</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">char</span>[] cs = s.toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">		<span class="keyword">if</span> (i % (nRows - <span class="number">1</span>) == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">			<span class="keyword">for</span> (j = i; j &lt; cs.length &amp;&amp; j &lt; i + nRows; j++) &#123;</div><div class="line">				charLists.get(j - i).add(cs[j]);</div><div class="line">			&#125;</div><div class="line">			i = j - <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">int</span> row = charLists.size() - <span class="number">1</span> - i % (nRows - <span class="number">1</span>);</div><div class="line">			charLists.get(row).add(cs[i]);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">	<span class="keyword">for</span> (ArrayList&lt;Character&gt; charList : charLists) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c : charList) &#123;</div><div class="line">			sb.append(c);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sb.toString();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
@@ -516,7 +1047,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -535,7 +1067,32 @@
       
         
           
-            <p>Reverse digits of an integer.<br>Example1: x = 123, return 321<br>Example2: x = -123, return -321<br><a href="http://oj.leetcode.com/problems/reverse-integer/#" target="_blank" rel="external">click to show spoilers.</a><br>Have you thought about this?Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!<br>If the integer’s last digit is 0, what should the output be? ie, cases such as 10, 100.<br>Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?<br>Throw an exception? Good, but what if throwing an exception is not an option? You would then have to re-design the function (ie, add an extra parameter).</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 123 Reverse Integer/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 123 Reverse Integer/'>CODE 123. Reverse Integer</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Reverse digits of an integer.<br>Example1: x = 123, return 321<br>Example2: x = -123, return -321<br><a href="http://oj.leetcode.com/problems/reverse-integer/#" target="_blank" rel="external">click to show spoilers.</a><br>Have you thought about this?Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!<br>If the integer’s last digit is 0, what should the output be? ie, cases such as 10, 100.<br>Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?<br>Throw an exception? Good, but what if throwing an exception is not an option? You would then have to re-design the function (ie, add an extra parameter).</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (x &gt;= -<span class="number">9</span> &amp;&amp; x &lt;= <span class="number">9</span>) &#123;</div><div class="line">		<span class="keyword">return</span> x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">boolean</span> ism = x &lt; <span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span> (ism) &#123;</div><div class="line">		x = -x;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">long</span> lx = (<span class="keyword">long</span>) x;</div><div class="line">	<span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (lx &gt; <span class="number">0</span>) &#123;</div><div class="line">		length++;</div><div class="line">		lx = lx / <span class="number">10</span>;</div><div class="line">	&#125;</div><div class="line">	lx = (<span class="keyword">long</span>) x;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= (length + <span class="number">1</span>) / <span class="number">2</span> - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> first = x / (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, i) % <span class="number">10</span>;</div><div class="line">		<span class="keyword">int</span> second = x / (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, length - <span class="number">1</span> - i) % <span class="number">10</span>;</div><div class="line">		lx = lx - (<span class="keyword">long</span>) first * (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, i);</div><div class="line">		lx = lx - (<span class="keyword">long</span>) second * (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, length - <span class="number">1</span> - i);</div><div class="line">		lx = lx + (<span class="keyword">long</span>) first * (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, length - <span class="number">1</span> - i);</div><div class="line">		lx = lx + (<span class="keyword">long</span>) second * (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, i);</div><div class="line">		<span class="keyword">if</span> (!ism &amp;&amp; lx &gt; Integer.MAX_VALUE) &#123;</div><div class="line">			<span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ism &amp;&amp; lx - <span class="number">1</span> &gt; Integer.MAX_VALUE) &#123;</div><div class="line">			<span class="keyword">return</span> Integer.MIN_VALUE;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> (<span class="keyword">int</span>) (ism ? -lx : lx);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -658,7 +1215,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -677,7 +1235,32 @@
       
         
           
-            <p>Implement atoi to convert a string to an integer.<br>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.<br>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.<br><a href="http://oj.leetcode.com/problems/string-to-integer-atoi/#" target="_blank" rel="external">spoilers alert… click to show requirements for atoi.</a><br>Requirements for atoi:The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed<br> by as many numerical digits as possible, and interprets them as a numerical value.<br>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.<br>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.<br>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 122 String to Integer (atoi)/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 122 String to Integer (atoi)/'>CODE 122. String to Integer (atoi)</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Implement atoi to convert a string to an integer.<br>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.<br>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.<br><a href="http://oj.leetcode.com/problems/string-to-integer-atoi/#" target="_blank" rel="external">spoilers alert… click to show requirements for atoi.</a><br>Requirements for atoi:The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed<br> by as many numerical digits as possible, and interprets them as a numerical value.<br>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.<br>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.<br>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">atoi</span><span class="params">(String str)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == str || <span class="string">""</span>.equals(str)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">char</span>[] strs = str.toCharArray();</div><div class="line">	<span class="keyword">int</span> begin = <span class="number">0</span>;</div><div class="line">	<span class="keyword">boolean</span> ism = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">while</span> (begin &lt; strs.length &amp;&amp; strs[begin] == <span class="string">' '</span>) &#123;</div><div class="line">		begin++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (begin &gt;= strs.length) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (strs[begin] == <span class="string">'+'</span>) &#123;</div><div class="line">		begin++;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (strs[begin] == <span class="string">'-'</span>) &#123;</div><div class="line">		ism = <span class="keyword">true</span>;</div><div class="line">		begin++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">long</span> number = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = begin; i &lt; strs.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (strs[i] &lt; <span class="string">'0'</span> || strs[i] &gt; <span class="string">'9'</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (i == begin) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			number = Character.digit(strs[i], <span class="number">10</span>) + <span class="number">10</span> * number;</div><div class="line">			<span class="keyword">if</span> (!ism &amp;&amp; number &gt; Integer.MAX_VALUE) &#123;</div><div class="line">				<span class="keyword">return</span> Integer.MAX_VALUE;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ism &amp;&amp; number - <span class="number">1</span> &gt; Integer.MAX_VALUE) &#123;</div><div class="line">				<span class="keyword">return</span> Integer.MIN_VALUE;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (ism) &#123;</div><div class="line">		number = -number;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> (<span class="keyword">int</span>) number;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -800,7 +1383,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -819,7 +1403,32 @@
       
         
           
-            <p>Determine whether an integer is a palindrome. Do this without extra space.<br><a href="http://oj.leetcode.com/problems/palindrome-number/#" target="_blank" rel="external">click to show spoilers.</a><br>Some hints:Could negative integers be palindromes? (ie, -1)<br>If you are thinking of converting the integer to string, note the restriction of using extra space.<br>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?<br>There is a more generic way of solving this problem.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 121 Palindrome Number/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/12/2013-11-12-CODE 121 Palindrome Number/'>CODE 121. Palindrome Number</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Determine whether an integer is a palindrome. Do this without extra space.<br><a href="http://oj.leetcode.com/problems/palindrome-number/#" target="_blank" rel="external">click to show spoilers.</a><br>Some hints:Could negative integers be palindromes? (ie, -1)<br>If you are thinking of converting the integer to string, note the restriction of using extra space.<br>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?<br>There is a more generic way of solving this problem.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (x &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (x &gt;= <span class="number">0</span> &amp;&amp; x &lt;= <span class="number">9</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> num = x;</div><div class="line">	<span class="keyword">int</span> length = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (num &gt; <span class="number">0</span>) &#123;</div><div class="line">		length++;</div><div class="line">		num = num / <span class="number">10</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= (length + <span class="number">1</span>) / <span class="number">2</span> - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span> ((x / (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, i) % <span class="number">10</span>) != (x</div><div class="line">				/ (<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, length - <span class="number">1</span> - i) % <span class="number">10</span>)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -942,7 +1551,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -961,7 +1571,32 @@
       
         
           
-            <p>Given n non-negative integers a1, a2,<br> …, an, where each represents a point at coordinate (i, ai). n vertical<br> lines are drawn such that the two endpoints of line i is at (i, ai)<br> and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 120 Container With Most Water/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 120 Container With Most Water/'>CODE 120. Container With Most Water</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given n non-negative integers a1, a2,<br> …, an, where each represents a point at coordinate (i, ai). n vertical<br> lines are drawn such that the two endpoints of line i is at (i, ai)<br> and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == height || height.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> max = Integer.MIN_VALUE;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; height.length; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (height[j] &gt;= height[i]) &#123;</div><div class="line">				<span class="keyword">int</span> tmp = (i - j) * height[i];</div><div class="line">				<span class="keyword">if</span> (tmp &gt; max) &#123;</div><div class="line">					max = tmp;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = height.length - <span class="number">1</span>; j &gt; i; j--) &#123;</div><div class="line">			<span class="keyword">if</span> (height[j] &gt;= height[i]) &#123;</div><div class="line">				<span class="keyword">int</span> tmp = (j - i) * height[i];</div><div class="line">				<span class="keyword">if</span> (tmp &gt; max) &#123;</div><div class="line">					max = tmp;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -1084,7 +1719,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1103,7 +1739,32 @@
       
         
           
-            <p>Given an integer, convert it to a roman numeral.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 119 Integer to Roman/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 119 Integer to Roman/'>CODE 119. Integer to Roman</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an integer, convert it to a roman numeral.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> List&lt;R2A&gt; r2a = <span class="keyword">new</span> ArrayList&lt;R2A&gt;();</div><div class="line"></div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">1000</span>, <span class="string">'M'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">500</span>, <span class="string">'D'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">100</span>, <span class="string">'C'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">50</span>, <span class="string">'L'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">10</span>, <span class="string">'X'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">5</span>, <span class="string">'V'</span>));</div><div class="line">	r2a.add(<span class="keyword">new</span> R2A(<span class="number">1</span>, <span class="string">'I'</span>));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">intToRoman</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">int</span> number = num;</div><div class="line">	StringBuilder sb = <span class="keyword">new</span> StringBuilder();</div><div class="line">	<span class="keyword">while</span> (number &gt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; r2a.size(); i++) &#123;</div><div class="line">			<span class="keyword">int</span> jieguo = number / r2a.get(i).number;</div><div class="line">			<span class="keyword">if</span> (jieguo &lt;= <span class="number">0</span>) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> (jieguo == <span class="number">4</span>) &#123;</div><div class="line">					sb.append(r2a.get(i).roman);</div><div class="line">					sb.append(r2a.get(i - <span class="number">1</span>).roman);</div><div class="line">					number = number % r2a.get(i).number;</div><div class="line"></div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">if</span> (i % <span class="number">2</span> == <span class="number">1</span></div><div class="line">							&amp;&amp; jieguo == <span class="number">1</span></div><div class="line">							&amp;&amp; i &lt; r2a.size() - <span class="number">1</span></div><div class="line">							&amp;&amp; number % r2a.get(i).number</div><div class="line">									/ r2a.get(i + <span class="number">1</span>).number == <span class="number">4</span>) &#123;</div><div class="line">						sb.append(r2a.get(i + <span class="number">1</span>).roman);</div><div class="line">						sb.append(r2a.get(i - <span class="number">1</span>).roman);</div><div class="line">						number = number % r2a.get(i + <span class="number">1</span>).number;</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; jieguo; j++) &#123;</div><div class="line">							sb.append(r2a.get(i).roman);</div><div class="line">						&#125;</div><div class="line">						number = number % r2a.get(i).number;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sb.toString();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">R2A</span> </span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">int</span> number;</div><div class="line">	<span class="keyword">public</span> <span class="keyword">char</span> roman;</div><div class="line"></div><div class="line">	R2A(<span class="keyword">int</span> n, <span class="keyword">char</span> r) &#123;</div><div class="line">		number = n;</div><div class="line">		roman = r;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
@@ -1226,7 +1887,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -1245,445 +1907,33 @@
       
         
           
-            <p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 118 Roman to Integer/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/10/2013-11-10-CODE 118 Roman to Integer/'>CODE 118. Roman to Integer</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a roman numeral, convert it to an integer.<br>Input is guaranteed to be within the range from 1 to 3999.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> Map&lt;Character, Integer&gt; r2a = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</div><div class="line"></div><div class="line"><span class="keyword">static</span> &#123;</div><div class="line">	r2a.put(<span class="string">'I'</span>, <span class="number">1</span>);</div><div class="line">	r2a.put(<span class="string">'V'</span>, <span class="number">5</span>);</div><div class="line">	r2a.put(<span class="string">'X'</span>, <span class="number">10</span>);</div><div class="line">	r2a.put(<span class="string">'L'</span>, <span class="number">50</span>);</div><div class="line">	r2a.put(<span class="string">'C'</span>, <span class="number">100</span>);</div><div class="line">	r2a.put(<span class="string">'D'</span>, <span class="number">500</span>);</div><div class="line">	r2a.put(<span class="string">'M'</span>, <span class="number">1000</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">romanToInt</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">char</span>[] cs = s.toCharArray();</div><div class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> tmpStep = -<span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">char</span> c : cs) &#123;</div><div class="line">		<span class="keyword">int</span> ttmp = r2a.get(c);</div><div class="line">		<span class="keyword">if</span> (-<span class="number">1</span> == tmpStep) &#123;</div><div class="line">			tmpStep = ttmp;</div><div class="line">			tmp = ttmp;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ttmp == tmpStep) &#123;</div><div class="line">			tmp += ttmp;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ttmp &gt; tmpStep) &#123;</div><div class="line">			tmp = ttmp - tmp;</div><div class="line">			num += tmp;</div><div class="line">			tmp = <span class="number">0</span>;</div><div class="line">			tmpStep = -<span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (ttmp &lt; tmpStep) &#123;</div><div class="line">			num += tmp;</div><div class="line">			tmpStep = ttmp;</div><div class="line">			tmp = ttmp;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	num += tmp;</div><div class="line">	<span class="keyword">return</span> num;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" itemprop="url">
-                  CODE 117. Longest Common Prefix
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-09T22:28:00+08:00" content="2013-11-09">
-              2013-11-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/09/2013-11-09-CODE 117 Longest Common Prefix/" class="leancloud_visitors" data-flag-title="CODE 117. Longest Common Prefix">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Write a function to find the longest common prefix string amongst an array of strings.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">longestCommonPrefix</span><span class="params">(String[] strs)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == strs || <span class="number">0</span> == strs.length) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">1</span> == strs.length) &#123;</div><div class="line">		<span class="keyword">return</span> strs[<span class="number">0</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> maxIndex = strs[<span class="number">0</span>].length() - <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (maxIndex &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">char</span>[] cs = strs[<span class="number">0</span>].toCharArray();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; strs.length; i++) &#123;</div><div class="line">		<span class="keyword">char</span>[] ss = strs[i].toCharArray();</div><div class="line">		<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">		<span class="keyword">while</span> (j &lt; cs.length &amp;&amp; j &lt; ss.length &amp;&amp; j &lt;= maxIndex</div><div class="line">				&amp;&amp; cs[j] == ss[j]) &#123;</div><div class="line">			j++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (j &gt; maxIndex) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		maxIndex = j - <span class="number">1</span>;</div><div class="line">		<span class="keyword">if</span> (maxIndex &lt; <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> strs[<span class="number">0</span>].substring(<span class="number">0</span>, maxIndex + <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/09/2013-11-09-CODE 114 4Sum/" itemprop="url">
-                  CODE 114. 4Sum
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-09T21:15:00+08:00" content="2013-11-09">
-              2013-11-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/09/2013-11-09-CODE 114 4Sum/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/09/2013-11-09-CODE 114 4Sum/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/09/2013-11-09-CODE 114 4Sum/" class="leancloud_visitors" data-flag-title="CODE 114. 4Sum">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array S of n integers, are there elements a, b, c, and d in S such<br> that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.<br>Note:</p>
-<ul>
-<li>Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)</li>
-<li>The solution set must not contain duplicate quadruplets.</li>
-</ul>
-<pre><code>For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
-
-A solution set is:
-(-1,  0, 0, 1)
-(-2, -1, 1, 2)
-(-2,  0, 0, 2)
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; fourSum(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target) &#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (num.length &lt;= <span class="number">3</span>) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	Arrays.sort(num);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length - <span class="number">3</span>; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">3</span>; j &lt; num.length; j++) &#123;</div><div class="line">			<span class="keyword">int</span> sum = num[i] + num[j];</div><div class="line">			<span class="keyword">int</span> start = i + <span class="number">1</span>;</div><div class="line">			<span class="keyword">int</span> end = j - <span class="number">1</span>;</div><div class="line">			<span class="keyword">while</span> (start &lt; end) &#123;</div><div class="line">				<span class="keyword">if</span> (num[start] + num[end] &gt; target - sum) &#123;</div><div class="line">					<span class="keyword">while</span> (start &lt; end &amp;&amp; num[end - <span class="number">1</span>] == num[end]) &#123;</div><div class="line">						end--;</div><div class="line">					&#125;</div><div class="line">					end--;</div><div class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num[start] + num[end] &lt; target - sum) &#123;</div><div class="line">					<span class="keyword">while</span> (start &lt; end &amp;&amp; num[start + <span class="number">1</span>] == num[start]) &#123;</div><div class="line">						start++;</div><div class="line">					&#125;</div><div class="line">					start++;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">					result.add(num[i]);</div><div class="line">					result.add(num[start]);</div><div class="line">					result.add(num[end]);</div><div class="line">					result.add(num[j]);</div><div class="line">					<span class="keyword">if</span> (!results.contains(result)) &#123;</div><div class="line">						results.add(result);</div><div class="line">					&#125;</div><div class="line">					start++;</div><div class="line">					end--;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">while</span> (i &lt; num.length - <span class="number">3</span> &amp;&amp; num[i + <span class="number">1</span>] == num[i]) &#123;</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/" itemprop="url">
-                  CODE 115. 3Sum Closest
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-08T22:32:00+08:00" content="2013-11-08">
-              2013-11-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/08/2013-11-08-CODE 115 3Sum Closest/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/08/2013-11-08-CODE 115 3Sum Closest/" class="leancloud_visitors" data-flag-title="CODE 115. 3Sum Closest">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have<br> exactly one solution.<br>        For example, given array S = {-1 2 1 -4}, and target = 1.</p>
-<pre><code>The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="keyword">int</span>[] num, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (num.length &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	Arrays.sort(num);</div><div class="line">	<span class="keyword">int</span> targetClosest = Integer.MAX_VALUE;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length - <span class="number">2</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> sum = num[i];</div><div class="line">		<span class="keyword">int</span> start = i + <span class="number">1</span>;</div><div class="line">		<span class="keyword">int</span> end = num.length - <span class="number">1</span>;</div><div class="line">		<span class="keyword">while</span> (start &lt; end) &#123;</div><div class="line">			<span class="keyword">if</span> (targetClosest == Integer.MAX_VALUE</div><div class="line">					|| (Math.abs(num[start] + num[end] + sum - target) &lt; Math</div><div class="line">							.abs(targetClosest - target))) &#123;</div><div class="line">				targetClosest = num[start] + num[end] + sum;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (num[start] + num[end] &gt; target - sum) &#123;</div><div class="line">				<span class="keyword">while</span> (start &lt; end &amp;&amp; num[end - <span class="number">1</span>] == num[end]) &#123;</div><div class="line">					end--;</div><div class="line">				&#125;</div><div class="line">				end--;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (num[start] + num[end] &lt; target - sum) &#123;</div><div class="line">				<span class="keyword">while</span> (start &lt; end &amp;&amp; num[start + <span class="number">1</span>] == num[start]) &#123;</div><div class="line">					start++;</div><div class="line">				&#125;</div><div class="line">				start++;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">return</span> target;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">while</span> (i &lt; num.length - <span class="number">2</span> &amp;&amp; num[i + <span class="number">1</span>] == num[i]) &#123;</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> targetClosest;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -1757,7 +2007,7 @@ A solution set is:
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1765,7 +2015,7 @@ A solution set is:
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1774,7 +2024,7 @@ A solution set is:
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

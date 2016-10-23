@@ -85,19 +85,34 @@
 
 
 
-<meta name="description" content="1.练习2.41
-123456789101112131415161718192021(define (seprate-except x except)  (filter (lambda (couple)             (let ((first (car couple))                  (second (cadr couple)))            (and (n">
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/访问原文「练习2.41-练习2.47」
+
+(function() {
+  Element.prototype.remove = function() {
+    this">
 <meta property="og:type" content="article">
 <meta property="og:title" content="练习2.41-练习2.47">
-<meta property="og:url" content="http://yoursite.com/2014/01/20/2014-01-20-练习2.41-练习2.47/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="1.练习2.41
-123456789101112131415161718192021(define (seprate-except x except)  (filter (lambda (couple)             (let ((first (car couple))                  (second (cadr couple)))            (and (n">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/访问原文「练习2.41-练习2.47」
+
+(function() {
+  Element.prototype.remove = function() {
+    this">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="练习2.41-练习2.47">
-<meta name="twitter:description" content="1.练习2.41
-123456789101112131415161718192021(define (seprate-except x except)  (filter (lambda (couple)             (let ((first (car couple))                  (second (cadr couple)))            (and (n">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/访问原文「练习2.41-练习2.47」
+
+(function() {
+  Element.prototype.remove = function() {
+    this">
 
 
 
@@ -126,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2014/01/20/2014-01-20-练习2.41-练习2.47/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/"/>
 
   <title> 练习2.41-练习2.47 | 行走的轮子 </title>
 </head>
@@ -341,7 +356,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -358,7 +374,32 @@
       
 
       
-        <p>1.练习2.41</p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/'>练习2.41-练习2.47</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.41</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">(define (seprate-except x except)</div><div class="line">  (filter (lambda (couple) </div><div class="line">            (let ((first (car couple))</div><div class="line">                  (second (cadr couple)))</div><div class="line">            (and (not (= first except))</div><div class="line">                 (not (= second except))</div><div class="line">                 (not (= first second)))))</div><div class="line">          (map (lambda (n) (list n (- x n)))</div><div class="line">               (enumerate-interval 1 (- x 1)))</div><div class="line">          )</div><div class="line">  )</div><div class="line"></div><div class="line">(define (flatmap proc seq)</div><div class="line">  (accumulate append &apos;() (map proc seq)))</div><div class="line"></div><div class="line">(define (seprate-to-three n)</div><div class="line">  (flatmap (lambda (x) </div><div class="line">             (map (lambda (y) (cons x y)) </div><div class="line">                  (seprate-except (- n x) x)))</div><div class="line">           (enumerate-interval 1 (- n 1)))</div><div class="line">  )</div></pre></td></tr></table></figure>
 <p>2.练习2.42</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">(define empty-board '())</div><div class="line"></div><div class="line">(define (adjoin-position new-row k rest-of-queens)</div><div class="line">  (cons (list k new-row) rest-of-queens))</div><div class="line"></div><div class="line">(define (safe? k positions)</div><div class="line">  (define (check-safe col row rest-positions)</div><div class="line">    (if (null? rest-positions)</div><div class="line">        true</div><div class="line">        (let ((first-position-col (car (car rest-positions)))</div><div class="line">              (first-position-row (cadr (car rest-positions)))</div><div class="line">              (remain-positions (cdr rest-positions)))</div><div class="line">          (and (not (= col first-position-col))</div><div class="line">               (not (= row first-position-row))</div><div class="line">               (not (= (abs (- col first-position-col))</div><div class="line">                       (abs (- row first-position-row))))</div><div class="line">               (check-safe col row remain-positions)))))</div><div class="line">  (if (null? positions)</div><div class="line">      true</div><div class="line">      (let ((col (car (car positions)))</div><div class="line">            (row (cadr (car positions)))</div><div class="line">            (rest (cdr positions)))</div><div class="line">        (if (null? rest)</div><div class="line">            true</div><div class="line">            (check-safe col row rest)))))</div></pre></td></tr></table></figure>
@@ -430,7 +471,7 @@
         <div class="ds-share flat" data-thread-key="2014/01/20/2014-01-20-练习2.41-练习2.47/"
      data-title="练习2.41-练习2.47"
      data-content=""
-     data-url="http://yoursite.com/2014/01/20/2014-01-20-练习2.41-练习2.47/">
+     data-url="http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -458,7 +499,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2014/01/20/2014-01-20-练习2.41-练习2.47/"
-           data-title="练习2.41-练习2.47" data-url="http://yoursite.com/2014/01/20/2014-01-20-练习2.41-练习2.47/">
+           data-title="练习2.41-练习2.47" data-url="http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.41-练习2.47/">
       </div>
     
   </div>
@@ -503,7 +544,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -511,7 +552,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -520,7 +561,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

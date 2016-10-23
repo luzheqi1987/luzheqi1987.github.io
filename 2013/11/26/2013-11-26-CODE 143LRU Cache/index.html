@@ -85,16 +85,31 @@
 
 
 
-<meta name="description" content="Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.get(key) - Get the value (will always be positive) of the key if the">
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/访问原文「CODE 143. LRU Cache」
+
+(function() {
+  Element.prototype.remove = function()">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CODE 143. LRU Cache">
-<meta property="og:url" content="http://yoursite.com/2013/11/26/2013-11-26-CODE 143LRU Cache/index.html">
+<meta property="og:url" content="http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/index.html">
 <meta property="og:site_name" content="行走的轮子">
-<meta property="og:description" content="Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.get(key) - Get the value (will always be positive) of the key if the">
-<meta property="og:updated_time" content="2016-08-23T03:35:18.000Z">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/访问原文「CODE 143. LRU Cache」
+
+(function() {
+  Element.prototype.remove = function()">
+<meta property="og:updated_time" content="2016-10-23T13:55:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CODE 143. LRU Cache">
-<meta name="twitter:description" content="Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.get(key) - Get the value (will always be positive) of the key if the">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/访问原文「CODE 143. LRU Cache」
+
+(function() {
+  Element.prototype.remove = function()">
 
 
 
@@ -123,7 +138,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2013/11/26/2013-11-26-CODE 143LRU Cache/"/>
+  <link rel="canonical" href="http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/"/>
 
   <title> CODE 143. LRU Cache | 行走的轮子 </title>
 </head>
@@ -369,7 +384,8 @@
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
                </span>
-               <span class="post-meta-item-text">阅读次数 </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
                <span class="leancloud-visitors-count"></span>
               </span>
           
@@ -386,7 +402,32 @@
       
 
       
-        <p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: <code>get</code> and <code>set</code>.<br><code>get(key)</code> - Get the value (will always be positive) of the key if the<br> key exists in the cache, otherwise return -1.<br><code>set(key, value)</code> - Set or insert the value if the key is not already<br> present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/'>CODE 143. LRU Cache</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: <code>get</code> and <code>set</code>.<br><code>get(key)</code> - Get the value (will always be positive) of the key if the<br> key exists in the cache, otherwise return -1.<br><code>set(key, value)</code> - Set or insert the value if the key is not already<br> present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LRUCache</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacity;</div><div class="line">    <span class="keyword">private</span> Map&lt;Integer, Entry&gt; nodes;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> currentSize;</div><div class="line">    <span class="keyword">private</span> Entry first;</div><div class="line">    <span class="keyword">private</span> Entry last;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LRUCache</span><span class="params">(<span class="keyword">int</span> capacity)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.capacity = capacity;</div><div class="line">        currentSize = <span class="number">0</span>;</div><div class="line">        nodes = <span class="keyword">new</span> HashMap&lt;Integer, Entry&gt;();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">        Entry node = nodes.get(key);</div><div class="line">        <span class="keyword">if</span>(node != <span class="keyword">null</span>)&#123;</div><div class="line">            moveToHead(node);</div><div class="line">            <span class="keyword">return</span> node.value;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> key, <span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">        Entry node = nodes.get(key);</div><div class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(currentSize &gt;= capacity)&#123;</div><div class="line">                nodes.remove(last.key);</div><div class="line">                removeLast();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                currentSize ++;</div><div class="line">            &#125;</div><div class="line">            node = <span class="keyword">new</span> Entry();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(currentSize == <span class="number">1</span>)&#123;</div><div class="line">            first = node;</div><div class="line">            last = node;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        node.key = key;</div><div class="line">        node.value = value;</div><div class="line">        moveToHead(node);</div><div class="line">        nodes.put(key, node);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">moveToHead</span><span class="params">(Entry node)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(node == first)</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        </div><div class="line">        <span class="comment">// delete current node from doubly linked list</span></div><div class="line">        <span class="keyword">if</span>(node.pre != <span class="keyword">null</span>)&#123;</div><div class="line">            node.pre.next = node.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(node.next != <span class="keyword">null</span>)&#123;</div><div class="line">            node.next.pre = node.pre;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(last == node)&#123;</div><div class="line">            last = node.pre;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(first != <span class="keyword">null</span>)&#123;</div><div class="line">            node.next = first;</div><div class="line">            first.pre = node;</div><div class="line">        &#125;</div><div class="line">        first = node;</div><div class="line">        node.pre = <span class="keyword">null</span>;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeLast</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(last != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(last.pre != <span class="keyword">null</span>)&#123;</div><div class="line">                last.pre.next = <span class="keyword">null</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                first = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            last = last.pre;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Entry</span></span>&#123;</div><div class="line">    Entry pre;</div><div class="line">    Entry next;</div><div class="line">    <span class="keyword">int</span> key;</div><div class="line">    <span class="keyword">int</span> value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
@@ -449,7 +490,7 @@
         <div class="ds-share flat" data-thread-key="2013/11/26/2013-11-26-CODE 143LRU Cache/"
      data-title="CODE 143. LRU Cache"
      data-content=""
-     data-url="http://yoursite.com/2013/11/26/2013-11-26-CODE 143LRU Cache/">
+     data-url="http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -477,7 +518,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2013/11/26/2013-11-26-CODE 143LRU Cache/"
-           data-title="CODE 143. LRU Cache" data-url="http://yoursite.com/2013/11/26/2013-11-26-CODE 143LRU Cache/">
+           data-title="CODE 143. LRU Cache" data-url="http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 143LRU Cache/">
       </div>
     
   </div>
@@ -522,7 +563,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">316</span>
+              <span class="site-state-item-count">319</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -530,7 +571,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -539,7 +580,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
