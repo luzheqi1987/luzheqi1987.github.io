@@ -301,6 +301,666 @@
             
               
                 
+                <a class="post-title-link" href="/2012/08/30/Spring JPA 不使用缓存的方法/" itemprop="url">
+                  Spring JPA 不使用缓存的方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-30T23:03:10+08:00" content="2012-08-30">
+              2012-08-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/30/Spring JPA 不使用缓存的方法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/30/Spring JPA 不使用缓存的方法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/30/Spring JPA 不使用缓存的方法/" class="leancloud_visitors" data-flag-title="Spring JPA 不使用缓存的方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最经遇到了一个问题，就是在使用JPA的时候，明明写入数据库，但是却完全查不出来，究其原因，可能就是JPA的缓存机制，当然也可以用别的方法，比如说给DAO一个固定的EntityManager，因为查不出来的原因可能就是因为在查询和插入的时候使用了不同的EntityManager。</p>
+<p>在JPA的配置文件persistent.xml中使用persistent_2_0.xsd，即如下：</p>
+<pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;"><span style="color: #ff1717;">&lt;?xml</span> <span style="color: #ff1717;">version="1.0" encoding="UTF-8"?&gt;</span>
+<span style="color: #170;">&lt;persistence</span> <span style="color: #00c;">version</span>=<span style="color: #2a00ff;">"2.0"</span> <span style="color: #00c;">xmlns</span>=<span style="color: #2a00ff;">"http://java.sun.com/xml/ns/persistence"</span> 
+             <span style="color: #00c;">xmlns:xsi</span>=<span style="color: #2a00ff;">"http://www.w3.org/2001/XMLSchema-instance"</span> 
+             <span style="color: #00c;">xsi:schemaLocation</span>=<span style="color: #2a00ff;">"http://java.sun.com/xml/ns/persistence </span>
+            _ <span style="text-decoration: underline; color: #ff0000;"><span style="text-decoration: underline;">http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"</span></span>_**<span style="color: #170;">&gt;</span>**</pre>
+然后增加配置：
+<pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;"> <span style="color: #170;">&lt;shared-cache-mode</span><span style="color: #170;">&gt;</span>NONE<span style="color: #170;">&lt;/shared-cache-mode</span><span style="color: #170;">&gt;</span></pre>
+shared-cache-mode属性有4种配置：ALL-缓存所有实体；NONE-禁止缓存；ENABLE_SELECTIVE-如果加了缓存的标识，是默认的选项；DISABLE_SELECTIVE- 使用缓存除非使用注解@Cacheable(false)，这个不推荐使用
+
+下面是一个persistent.xml的举例，不过不是Spring的，是Hibernate的，而且是从网上摘的，网址为[点我](http://www.cnblogs.com/luxh/archive/2012/05/24/2516282.html)
+<pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;"> <span style="color: #ff1717;">&lt;?xml</span> <span style="color: #ff1717;">version="1.0" encoding="UTF-8"?&gt;</span>
+  <span style="color: #170;">&lt;persistence</span> <span style="color: #00c;">version</span>=<span style="color: #2a00ff;">"2.0"</span> <span style="color: #00c;">xmlns</span>=<span style="color: #2a00ff;">"http://java.sun.com/xml/ns/persistence"</span> 
+              <span style="color: #00c;">xmlns:xsi</span>=<span style="color: #2a00ff;">"http://www.w3.org/2001/XMLSchema-instance"</span> 
+              <span style="color: #00c;">xsi:schemaLocation</span>=<span style="color: #2a00ff;">"http://java.sun.com/xml/ns/persistence </span>
+              <span style="color: #2a00ff;">http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"</span><span style="color: #170;">&gt;</span>
+
+     <span style="color: #3f7f5f;">&lt;!--必须要有name属性，不能为空 --&gt;</span>
+      <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"jpaPU"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #2a00ff;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.hibernate.ejb.HibernatePersistence<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;jta-data-source</span><span style="color: #170;">&gt;</span>java:/DefaultDS<span style="color: #170;">&lt;/jta-data-source</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;mapping-file</span><span style="color: #170;">&gt;</span>ormap.xml<span style="color: #170;">&lt;/mapping-file</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;jar-file</span><span style="color: #170;">&gt;</span>MyApp.jar<span style="color: #170;">&lt;/jar-file</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.acme.Employee<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;shared-cache-mode</span><span style="color: #170;">&gt;</span>ENABLE_SELECTOVE<span style="color: #170;">&lt;/shared-cache-mode</span><span style="color: #170;">&gt;</span>
+           <span style="color: #3f7f5f;">&lt;!--可选 --&gt;</span>
+           <span style="color: #170;">&lt;validation-mode</span><span style="color: #170;">&gt;</span>CALLBACK<span style="color: #170;">&lt;/validation-mode</span><span style="color: #170;">&gt;</span>
+
+           <span style="color: #3f7f5f;">&lt;!--厂商的特定属性 --&gt;</span>
+           <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--配置Hibernate方言 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.dialect"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"org.hibernate.dialect.MySQL5Dialect"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--配置数据库驱动 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.connection.driver_class"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"com.mysql.jdbc.Driver"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--配置数据库用户名 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.connection.username"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"root"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--配置数据库密码 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.connection.password"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"root"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--配置数据库url --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.connection.url"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"jdbc:mysql://localhost:3306/jpa?useUnicode=true&amp;amp;characterEncoding=UTF-8"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--设置外连接抓取树的最大深度 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.max_fetch_depth"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"3"</span> <span style="color: #170;">/&gt;</span>
+              <span style="color: #3f7f5f;">&lt;!--自动输出schema创建DDL语句 --&gt;</span>
+              <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #2a00ff;">"hibernate.hbm2ddl.auto"</span> <span style="color: #00c;">value</span>=<span style="color: #2a00ff;">"update"</span> <span style="color: #170;">/&gt;</span>    
+           <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+      <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+  <span style="color: #170;">&lt;/persistence</span><span style="color: #170;">&gt;</span></pre>
+<span style="color: #993366;">**xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"**</span>
+要注意使用的是2.0规范
+<span style="color: #993366;">**name**</span>
+JPA2.0规范要求每一个持久化单元必须有一个名字，不能为空。即persistence-unit name="manager1"的name不能为空。
+<span style="color: #993366;">**transaction-type**</span>
+使用的事务类型。有JTA和RESOURCE_LOCAL两种类型可以选择。在JavaEE环境中默认为JTA,在JavaSE环境中默认为RESOURCE_LOCAL。当在persistent.xml文件使用,默认就是JTA事务，使用，默认就是使用RESOURCE_LOCAL事务。这两种事务的区别不在这里讨论。
+<span style="color: #993366;">**provider**</span>
+EJB Persistence provider的一个实现类。如果不是使用多个厂商的 EJB Persistence实现，是不需要定义的。
+<span style="color: #993366;">**mapping-file**</span>
+指定映射文件的位置
+<span style="color: #993366;">**jar-file**</span>
+指定要解析的jar。jar中所有注解的类、包和所有的hbm.xml都会被添加到persistent-unit的配置中。主要用在JavaEE环境中。
+<span style="color: #993366;">**exclude-unlisted-classes**</span>
+不检查jar中加了@Entity注解的类。
+<span style="color: #993366;">**class**</span>
+明确指定要映射的类
+<span style="color: #993366;">**validation-mode**</span>
+实体的验证模式，默认是激活的。当一个实体在创建、更新，在实体发送到数据库前会被进行验证。CALLBACK: entities are validated on creation, update and deletion. If no Bean Validation provider is present, an exception is raised at initialization time.
+<span style="color: #993366;">**properties**</span>
+配置厂商的一些特定属性。
+
+&nbsp;
+
+下面这个包含了各种JPA的persistent.xml，用的是1.0规范，看的玩儿吧：
+
+&nbsp;
+<pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;"><span style="color: #170;">&lt;persistence</span> <span style="color: #00c;">xmlns</span>=<span style="color: #a11;">"http://java.sun.com/xml/ns/persistence"</span> <span style="color: #00c;">xmlns:xsi</span>=<span style="color: #a11;">"http://www.w3.org/2001/XMLSchema-instance"</span>
+             <span style="color: #00c;">xsi:schemaLocation</span>=<span style="color: #a11;">"http://java.sun.com/xml/ns/persistence persistence_1_0.xsd"</span> <span style="color: #00c;">version</span>=<span style="color: #a11;">"1.0"</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.eclipse.persistence.jpa.PersistenceProvider<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.driver"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.user"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.target-database"</span>
+                      <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.eclipse.persistence.platform.database.HSQLPlatform"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.logging.level"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"OFF"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.orm.throw.exceptions"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.ddl-generation"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"drop-and-create-tables"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.ddl-generation.output-mode"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"database"</span><span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"embeddedeclipselink"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.eclipse.persistence.jpa.PersistenceProvider<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.driver"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.user"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.jdbc.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.target-database"</span>
+                      <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.eclipse.persistence.platform.database.HSQLPlatform"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.logging.level"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"OFF"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.orm.throw.exceptions"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.ddl-generation"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"drop-and-create-tables"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.ddl-generation.output-mode"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"database"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"eclipselink.session.customizer"</span>
+                      <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.compass.gps.device.jpa.embedded.eclipselink.CompassSessionCustomizer"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.engine.connection"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"target/test-index"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.debug"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span> <span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>oracle.toplink.essentials.PersistenceProvider<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.driver"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.user"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.target-database"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"oracle.toplink.essentials.platform.database.HSQLPlatform"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.logging.level"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"OFF"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.orm.throw.exceptions"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.ddl-generation"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"drop-and-create-tables"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.ddl-generation.output-mode"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"database"</span><span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"embeddedtoplink"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>oracle.toplink.essentials.PersistenceProvider<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.driver"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.user"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.jdbc.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.target-database"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"oracle.toplink.essentials.platform.database.HSQLPlatform"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.logging.level"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"OFF"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.orm.throw.exceptions"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.ddl-generation"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"drop-and-create-tables"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.ddl-generation.output-mode"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"database"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"toplink.session.customizer"</span>
+                      <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.compass.gps.device.jpa.embedded.toplink.CompassSessionCustomizer"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.engine.connection"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"target/test-index"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.debug"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span> <span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.hibernate.ejb.HibernatePersistence<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.dialect"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hibernate.dialect.HSQLDialect"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.driver_class"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.username"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.search.autoregister_listeners"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"false"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.hbm2ddl.auto"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"create"</span><span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"embeddedhibernate"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.hibernate.ejb.HibernatePersistence<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.dialect"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hibernate.dialect.HSQLDialect"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.driver_class"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.url"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.username"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.connection.password"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.search.autoregister_listeners"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"hibernate.hbm2ddl.auto"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"create"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.engine.connection"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"target/test-index"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.debug"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span> <span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.apache.openjpa.persistence.PersistenceProviderImpl<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>false<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.jdbc.DBDictionary"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"hsql"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionDriverName"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionURL"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionUserName"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionPassword"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.jdbc.SynchronizeMappings"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"buildSchema"</span><span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+
+    <span style="color: #170;">&lt;persistence-unit</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"embeddedopenjpa"</span> <span style="color: #00c;">transaction-type</span>=<span style="color: #a11;">"RESOURCE_LOCAL"</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;provider</span><span style="color: #170;">&gt;</span>org.apache.openjpa.persistence.PersistenceProviderImpl<span style="color: #170;">&lt;/provider</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.Simple<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleBase<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;class</span><span style="color: #170;">&gt;</span>org.compass.gps.device.jpa.model.SimpleExtend<span style="color: #170;">&lt;/class</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>true<span style="color: #170;">&lt;/exclude-unlisted-classes</span><span style="color: #170;">&gt;</span>
+        <span style="color: #170;">&lt;properties</span><span style="color: #170;">&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.jdbc.DBDictionary"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"hsql"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionDriverName"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"org.hsqldb.jdbcDriver"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionURL"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"jdbc:hsqldb:mem:test"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionUserName"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"sa"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.ConnectionPassword"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">""</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"openjpa.jdbc.SynchronizeMappings"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"buildSchema"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.engine.connection"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"target/test-index"</span><span style="color: #170;">/&gt;</span>
+            <span style="color: #170;">&lt;property</span> <span style="color: #00c;">name</span>=<span style="color: #a11;">"compass.debug"</span> <span style="color: #00c;">value</span>=<span style="color: #a11;">"true"</span> <span style="color: #170;">/&gt;</span>
+        <span style="color: #170;">&lt;/properties</span><span style="color: #170;">&gt;</span>
+    <span style="color: #170;">&lt;/persistence-unit</span><span style="color: #170;">&gt;</span>
+<span style="color: #170;">&lt;/persistence</span><span style="color: #170;">&gt;</span></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/23/关于代码高亮/" itemprop="url">
+                  关于代码高亮
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-23T23:03:36+08:00" content="2012-08-23">
+              2012-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/23/关于代码高亮/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/23/关于代码高亮/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/23/关于代码高亮/" class="leancloud_visitors" data-flag-title="关于代码高亮">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前几天看到了别人的代码高亮程序，觉得很有意思，也就想着自己也做做。可惜了，我每天都很晚回来，所以这个东西拖了很久，大概做了3-4的时间，不过收获还是有一些的，毕竟它现在已经上线了。</p>
+<p>这个代码高亮的东西是依托于一个开源的东东——CodeMirror。我基本上对css、js，可能还包括php都是非常的不熟悉，谁叫我每天在单位都做得是后台的东西呢。</p>
+<p>啃啃巴巴的终于做完了，本来想吧主题的类型能加都加上，后来发现这个处理逻辑貌似有点复杂，就只做了default的和eclipse的，而且整个代码不乏“借鉴”别人的。。。为搞清楚很多东西，我还专门看了css，javascript方面的书籍，真是有够麻烦的。</p>
+<p>以下是注意的内容吧，这个很有可能是不完备的：</p>
+<p>1.wordpress的相对路径类似于下面这样</p>
+<p><pre style="margin: 15px 0; font: 100 12px/18px monaco, andale mono, courier new; padding: 10px 12px; border: #ccc 1px solid; border-left-width: 4px; background-color: #fefefe; box-shadow: 0 0 4px #eee; word-break: break-all; word-wrap: break-word; color: #444;">bloginfo(‘template_url’)?&gt;/js/CodeMirror/mode/xml/xml.js</pre><br>必须注意的是用bloginfo(‘template_url’)开头，而不是什么“..”什么的。</p>
+<p>2.用EditPlus这种东西写代码很麻烦，必须时刻注意很小的地方，不然出错也发现不了，回头找找有没有更好的方法。</p>
+<p>3.javascript的返回方式好像包括return和回调函数这两种，我只知道回调函数，这回却也没用上， 以后可以研究下。</p>
+<p>4.正则表达式一定要弄清楚各个部分的含义，它还是很强大的。javascript中，/…/表示这个为正则表达式，后面加g即/…/g，为全部进行匹配。\为转义，注意为标点符号转义。其他正则表达式的元符号这里就不说明了，太罗嗦了。</p>
+<p>5.本服务目前不支持ie浏览器，</p>
+<p>现就这么多了，今天要好好休息，好好睡觉。</p>
+<p>发现别人在用代码托管，比如注册了一个google code host，可以在这个SVN客户端管理我的代码，回头学学。</p>
+<p>&nbsp;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/21/OpenCV 级联分类器训练（2）/" itemprop="url">
+                  OpenCV 级联分类器训练（2）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-21T23:40:38+08:00" content="2012-08-21">
+              2012-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/21/OpenCV 级联分类器训练（2）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/21/OpenCV 级联分类器训练（2）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/21/OpenCV 级联分类器训练（2）/" class="leancloud_visitors" data-flag-title="OpenCV 级联分类器训练（2）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>（1）解决Adaboost的问题。Adaboost的原理是用弱分类器去构造强分类器，强分类器的错误率呈下降并稳定的趋势。之前之所以只有62%的正确率，是因为，在训练集训练得到的最强的弱分类器在测试集上也表现不佳，也难怪最终的正确率不高了。样本过拟合是机器学习中的一个常见问题。针对今天出现的情况，最简单的方法是随机取样形成train和test样本集。</p>
+<p>编程核心实现就是生成随机数。C++中常用rand()函数生成随机数，但严格意义上来讲生成的只是伪随机数（pseudo-random integral number）。生成随机数时需要我们指定一个种子，如果在程序内循环，那么下一次生成随机数时调用上一次的结果作为种子。但如果分两次执行程序，那么由于种子相同，生成的“随机数”也是相同的。在工程应用时，我们一般将系统当前时间(Unix时间)作为种子，这样生成的随机数更接近于实际意义上的随机数。</p>
+<p>srand(unsigned(time(0))); num=rand()%100//生成0-100的随机数</p>
+<p>（2）vc 6.0和vs2005中控制台程序读取命令行参数的不同。</p>
+<p>vc6.0  int main(int argc, char* argv[])//argc表示命令行参数的个数，argv[]表示参数数组。argv[0]是可执行文件的信息。</p>
+<p>vs2005 int _tmain(int argc, _TCHAR* argv[])//意义与上类似，但是_tmain 是unicode版本的main，_CHAR 表示宽长度字符，c++中对应的cout，需要使用wout实现：wout&lt;&lt;argv[2];若使用cout则出现乱码。</p>
+<p>linux 下 一般为 int main(int argc, char** argv)</p>
+<p>（3）基于vs2010和opencv2.0 完成了对行人的Haar特征进行了训练。这个程序可以借鉴的地方很多，例如vector、templete、虚函数的使用等等，温故知新。等待明晚的测试。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/08/20/OpenCV 级联分类器训练（1）/" itemprop="url">
                   OpenCV 级联分类器训练（1）
                 </a>
@@ -1286,326 +1946,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/11/17/2011-11-17-python串口通信模块pySerial/" itemprop="url">
-                  python串口通信模块——pySerial
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-11-17T22:20:00+08:00" content="2011-11-17">
-              2011-11-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/11/17/2011-11-17-python串口通信模块pySerial/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2011/11/17/2011-11-17-python串口通信模块pySerial/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2011/11/17/2011-11-17-python串口通信模块pySerial/" class="leancloud_visitors" data-flag-title="python串口通信模块——pySerial">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#pySerial</p>
-<p>##Overview<br>This module encapsulates the access for the serial port. It provides backends for Python running on Windows, Linux, BSD (possibly any POSIX compliant system), Jython and IronPython (.NET and Mono). The module named “serial” automatically selects the appropriate<br> backend.</p>
-<p>It is released under a free software license, see <a href="http://pyserial.svn.sourceforge.net/viewvc/*checkout*/pyserial/trunk/pyserial/LICENSE.txt" target="_blank" rel="external">LICENSE.txt</a> for more details.<br>(C) 2001-2008 Chris Liechti <a href="mailto:cliechti@gmx.net" target="_blank" rel="external">cliechti@gmx.net</a></p>
-<p>The <a href="http://sourceforge.net/projects/pyserial/" target="_blank" rel="external">project page on SourceForge</a> and here is the <a href="http://sourceforge.net/svn/?group_id=46487" target="_blank" rel="external">SVN repository</a> and the <a href="http://sourceforge.net/project/showfiles.php?group_id=46487" target="_blank" rel="external">Download Page</a> .<br>The homepage is on <a href="http://pyserial.sf.net/" target="_blank" rel="external">http://pyserial.sf.net/</a></p>
-<p>##Features</p>
-<ul>
-<li>same class based interface on all supported platforms </li>
-<li>access to the port settings through Python 2.2+ properties </li>
-<li>port numbering starts at zero, no need to know the port name in the user program</li>
-<li>port string (device name) can be specified if access through numbering is inappropriate</li>
-<li>support for different bytesizes, stopbits, parity and flow control with RTS/CTS and/or Xon/Xoff</li>
-<li>working with or without receive timeout </li>
-<li>file like API with “read” and “write” (“readline” etc. also supported) </li>
-<li>The files in this package are 100% pure Python. They depend on non standard but common packages on Windows (pywin32) and Jython (JavaComm). POSIX (Linux, BSD) uses only modules from the standard Python distribution)</li>
-<li>The port is set up for binary transmission. No NULL byte stripping, CR-LF translation etc. (which are many times enabled for POSIX.) This makes this module universally useful.</li>
-</ul>
-<p>##Requirements</p>
-<ul>
-<li>Python 2.2 or newer </li>
-<li>pywin32 extensions on Windows </li>
-<li>“Java Communications” (JavaComm) or compatible extension for Java/Jython </li>
-</ul>
-<p>##Installation</p>
-<p>###from source<br>Extract files from the archive, open a shell/console in that directory and let Distutils do the rest:<br>python setup.py install</p>
-<p>The files get installed in the “Lib/site-packages” directory.</p>
-<p>###easy_install<br>An EGG is available from the Python Package Index: <a href="http://pypi.python.org/pypi/pyserial" target="_blank" rel="external">http://pypi.python.org/pypi/pyserial</a><br>easy_install pyserial</p>
-<p>###windows installer<br>There is also a Windows installer for end users. It is located in the <a href="http://sourceforge.net/project/showfiles.php?group_id=46487" target="_blank" rel="external">Download Page</a><br>Developers may be interested to get the source archive, because it contains examples and the readme.</p>
-<p>##Short introduction<br>Open port 0 at “9600,8,N,1”, no timeout<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import serial</div><div class="line">ser = serial.Serial(0)  # open first serial port</div><div class="line">print ser.portstr       # check which port was really used</div><div class="line">ser.write("hello")      # write a string</div><div class="line">ser.close()             # close port</div></pre></td></tr></table></figure></p>
-<p>Open named port at “19200,8,N,1”, 1s timeout<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial('/dev/ttyS1', 19200, timeout=1)</div><div class="line">x = ser.read()          # read one byte</div><div class="line">s = ser.read(10)        # read up to ten bytes (timeout)</div><div class="line">line = ser.readline()   # read a '\n' terminated line</div><div class="line">ser.close()</div></pre></td></tr></table></figure></p>
-<p>Open second port at “38400,8,E,1”, non blocking HW handshaking<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial(1, 38400, timeout=0, parity=serial.PARITY_EVEN, rtscts=1)</div><div class="line">s = ser.read(100)       # read up to one hundred bytes</div><div class="line">...                     # or as much is in the buffer</div></pre></td></tr></table></figure></p>
-<p>Get a Serial instance and configure/open it later<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; ser = serial.Serial()</div><div class="line">&gt;&gt;&gt; ser.baudrate = 19200</div><div class="line">&gt;&gt;&gt; ser.port = 0</div><div class="line">&gt;&gt;&gt; ser</div><div class="line">Serial<span class="tag">&lt;<span class="name">id=0xa81c10,</span> <span class="attr">open</span>=<span class="string">False</span>&gt;</span>(port='COM1', baudrate=19200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0)</div><div class="line">&gt;&gt;&gt; ser.open()</div><div class="line">&gt;&gt;&gt; ser.isOpen()</div><div class="line">True</div><div class="line">&gt;&gt;&gt; ser.close()</div><div class="line">&gt;&gt;&gt; ser.isOpen()</div><div class="line">False</div></pre></td></tr></table></figure></p>
-<p>Be carefully when using “readline”. Do specify a timeout when opening the serial port otherwise it could block forever if no newline character is received. Also note that “readlines” only works with a timeout. “readlines”<br> depends on having a timeout and interprets that as EOF (end of file). It raises an exception if the port is not opened correctly.<br>Do also have a look at the example files in the examples directory in the source distribution or online.</p>
-<p>##Examples<br>Please look in the SVN Repository. There is an example directory where you can find a simple terminal and more.<br><a href="http://pyserial.svn.sourceforge.net/viewvc/pyserial/trunk/pyserial/examples/" target="_blank" rel="external">http://pyserial.svn.sourceforge.net/viewvc/pyserial/trunk/pyserial/examples/</a></p>
-<p>##Parameters for the Serial class<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">ser = serial.Serial(</div><div class="line">port=None,              # number of device, numbering starts at</div><div class="line"># zero. if everything fails, the user</div><div class="line"># can specify a device string, note</div><div class="line"># that this isn't portable anymore</div><div class="line"># if no port is specified an unconfigured</div><div class="line"># an closed serial port object is created</div><div class="line">baudrate=9600,          # baud rate</div><div class="line">bytesize=EIGHTBITS,     # number of databits</div><div class="line">parity=PARITY_NONE,     # enable parity checking</div><div class="line">stopbits=STOPBITS_ONE,  # number of stopbits</div><div class="line">timeout=None,           # set a timeout value, None for waiting forever</div><div class="line">xonxoff=0,              # enable software flow control</div><div class="line">rtscts=0,               # enable RTS/CTS flow control</div><div class="line">interCharTimeout=None   # Inter-character timeout, None to disable</div><div class="line">)</div></pre></td></tr></table></figure></p>
-<p>The port is immediately opened on object creation, if a port is given. It is not opened if port is None.<br>Options for read timeout:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">timeout=None            # wait forever</div><div class="line">timeout=0               # non-blocking mode (return immediately on read)</div><div class="line">timeout=x               # set timeout to x seconds (float allowed)</div></pre></td></tr></table></figure></p>
-<p>##Methods of Serial instances<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">open()                  # open port</div><div class="line">close()                 # close port immediately</div><div class="line">setBaudrate(baudrate)   # change baud rate on an open port</div><div class="line">inWaiting()             # return the number of chars in the receive buffer</div><div class="line">read(size=1)            # read "size" characters</div><div class="line">write(s)                # write the string s to the port</div><div class="line">flushInput()            # flush input buffer, discarding all it's contents</div><div class="line">flushOutput()           # flush output buffer, abort output</div><div class="line">sendBreak()             # send break condition</div><div class="line">setRTS(level=1)         # set RTS line to specified logic level</div><div class="line">setDTR(level=1)         # set DTR line to specified logic level</div><div class="line">getCTS()                # return the state of the CTS line</div><div class="line">getDSR()                # return the state of the DSR line</div><div class="line">getRI()                 # return the state of the RI line</div><div class="line">getCD()                 # return the state of the CD line</div></pre></td></tr></table></figure></p>
-<p>##Attributes of Serial instances<br>Read Only:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">portstr                 # device name</div><div class="line">BAUDRATES               # list of valid baudrates</div><div class="line">BYTESIZES               # list of valid byte sizes</div><div class="line">PARITIES                # list of valid parities</div><div class="line">STOPBITS                # list of valid stop bit widths</div></pre></td></tr></table></figure></p>
-<p>New values can be assigned to the following attributes, the port will be reconfigured, even if it’s opened at that time:</p>
-<!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} -->
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">port                    # port name/number as set by the user</div><div class="line">baudrate                # current baud rate setting</div><div class="line">bytesize                # byte size in bits</div><div class="line">parity                  # parity setting</div><div class="line">stopbits                # stop bit with (1,2)</div><div class="line">timeout                 # timeout setting</div><div class="line">xonxoff                 # if Xon/Xoff flow control is enabled</div><div class="line">rtscts                  # if hardware flow control is enabled</div></pre></td></tr></table></figure>
-<p>##Exceptions<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">serial.SerialException</div></pre></td></tr></table></figure></p>
-<p>##Constants<br>parity:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">serial.PARITY_NONE</div><div class="line">serial.PARITY_EVEN</div><div class="line">serial.PARITY_ODD</div></pre></td></tr></table></figure></p>
-<p>stopbits:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">serial.STOPBITS_ONE</div><div class="line">serial.STOPBITS_TWO</div></pre></td></tr></table></figure></p>
-<p>bytesize:<br><!-- /* GeSHi (c) Nigel McNie 2004 (http://qbnz.com/highlighter) */ .text .imp {font-weight: bold; color: red;} --><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">serial.FIVEBITS</div><div class="line">serial.SIXBITS</div><div class="line">serial.SEVENBITS</div><div class="line">serial.EIGHTBITS</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2011/11/14/2011-11-14-在python文件中集成图片/" itemprop="url">
-                  在python文件中集成图片
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2011-11-14T13:43:00+08:00" content="2011-11-14">
-              2011-11-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2011/11/14/2011-11-14-在python文件中集成图片/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2011/11/14/2011-11-14-在python文件中集成图片/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2011/11/14/2011-11-14-在python文件中集成图片/" class="leancloud_visitors" data-flag-title="在python文件中集成图片">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>方法一：<br><a href="http://leo108.com/pid-938.asp" target="_blank" rel="external">http://leo108.com/pid-938.asp</a><br>使用base64方式编解码。<br>核心代码如下：<br>1.将图片文件编码为base64字符串：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import base64                    #导入base64库 </div><div class="line">f = open(r'/home/1.ico','rb')    #用二进制方式打开图片文件</div><div class="line">str = base64.b64encode(f.read()) #读取文件内容，编码为base64字符串</div><div class="line">f.close()                        #关闭文件</div><div class="line">print str                        #输出base64编码结果</div></pre></td></tr></table></figure>
-<p>2.将base64字符串解码为图片：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">import base64  </div><div class="line">import wx  </div><div class="line">import cStringIO  </div><div class="line"></div><div class="line">def GetMondrianData():  </div><div class="line">    iconData = "图片BASE64字符串" </div><div class="line">    iconData = base64.b64decode(iconData)  </div><div class="line">    return iconData  </div><div class="line">def GetMondrianBitmap():  </div><div class="line">    return wx.BitmapFromImage(GetMondrianImage())  </div><div class="line">def GetMondrianImage():  </div><div class="line">    stream = cStringIO.StringIO(GetMondrianData())  </div><div class="line">    return wx.ImageFromStream(stream)  </div><div class="line">def GetMondrianIcon():  </div><div class="line">    icon = wx.EmptyIcon()  </div><div class="line">    icon.CopyFromBitmap(GetMondrianBitmap())  </div><div class="line">    return icon</div></pre></td></tr></table></figure>
-<p>调用GetMondrianIcon()函数即可</p>
-<p>方法二：<br>使用函数im2py.py，下面这个是旧版wxpython的使用<br><a href="http://www.blog.pythonlibrary.org/2008/05/23/wxpython-embedding-an-image-in-your-title-bar/" target="_blank" rel="external">http://www.blog.pythonlibrary.org/2008/05/23/wxpython-embedding-an-image-in-your-title-bar/</a><br>wxpython_2.9.2_py27中的使用:<br>打开cmd，打开文件夹C:\Python27\Lib\site-packages\wx-2.9.2-msw\wx\tools，输入命令</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python img2py.py -i (-n ***）28.ico myIcon.py</div></pre></td></tr></table></figure>
-<p>option中-n, -i的注释：<br>-n <name>      Normally generic names (getBitmap, etc.) are used for the<br>                        image access functions.  If you use this option you can<br>                        specify a name that should be used to customize the access<br>                        fucntions, (getNameBitmap, etc.)，<strong>否则默认为下划线+ico的名字</strong><br><strong>                        本例中为_28</strong><br>-i                     Also output a function to return the image as a wxIcon<br>输出文件为myIcon，<br>本例中的使用方法为：</name></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import myIcon</div><div class="line">ico = myIcon._28.getIcon()</div><div class="line">self.SetIcon(ico)</div></pre></td></tr></table></figure>
-<p>当然也可以在myIcon.py的文件末尾加</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">get_Icon = _28.getIcon</div></pre></td></tr></table></figure>
-<p>则使用方法为</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import myIcon</div><div class="line">ico = myIcon.get_Icon()</div><div class="line">self.SetIcon(ico)</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span>
+    <a class="extend prev" rel="prev" href="/page/31/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/31/">31</a><span class="page-number current">32</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/33/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1646,7 +1991,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1663,7 +2008,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

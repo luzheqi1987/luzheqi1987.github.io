@@ -301,6 +301,530 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/27/深入解析MySQL分区（Partition）功能/" itemprop="url">
+                  深入解析MySQL分区（Partition）功能
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-27T09:15:01+08:00" content="2015-04-27">
+              2015-04-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/27/深入解析MySQL分区（Partition）功能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/27/深入解析MySQL分区（Partition）功能/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/27/深入解析MySQL分区（Partition）功能/" class="leancloud_visitors" data-flag-title="深入解析MySQL分区（Partition）功能">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mysql自5.1开始对分区(Partition)有支持</p>
+<p>= 水平分区（根据列属性按行分）=<br>举个简单例子：一个包含十年发票记录的表可以被分区为十个不同的分区，每个分区包含的是其中一年的记录。</p>
+<p>=== 水平分区的几种模式：===</p>
+<ul>
+<li><p>Range（范围） – 这种模式允许DBA将数据划分不同范围。例如DBA可以将一个表通过年份划分成三个分区，80年代（1980’s）的数据，90年代（1990’s）的数据以及任何在2000年（包括2000年）后的数据。 </p>
+</li>
+<li><p>Hash（哈希） – 这中模式允许DBA通过对表的一个或多个列的Hash Key进行计算，最后通过这个Hash码不同数值对应的数据区域进行分区，。例如DBA可以建立一个对表主键进行分区的表。 </p>
+</li>
+<li><p>Key（键值） – 上面Hash模式的一种延伸，这里的Hash Key是MySQL系统产生的。 </p>
+</li>
+<li><p>List（预定义列表） – 这种模式允许系统通过DBA定义的列表的值所对应的行数据进行分割。例如：DBA建立了一个横跨三个分区的表，分别根据2004年2005年和2006年值所对应的数据。 </p>
+</li>
+<li><p>Composite（复合模式） - 很神秘吧，哈哈，其实是以上模式的组合使用而已，就不解释了。举例：在初始化已经进行了Range范围分区的表上，我们可以对其中一个分区再进行hash哈希分区。 </p>
+</li>
+</ul>
+<p>= 垂直分区（按列分）=<br>举个简单例子：一个包含了大text和BLOB列的表，这些text和BLOB列又不经常被访问，这时候就要把这些不经常使用的text和BLOB了划分到另一个分区，在保证它们数据相关性的同时还能提高访问速度。</p>
+<p>[分区表和未分区表试验过程]</p>
+<p>*创建分区表,按日期的年份拆分<br>[sql]<br>CREATE TABLE part_tab ( c1 int default NULL, c2 varchar(30) default NULL, c3 date default NULL) engine=myisam<br>PARTITION BY RANGE (year(c3)) (PARTITION p0 VALUES LESS THAN (1995),<br>PARTITION p1 VALUES LESS THAN (1996) , PARTITION p2 VALUES LESS THAN (1997) ,<br>PARTITION p3 VALUES LESS THAN (1998) , PARTITION p4 VALUES LESS THAN (1999) ,<br>PARTITION p5 VALUES LESS THAN (2000) , PARTITION p6 VALUES LESS THAN (2001) ,<br>PARTITION p7 VALUES LESS THAN (2002) , PARTITION p8 VALUES LESS THAN (2003) ,<br>PARTITION p9 VALUES LESS THAN (2004) , PARTITION p10 VALUES LESS THAN (2010),<br>PARTITION p11 VALUES LESS THAN MAXVALUE );  [/sql]<br>注意最后一行，考虑到可能的最大值</p>
+<p>*创建未分区表<br>[sql]<br>mysql&gt; create table no_part_tab (c1 int(11) default NULL,c2 varchar(30) default NULL,c3 date default NULL) engine=myisam;<br>[/sql]</p>
+<p><em>通过存储过程灌入800万条测试数据<br>mysql&gt; set sql_mode=’’; /</em> 如果创建存储过程失败，则先需设置此变量, bug? <em>/<br>mysql&gt; delimiter //   /</em> 设定语句终结符为 //，因存储过程语句用;结束 */</p>
+<p>[sql]<br>mysql&gt; CREATE PROCEDURE load_part_tab()<br>       begin<br>    declare v int default 0;<br>    while v &lt; 8000000<br>    do<br>        insert into part_tab<br>        values (v,’testing partitions’,adddate(‘1995-01-01’,(rand(v)<em>36520) mod 3652));<br>         set v = v + 1;<br>    end while;<br>    end<br>    //<br>mysql&gt; delimiter ;<br>mysql&gt; call load_part_tab();<br>Query OK, 1 row affected (8 min 17.75 sec)<br>[sql] view plaincopy<br>mysql&gt; insert into no_part_tab select </em> from part_tab;<br>Query OK, 8000000 rows affected (51.59 sec)<br>Records: 8000000 Duplicates: 0 Warnings: 0<br>[/sql]</p>
+<ul>
+<li>测试SQL性能</li>
+</ul>
+<p>[sql]<br>mysql&gt; select count(<em>) from part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’;<br>+———-+<br>| count(</em>) |<br>+———-+<br>|   795181 |<br>+———-+<br>1 row in set (0.55 sec)<br>[/sql]</p>
+<p>[sql]<br>mysql&gt; select count(<em>) from no_part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’;<br>+———-+<br>| count(</em>) |<br>+———-+<br>|   795181 |<br>+———-+<br>1 row in set (4.69 sec)[/sql]<br>结果表明分区表比未分区表的执行时间少90%。</p>
+<ul>
+<li>通过explain语句来分析执行情况<br>[sql]<br>mysql &gt; explain select count(<em>) from no_part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’\G<br>/</em> 结尾的\G使得mysql的输出改为列模式 <em>/<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong><pre><code>id: 1
+</code></pre>select_type: SIMPLE<pre><code>table: no_part_tab
+ type: ALL
+</code></pre>possible_keys: NULL<pre><code>    key: NULL
+key_len: NULL
+    ref: NULL
+   rows: 8000000
+  Extra: Using where
+</code></pre>1 row in set (0.00 sec)<br>[/sql]</li>
+</ul>
+<p>[sql]<br>mysql&gt; explain select count(<em>) from part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’\G<br><strong><strong><strong><strong><strong><strong>**</strong></strong></strong></strong></strong></strong></em> 1. row <strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong><br>           id: 1<br>select_type: SIMPLE<br>        table: part_tab<br>         type: ALL<br>possible_keys: NULL<br>          key: NULL<br>      key_len: NULL<br>          ref: NULL<br>         rows: 798458<br>        Extra: Using where<br>1 row in set (0.00 sec)[/sql]<br>explain语句显示了SQL查询要处理的记录数目</p>
+<ul>
+<li><p>试验创建索引后情况<br>[sql]<br>mysql&gt; create index idx_of_c3 on no_part_tab (c3);<br>Query OK, 8000000 rows affected (1 min 18.08 sec)<br>Records: 8000000 Duplicates: 0 Warnings: 0<br>[/sql]<br>[sql]<br>mysql&gt; create index idx_of_c3 on part_tab (c3);<br>Query OK, 8000000 rows affected (1 min 19.19 sec)<br>Records: 8000000 Duplicates: 0 Warnings: 0[/sql]<br>创建索引后的数据库文件大小列表：<br>2008-05-24 09:23             8,608 no_part_tab.frm<br>2008-05-24 09:24       255,999,996 no_part_tab.MYD<br>2008-05-24 09:24        81,611,776 no_part_tab.MYI<br>2008-05-24 09:25                 0 part_tab#P#p0.MYD<br>2008-05-24 09:26             1,024 part_tab#P#p0.MYI<br>2008-05-24 09:26        25,550,656 part_tab#P#p1.MYD<br>2008-05-24 09:26         8,148,992 part_tab#P#p1.MYI<br>2008-05-24 09:26        25,620,192 part_tab#P#p10.MYD<br>2008-05-24 09:26         8,170,496 part_tab#P#p10.MYI<br>2008-05-24 09:25                 0 part_tab#P#p11.MYD<br>2008-05-24 09:26             1,024 part_tab#P#p11.MYI<br>2008-05-24 09:26        25,656,512 part_tab#P#p2.MYD<br>2008-05-24 09:26         8,181,760 part_tab#P#p2.MYI<br>2008-05-24 09:26        25,586,880 part_tab#P#p3.MYD<br>2008-05-24 09:26         8,160,256 part_tab#P#p3.MYI<br>2008-05-24 09:26        25,585,696 part_tab#P#p4.MYD<br>2008-05-24 09:26         8,159,232 part_tab#P#p4.MYI<br>2008-05-24 09:26        25,585,216 part_tab#P#p5.MYD<br>2008-05-24 09:26         8,159,232 part_tab#P#p5.MYI<br>2008-05-24 09:26        25,655,740 part_tab#P#p6.MYD<br>2008-05-24 09:26         8,181,760 part_tab#P#p6.MYI<br>2008-05-24 09:26        25,586,528 part_tab#P#p7.MYD<br>2008-05-24 09:26         8,160,256 part_tab#P#p7.MYI<br>2008-05-24 09:26        25,586,752 part_tab#P#p8.MYD<br>2008-05-24 09:26         8,160,256 part_tab#P#p8.MYI<br>2008-05-24 09:26        25,585,824 part_tab#P#p9.MYD<br>2008-05-24 09:26         8,159,232 part_tab#P#p9.MYI<br>2008-05-24 09:25             8,608 part_tab.frm<br>2008-05-24 09:25                68 part_tab.par</p>
+</li>
+<li><p>再次测试SQL性能</p>
+</li>
+</ul>
+<p>[sql]<br>mysql&gt; select count(<em>) from no_part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’;<br>+———-+<br>| count(</em>) |<br>+———-+<br>|   795181 |<br>+———-+<br>1 row in set (2.42 sec)   /<em> 为原来4.69 sec 的51%</em>/<br>[/sql]</p>
+<p>重启mysql ( net stop mysql, net start mysql)后，查询时间降为0.89 sec,几乎与分区表相同。</p>
+<p>[sql]<br>mysql&gt; select count(<em>) from part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1995-12-31’;<br>+———-+<br>| count(</em>) |<br>+———-+<br>|   795181 |<br>+———-+<br>1 row in set (0.86 sec)<br>[/sql]</p>
+<ul>
+<li>更进一步的试验<br><em>* 增加日期范围<br>[sql]<br>mysql&gt; select count(</em>) from no_part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1997-12-31’;<br>+———-+<br>| count(<em>) |<br>+———-+<br>| 2396524 |<br>+———-+<br>1 row in set (5.42 sec)<br>[/sql]<br>[sql]<br>mysql&gt; select count(</em>) from part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1997-12-31’;<br>+———-+<br>| count(*) |<br>+———-+<br>| 2396524 |<br>+———-+<br>1 row in set (2.63 sec)<br>[/sql]</li>
+</ul>
+<p><em>* 增加未索引字段查询<br>[sql]<br>mysql&gt; select count(</em>) from part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date<br>‘1996-12-31’ and c2=’hello’;<br>+———-+<br>| count(<em>) |<br>+———-+<br>|        0 |<br>+———-+<br>1 row in set (0.75 sec)<br>[/sql]<br>[sql]<br>mysql&gt; select count(</em>) from no_part_tab where c3 &gt; date ‘1995-01-01’ and c3 &lt; date ‘1996-12-31’ and c2=’hello’;<br>+———-+<br>| count(*) |<br>+———-+<br>|        0 |<br>+———-+<br>1 row in set (11.52 sec)<br>[/sql]</p>
+<p>= 初步结论 =</p>
+<ul>
+<li>分区和未分区占用文件空间大致相同 （数据和索引文件）</li>
+<li>如果查询语句中有未建立索引字段，分区时间远远优于未分区时间</li>
+<li>如果查询语句中字段建立了索引，分区和未分区的差别缩小，分区略优于未分区。</li>
+</ul>
+<p>= 最终结论 =</p>
+<ul>
+<li>对于大数据量，建议使用分区功能。</li>
+<li>去除不必要的字段</li>
+<li>根据手册， 增加myisam_max_sort_file_size 会增加分区性能</li>
+</ul>
+<p>[分区命令详解]</p>
+<p>= 分区例子 = </p>
+<ul>
+<li><p>RANGE 类型<br>[sql]<br>CREATE TABLE users (  </p>
+<pre><code>uid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,  
+name VARCHAR(30) NOT NULL DEFAULT &apos;&apos;,  
+email VARCHAR(30) NOT NULL DEFAULT &apos;&apos;  
+</code></pre><p>)<br>PARTITION BY RANGE (uid) (  </p>
+<pre><code>PARTITION p0 VALUES LESS THAN (3000000)  
+DATA DIRECTORY = &apos;/data0/data&apos;  
+INDEX DIRECTORY = &apos;/data1/idx&apos;,  
+
+PARTITION p1 VALUES LESS THAN (6000000)  
+DATA DIRECTORY = &apos;/data2/data&apos;  
+INDEX DIRECTORY = &apos;/data3/idx&apos;,  
+
+PARTITION p2 VALUES LESS THAN (9000000)  
+DATA DIRECTORY = &apos;/data4/data&apos;  
+INDEX DIRECTORY = &apos;/data5/idx&apos;,  
+
+PARTITION p3 VALUES LESS THAN MAXVALUE     DATA DIRECTORY = &apos;/data6/data&apos;   
+INDEX DIRECTORY = &apos;/data7/idx&apos;  
+</code></pre><p>);  [/sql]<br>在这里，将用户表分成4个分区，以每300万条记录为界限，每个分区都有自己独立的数据、索引文件的存放目录，与此同时，这些目录所在的物理磁盘分区可能也都是完全独立的，可以提高磁盘IO吞吐量。</p>
+</li>
+<li><p>LIST 类型<br>[sql]<br>CREATE TABLE category (<br>   cid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,<br>   name VARCHAR(30) NOT NULL DEFAULT ‘’<br>)<br>PARTITION BY LIST (cid) (<br>   PARTITION p0 VALUES IN (0,4,8,12)<br>   DATA DIRECTORY = ‘/data0/data’<br>   INDEX DIRECTORY = ‘/data1/idx’,  </p>
+<p>   PARTITION p1 VALUES IN (1,5,9,13)<br>   DATA DIRECTORY = ‘/data2/data’<br>   INDEX DIRECTORY = ‘/data3/idx’,  </p>
+<p>   PARTITION p2 VALUES IN (2,6,10,14)<br>   DATA DIRECTORY = ‘/data4/data’<br>   INDEX DIRECTORY = ‘/data5/idx’,  </p>
+<p>   PARTITION p3 VALUES IN (3,7,11,15)<br>   DATA DIRECTORY = ‘/data6/data’<br>   INDEX DIRECTORY = ‘/data7/idx’<br>);    [/sql]<br>分成4个区，数据文件和索引文件单独存放。</p>
+</li>
+<li><p>HASH 类型<br>[sql]<br>CREATE TABLE users (<br>   uid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,<br>   name VARCHAR(30) NOT NULL DEFAULT ‘’,<br>   email VARCHAR(30) NOT NULL DEFAULT ‘’<br>)<br>PARTITION BY HASH (uid) PARTITIONS 4 (<br>   PARTITION p0<br>   DATA DIRECTORY = ‘/data0/data’<br>   INDEX DIRECTORY = ‘/data1/idx’,  </p>
+<p>   PARTITION p1<br>   DATA DIRECTORY = ‘/data2/data’<br>   INDEX DIRECTORY = ‘/data3/idx’,  </p>
+<p>   PARTITION p2<br>   DATA DIRECTORY = ‘/data4/data’<br>   INDEX DIRECTORY = ‘/data5/idx’,  </p>
+<p>   PARTITION p3<br>   DATA DIRECTORY = ‘/data6/data’<br>   INDEX DIRECTORY = ‘/data7/idx’<br>);  [/sql]<br>分成4个区，数据文件和索引文件单独存放。</p>
+</li>
+</ul>
+<p>例子：<br>[sql]<br>CREATE TABLE ti2 (id INT, amount DECIMAL(7,2), tr_date DATE)<br>    ENGINE=myisam<br>    PARTITION BY HASH( MONTH(tr_date) )<br>    PARTITIONS 6;  </p>
+<p>CREATE PROCEDURE load_ti2()<br>       begin<br>    declare v int default 0;<br>    while v &lt; 80000<br>    do<br>        insert into ti2<br>        values (v,’3.14’,adddate(‘1995-01-01’,(rand(v)*3652) mod 365));<br>         set v = v + 1;<br>    end while;<br>    end<br>    //<br>[/sql]</p>
+<ul>
+<li><p>KEY 类型<br>[sql]<br>CREATE TABLE users (<br>   uid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,<br>   name VARCHAR(30) NOT NULL DEFAULT ‘’,<br>   email VARCHAR(30) NOT NULL DEFAULT ‘’<br>)<br>PARTITION BY KEY (uid) PARTITIONS 4 (<br>   PARTITION p0<br>   DATA DIRECTORY = ‘/data0/data’<br>   INDEX DIRECTORY = ‘/data1/idx’,  </p>
+<p>   PARTITION p1<br>   DATA DIRECTORY = ‘/data2/data’<br>   INDEX DIRECTORY = ‘/data3/idx’,  </p>
+<p>   PARTITION p2<br>   DATA DIRECTORY = ‘/data4/data’<br>   INDEX DIRECTORY = ‘/data5/idx’,  </p>
+<p>   PARTITION p3<br>   DATA DIRECTORY = ‘/data6/data’<br>   INDEX DIRECTORY = ‘/data7/idx’<br>); [/sql]<br>分成4个区，数据文件和索引文件单独存放。</p>
+</li>
+<li><p>子分区<br>子分区是针对 RANGE/LIST 类型的分区表中每个分区的再次分割。再次分割可以是 HASH/KEY 等类型。例如：<br>[sql]<br>CREATE TABLE users (<br>   uid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,<br>   name VARCHAR(30) NOT NULL DEFAULT ‘’,<br>   email VARCHAR(30) NOT NULL DEFAULT ‘’<br>)<br>PARTITION BY RANGE (uid) SUBPARTITION BY HASH (uid % 4) SUBPARTITIONS 2(<br>   PARTITION p0 VALUES LESS THAN (3000000)<br>   DATA DIRECTORY = ‘/data0/data’<br>   INDEX DIRECTORY = ‘/data1/idx’,  </p>
+<p>   PARTITION p1 VALUES LESS THAN (6000000)<br>   DATA DIRECTORY = ‘/data2/data’<br>   INDEX DIRECTORY = ‘/data3/idx’<br>);  [/sql]<br>对 RANGE 分区再次进行子分区划分，子分区采用 HASH 类型。<br>或者<br>[sql]<br>CREATE TABLE users (<br>   uid INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,<br>   name VARCHAR(30) NOT NULL DEFAULT ‘’,<br>   email VARCHAR(30) NOT NULL DEFAULT ‘’<br>)<br>PARTITION BY RANGE (uid) SUBPARTITION BY KEY(uid) SUBPARTITIONS 2(<br>   PARTITION p0 VALUES LESS THAN (3000000)<br>   DATA DIRECTORY = ‘/data0/data’<br>   INDEX DIRECTORY = ‘/data1/idx’,  </p>
+<p>   PARTITION p1 VALUES LESS THAN (6000000)<br>   DATA DIRECTORY = ‘/data2/data’<br>   INDEX DIRECTORY = ‘/data3/idx’<br>);  [/sql]<br>对 RANGE 分区再次进行子分区划分，子分区采用 KEY 类型。</p>
+</li>
+</ul>
+<p>= 分区管理 =</p>
+<pre><code>* 删除分区  
+</code></pre><p>[sql]<br>ALERT TABLE users DROP PARTITION p0;  [/sql]<br>      删除分区 p0。</p>
+<pre><code>* 重建分区
+      o RANGE 分区重建
+</code></pre><p>[sql]<br>ALTER TABLE users REORGANIZE PARTITION p0,p1 INTO (PARTITION p0 VALUES LESS THAN (6000000));  [/sql]<br>            将原来的 p0,p1 分区合并起来，放到新的 p0 分区中。<br>          o LIST 分区重建<br>[sql]<br>ALTER TABLE users REORGANIZE PARTITION p0,p1 INTO (PARTITION p0 VALUES IN(0,1,4,5,8,9,12,13));  [/sql]<br>            将原来的 p0,p1 分区合并起来，放到新的 p0 分区中。<br>          o HASH/KEY 分区重建<br>[sql]<br>ALTER TABLE users REORGANIZE PARTITION COALESCE PARTITION 2;  [/sql]<br>            用 REORGANIZE 方式重建分区的数量变成2，在这里数量只能减少不能增加。想要增加可以用 ADD PARTITION 方法。</p>
+<pre><code>* 新增分区
+      o 新增 RANGE 分区   
+</code></pre><p>[sql]<br>ALTER TABLE category ADD PARTITION (PARTITION p4 VALUES IN (16,17,18,19)<br>           DATA DIRECTORY = ‘/data8/data’<br>           INDEX DIRECTORY = ‘/data9/idx’);  [/sql]<br>            新增一个RANGE分区。<br>          o 新增 HASH/KEY 分区<br>[sql]<br>ALTER TABLE users ADD PARTITION PARTITIONS 8;  [/sql]<br>            将分区总数扩展到8个。</p>
+<p>[ 给已有的表加上分区 ]<br>[sql]<br>alter table results partition by RANGE (month(ttime))<br>(PARTITION p0 VALUES LESS THAN (1),<br>PARTITION p1 VALUES LESS THAN (2) , PARTITION p2 VALUES LESS THAN (3) ,<br>PARTITION p3 VALUES LESS THAN (4) , PARTITION p4 VALUES LESS THAN (5) ,<br>PARTITION p5 VALUES LESS THAN (6) , PARTITION p6 VALUES LESS THAN (7) ,<br>PARTITION p7 VALUES LESS THAN (8) , PARTITION p8 VALUES LESS THAN (9) ,<br>PARTITION p9 VALUES LESS THAN (10) , PARTITION p10 VALUES LESS THAN (11),<br>PARTITION p11 VALUES LESS THAN (12),<br>PARTITION P12 VALUES LESS THAN (13) );   [/sql]</p>
+<p>默认分区限制分区字段必须是主键（PRIMARY KEY)的一部分，为了去除此<br>限制：<br>[方法1] 使用ID<br>[sql]<br>mysql&gt; ALTER TABLE np_pk<br>    -&gt;     PARTITION BY HASH( TO_DAYS(added) )<br>    -&gt;     PARTITIONS 4;<br>ERROR 1503 (HY000): A PRIMARY KEY must include all columns in the table’s partitioning function<br>[/sql]<br>However, this statement using the id column for the partitioning column is valid, as shown here:</p>
+<p>[sql]<br>mysql&gt; ALTER TABLE np_pk<br>    -&gt;     PARTITION BY HASH(id)<br>    -&gt;     PARTITIONS 4;<br>Query OK, 0 rows affected (0.11 sec)<br>Records: 0 Duplicates: 0 Warnings: 0<br>[/sql]<br>[方法2] 将原有PK去掉生成新PK<br>[sql]<br>mysql&gt; alter table results drop PRIMARY KEY;<br>Query OK, 5374850 rows affected (7 min 4.05 sec)<br>Records: 5374850 Duplicates: 0 Warnings: 0<br>[/sql]<br>[sql]<br>mysql&gt; alter table results add PRIMARY KEY(id, ttime);<br>Query OK, 5374850 rows affected (6 min 14.86 sec)<br>Records: 5374850 Duplicates: 0 Warnings: 0<br>[/sql]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/Linux 面试/" itemprop="url">
+                  Linux 面试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-22T14:02:42+08:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/Linux 面试/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/Linux 面试/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/22/Linux 面试/" class="leancloud_visitors" data-flag-title="Linux 面试">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1. linux文件系统都有三个身份Owner, group, others， 每种身份都有r，w，x三种权限。<br>2. /etc/passwd 存有系统的用户信息，/etc/shadow存有用户的密码，/etc/group 存有组的情况。<br>3. 更改权限的三个命令：chmod, chgrp, chown<br>对于文件来说：r–读取文件内容；w–编辑、新增文件（不可删除）；x-可执行<br>umask 决定新建文件或文件夹的权限，显示的值为需要去掉的权限<br>对于目录来说：r–使用ls查看目录文件；w–创建、删除、移动、重命名文件；x-可使用cd切换目录<br>4. /sbin/service, /sbin/ifconfig默认状况下只有root用户才能直接使用<br>5.路径：. ， .. ，~<br>6. 目录有关的操作：cd，pwd，mkdir， rmdir<br>7.文件操作：ls，cp，rm，mv，touch<br>8.文件查阅：cat/tac， nl，more，less。head，tail<br>9.查看文件类型：file<br>10.查找脚本：which 查找文件名： whereis， locate， find<br>find -name -type -user -exec ls  {} \;<br>11. 添加用户useradd；用户组groupadd<br>用户查询：w/who 用户通讯：mesg，write，wall<br>批量添加用户和密码：useradd user；echo user | passwd –stdin user<br>12. 磁盘有关命令：df/du 查看磁盘； fdisk -l查看磁盘分区；fsck系统检查；mount挂载磁盘，新建目录，挂载磁盘分区；umount卸载磁盘<br>13. 打包 tar -czvf， 解压tar -xzvf<br>14.Vim编辑器使用<br>15.正则表达式和grep<br>16. awk，sed<br>17. Shell脚本<br>18.程序管理：<br>查看 进程 ps -ef | grep pname ps aux<br>后台运行&amp;<br>后台暂停：ctr+z<br>查看后台进程： jobs -l<br>恢复前台 fg %jobnumber<br>后台运行：bg %jobnumber<br>脱机运行：nohup<br>查看动态进程：top<br>强制杀死进程：kill -9 pid<br>19. 查看内存： free -m；查看内核：uname -a；跟踪网络 netstat -a -tlnp<br>20. /etc/init.d/<em> 系统启动脚本<br>     /etc/</em>  系统配置<br>     /var/lib/* 各服务产生的数据库<br>     service name start/stop/restart/status<br>     chkconfig –list –add 开机启动 防火墙 iptables<br>     /var/log 系统日志文件<br>21. 软件安装：rqm -ivh | -aq| -e ；yum install </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/vim下ctags使用/" itemprop="url">
+                  vim下ctags使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-22T14:01:23+08:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/vim下ctags使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/vim下ctags使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/22/vim下ctags使用/" class="leancloud_visitors" data-flag-title="vim下ctags使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1. cd to the root directory of your code:<br>2.Run Ctags recursively over the entire code to generate the tags file<br>ctags -R *<br>3. To search for a specific tag and open Vim to its definition, run the following command in your shell:<br>vim -t <tag><br>4. Or, open any Linux source file in Vim and use the following basic commands:<br>Ctrl-] Jump to the tag underneath the cursor<br>:ts <tag> <ret> Search for a particular tag<br>:tn Go to the next definition for the last tag<br>:tp Go to the previous definition for the last tag<br>:ts List all of the definitions of the last tag<br>Ctrl-t Jump back up in the tag stack<br>The first command is probably the one you will use most often: it jumps to the definition of the tag (function name, structure name, variable name, or pretty much anything) under the cursor. The second command can be used to search for any tag, regardless of the file that is currently opened. If there are multiple definitions/uses for a particular tag, the tn and tp commands can be used to scroll through them, and the ts command can be used to “search” a list for the definition you want (useful when there are dozens or hundreds of definitions for some commonly-used struct). Finally, the last command is used to jump back up in the tag stack to the location you initiated the previous tag search from.</ret></tag></tag></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/21/Ganglia 安装/" itemprop="url">
                   Ganglia 安装
                 </a>
@@ -1951,562 +2475,11 @@ void render(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, Http
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="url">
-                  RAID0、RAID1、RAID0+1、RAID5原理介绍
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-13T10:57:21+08:00" content="2015-04-13">
-              2015-04-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Storage/" itemprop="url" rel="index">
-                    <span itemprop="name">Storage</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" class="leancloud_visitors" data-flag-title="RAID0、RAID1、RAID0+1、RAID5原理介绍">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>RAID 0又称为Stripe或Striping，它代表了所有RAID级别中最高的存储性能。RAID 0提高存储性能的原理是把连续的数据分散到多个磁盘上存取，这样，系统有数据请求就可以被多个磁盘并行的执行，每个磁盘执行属于它自己的那部分数据请求。这种数据上的并行操作可以充分利用总线的带宽，显著提高磁盘整体存取性能<br>RAID 1又称为Mirror或Mirroring，它的宗旨是最大限度的保证用户数据的可用性和可修复性。 RAID 1的操作方式是把用户写入硬盘的数据百分之百地自动复制到另外一个硬盘上。由于对存储的数据进行百分之百的备份，在所有RAID级别中，RAID 1提供最高的数据安全保障。同样，由于数据的百分之百备份，备份数据占了总存储空间的一半，因而，Mirror的磁盘空间利用率低，存储成本高。<br>RAID 5 是一种存储性能、数据安全和存储成本兼顾的存储解决方案。RAID 5不对存储的数据进行备份，而是把数据和相对应的奇偶校验信息存储到组成RAID5的各个磁盘上，并且奇偶校验信息和相对应的数据分别存储于不同的磁盘上。当RAID5的一个磁盘数据发生损坏后，利用剩下的数据和相应的奇偶校验信息去恢复被损坏的数据。<br>RAID 5可以理解为是RAID 0和RAID 1的折衷方案。RAID 5可以为系统提供数据安全保障，但保障程度要比Mirror低而磁盘空间利用率要比Mirror高。RAID 5具有和RAID 0相近似的数据读取速度，只是多了一个奇偶校验信息，写入数据的速度比对单个磁盘进行写入操作稍慢。同时由于多个数据对应一个奇偶校验信息，RAID 5的磁盘空间利用率要比RAID 1高，存储成本相对较低。<br>在RAID 5中有“写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
-<p>RAID是通过磁盘阵列与数据条块化方法相结合, 以提高数据可用率的一种结构。IBM早于1970年就开始研究此项技术 。RAID 可分为RAID级别1到RAID级别6, 通常称为： RAID 0, RAID 1, RAID 2, RAID 3,RAID 4,RAID 5,RAID6。每一个RAID级别都有自己的强项和弱项. “奇偶校验”定义为用户数据的冗余信息, 当硬盘失效时, 可以重新产生数据。</p>
-<p>RAID 0： RAID 0 并不是真正的RAID结构, 没有数据冗余。 RAID 0 连续地分割数据并并行地读/写于多个磁盘上。 因此具有很高的数据传输率。 但RAID 0在提高性能的同时,并没有提供数据可靠性,如果一个磁盘失效, 将影响整个数据.因此RAID 0 不可应用于需要数据高可用性的关键应用。</p>
-<p>RAID 1： RAID 1通过数据镜像实现数据冗余, 在两对分离的磁盘上产生互为备份的数据。 RAID 1可以提高读的性能,当原始数据繁忙时, 可直接从镜像拷贝中读取数据.RAID 1是磁盘阵列中费用最高的, 但提供了最高的数据可用率。当一个磁盘失效, 系统可以自动地交换到镜像磁盘上, 而不需要重组失效的数据。RAID 2：从概念上讲, RAID 2 同RAID 3类似, 两者都是将数据条块化分布于不同的硬盘上, 条块单位为位或字节。然而RAID 2 使用称为”加重平均纠错码”的编码技术来提供错误检查及恢复。 这种编码技术需要多个磁盘存放检查及恢复信息, 使得RAID 2技术实施更复杂。 因此,在商业环境中很少使用。</p>
-<p>RAID 3：不同于RAID 2, RAID 3使用单块磁盘存放奇偶校验信息。 如果一块磁盘失效, 奇偶盘及其他数据盘可以重新产生数据。 如果奇偶盘失效,则不影响数据使用.RAID 3对于大量的连续数据可提供很好的传输率, 但对于随机数据, 奇偶盘会成为写操作的瓶颈。</p>
-<p>RAID 4：同RAID 2, RAID 3一样, RAID 4, RAID 5也同样将数据条块化并分布于不同的磁盘上, 但条块单位为块或记录. RAID 4使用一块磁盘作为奇偶校验盘, 每次写操作都需要访问奇偶盘, 成为写操作的瓶颈。 在商业应用中很少使用。</p>
-<p>RAID 5：RAID 5没有单独指定的奇偶盘, 而是交叉地存取数据及奇偶校验信息于所有磁盘上。 在RAID5 上, 读/写指针可同时对阵列设备进行操作, 提供了更高的数据流量。 RAID 5更适合于小数据块,随机读写的数据。RAID 3与RAID 5相比, 重要的区别在于RAID 3每进行一次数据传输,需涉及到所有的阵列盘。而对于RAID 5来说, 大部分数据传输只对一块磁盘操作, 可进行并行操作。在RAID 5中有”写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
-<p>RAID 6：RAID 6 与RAID 5相比,增加了第二个独立的奇偶校验信息块。两个独立的奇偶系统使用不同的算法, 数据的可靠性非常高。 即使两块磁盘同时失效,也不会影响数据的使用。 但需要分配给奇偶校验信息更大的磁盘空间,相对于RAID 5有更大的“写损失”。 RAID 6 的写性能非常差, 较差的性能和复杂的实施使得RAID 6很少使用。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/13/关于java字节码框架ASM的学习'/" itemprop="url">
-                  关于java字节码框架ASM的学习
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-13T10:29:17+08:00" content="2015-04-13">
-              2015-04-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/13/关于java字节码框架ASM的学习'/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/关于java字节码框架ASM的学习'/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/13/关于java字节码框架ASM的学习'/" class="leancloud_visitors" data-flag-title="关于java字节码框架ASM的学习">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一、什么是ASM<br>　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变类行为，分析类信息，甚至能够根据用户要求生成新类。</p>
-<p>　　使用ASM框架需要导入asm的jar包，下载链接：<a href="http://files.cnblogs.com/liuling/asm-3.2.rar" target="_blank" rel="external">asm-3.2.jar</a>。<br>　　二、如何使用ASM<br>　　ASM框架中的核心类有以下几个：<br>　　①  ClassReader:该类用来解析编译过的class字节码文件。<br>　　②  ClassWriter:该类用来重新构建编译后的类，比如说修改类名、属性以及方法，甚至可以生成新的类的字节码文件。<br>　　③  ClassAdapter:该类也实现了ClassVisitor接口，它将对它的方法调用委托给另一个ClassVisitor对象。<br>　　示例1.通过asm生成类的字节码<br>[java]<br>package com.asm3;</p>
-<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
-<p>import org.objectweb.asm.ClassWriter;<br>import org.objectweb.asm.Opcodes;</p>
-<p>/**</p>
-<ul>
-<li>通过asm生成类的字节码</li>
-<li><p>@author Administrator<br><em>
-</em>/<br>public class GeneratorClass {</p>
-<p> public static void main(String[] args) throws IOException {</p>
-<pre><code>//生成一个类只需要ClassWriter组件即可
-ClassWriter cw = new ClassWriter(0);
-//通过visit方法确定类的头部信息
-cw.visit(Opcodes.V1_5, Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT+Opcodes.ACC_INTERFACE,
-        &amp;quot;com/asm3/Comparable&amp;quot;, null, &amp;quot;java/lang/Object&amp;quot;, new String[]{&amp;quot;com/asm3/Mesurable&amp;quot;});
-//定义类的属性
-cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
-        &amp;quot;LESS&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(-1)).visitEnd();
-cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
-        &amp;quot;EQUAL&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(0)).visitEnd();
-cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
-        &amp;quot;GREATER&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(1)).visitEnd();
-//定义类的方法
-cw.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT, &amp;quot;compareTo&amp;quot;,
-        &amp;quot;(Ljava/lang/Object;)I&amp;quot;, null, null).visitEnd();
-cw.visitEnd(); //使cw类已经完成
-//将cw转换成字节数组写到文件里面去
-byte[] data = cw.toByteArray();
-File file = new File(&amp;quot;D://Comparable.class&amp;quot;);
-FileOutputStream fout = new FileOutputStream(file);
-fout.write(data);
-fout.close();
-</code></pre><p> }<br>}<br>[/java]</p>
-</li>
-</ul>
-<p>　生成一个类的字节码文件只需要用到ClassWriter类即可，生成Comparable.class后用javap指令对其进行反编译：javap -c Comparable.class &gt;test.txt  ,编译后的结果如下<br>[java]<br>public interface com.asm3.Comparable extends com.asm3.Mesurable {<br>  public static final int LESS;</p>
-<p>  public static final int EQUAL;</p>
-<p>  public static final int GREATER;</p>
-<p>  public abstract int compareTo(java.lang.Object);<br>}<br>[/java]</p>
-<p>　　示例2.修改类的字节码文件<br>[java]<br>package com.asm5;</p>
-<p>public class C {<br>    public void m() throws InterruptedException{<br>        Thread.sleep(100);<br>    }<br>}<br>[/java]<br>将C.java类的内容改为如下：<br>[java]<br>package com.asm5;</p>
-<p>public class C {<br>    public static long timer;<br>    public void m() throws InterruptedException{<br>        timer -= System.currentTimeMillis();<br>        Thread.sleep(100);<br>        timer += System.currentTimeMillis();<br>    }<br>}<br>[/java]<br>　为了弄清楚ASM是如何实现的，我们先编译这两个类，然后比对它们的TraceClassVisitor的输出，我们可以发现如下的不同（粗体表示）</p>
-<p><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LSUB<br>PUTSTATIC C.timer : J</strong><br>LDC 100<br>INVOKESTATIC java/lang/Thread.sleep(J)V<br><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LADD<br>PUTSTATIC C.timer : J</strong><br>RETURN<br>MAXSTACK=4<br>MAXLOCALS=1</p>
-<p>　　通过比对上面的指令，我们可以发现必须在m()方法的最前面增加四条指令，在RETURN指令前也增加四条指令，同时这四条必须位于xRETURN和ATHROW之前，因为这些指令都会结束方法的执行。</p>
-<p>具体代码如下：</p>
-<p>AddTimeClassAdapter.java<br>[java]<br>package com.asm5;</p>
-<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassVisitor;<br>import org.objectweb.asm.FieldVisitor;<br>import org.objectweb.asm.MethodAdapter;<br>import org.objectweb.asm.MethodVisitor;<br>import org.objectweb.asm.Opcodes;</p>
-<p>public class AddTimeClassAdapter extends ClassAdapter {<br>    private String owner;<br>    private boolean isInterface;<br>    public AddTimeClassAdapter(ClassVisitor cv) {<br>        super(cv);<br>    }<br>    @Override<br>    public void visit(int version, int access, String name, String signature,<br>            String superName, String[] interfaces) {<br>        cv.visit(version, access, name, signature, superName, interfaces);<br>        owner = name;<br>        isInterface = (access &amp; Opcodes.ACC_INTERFACE) != 0;<br>    }<br>    @Override<br>    public MethodVisitor visitMethod(int access, String name, String desc,<br>            String signature, String[] exceptions) {<br>        MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);<br>        if(!name.equals(&quot;&lt;init&gt;&quot;) &amp;&amp; !isInterface &amp;&amp; mv!=null){<br>            //为方法添加计时功能<br>            mv = new AddTimeMethodAdapter(mv);<br>        }<br>        return mv;<br>    }<br>    @Override<br>    public void visitEnd() {<br>        //添加字段<br>        if(!isInterface){<br>            FieldVisitor fv = cv.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC, &quot;timer&quot;, &quot;J&quot;, null, null);<br>            if(fv!=null){<br>                fv.visitEnd();<br>            }<br>        }<br>        cv.visitEnd();<br>    }</p>
-<pre><code>class AddTimeMethodAdapter extends MethodAdapter{
-    public AddTimeMethodAdapter(MethodVisitor mv) {
-        super(mv);
-    }
-    @Override
-    public void visitCode() {
-        mv.visitCode();
-        mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
-        mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
-        mv.visitInsn(Opcodes.LSUB);
-        mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
-    }
-    @Override
-    public void visitInsn(int opcode) {
-        if((opcode&amp;gt;=Opcodes.IRETURN &amp;amp;&amp;amp; opcode&amp;lt;=Opcodes.RETURN) || opcode==Opcodes.ATHROW){
-            mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
-            mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
-            mv.visitInsn(Opcodes.LADD);
-            mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
-        }
-        mv.visitInsn(opcode);
-    }
-    @Override
-    public void visitMaxs(int maxStack, int maxLocal) {
-        mv.visitMaxs(maxStack+4, maxLocal);
-    }
-}
-</code></pre><p>}<br>[/java]<br>Generator.java<br>[java]<br>package com.asm5;</p>
-<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
-<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassReader;<br>import org.objectweb.asm.ClassWriter;</p>
-<p>public class Generator {</p>
-<pre><code>public static void main(String[] args){
-    try {
-        ClassReader cr = new ClassReader(&amp;quot;com/asm5/C&amp;quot;);
-        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        ClassAdapter classAdapter = new AddTimeClassAdapter(cw);
-        //使给定的访问者访问Java类的ClassReader
-        cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
-        byte[] data = cw.toByteArray();
-        File file = new File(System.getProperty(&amp;quot;user.dir&amp;quot;) + &amp;quot;\\WebRoot\\WEB-INF\\classes\\com\\asm5\\C.class&amp;quot;);
-        FileOutputStream fout = new FileOutputStream(file);
-        fout.write(data);
-        fout.close();
-        System.out.println(&amp;quot;success!&amp;quot;);
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-</code></pre><p>}<br>[/java]<br>下面是一个测试类：<br>[java]<br>package com.asm5;</p>
-<p>public class Test {<br>    public static void main(String[] args) throws InterruptedException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {<br>        C c = new C();<br>        c.m();<br>        Class cc = c.getClass();<br>        System.out.println(cc.getField(&quot;timer&quot;).get(c));<br>    }<br>}<br>[/java]<br>输出结果为：100</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/" itemprop="url">
-                  [转]Spring MVC源码分析——初始化过程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-08T16:02:03+08:00" content="2015-04-08">
-              2015-04-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/08/[转]Spring MVC源码分析——初始化过程/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/08/[转]Spring MVC源码分析——初始化过程/" class="leancloud_visitors" data-flag-title="[转]Spring MVC源码分析——初始化过程">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>转载自<a href="http://www.jmatrix.org/" target="_blank" rel="external">jmatrix</a><br>本文链接地址: <a href="http://www.jmatrix.org/spring/453.html" target="_blank" rel="external">Spring MVC源码分析——初始化过程</a></p>
-<p>1.<strong>概述</strong></p>
-<p>对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutionChain，其中包含了具体的处理对象handler（也即我们编程时写的controller）以及一系列的拦截器interceptors，此时DispatcherServlet会根据返回的HandlerExecutionChain中的handler找到支持这一处理器类型的适配器（handlerAdapter），在处理器适配器中最终会去调用控制器的请求响应方法并返回结果视图（ModelAndView），得到结果视图后，通过render方法完成结果的显示。</p>
-<p>HanderMapping的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/1.jpg" alt=""></p>
-<p>HandlerAdapter的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/2.jpg" alt=""></p>
-<p>同样的视图解析器ViewResolver针对不同的输出格式也有一系列的实现类，具体可自己看。</p>
-<p>2.<strong>实现分析</strong><br>以我自己的一个web项目中spring mvc的配置为例：<br>[xml]<br>&lt;context:component-scan base-package=&quot;cn.ds.log&quot; /&gt;<br>&lt;bean id=&quot;defaultHandlerMapping&quot;<br>    class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot; /&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean id=&quot;viewResolver&quot;<br>    class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name=&quot;prefix&quot;&gt;<br>        &lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;<br>    &lt;/property&gt;<br>    &lt;property name=&quot;suffix&quot;&gt;<br>        &lt;value&gt;.jsp&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/bean&gt;<br>[/xml]<br>这里因为是采用全注解的方式，所以先通过context:component-scan配置让spring自定扫描的包路径，接着配置handlerMapping、handlerAdapter及ViewResolver，几乎包含了SpringMVC的配置中需要涉及的所有元素。后面需要涉及具体的HanderMapping等的实现时，将以这里配置中的实现为例进行分析，其它的大家“同理可解”。</p>
-<p>2.1 <strong>Spring MVC初始化流程</strong><br>DispatcherServlet的继承体系如：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/3.jpg" alt=""><br>看到它们继承自HttpServlet，你就知道初始化过程应该是从init方法开始了，整个初始化的流程为：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/4.jpg" alt=""></p>
-<p>很简单是么？我也觉得是，至少从上面的时序图看来是这样，不过前提是你已经很了解Spring IOC的实现原理了。上面的时序图中，在5的initStragegies()中除了调用6,7的函数外，还有几个类似的初始化函数，因为这里主要是为了理解整个的流程，所以我都省略了。上面流程可能需要分析的地方就在于3,4步，我们看看initWebApplicationContext函数的实现：<br>[java]<br>protected WebApplicationContext initWebApplicationContext() {<br>        WebApplicationContext rootContext =<br>                WebApplicationContextUtils.getWebApplicationContext(getServletContext());<br>        WebApplicationContext wac = null;</p>
-<pre><code>    if (this.webApplicationContext != null) {
-        // A context instance was injected at construction time -&amp;amp;gt; use it
-        wac = this.webApplicationContext;
-        if (wac instanceof ConfigurableWebApplicationContext) {
-            ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
-            if (!cwac.isActive()) {
-                ……
-                configureAndRefreshWebApplicationContext(cwac);
-            }
-        }
-    }
-    if (wac == null) {
-        wac = findWebApplicationContext();
-    }
-    if (wac == null) {
-        // No context instance is defined for this servlet -&amp;amp;gt; create a local one
-        wac = createWebApplicationContext(rootContext);
-    }
-
-    if (!this.refreshEventReceived) {
-        // Either the context is not a ConfigurableApplicationContext with refresh
-        // support or the context injected at construction time had already been
-        // refreshed -&amp;amp;gt; trigger initial onRefresh manually here.
-        onRefresh(wac);
-    }
-
-    if (this.publishContext) {
-        ……
-    }
-
-    return wac;
-}
-</code></pre><p>[/java]<br>看起来貌似有点复杂，其实理解了IOC容器的实现原理（可以看下“spring ioc源码分析”一文，⊙﹏⊙多年前弄的，这次暑假实习时又以读书报告的形式写了，感觉当年肿么可以写得这么乱……也是一种成长，不打算修改）就很简单，函数一开始会去获取WebApplicationContext对象，这个对象在ContextLoaderListener初始化IOC容器时就已经把它set到ServletContext的属性中，而且它也正是ConfigurableWebApplicationContext的实例，第一个if语句其实就是如果此时SpringIOC容器没有初始化的话就在这里启动IOC容器的初始化过程，因为看“省略（1）”中的代码你就知道，它会在这里调用refresh函数，“世人”都知道这就是IOC容器启动的入口，这里会解析配置文件springmvc-servlet.xml。</p>
-<p>这里最终要执行onRefresh()，而这个就是SpringMVC初始化的入口。</p>
-<p>（注：其实这里也可以配置log4j，通过其打印的info信息来看IOC与MVC的初始化顺序）</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2547,7 +2520,7 @@ fout.close();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2564,7 +2537,7 @@ fout.close();
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

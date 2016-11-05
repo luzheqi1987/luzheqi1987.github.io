@@ -301,6 +301,450 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/15/2014-01-15-练习2.2-练习2.10/" itemprop="url">
+                  练习2.2-练习2.10
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-15T21:29:00+08:00" content="2014-01-15">
+              2014-01-15
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/15/2014-01-15-练习2.2-练习2.10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/15/2014-01-15-练习2.2-练习2.10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/15/2014-01-15-练习2.2-练习2.10/" class="leancloud_visitors" data-flag-title="练习2.2-练习2.10">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/'>练习2.2-练习2.10</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (make-segment start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-segment seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-segment seg)</div><div class="line">  (cdr seg))</div><div class="line"></div><div class="line">(define (make-point x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (x-point p)</div><div class="line">  (car p))</div><div class="line"></div><div class="line">(define (y-point p)</div><div class="line">  (cdr p))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (midpoint-segment seg)</div><div class="line">  (make-point (/ (+ (x-point (start-segment seg))</div><div class="line">		    (x-point (end-segment seg))) 2)</div><div class="line">	      (/ (+ (y-point (start-segment seg))</div><div class="line">		    (y-point (end-segment seg))) 2)))</div></pre></td></tr></table></figure>
+<p>2.练习2.3首次定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-rect start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-rect seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-rect seg)</div><div class="line">  (cdr seg))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (width rect)</div><div class="line">  (abs (- (y-point (end-rect rect))</div><div class="line">	  (y-point (start-rect rect)))))</div><div class="line"></div><div class="line">(define (length rect)</div><div class="line">  (abs (- (x-point (end-rect rect))</div><div class="line">	  (x-point (start-rect rect)))))</div><div class="line"></div><div class="line">(define (girth rect)</div><div class="line">  (* (+ (width rect)</div><div class="line">	(length rect))</div><div class="line">     2))</div><div class="line"></div><div class="line">(define (area rect)</div><div class="line">  (* (width rect)</div><div class="line">     (length rect)))</div></pre></td></tr></table></figure>
+<p>二次定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (make-rect start length width)</div><div class="line">  (cons start</div><div class="line">	(cons length width)))</div><div class="line"></div><div class="line">(define (start-rect seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-rect seg)</div><div class="line">  (cons (+ (x-point (start-rect seg))</div><div class="line">	   (car (cdr seg)))</div><div class="line">	(+ (y-point (start-rect seg))</div><div class="line">	   (cdr (cdr seg)))))</div></pre></td></tr></table></figure>
+<p>3.练习2.4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (cons x y)</div><div class="line">  (lambda (m) (m x y)))</div><div class="line"></div><div class="line">(define (car z)</div><div class="line">  (z (lambda (p q) p)))</div><div class="line"></div><div class="line">(define (cdr z)</div><div class="line">  (z (lambda (p q) q)))</div></pre></td></tr></table></figure>
+<p>4.练习2.5</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (cons a b)</div><div class="line">  (* (pow 2 a)</div><div class="line">     (pow 3 b)))</div><div class="line"></div><div class="line">(define (car c)</div><div class="line">  (define (iter n result)</div><div class="line">    (if (not (= (remainder n 2) 0))</div><div class="line">	result</div><div class="line">	(iter (/ n 2) (+ result 1))))</div><div class="line">  (iter c 0))</div><div class="line"></div><div class="line">(define (cdr c)</div><div class="line">  (define (iter n result)</div><div class="line">    (if (not (= (remainder n 3) 0))</div><div class="line">	result</div><div class="line">	(iter (/ n 3) (+ result 1))))</div><div class="line">  (iter c 0))</div></pre></td></tr></table></figure>
+<p>5.练习2.6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define one</div><div class="line">  (lambda (f) (lambda (x) (f x))))</div><div class="line"></div><div class="line">(define two</div><div class="line">  (lambda (f) (lambda (x) (f (f x)))))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(define (add a b)</div><div class="line">  (lambda (f) (lambda (x) ((b f) ((a f) x)))))</div></pre></td></tr></table></figure>
+<p>6.练习2.7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-interval x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (upper-bound c)</div><div class="line">  (cdr c))</div><div class="line"></div><div class="line">(define (lower-bound c)</div><div class="line">  (car c))</div></pre></td></tr></table></figure>
+<p>7.练习2.8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sub-interval x y)</div><div class="line">  (let ((a (- (lower-bound x) (lower-bound y)))</div><div class="line">	(b (- (upper-bound x) (upper-bound y))))</div><div class="line">    (make-interval (min a b)</div><div class="line">		   (max a b))))</div></pre></td></tr></table></figure>
+<p>8.练习2.9</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (width-interval a)</div><div class="line">  (/ (- (upper-bound a)</div><div class="line">	(lower-bound a))</div><div class="line">     2))</div></pre></td></tr></table></figure>
+<p>9.练习2.10</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (div-interval x y)</div><div class="line">  (if (and (&lt;= (lower-bound y) 0) (&gt;= (upper-bound y) 0))</div><div class="line">      (error &quot;ERROR!!!&quot;)</div><div class="line">      (mul-interval x</div><div class="line">		       (make-interval (/ 1.0 (upper-bound y))</div><div class="line">				      (/ 1.0 (lower-bound y))))))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/14/2014-01-14-练习2.1/" itemprop="url">
+                  练习2.1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-14T22:59:00+08:00" content="2014-01-14">
+              2014-01-14
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/14/2014-01-14-练习2.1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/14/2014-01-14-练习2.1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/14/2014-01-14-练习2.1/" class="leancloud_visitors" data-flag-title="练习2.1">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/'>练习2.1</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习2.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (check-pos-neg a b)</div><div class="line">  (or (and (not (&lt; a 0)) (&gt; b 0))</div><div class="line">      (and (not (&gt; a 0)) (&lt; b 0))))</div><div class="line"></div><div class="line">(define (make-rat n d)</div><div class="line">  (let ((g (gcd (abs n) (abs d)))</div><div class="line">	(posi (check-pos-neg n d)))</div><div class="line">    (cons (/ (if posi</div><div class="line">		 (abs n)</div><div class="line">		 (- (abs n)))</div><div class="line">	     g)</div><div class="line">	  (/ (abs d) g))))</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/13/2014-01-13-练习1.40-练习1.46/" itemprop="url">
+                  练习1.40-练习1.46
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-13T21:01:00+08:00" content="2014-01-13">
+              2014-01-13
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/13/2014-01-13-练习1.40-练习1.46/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/13/2014-01-13-练习1.40-练习1.46/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/13/2014-01-13-练习1.40-练习1.46/" class="leancloud_visitors" data-flag-title="练习1.40-练习1.46">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/'>练习1.40-练习1.46</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习1.40</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (cubic a b c)</div><div class="line">  (define (cube x)</div><div class="line">    (* x x x))</div><div class="line">  (lambda (x)</div><div class="line">    (+ (cube x)</div><div class="line">       (* a (square x))</div><div class="line">       (* b x)</div><div class="line">       c)))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (newtons-method g guess)</div><div class="line">  (fixed-point (newton-transform g) guess))</div><div class="line"></div><div class="line">(newtons-method (cubic 1 0 0) 1)</div></pre></td></tr></table></figure>
+<p>2.练习1.41</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (double f)</div><div class="line">  (lambda (x) (f (f x))))</div><div class="line"></div><div class="line">(((double (double double)) (lambda (x) (+ x 1))) 5)</div></pre></td></tr></table></figure>
+<p>结果是21，真的很不想解释。(double double)展开是(f (f  (f (f x))))<br>(double (double double))展开是(f’ (f‘ (f’ (f‘ x)))))))，每个f‘为(f (f  (f (f x))))，一共是16个f，所以结果是5+16=21<br>3.练习1.42</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(define (compose f g)</div><div class="line">  (lambda (x) (f (g x))))</div></pre></td></tr></table></figure>
+<p>4.练习1.43</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (repeated f n)</div><div class="line">  (if (= n 1)</div><div class="line">      (lambda (x) (f x))</div><div class="line">      (lambda (x) (f ((repeated f (- n 1)) x)))))</div></pre></td></tr></table></figure>
+<p>5.练习1.44这个有点儿直接了，没有简化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (smooth f)</div><div class="line">  (let ((dx 0.0000001))</div><div class="line">    (lambda (x) (/</div><div class="line">		 (+</div><div class="line">		  (f (- x dx))</div><div class="line">		  (f x)</div><div class="line">		  (f (+ x dx)))</div><div class="line">		 3))))</div><div class="line"></div><div class="line">(((repeated smooth 6) square) 2)</div></pre></td></tr></table></figure>
+<p>6.练习1.45也是没有简化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (average-dump-time n)</div><div class="line">  (floor (/ (log n) (log 2))))</div><div class="line"></div><div class="line">(define (cifanggen x n)</div><div class="line">  (define (product term a next b)</div><div class="line">    (if (&gt; a b)</div><div class="line">	1</div><div class="line">	(* (term a)</div><div class="line">	   (product term (next a) next b)))) </div><div class="line">  (define (cifang x n)</div><div class="line">    (product (lambda (i) x)</div><div class="line">	     1</div><div class="line">	     (lambda (i) (+ i 1))</div><div class="line">	     n))</div><div class="line">  (fixed-point ((repeated average-dump (average-dump-time n)) (lambda (i) (/ x (cifang i (- n 1)))))</div><div class="line">	       n))</div></pre></td></tr></table></figure>
+<p>7.练习1.46<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (iterative-improve good-enough? improve)</div><div class="line">   (lambda (a) (if (good-enough? a (improve a))</div><div class="line">		   (improve a)</div><div class="line">		   ((iterative-improve good-enough? improve) (improve a)))))</div><div class="line"></div><div class="line">(define (fixed-point f guess)</div><div class="line">  (define (good-enough1? a b)</div><div class="line">    (let ((tolerance 0.000001))</div><div class="line">      (&lt; (abs (- a b)) tolerance)))</div><div class="line">  ((iterative-improve good-enough1? f) guess))</div><div class="line"></div><div class="line">(define (sqrt n)</div><div class="line">  (fixed-point (lambda (y) (/ (+ y (/ n y)) 2))</div><div class="line">	       1.0))</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/11/2014-01-11-练习1.35-练习1-38/" itemprop="url">
                   练习1.35-练习1-38
                 </a>
@@ -1310,421 +1754,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/04/Emacs 配置之查找是否有“＊scheme＊”窗口/" itemprop="url">
-                  Emacs 配置之查找是否有“＊scheme＊”窗口
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-04T17:14:00+08:00" content="2014-01-04">
-              2014-01-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Emacs/" itemprop="url" rel="index">
-                    <span itemprop="name">Emacs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/04/Emacs 配置之查找是否有“＊scheme＊”窗口/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/04/Emacs 配置之查找是否有“＊scheme＊”窗口/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/04/Emacs 配置之查找是否有“＊scheme＊”窗口/" class="leancloud_visitors" data-flag-title="Emacs 配置之查找是否有“＊scheme＊”窗口">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近终于下定决心学习一下lisp，打算从SICP开始吧。<br>编辑器打算采用Emacs，原因是它是用C和Emacs Lisp（Lisp的一种方言）编写的程序。<br>Emacs还真的是难学啊，在掌握了基本（基本）的操作后，开始配置Emacs的环境，参考的很多网上的一些代码，就不多说了。<br>这里要说的是我在借鉴了大牛王垠的配置后，在使用<f5><f6>的时候会报一个找不到find函数的的错误，源代码如下：</f6></f5></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">(defun scheme-split-window ()</div><div class="line">  (cond</div><div class="line">   ((= 1 (count-windows))</div><div class="line">    (delete-other-windows)</div><div class="line">    (split-window-vertically (floor (* 0.68 (window-height))))</div><div class="line">    (other-window 1)</div><div class="line">    (switch-to-buffer &quot;*scheme*&quot;)</div><div class="line">    (other-window 1))</div><div class="line">   ((not (find &quot;*scheme*&quot;</div><div class="line">               (mapcar (lambda (w) (buffer-name (window-buffer w)))</div><div class="line">                       (window-list))</div><div class="line">               :test &apos;equal))</div><div class="line">    (other-window 1)</div><div class="line">    (switch-to-buffer &quot;*scheme*&quot;)</div><div class="line">    (other-window -1))))</div><div class="line"></div><div class="line"></div><div class="line">(defun scheme-send-last-sexp-split-window ()</div><div class="line">  (interactive)</div><div class="line">  (scheme-split-window)</div><div class="line">  (scheme-send-last-sexp))</div><div class="line"></div><div class="line"></div><div class="line">(defun scheme-send-definition-split-window ()</div><div class="line">  (interactive)</div><div class="line">  (scheme-split-window)</div><div class="line">  (scheme-send-definition))</div><div class="line"></div><div class="line">(add-hook &apos;scheme-mode-hook</div><div class="line">  (lambda ()</div><div class="line">    (paredit-mode 1)</div><div class="line">    (define-key scheme-mode-map (kbd &quot;&lt;f5&gt;&quot;) &apos;scheme-send-last-sexp-split-window)</div><div class="line">    (define-key scheme-mode-map (kbd &quot;&lt;f6&gt;&quot;) &apos;scheme-send-definition-split-window)))</div></pre></td></tr></table></figure>
-<p>问题就出在了schem-split-window函数的find语句，不知道为什么在我的电脑上不好使。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure></p>
-<p>但是我的心里不爽，十分想要把这个函数搞定，于是在完全对Lisp没有学习的我进行了不断的尝试。下面是结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(defun check-scheme()</div><div class="line">   (let ((res 21))</div><div class="line">   (dolist (x (mapcar(lambda (w) (setq a (buffer-name (window-buffer w)))) (window-list))) (when (string= &quot;*scheme*&quot; x)(setq res 100)))</div><div class="line">   (= res 100)</div><div class="line">   ))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(defun scheme-split-window ()</div><div class="line">  (cond</div><div class="line">   ((= 1 (count-windows))</div><div class="line">    (delete-other-windows)</div><div class="line">    (split-window-vertically (floor (* 0.68 (window-height))))</div><div class="line">    (other-window 1)</div><div class="line">    (switch-to-buffer &quot;*scheme*&quot;)</div><div class="line">    (other-window 1))</div><div class="line">    ((not (check-scheme))</div><div class="line">    (other-window 1)</div><div class="line">    (switch-to-buffer &quot;*scheme*&quot;)</div><div class="line">    (other-window -1))))</div></pre></td></tr></table></figure>
-<p>可以看到，主要使定义了一个check-scheme的函数，这个函数虽然是我写的不过我也是对它一知半解，真是汗颜。下面应该开始努力学习SICP了，这可是个持久战啊，加油吧。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/03/2014-01-03-Emacs安装和设置tabbar/" itemprop="url">
-                  [转]Emacs安装和设置tabbar
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-03T00:09:00+08:00" content="2014-01-03">
-              2014-01-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Emacs/" itemprop="url" rel="index">
-                    <span itemprop="name">Emacs</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/03/2014-01-03-Emacs安装和设置tabbar/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/03/2014-01-03-Emacs安装和设置tabbar/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/03/2014-01-03-Emacs安装和设置tabbar/" class="leancloud_visitors" data-flag-title="[转]Emacs安装和设置tabbar">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://blog.csdn.net/CherylNatsu/article/details/6204737" target="_blank" rel="external">点击打开链接</a></p>
-<p>Emacs是用Buffer来组织编辑区域的，一个Buffer就代表一个文件或者一个临时编辑区域，我们可以用一些函数来切换到前一个或后一个Buffer，也可以列出所有的Buffer来进行选择。一些现代编辑器都支持一种特性，那就是Tab，用标签来列出所有的文件并可以方便地在文件之间切换，直观而方便。万能的Emacs当然也可以做到这个。<br>增加标签特性需要tabbar.el，emacswiki上可以下载到这个插件：<br><a href="http://www.emacswiki.org/emacs/tabbar.el" target="_blank" rel="external">http://www.emacswiki.org/emacs/tabbar.el</a><br>放在任意目录并把这个目录添加到载入列表中，比如我们把tabbar.el放在~/.mylisp/下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">;;main plugin path  </div><div class="line">(add-to-list <span class="string">'load-path "~/.mylisp/")</span></div></pre></td></tr></table></figure></p>
-<p>然后require这个插件并打开tabbar模式：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(require 'tabbar)</div><div class="line">(tabbar-mode 1)</div></pre></td></tr></table></figure></p>
-<p>进行一些快捷键设置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(global-set-key [(meta j)] 'tabbar-backward)</div><div class="line">(global-set-key [(meta k)] 'tabbar-forward)</div></pre></td></tr></table></figure></p>
-<p>重新启动Emacs或eval-buffer就可以看到tabbar了：<br><img src="http://hi.csdn.net/attachment/201102/24/0_129852224272P1.gif" alt=""></p>
-<p>默认的tabbar样式很难看，而且字体太小，不容易看清楚，我们接下来需要做的就是修改它的样式和配色。<br>下面使用一段网友菩提老祖给出的代码：<br>在.emacs下加入:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">;; 设置tabbar外观  </div><div class="line">;; 设置默认主题: 字体, 背景和前景颜色，大小  </div><div class="line">(set-face-attribute 'tabbar-default-face nil  </div><div class="line">                    :family "DejaVu Sans Mono"  </div><div class="line">                    :background "gray80"  </div><div class="line">                    :foreground "gray30"  </div><div class="line">                    :height 1.0  </div><div class="line">                    )  </div><div class="line">;; 设置左边按钮外观：外框框边大小和颜色  </div><div class="line">(set-face-attribute 'tabbar-button-face nil  </div><div class="line">                    :inherit 'tabbar-default  </div><div class="line">                    :box '(:line-width 1 :color "yellow70")  </div><div class="line">                    )  </div><div class="line">;; 设置当前tab外观：颜色，字体，外框大小和颜色  </div><div class="line">(set-face-attribute 'tabbar-selected-face nil  </div><div class="line">                    :inherit 'tabbar-default  </div><div class="line">                    :foreground "DarkGreen"  </div><div class="line">                    :background "LightGoldenrod"  </div><div class="line">                    :box '(:line-width 2 :color "DarkGoldenrod")  </div><div class="line">                    :overline "black"  </div><div class="line">                    :underline "black"  </div><div class="line">                    :weight 'bold  </div><div class="line">                    )  </div><div class="line">;; 设置非当前tab外观：外框大小和颜色  </div><div class="line">(set-face-attribute 'tabbar-unselected-face nil  </div><div class="line">                    :inherit 'tabbar-default  </div><div class="line">                    :box '(:line-width 2 :color "#00B2BF")  </div><div class="line">                    )</div></pre></td></tr></table></figure></p>
-<p>现在我们的tabbar外观变成这样：<br><img src="http://hi.csdn.net/attachment/201102/24/0_129852224888ic.gif" alt=""><br>可以看出，已经几乎完成了，美中不足的是左边的几个按钮尺寸不正确，还需要修正。<br>打开~/.mylisp/tabbar.el，可以在里面找到类似这样的内容：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(defconst tabbar-home-button-enabled-image</div><div class="line">  '((:type pbm :ascent center :data "/</div><div class="line">P2</div><div class="line">10 10</div><div class="line">255</div><div class="line">184 184 184 184 0 184 184 184 184 184 184 184 184 0 0 0 184 184 184 184</div><div class="line">184 184 0 0 0 0 0 184 184 184 184 0 0 0 0 0 0 0 184 184 184 184 255 0 0</div><div class="line">0 255 255 255 184 184 0 0 0 0 0 0 0 184 184 184 184 0 0 0 0 0 255 255 184</div><div class="line">184 184 184 0 0 0 255 255 184 184 184 184 184 184 0 255 255 184 184 184</div><div class="line">184 184 184 184 184 255 184 184 184 184</div><div class="line">"))</div><div class="line">  "Default image for the enabled home button.")</div></pre></td></tr></table></figure>
-<p>这部分就是设定home-button的图像，同样，另外几个按钮的图像也可以找到：<br>tabbar-home-button-disabled-image<br>tabbar-scroll-left-button-enabled-image<br>tabbar-scroll-left-button-disabled-image<br>tabbar-scroll-right-button-enabled-image<br>tabbar-scroll-right-button-disabled-image</p>
-<p>这种图片的格式是pbm，pbm是Portable Bitmap Format(便携位图格式)的缩写，该系列共有三种格式：<br>PBM 位图黑白位图<br>PGM 灰度位图<br>PPM 带颜色的像素位图<br>文件的前两个字节指明了该文件到底属于哪种格式：<br>Magic Number 类型                编码<br>P1     Portable bitmap ASCII<br>P2     Portable graymap ASCII<br>P3     Portable pixmap ASCII<br>P4     Portable bitmap Binary<br>P5     Portable graymap Binary<br>P6     Portable pixmap Binary<br>如果编码是ASCII的话文件的内容就由直接可读的数字组成，数字之间用空格隔开。<br>我们修改后的tabbar高度变为20像素，宽度没变，减去原来的10像素那么上下分别加宽5像素。<br>也就是增加5 <em> 10 = 30个数字，5 </em> 10 = 10个数字。<br>修改tabbar里每个图片的数据块<br>P2保持不变，接下来的两个数字分别是宽度和高度，那么原来的”10 10”就要修改为”10 19”，255为白色的值，保持为原来的255.然后在描述各个像素的数据前后分别加上50个184，保持和原来的颜色一样。<br>tabbar-home-button-enabled-image的那段就变为：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">(defconst tabbar-home-button-enabled-image</div><div class="line">  '((:type pbm :ascent center :data "/</div><div class="line">P2</div><div class="line">10 20</div><div class="line">255</div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 0 184 184 184 184 184 184 184 184 0 0 0 184 184 184 184</div><div class="line">184 184 0 0 0 0 0 184 184 184 184 0 0 0 0 0 0 0 184 184 184 184 255 0 0</div><div class="line">0 255 255 255 184 184 0 0 0 0 0 0 0 184 184 184 184 0 0 0 0 0 255 255 184</div><div class="line">184 184 184 0 0 0 255 255 184 184 184 184 184 184 0 255 255 184 184 184</div><div class="line">184 184 184 184 184 255 184 184 184 184</div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">184 184 184 184 184 184 184 184 184 184 </div><div class="line">"))</div><div class="line">  "Default image for the enabled home button.")</div></pre></td></tr></table></figure></p>
-<p> 其他部分也照着这样修改就行了，最后的效果如图：<img src="http://hi.csdn.net/attachment/201102/24/0_1298522254zQl2.gif" alt=""> </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/12/23/2013-12-23-Android滑动菜单特效实现/" itemprop="url">
-                  [转]Android滑动菜单特效实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-12-23T23:49:00+08:00" content="2013-12-23">
-              2013-12-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/12/23/2013-12-23-Android滑动菜单特效实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/23/2013-12-23-Android滑动菜单特效实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/12/23/2013-12-23-Android滑动菜单特效实现/" class="leancloud_visitors" data-flag-title="[转]Android滑动菜单特效实现">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>出处：<a href="http://blog.csdn.net/guolin_blog/article/details/8714621" target="_blank" rel="external">http://blog.csdn.net/guolin_blog/article/details/8714621</a></p>
-<p>人人客户端有一个特效还是挺吸引人的，在主界面手指向右滑动，就可以将菜单展示出来，而主界面会被隐藏大部分，但是仍有左侧的一小部分同菜单一起展示。<br>据说人人客户端的这个特效是从facebook客户端模仿来的，至于facebook是不是又从其它地方模仿来的就不得而知了。好，今天我们就一起来实现这个效果，总之我第一次看到这个特效是在人人客户端看到的，我也就主观性地认为我是在模仿人人客户端的特效了。<br>虽然现在网上类似这种效果的实现也非常多，可是我发现实现方案大都非常复杂，并不容易理解。但其实这种效果并不难实现，因此我今天给大家带来的也是史上最简单的滑动菜单实现方案。<br>首先还是讲一下实现原理。在一个Activity的布局中需要有两部分，一个是菜单(menu)的布局，一个是内容(content)的布局。两个布局横向排列，菜单布局在左，内容布局在右。初始化的时候将菜单布局向左偏移，以至于能够完全隐藏，这样内容布局就会完全显示在Activity中。然后通过监听手指滑动事件，来改变菜单布局的左偏移距离，从而控制菜单布局的显示和隐藏。原理图如下：<br><img src="http://img.my.csdn.net/uploads/201303/24/1364136791_5684.png" alt=""><br>将菜单布局的左偏移值改成0时，效果图如下：<br><img src="http://img.my.csdn.net/uploads/201303/24/1364137323_7998.png" alt=""><br>好，我们开始用代码来实现。首先在Eclipse中新建一个Android项目，项目名就叫做RenRenSlideMenuDemo。然后写一下布局文件，创建或打开layout目录下的activity_main.xml文件，加入如下代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>  </span></div><div class="line">    <span class="attr">xmlns:tools</span>=<span class="string">"http://schemas.android.com/tools"</span>  </div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>  </div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"horizontal"</span>  </div><div class="line">    <span class="attr">tools:context</span>=<span class="string">".MainActivity"</span> &gt;  </div><div class="line">  </div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span>  </span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/menu"</span>  </div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>  </div><div class="line">        <span class="attr">android:background</span>=<span class="string">"@drawable/menu"</span> &gt;  </div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span>  </div><div class="line">  </div><div class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span>  </span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/content"</span>  </div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>  </div><div class="line">        <span class="attr">android:background</span>=<span class="string">"@drawable/content"</span> &gt;  </div><div class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span>  </div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>这个布局文件的最外层布局是一个LinearLayout，排列方向是水平方向排列。这个LinearLayout下面嵌套了两个子LinearLayout，分别就是菜单的布局和内容的布局。这里为了要让布局尽量简单，菜单布局和内容布局里面没有加入任何控件，只是给这两个布局各添加了一张背景图片，这两张背景图片是我从人人客户端上截下来的图。这样我们可以把注意力都集中在如何实现滑动菜单的效果上面，不用关心里面各种复杂的布局了。<br>创建或打开MainActivity，这个类仍然是程序的主Activity，也是这次demo唯一的Activity，在里面加入如下代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> <span class="keyword">implements</span> <span class="title">OnTouchListener</span> </span>&#123;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 滚动显示和隐藏menu时，手指滑动需要达到的速度。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SNAP_VELOCITY = <span class="number">200</span>;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 屏幕宽度值。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> screenWidth;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu最多可以滑动到的左边缘。值由menu布局的宽度来定，marginLeft到达此值之后，不能再减少。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> leftEdge;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu最多可以滑动到的右边缘。值恒为0，即marginLeft到达0之后，不能增加。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> rightEdge = <span class="number">0</span>;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu完全显示时，留给content的宽度值。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> menuPadding = <span class="number">80</span>;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 主内容的布局。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> View content;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu的布局。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> View menu;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu布局的参数，通过此参数来更改leftMargin的值。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> LinearLayout.LayoutParams menuParams;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 记录手指按下时的横坐标。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> xDown;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 记录手指移动时的横坐标。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> xMove;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 记录手机抬起时的横坐标。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">float</span> xUp;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * menu当前是显示还是隐藏。只有完全显示或隐藏menu时才会更改此值，滑动过程中此值无效。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isMenuVisible;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 用于计算手指滑动的速度。 </div><div class="line">     */  </div><div class="line">    <span class="keyword">private</span> VelocityTracker mVelocityTracker;  </div><div class="line">  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;  </div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);  </div><div class="line">        setContentView(R.layout.activity_main);  </div><div class="line">        initValues();  </div><div class="line">        content.setOnTouchListener(<span class="keyword">this</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 初始化一些关键性数据。包括获取屏幕的宽度，给content布局重新设置宽度，给menu布局重新设置宽度和偏移距离等。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initValues</span><span class="params">()</span> </span>&#123;  </div><div class="line">        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);  </div><div class="line">        screenWidth = window.getDefaultDisplay().getWidth();  </div><div class="line">        content = findViewById(R.id.content);  </div><div class="line">        menu = findViewById(R.id.menu);  </div><div class="line">        menuParams = (LinearLayout.LayoutParams) menu.getLayoutParams();  </div><div class="line">        <span class="comment">// 将menu的宽度设置为屏幕宽度减去menuPadding  </span></div><div class="line">        menuParams.width = screenWidth - menuPadding;  </div><div class="line">        <span class="comment">// 左边缘的值赋值为menu宽度的负数  </span></div><div class="line">        leftEdge = -menuParams.width;  </div><div class="line">        <span class="comment">// menu的leftMargin设置为左边缘的值，这样初始化时menu就变为不可见  </span></div><div class="line">        menuParams.leftMargin = leftEdge;  </div><div class="line">        <span class="comment">// 将content的宽度设置为屏幕宽度  </span></div><div class="line">        content.getLayoutParams().width = screenWidth;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouch</span><span class="params">(View v, MotionEvent event)</span> </span>&#123;  </div><div class="line">        createVelocityTracker(event);  </div><div class="line">        <span class="keyword">switch</span> (event.getAction()) &#123;  </div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_DOWN:  </div><div class="line">            <span class="comment">// 手指按下时，记录按下时的横坐标  </span></div><div class="line">            xDown = event.getRawX();  </div><div class="line">            <span class="keyword">break</span>;  </div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_MOVE:  </div><div class="line">            <span class="comment">// 手指移动时，对比按下时的横坐标，计算出移动的距离，来调整menu的leftMargin值，从而显示和隐藏menu  </span></div><div class="line">            xMove = event.getRawX();  </div><div class="line">            <span class="keyword">int</span> distanceX = (<span class="keyword">int</span>) (xMove - xDown);  </div><div class="line">            <span class="keyword">if</span> (isMenuVisible) &#123;  </div><div class="line">                menuParams.leftMargin = distanceX;  </div><div class="line">            &#125; <span class="keyword">else</span> &#123;  </div><div class="line">                menuParams.leftMargin = leftEdge + distanceX;  </div><div class="line">            &#125;  </div><div class="line">            <span class="keyword">if</span> (menuParams.leftMargin &lt; leftEdge) &#123;  </div><div class="line">                menuParams.leftMargin = leftEdge;  </div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (menuParams.leftMargin &gt; rightEdge) &#123;  </div><div class="line">                menuParams.leftMargin = rightEdge;  </div><div class="line">            &#125;  </div><div class="line">            menu.setLayoutParams(menuParams);  </div><div class="line">            <span class="keyword">break</span>;  </div><div class="line">        <span class="keyword">case</span> MotionEvent.ACTION_UP:  </div><div class="line">            <span class="comment">// 手指抬起时，进行判断当前手势的意图，从而决定是滚动到menu界面，还是滚动到content界面  </span></div><div class="line">            xUp = event.getRawX();  </div><div class="line">            <span class="keyword">if</span> (wantToShowMenu()) &#123;  </div><div class="line">                <span class="keyword">if</span> (shouldScrollToMenu()) &#123;  </div><div class="line">                    scrollToMenu();  </div><div class="line">                &#125; <span class="keyword">else</span> &#123;  </div><div class="line">                    scrollToContent();  </div><div class="line">                &#125;  </div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (wantToShowContent()) &#123;  </div><div class="line">                <span class="keyword">if</span> (shouldScrollToContent()) &#123;  </div><div class="line">                    scrollToContent();  </div><div class="line">                &#125; <span class="keyword">else</span> &#123;  </div><div class="line">                    scrollToMenu();  </div><div class="line">                &#125;  </div><div class="line">            &#125;  </div><div class="line">            recycleVelocityTracker();  </div><div class="line">            <span class="keyword">break</span>;  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 判断当前手势的意图是不是想显示content。如果手指移动的距离是负数，且当前menu是可见的，则认为当前手势是想要显示content。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@return</span> 当前手势想显示content返回true，否则返回false。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">wantToShowContent</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> xUp - xDown &lt; <span class="number">0</span> &amp;&amp; isMenuVisible;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 判断当前手势的意图是不是想显示menu。如果手指移动的距离是正数，且当前menu是不可见的，则认为当前手势是想要显示menu。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@return</span> 当前手势想显示menu返回true，否则返回false。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">wantToShowMenu</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> xUp - xDown &gt; <span class="number">0</span> &amp;&amp; !isMenuVisible;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 判断是否应该滚动将menu展示出来。如果手指移动距离大于屏幕的1/2，或者手指移动速度大于SNAP_VELOCITY， </div><div class="line">     * 就认为应该滚动将menu展示出来。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@return</span> 如果应该滚动将menu展示出来返回true，否则返回false。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">shouldScrollToMenu</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> xUp - xDown &gt; screenWidth / <span class="number">2</span> || getScrollVelocity() &gt; SNAP_VELOCITY;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 判断是否应该滚动将content展示出来。如果手指移动距离加上menuPadding大于屏幕的1/2， </div><div class="line">     * 或者手指移动速度大于SNAP_VELOCITY， 就认为应该滚动将content展示出来。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@return</span> 如果应该滚动将content展示出来返回true，否则返回false。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">shouldScrollToContent</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">return</span> xDown - xUp + menuPadding &gt; screenWidth / <span class="number">2</span> || getScrollVelocity() &gt; SNAP_VELOCITY;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 将屏幕滚动到menu界面，滚动速度设定为30. </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scrollToMenu</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">new</span> ScrollTask().execute(<span class="number">30</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 将屏幕滚动到content界面，滚动速度设定为-30. </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">scrollToContent</span><span class="params">()</span> </span>&#123;  </div><div class="line">        <span class="keyword">new</span> ScrollTask().execute(-<span class="number">30</span>);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 创建VelocityTracker对象，并将触摸content界面的滑动事件加入到VelocityTracker当中。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@param</span> event </div><div class="line">     *            content界面的滑动事件 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createVelocityTracker</span><span class="params">(MotionEvent event)</span> </span>&#123;  </div><div class="line">        <span class="keyword">if</span> (mVelocityTracker == <span class="keyword">null</span>) &#123;  </div><div class="line">            mVelocityTracker = VelocityTracker.obtain();  </div><div class="line">        &#125;  </div><div class="line">        mVelocityTracker.addMovement(event);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 获取手指在content界面滑动的速度。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@return</span> 滑动速度，以每秒钟移动了多少像素值为单位。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getScrollVelocity</span><span class="params">()</span> </span>&#123;  </div><div class="line">        mVelocityTracker.computeCurrentVelocity(<span class="number">1000</span>);  </div><div class="line">        <span class="keyword">int</span> velocity = (<span class="keyword">int</span>) mVelocityTracker.getXVelocity();  </div><div class="line">        <span class="keyword">return</span> Math.abs(velocity);  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 回收VelocityTracker对象。 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">recycleVelocityTracker</span><span class="params">()</span> </span>&#123;  </div><div class="line">        mVelocityTracker.recycle();  </div><div class="line">        mVelocityTracker = <span class="keyword">null</span>;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ScrollTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask</span>&lt;<span class="title">Integer</span>, <span class="title">Integer</span>, <span class="title">Integer</span>&gt; </span>&#123;  </div><div class="line">  </div><div class="line">        <span class="meta">@Override</span>  </div><div class="line">        <span class="function"><span class="keyword">protected</span> Integer <span class="title">doInBackground</span><span class="params">(Integer... speed)</span> </span>&#123;  </div><div class="line">            <span class="keyword">int</span> leftMargin = menuParams.leftMargin;  </div><div class="line">            <span class="comment">// 根据传入的速度来滚动界面，当滚动到达左边界或右边界时，跳出循环。  </span></div><div class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;  </div><div class="line">                leftMargin = leftMargin + speed[<span class="number">0</span>];  </div><div class="line">                <span class="keyword">if</span> (leftMargin &gt; rightEdge) &#123;  </div><div class="line">                    leftMargin = rightEdge;  </div><div class="line">                    <span class="keyword">break</span>;  </div><div class="line">                &#125;  </div><div class="line">                <span class="keyword">if</span> (leftMargin &lt; leftEdge) &#123;  </div><div class="line">                    leftMargin = leftEdge;  </div><div class="line">                    <span class="keyword">break</span>;  </div><div class="line">                &#125;  </div><div class="line">                publishProgress(leftMargin);  </div><div class="line">                <span class="comment">// 为了要有滚动效果产生，每次循环使线程睡眠20毫秒，这样肉眼才能够看到滚动动画。  </span></div><div class="line">                sleep(<span class="number">20</span>);  </div><div class="line">            &#125;  </div><div class="line">            <span class="keyword">if</span> (speed[<span class="number">0</span>] &gt; <span class="number">0</span>) &#123;  </div><div class="line">                isMenuVisible = <span class="keyword">true</span>;  </div><div class="line">            &#125; <span class="keyword">else</span> &#123;  </div><div class="line">                isMenuVisible = <span class="keyword">false</span>;  </div><div class="line">            &#125;  </div><div class="line">            <span class="keyword">return</span> leftMargin;  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">        <span class="meta">@Override</span>  </div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onProgressUpdate</span><span class="params">(Integer... leftMargin)</span> </span>&#123;  </div><div class="line">            menuParams.leftMargin = leftMargin[<span class="number">0</span>];  </div><div class="line">            menu.setLayoutParams(menuParams);  </div><div class="line">        &#125;  </div><div class="line">  </div><div class="line">        <span class="meta">@Override</span>  </div><div class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Integer leftMargin)</span> </span>&#123;  </div><div class="line">            menuParams.leftMargin = leftMargin;  </div><div class="line">            menu.setLayoutParams(menuParams);  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    <span class="comment">/** </span></div><div class="line">     * 使当前线程睡眠指定的毫秒数。 </div><div class="line">     *  </div><div class="line">     * <span class="doctag">@param</span> millis </div><div class="line">     *            指定当前线程睡眠多久，以毫秒为单位 </div><div class="line">     */  </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">(<span class="keyword">long</span> millis)</span> </span>&#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">            Thread.sleep(millis);  </div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;  </div><div class="line">            e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>全部的代码都在这里了，我们可以看到，加上注释总共才两百多行的代码就能实现滑动菜单的特效。下面我来对以上代码解释一下，首先初始化的时候调用initValues方法，在这里面将内容布局的宽度设定为屏幕的宽度，菜单布局的宽度设定为屏幕的宽度减去menuPadding值，这样可以保证在菜单布局展示的时候，仍有一部分内容布局可以看到。如果不在初始化的时候重定义两个布局宽度，就会按照layout文件里面声明的一样，两个布局都是fill_parent，这样就无法实现滑动菜单的效果了。然后将菜单布局的左偏移量设置为负的菜单布局的宽度，这样菜单布局就会被完全隐藏，只有内容布局会显示在界面上。<br>之后给内容布局注册监听事件，这样当手指在内容布局上滑动的时候就会触发onTouch事件。在onTouch事件里面，根据手指滑动的距离会改变菜单布局的左偏移量，从而控制菜单布局的显示和隐藏。当手指离开屏幕的时候，会判断应该滑动到菜单布局还是内容布局，判断依据是根据手指滑动的距离或者滑动的速度，细节可以看代码中的注释。<br>最后还是给出AndroidManifest.xml的代码，都是自动生成的，非常简单：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;  </div><div class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>  </span></div><div class="line">    <span class="attr">package</span>=<span class="string">"com.example.renrenslidemenudemo"</span>  </div><div class="line">    <span class="attr">android:versionCode</span>=<span class="string">"1"</span>  </div><div class="line">    <span class="attr">android:versionName</span>=<span class="string">"1.0"</span> &gt;  </div><div class="line">  </div><div class="line">    <span class="tag">&lt;<span class="name">uses-sdk</span>  </span></div><div class="line">        <span class="attr">android:minSdkVersion</span>=<span class="string">"8"</span>  </div><div class="line">        <span class="attr">android:targetSdkVersion</span>=<span class="string">"8"</span> /&gt;  </div><div class="line">  </div><div class="line">    <span class="tag">&lt;<span class="name">application</span>  </span></div><div class="line">        <span class="attr">android:allowBackup</span>=<span class="string">"true"</span>  </div><div class="line">        <span class="attr">android:icon</span>=<span class="string">"@drawable/ic_launcher"</span>  </div><div class="line">        <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span>  </div><div class="line">        <span class="attr">android:theme</span>=<span class="string">"@android:style/Theme.NoTitleBar"</span> &gt;  </div><div class="line">        <span class="tag">&lt;<span class="name">activity</span>  </span></div><div class="line">            <span class="attr">android:name</span>=<span class="string">"com.example.renrenslidemenudemo.MainActivity"</span>  </div><div class="line">            <span class="attr">android:label</span>=<span class="string">"@string/app_name"</span> &gt;  </div><div class="line">            <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span>  </div><div class="line">                <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span>  </div><div class="line">  </div><div class="line">                <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span>  </div><div class="line">            <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span>  </div><div class="line">        <span class="tag">&lt;/<span class="name">activity</span>&gt;</span>  </div><div class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span>  </div><div class="line">  </div><div class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>好了，现在我们运行一下，看一下效果吧，首先是程序刚打开的时候，显示的是内容布局。用手指在界面向右滑动，可以看到菜单布局出现。<br><img src="http://img.my.csdn.net/uploads/201303/25/1364193322_3549.png" alt=""><br><img src="http://img.my.csdn.net/uploads/201303/25/1364193329_2086.png" alt=""><br>而当菜单布局完全展示的时候，效果如下图：<br><img src="http://img.my.csdn.net/uploads/201303/25/1364193500_7762.png" alt=""><br>今天大家看到了史上最简单的滑动菜单实现方案，确实是非常简单。那么有朋友也许会问了，在一个Activity当中这样实现滑动菜单是很简单，可是如果我的应用程序有好多个Activity都需要滑动菜单，每个Activity里都这么实现一遍，也变得复杂了。没错，当前的这个解决方案只适用于单个Activity中，如果是想在多个Activity中都实现滑动菜单的效果，请参考我的另一篇文章 <a href="http://blog.csdn.net/sinyu890807/article/details/8744400" target="_blank" rel="external">Android滑动菜单框架完全解析，教你如何一分钟实现滑动菜单特效</a>。<br>有对双向滑动菜单感兴趣的朋友请转阅 <a href="http://blog.csdn.net/guolin_blog/article/details/9671609" target="_blank" rel="external">Android双向滑动菜单完全解析，教你如何一分钟实现双向滑动特效。</a><br>好了，今天的讲解到此结束，有疑问的朋友可以在下面留言。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1765,7 +1799,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1782,7 +1816,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

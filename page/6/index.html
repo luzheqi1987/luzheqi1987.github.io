@@ -301,6 +301,508 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="url">
+                  [转]Spring4新特性——泛型限定式依赖注入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:53:17+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——泛型限定式依赖注入">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
+<p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
+<p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
+<p>@Repository<br>public class UserRepository extends BaseRepository&lt;User&gt; {<br>}  </p>
+<p>@Repository<br>public class OrganizationRepository extends BaseRepository&lt;Organization&gt; {<br>}<br>[/java]<br> 对于Repository，我们一般是这样实现的：首先写一个模板父类，把通用的crud等代码放在BaseRepository；然后子类继承后，只需要添加额外的实现。</p>
+<p>1.3、Service<br>1.3.1、以前Service写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    private BaseRepository&lt;M&gt; repository;<br>    public void setRepository(BaseRepository&lt;M&gt; repository) {<br>        this.repository = repository;<br>    }<br>    public void save(M m) {<br>        repository.save(m);<br>    }<br>}<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>    @Autowired<br>    public void setUserRepository(UserRepository userRepository) {<br>        setRepository(userRepository);<br>    }<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>    @Autowired<br>    public void setOrganizationRepository(OrganizationRepository organizationRepository) {<br>        setRepository(organizationRepository);<br>    }<br>}<br>[/java]<br>可以看到，以前必须再写一个setter方法，然后指定注入的具体类型，然后进行注入；</p>
+<p>1.3.2、泛型Service的写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    @Autowired<br>    protected BaseRepository&lt;M&gt; repository;  </p>
+<pre><code>public void save(M m) {  
+    repository.save(m);  
+}  
+</code></pre><p>}  </p>
+<p>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>}<br>[/java]<br> 大家可以看到，现在的写法非常简洁。支持泛型式依赖注入。</p>
+<p>这个也是我之前非常想要的一个功能，这样对于那些基本的CRUD式代码，可以简化更多的代码。</p>
+<p>如果大家用过Spring data jpa的话，以后注入的话也可以使用泛型限定式依赖注入 ：<br>[java]<br>@Autowired<br>private Repository&lt;User&gt; userRepository;<br>[/java]<br> 对于泛型依赖注入，最好使用setter注入，这样万一子类想变，比较容易切换。比如<a href="https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。" target="_blank" rel="external">https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="url">
+                  SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T14:53:58+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" class="leancloud_visitors" data-flag-title="SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/'>SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p> 一、SpringMVC使用@ResponseBody时返回json的日期格式</p>
+<pre><code> @ResponseBody 返回json字符串的核心类是org.springframework.http.converter.json.MappingJacksonHttpMessageConverter，它使用了Jackson 这个开源的第三方类库。主要是以下两个jar包：jackson-core-asl-1.6.4.jar；jackson-mapper-asl-1.6.4.jar。
+出现问题： 使用@ResponseBody时返回json字符串的日期格式。Date类型属性默认返回一个Long型的时间戳，怎样能够返回自定义的日期格式？
+解决方案：目前有两种方式实现,
+         1、局部修改(网上较多，但不推荐)；
+      继承Jackson的抽象类：JsonSerializer&lt;T&gt;，然后在javabean的属性getter()上添加注解@JsonSerialize即可实现。
+     代码如下：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 自定义返回JSON 数据格中日期格式化处理 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomDateSerializer</span> <span class="keyword">extends</span> <span class="title">JsonSerializer</span>&amp;<span class="title">lt</span></span>;Date&amp;gt; &#123;  </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">            JsonGenerator jsonGenerator,   </div><div class="line">            SerializerProvider provider)  </div><div class="line">            <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">        jsonGenerator.writeString(sdf.format(value));  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@JsonSerialize</span>(using = CustomDateSerializer.class)  </div><div class="line"><span class="function"><span class="keyword">public</span> Date <span class="title">getCreateDate</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> createDate;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>     2、全局修改(强烈推荐)：
+ MappingJacksonHttpMessageConverter主要通过ObjectMapper来实现返回json字符串。这里我们继承该类，注册一个JsonSerializer&lt;T&gt;。然后在配置文件中注入自定义的ObjectMapper。
+代码如下：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ObjectMapper;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ser.CustomSerializerFactory;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 解决Date类型返回json格式为自定义格式 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomObjectMapper</span> <span class="keyword">extends</span> <span class="title">ObjectMapper</span> </span>&#123;  </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomObjectMapper</span><span class="params">()</span></span>&#123;  </div><div class="line">        CustomSerializerFactory factory = <span class="keyword">new</span> CustomSerializerFactory();  </div><div class="line">        factory.addGenericMapping(Date.class, <span class="keyword">new</span> JsonSerializer&amp;lt;Date&amp;gt;()&#123;  </div><div class="line">            <span class="meta">@Override</span>  </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">                    JsonGenerator jsonGenerator,   </div><div class="line">                    SerializerProvider provider)  </div><div class="line">                    <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">                SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">                jsonGenerator.writeString(sdf.format(value));  </div><div class="line">            &#125;  </div><div class="line">        &#125;);  </div><div class="line">        <span class="keyword">this</span>.setSerializerFactory(factory);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   spring-servlet.xml中配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&amp;lt;mvc:annotation-driven&amp;gt;  </div><div class="line">        &amp;lt;mvc:message-converters&amp;gt;  </div><div class="line">            &amp;lt;bean <span class="class"><span class="keyword">class</span></span>=&amp;quot;org.springframework.http.converter.json.MappingJacksonHttpMessageConverter&amp;quot;&amp;gt;  </div><div class="line">                &amp;lt;property name=&amp;quot;objectMapper&amp;quot; ref=&amp;quot;customObjectMapper&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;  </div><div class="line">            &amp;lt;/bean&amp;gt;  </div><div class="line">        &amp;lt;/mvc:message-converters&amp;gt;  </div><div class="line">    &amp;lt;/mvc:annotation-driven&amp;gt;  </div><div class="line">   &amp;lt;bean id=&amp;quot;customObjectMapper&amp;quot; <span class="class"><span class="keyword">class</span></span>=&amp;quot;com.pmc.dwa.common.custom.CustomObjectMapper&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;</div></pre></td></tr></table></figure></p>
+<p> 二、@DatetimeFormat使用注意<br>     1、 使用@DatetimeFormat很简单，这里需要注意的是：使用时要引入一个类库joda-time-1.3.jar，否则会无法访问相应路径(400错误)。<br>ps：该注解可以作用在METHOD，FIELD以及PARAMETER级别上。<br>使用介绍参考：<a href="http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k" target="_blank" rel="external">http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k</a><br>   2、因为springMVC没有提供默认的日期转换器，前段页面传递过来日期字符串怎么转换为日期类型，如果没有提供全局日期转换器或者数据绑定的基础上，可以使用@DatetimeFormat注解完成。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="url">
+                  关于spring 3.0.5的 标签的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T14:48:47+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/关于spring 3.0.5的 标签的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/关于spring 3.0.5的 标签的使用/" class="leancloud_visitors" data-flag-title="关于spring 3.0.5的 标签的使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>spring mvc 的<mvc;resources mapping="***" location="***">标签是在spring3.0.4出现的，主要是用来进行静态资源的访问。在spring3.0.4出来的时候spring还没有更新其schema所以在配置文件中有可能找不到<mvc:resources>标签，这个问题在spring3.0.5中已经解决，而且网上也有很多其他的解决方案，我在这里就不记录了。 </mvc:resources></mvc;resources></p>
+<p>首先使用spring mvc需要配置其使用的servlet.在web.xml中:<br>[xml]<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>    &lt;/servlet&gt;  </p>
+<pre><code>&amp;lt;servlet-mapping&amp;gt;  
+    &amp;lt;servlet-name&amp;gt;springMVC&amp;lt;/servlet-name&amp;gt;  
+    &amp;lt;url-pattern&amp;gt;/&amp;lt;/url-pattern&amp;gt;  
+&amp;lt;/servlet-mapping&amp;gt;  
+</code></pre><p>[/xml]<br>这里给 servlet-name定义的名称是springMVC,这样的话会在web-inf下spring会自动扫描一个XML文件名叫springMVC-servlet.xml文件，这里都是spring自动扫描的，如果你没有提供，将会报一个文件查找不到的异常。看了下org.springframework.web.servlet.DispatcherServlet加载这个文件的过程，貌似这个文件存放的地址也是可以进行设置的，具体怎么搞我还没有研究。 </p>
+<p>由于spring mvc拦截了所有请求，所以当你设置<br>[xml]<br>&lt;servlet-mapping&gt;<br>&lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>&lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>[/xml]<br>的时候会影响到静态资源文件的获取，这样就需要有这个标签来帮你分类完成获取静态资源的责任。 </p>
+<p>springMVC-servlet.xml文件<br>[xml]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns=&quot;<a href="http://www.springframework.org/schema/beans&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/beans&amp;quot</a>;<br>    xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>;<br>    xmlns:mvc=&quot;<a href="http://www.springframework.org/schema/mvc&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/mvc&amp;quot</a>;<br>    xsi:schemaLocation=&quot;<a href="http://www.springframework.org/schema/beans" target="_blank" rel="external">http://www.springframework.org/schema/beans</a> <a href="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" target="_blank" rel="external">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</a><br>    <a href="http://www.springframework.org/schema/mvc" target="_blank" rel="external">http://www.springframework.org/schema/mvc</a> <a href="http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt" target="_blank" rel="external">http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt</a>;     </p>
+<pre><code>&amp;lt;mvc:resources mapping=&amp;quot;/javascript/**&amp;quot; location=&amp;quot;/static_resources/javascript/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:resources mapping=&amp;quot;/styles/**&amp;quot; location=&amp;quot;/static_resources/css/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:resources mapping=&amp;quot;/images/**&amp;quot; location=&amp;quot;/static_resources/images/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:default-servlet-handler /&amp;gt;  
+
+&amp;lt;bean class=&amp;quot;org.springframework.web.servlet.view.InternalResourceViewResolver&amp;quot;&amp;gt;  
+    &amp;lt;property name=&amp;quot;prefix&amp;quot; value=&amp;quot;/WEB-INF/views/&amp;quot;/&amp;gt;  
+    &amp;lt;property name=&amp;quot;suffix&amp;quot; value=&amp;quot;.jsp&amp;quot;/&amp;gt;  
+&amp;lt;/bean&amp;gt;  
+</code></pre><p>&lt;/beans&gt;<br>[/xml]<br>这里可以看到我所有的页面引用到/styles/**的资源都从/static_resources/css里面进行查找。 </p>
+<p>页面的一段静态资源访问的代码。<br>[html]<br>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;<a href="http://java.sun.com/jstl/core&quot;%&amp;gt" target="_blank" rel="external">http://java.sun.com/jstl/core&quot;%&amp;gt</a>;<br>&lt;HTML&gt;<br>&lt;HEAD&gt;<br>  &lt;TITLE&gt; ABCDEFG &lt;/TITLE&gt;<br>&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;&lt;c:url value=’/styles/siteboard.css’/&gt;&quot;&gt;<br>…<br>…<br>…<br>[/html]</p>
+<p>可能这个标签的真谛就是为了引用资源的访问不会类似CONTROLLER一样被拦截，区分出关注的资源的访问，一般我们在springMVC里面的拦截都会配置为”/“，拦截所有的。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" itemprop="url">
                   [转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC
                 </a>
@@ -1364,468 +1866,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/c-public-protected-private/" itemprop="url">
-                  C++ public , protected, private
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T13:20:55+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/c-public-protected-private/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/c-public-protected-private/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/c-public-protected-private/" class="leancloud_visitors" data-flag-title="C++ public , protected, private">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当private,public,protected单纯的作为一个类中的成员权限设置时：<br>private: 只能由该类中的函数、其友元函数访问,不能被任何其他访问，该类的对象也不能访问.</p>
-<p>protected: 可以被该类中的函数、子类的函数、以及其友元函数访问,但不能被该类的对象访问</p>
-<p>public: 可以被该类中的函数、子类的函数、其友元函数访问,也可以由该类的对象访问<br>注：友元函数包括两种：设为友元的全局函数，设为友元类中的成员函数</p>
-<p>当private,public,protected作为继承方式时：</p>
-<p>对于公有继承方式：<br>(1)父类的public成员成为子类的public成员，允许类以外的代码访问这些成员；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他不可见。这里保护成员同于私有成员。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员可见，而私有成员不可见。这里保护成员同于公有成员。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>所以，在公有继承时，派生类的对象可以访问基类中的公有成员；派生类的成员函数可以访问基类中的公有成员和保护成员。这里，一定要区分清楚派生类的对象和派生类中的成员函数对基类的访问是不同的。</p>
-<p>对于私有继承方式：</p>
-<p>(1)父类的public成员成为子类的private成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的private成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员是可见的，而私有成员是不可见的。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>所有成员都是不可见的。</p>
-<p>所以，在私有继承时，基类的成员只能由直接派生类访问，而无法再往下继承。</p>
-<p>对于保护继承方式：</p>
-<p>(1)父类的public成员成为子类的protected成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的public成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>这种继承方式与私有继承方式的情况相同。两者的区别仅在于对派生类的成员而言，对基类成员有不同的可见性。</p>
-<p>上述所说的可见性也就是可访问性。关于可访问性还有另的一种说法。这种规则中，称派生类的对象对基类访问为水平访问，称派生类的派生类对基类的访问为垂直访问。</p>
-<p>一般规则如下：</p>
-<p>公有继承时，水平访问和垂直访问对基类中的公有成员不受限制；<br>私有继承时，水平访问和垂直访问对基类中的公有成员也不能访问；<br>保护继承时，对于垂直访问同于公有继承，对于水平访问同于私有继承。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/http返回码/" itemprop="url">
-                  http返回码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T13:20:06+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/http返回码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/http返回码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/http返回码/" class="leancloud_visitors" data-flag-title="http返回码">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>HTTP协议状态码表示的意思主要分为五类 ,大体是 :<br><del>~</del><del>~</del><del>~</del><del>~</del><del>~</del>~~~<br>1×× 　　保留<br>2×× 　　表示请求成功地接收<br>3×× 　　为完成请求客户需进一步细化请求<br>4×× 　　客户错误<br>5×× 　　服务器错误</p>
-<p>100 Continue<br>指示客户端应该继续请求。回送用于通知客户端此次请求已经收到，并且没有被服务器拒绝。<br>客户端应该继续发送剩下的请求数据或者请求已经完成，或者忽略回送数据。服务器必须发送<br>最后的回送在请求之后。</p>
-<p>101 Switching Protocols<br>服务器依照客服端请求，通过Upgrade头信息，改变当前连接的应用协议。服务器将根据Upgrade头立刻改变协议<br>在101回送以空行结束的时候。</p>
-<h1 id="Successful"><a href="#Successful" class="headerlink" title="Successful"></a>Successful</h1><p>200 OK<br>指示客服端的请求已经成功收到，解析，接受。</p>
-<p>201 Created<br>请求已经完成并一个新的返回资源被创建。被创建的资源可能是一个URI资源，通常URI资源在Location头指定。回送应该包含一个实体数据<br>并且包含资源特性以及location通过用户或者用户代理来选择合适的方法。实体数据格式通过煤体类型来指定即content-type头。最开始服务 器<br>必须创建指定的资源在返回201状态码之前。如果行为没有被立刻执行，服务器应该返回202。</p>
-<p>202 Accepted<br>请求已经被接受用来处理。但是处理并没有完成。请求可能或者根本没有遵照执行，因为处理实际执行过程中可能被拒绝。</p>
-<p>203 Non-Authoritative Information</p>
-<p>204 No Content<br>服务器已经接受请求并且没必要返回实体数据，可能需要返回更新信息。回送可能包含新的或更新信息由entity-headers呈现。</p>
-<p>205 Reset Content<br>服务器已经接受请求并且用户代理应该重新设置文档视图。</p>
-<p>206 Partial Content<br>服务器已经接受请求GET请求资源的部分。请求必须包含一个Range头信息以指示获取范围可能必须包含If-Range头信息以成立请求条件。</p>
-<h1 id="Redirection"><a href="#Redirection" class="headerlink" title="Redirection"></a>Redirection</h1><p>300 Multiple Choices<br>请求资源符合任何一个呈现方式。</p>
-<p>301 Moved Permanently<br>请求的资源已经被赋予一个新的URI。</p>
-<p>302 Found<br>通过不同的URI请求资源的临时文件。<br>303 See Other</p>
-<p>304 Not Modified<br>如果客服端已经完成一个有条件的请求并且请求是允许的，但是这个文档并没有改变，服务器应该返回304状态码。304<br>状态码一定不能包含信息主体，从而通常通过一个头字段后的第一个空行结束。</p>
-<p>305 Use Proxy<br>请求的资源必须通过代理（由Location字段指定）来访问。Location资源给出了代理的URI。</p>
-<p>306 Unused</p>
-<p>307 Temporary Redirect</p>
-<h1 id="Client-Error"><a href="#Client-Error" class="headerlink" title="Client Error"></a>Client Error</h1><p>400 Bad Request<br>因为错误的语法导致服务器无法理解请求信息。</p>
-<p>401 Unauthorized<br>如果请求需要用户验证。回送应该包含一个WWW-Authenticate头字段用来指明请求资源的权限。</p>
-<p>402 Payment Required<br>保留状态码</p>
-<p>403 Forbidden<br>服务器接受请求，但是被拒绝处理。</p>
-<p>404 Not Found<br>服务器已经找到任何匹配Request-URI的资源。</p>
-<p>405 Menthod Not Allowed<br>Request-Line 请求的方法不被允许通过指定的URI。</p>
-<p>406 Not Acceptable</p>
-<p>407 Proxy Authentication Required</p>
-<p>408 Reqeust Timeout<br>客服端没有提交任何请求在服务器等待处理时间内。</p>
-<p>409 Conflict</p>
-<p>410 Gone</p>
-<p>411 Length Required<br>服务器拒绝接受请求在没有定义Content-Length字段的情况下。</p>
-<p>412 Precondition Failed</p>
-<p>413 Request Entity Too Large<br>服务器拒绝处理请求因为请求数据超过服务器能够处理的范围。服务器可能关闭当前连接来阻止客服端继续请求。</p>
-<p>414 Request-URI Too Long<br>服务器拒绝服务当前请求因为URI的长度超过了服务器的解析范围。</p>
-<p>415 Unsupported Media Type<br>服务器拒绝服务当前请求因为请求数据格式并不被请求的资源支持。</p>
-<p>416 Request Range Not Satisfialbe</p>
-<p>417 Expectation Failed</p>
-<h1 id="Server-Error"><a href="#Server-Error" class="headerlink" title="Server Error"></a>Server Error</h1><p>500 Internal Server Error<br>服务器遭遇异常阻止了当前请求的执行</p>
-<p>501 Not Implemented<br>服务器没有相应的执行动作来完成当前请求。</p>
-<p>502 Bad Gateway</p>
-<p>503 Service Unavailable<br>因为临时文件超载导致服务器不能处理当前请求。</p>
-<p>504 Gateway Timeout</p>
-<p>505 Http Version Not Supported</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="url">
-                  Remember that ordinal parameters are 1-based!
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T08:36:05+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/Remember that ordinal parameters are 1-based!/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/Remember that ordinal parameters are 1-based!/" class="leancloud_visitors" data-flag-title="Remember that ordinal parameters are 1-based!">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exception</div><div class="line"></div><div class="line">javax.servlet.ServletException: java.lang.IndexOutOfBoundsException:</div><div class="line"></div><div class="line">        Remember that ordinal parameters are <span class="number">1</span>-based!</div></pre></td></tr></table></figure>
-<p>是因为在HQL语句中出错。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1866,7 +1911,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1883,7 +1928,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

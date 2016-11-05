@@ -301,6 +301,463 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/30/c-public-protected-private/" itemprop="url">
+                  C++ public , protected, private
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-30T13:20:55+08:00" content="2015-03-30">
+              2015-03-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/30/c-public-protected-private/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/c-public-protected-private/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/30/c-public-protected-private/" class="leancloud_visitors" data-flag-title="C++ public , protected, private">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当private,public,protected单纯的作为一个类中的成员权限设置时：<br>private: 只能由该类中的函数、其友元函数访问,不能被任何其他访问，该类的对象也不能访问.</p>
+<p>protected: 可以被该类中的函数、子类的函数、以及其友元函数访问,但不能被该类的对象访问</p>
+<p>public: 可以被该类中的函数、子类的函数、其友元函数访问,也可以由该类的对象访问<br>注：友元函数包括两种：设为友元的全局函数，设为友元类中的成员函数</p>
+<p>当private,public,protected作为继承方式时：</p>
+<p>对于公有继承方式：<br>(1)父类的public成员成为子类的public成员，允许类以外的代码访问这些成员；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的protected成员，只允许子类成员访问；</p>
+<p>(1) 基类成员对其对象的可见性：</p>
+<p>公有成员可见，其他不可见。这里保护成员同于私有成员。</p>
+<p>(2) 基类成员对派生类的可见性：</p>
+<p>公有成员和保护成员可见，而私有成员不可见。这里保护成员同于公有成员。</p>
+<p>(3) 基类成员对派生类对象的可见性：</p>
+<p>公有成员可见，其他成员不可见。</p>
+<p>所以，在公有继承时，派生类的对象可以访问基类中的公有成员；派生类的成员函数可以访问基类中的公有成员和保护成员。这里，一定要区分清楚派生类的对象和派生类中的成员函数对基类的访问是不同的。</p>
+<p>对于私有继承方式：</p>
+<p>(1)父类的public成员成为子类的private成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的private成员，只允许子类成员访问；</p>
+<p>(1) 基类成员对其对象的可见性：</p>
+<p>公有成员可见，其他成员不可见。</p>
+<p>(2) 基类成员对派生类的可见性：</p>
+<p>公有成员和保护成员是可见的，而私有成员是不可见的。</p>
+<p>(3) 基类成员对派生类对象的可见性：</p>
+<p>所有成员都是不可见的。</p>
+<p>所以，在私有继承时，基类的成员只能由直接派生类访问，而无法再往下继承。</p>
+<p>对于保护继承方式：</p>
+<p>(1)父类的public成员成为子类的protected成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的public成员成为子类的protected成员，只允许子类成员访问；</p>
+<p>这种继承方式与私有继承方式的情况相同。两者的区别仅在于对派生类的成员而言，对基类成员有不同的可见性。</p>
+<p>上述所说的可见性也就是可访问性。关于可访问性还有另的一种说法。这种规则中，称派生类的对象对基类访问为水平访问，称派生类的派生类对基类的访问为垂直访问。</p>
+<p>一般规则如下：</p>
+<p>公有继承时，水平访问和垂直访问对基类中的公有成员不受限制；<br>私有继承时，水平访问和垂直访问对基类中的公有成员也不能访问；<br>保护继承时，对于垂直访问同于公有继承，对于水平访问同于私有继承。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/30/http返回码/" itemprop="url">
+                  http返回码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-30T13:20:06+08:00" content="2015-03-30">
+              2015-03-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/30/http返回码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/http返回码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/30/http返回码/" class="leancloud_visitors" data-flag-title="http返回码">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>HTTP协议状态码表示的意思主要分为五类 ,大体是 :<br><del>~</del><del>~</del><del>~</del><del>~</del><del>~</del>~~~<br>1×× 　　保留<br>2×× 　　表示请求成功地接收<br>3×× 　　为完成请求客户需进一步细化请求<br>4×× 　　客户错误<br>5×× 　　服务器错误</p>
+<p>100 Continue<br>指示客户端应该继续请求。回送用于通知客户端此次请求已经收到，并且没有被服务器拒绝。<br>客户端应该继续发送剩下的请求数据或者请求已经完成，或者忽略回送数据。服务器必须发送<br>最后的回送在请求之后。</p>
+<p>101 Switching Protocols<br>服务器依照客服端请求，通过Upgrade头信息，改变当前连接的应用协议。服务器将根据Upgrade头立刻改变协议<br>在101回送以空行结束的时候。</p>
+<h1 id="Successful"><a href="#Successful" class="headerlink" title="Successful"></a>Successful</h1><p>200 OK<br>指示客服端的请求已经成功收到，解析，接受。</p>
+<p>201 Created<br>请求已经完成并一个新的返回资源被创建。被创建的资源可能是一个URI资源，通常URI资源在Location头指定。回送应该包含一个实体数据<br>并且包含资源特性以及location通过用户或者用户代理来选择合适的方法。实体数据格式通过煤体类型来指定即content-type头。最开始服务 器<br>必须创建指定的资源在返回201状态码之前。如果行为没有被立刻执行，服务器应该返回202。</p>
+<p>202 Accepted<br>请求已经被接受用来处理。但是处理并没有完成。请求可能或者根本没有遵照执行，因为处理实际执行过程中可能被拒绝。</p>
+<p>203 Non-Authoritative Information</p>
+<p>204 No Content<br>服务器已经接受请求并且没必要返回实体数据，可能需要返回更新信息。回送可能包含新的或更新信息由entity-headers呈现。</p>
+<p>205 Reset Content<br>服务器已经接受请求并且用户代理应该重新设置文档视图。</p>
+<p>206 Partial Content<br>服务器已经接受请求GET请求资源的部分。请求必须包含一个Range头信息以指示获取范围可能必须包含If-Range头信息以成立请求条件。</p>
+<h1 id="Redirection"><a href="#Redirection" class="headerlink" title="Redirection"></a>Redirection</h1><p>300 Multiple Choices<br>请求资源符合任何一个呈现方式。</p>
+<p>301 Moved Permanently<br>请求的资源已经被赋予一个新的URI。</p>
+<p>302 Found<br>通过不同的URI请求资源的临时文件。<br>303 See Other</p>
+<p>304 Not Modified<br>如果客服端已经完成一个有条件的请求并且请求是允许的，但是这个文档并没有改变，服务器应该返回304状态码。304<br>状态码一定不能包含信息主体，从而通常通过一个头字段后的第一个空行结束。</p>
+<p>305 Use Proxy<br>请求的资源必须通过代理（由Location字段指定）来访问。Location资源给出了代理的URI。</p>
+<p>306 Unused</p>
+<p>307 Temporary Redirect</p>
+<h1 id="Client-Error"><a href="#Client-Error" class="headerlink" title="Client Error"></a>Client Error</h1><p>400 Bad Request<br>因为错误的语法导致服务器无法理解请求信息。</p>
+<p>401 Unauthorized<br>如果请求需要用户验证。回送应该包含一个WWW-Authenticate头字段用来指明请求资源的权限。</p>
+<p>402 Payment Required<br>保留状态码</p>
+<p>403 Forbidden<br>服务器接受请求，但是被拒绝处理。</p>
+<p>404 Not Found<br>服务器已经找到任何匹配Request-URI的资源。</p>
+<p>405 Menthod Not Allowed<br>Request-Line 请求的方法不被允许通过指定的URI。</p>
+<p>406 Not Acceptable</p>
+<p>407 Proxy Authentication Required</p>
+<p>408 Reqeust Timeout<br>客服端没有提交任何请求在服务器等待处理时间内。</p>
+<p>409 Conflict</p>
+<p>410 Gone</p>
+<p>411 Length Required<br>服务器拒绝接受请求在没有定义Content-Length字段的情况下。</p>
+<p>412 Precondition Failed</p>
+<p>413 Request Entity Too Large<br>服务器拒绝处理请求因为请求数据超过服务器能够处理的范围。服务器可能关闭当前连接来阻止客服端继续请求。</p>
+<p>414 Request-URI Too Long<br>服务器拒绝服务当前请求因为URI的长度超过了服务器的解析范围。</p>
+<p>415 Unsupported Media Type<br>服务器拒绝服务当前请求因为请求数据格式并不被请求的资源支持。</p>
+<p>416 Request Range Not Satisfialbe</p>
+<p>417 Expectation Failed</p>
+<h1 id="Server-Error"><a href="#Server-Error" class="headerlink" title="Server Error"></a>Server Error</h1><p>500 Internal Server Error<br>服务器遭遇异常阻止了当前请求的执行</p>
+<p>501 Not Implemented<br>服务器没有相应的执行动作来完成当前请求。</p>
+<p>502 Bad Gateway</p>
+<p>503 Service Unavailable<br>因为临时文件超载导致服务器不能处理当前请求。</p>
+<p>504 Gateway Timeout</p>
+<p>505 Http Version Not Supported</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="url">
+                  Remember that ordinal parameters are 1-based!
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-30T08:36:05+08:00" content="2015-03-30">
+              2015-03-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/30/Remember that ordinal parameters are 1-based!/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/30/Remember that ordinal parameters are 1-based!/" class="leancloud_visitors" data-flag-title="Remember that ordinal parameters are 1-based!">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exception</div><div class="line"></div><div class="line">javax.servlet.ServletException: java.lang.IndexOutOfBoundsException:</div><div class="line"></div><div class="line">        Remember that ordinal parameters are <span class="number">1</span>-based!</div></pre></td></tr></table></figure>
+<p>是因为在HQL语句中出错。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/26/用Java进行3DES加密解/" itemprop="url">
                   用Java进行3DES加密解
                 </a>
@@ -1372,405 +1829,11 @@ public List&amp;lt;User&amp;gt; list();
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="url">
-                  [转]获得每日，每周，每月的0点和24点的时间戳
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-05T02:16:07+08:00" content="2015-03-05">
-              2015-03-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" class="leancloud_visitors" data-flag-title="[转]获得每日，每周，每月的0点和24点的时间戳">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://chenp1111.iteye.com/blog/744259" target="_blank" rel="external">原文地址</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获得当天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得当天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周一0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeekmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周日24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeeknight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) ((cal.getTime().getTime()+ (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月第一天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH)); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月最后一天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMaximum(Calendar.DAY_OF_MONTH)); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="url">
-                  Java中Date,Calendar,Timestamp的区别以及相互转换与使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-05T02:14:17+08:00" content="2015-03-05">
-              2015-03-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" class="leancloud_visitors" data-flag-title="Java中Date,Calendar,Timestamp的区别以及相互转换与使用">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1 Java.util.Date<br>包含年、月、日、时、分、秒信息。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String转换为Date</span></div><div class="line">String dateStr=&amp;quot;<span class="number">2013</span>-<span class="number">8</span>-<span class="number">13</span> <span class="number">23</span>:<span class="number">23</span>:<span class="number">23</span>&amp;quot;;</div><div class="line">String pattern=&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;;</div><div class="line">DateFormate dateFormat=<span class="keyword">new</span> SimpleDateFormat(pattern);</div><div class="line">Date date=dateFormat.parse(dateStr);</div><div class="line">date=dateFormat.format(date);</div></pre></td></tr></table></figure></p>
-<p>2 Java.sql.Date<br>包含年、月、日信息。<br>继承自java.util.Date。在数据库相关操作中使用，如rs.getDate，ps.setDate等。rs是指ResultSet，ps是指PreparedStatement。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Date转换为java.sql.Date</span></div><div class="line"><span class="keyword">new</span> java.sql.Date(utilDate.getTime());<span class="comment">// 其中utilDate为java.util.Date类型的对象</span></div></pre></td></tr></table></figure></p>
-<p>3 Java.util.Calendar<br>包含年、月、日、时、分、秒、毫秒信息。<br>JDK1.1引入，用以代替java.util.Date。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Date转为Calendar</span></div><div class="line">Date date=<span class="keyword">new</span> Date();</div><div class="line">Calendar calendar=Calendar.getInstance();</div><div class="line">calendar.setTime(date);</div><div class="line"><span class="comment">// Calendar转为Date</span></div><div class="line">Calendar ca=Calendar.getInstance();  </div><div class="line">Date d =(Date) ca.getTime();</div></pre></td></tr></table></figure></p>
-<p>4 Java.sql.Timestamp<br>包含年、月、日、时、分、秒、纳秒（nano）信息。<br>继承自java.util.Date。比java.sql.Date包含更多信息。在数据库相关操作中使用，如rs.getTimestamp，ps.setTimeStamp等。例如：若数据库中某字段hireDate为Oracle的Date类型，则使用getTimestamp时能够将年、月、日、时、分、秒信息取出；但使用getDate时则只能取出年、月、日信息。因此，一般推荐使用getTimestamp。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Calendar转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(Calendar.getInstance().getTimeInMillis());</div><div class="line"><span class="comment">// java.util.Date转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(date.getTime());</div><div class="line"><span class="comment">// String转换为java.sql.Timestamp，String格式：yyyy-mm-dd hh:mm:ss[.f...] ，方括号表示可选</span></div><div class="line">Timestamp.valueOf(&amp;quot;<span class="number">2013</span>-<span class="number">07</span>-<span class="number">06</span> <span class="number">01</span>:<span class="number">49</span>:<span class="number">30</span>&amp;quot;);</div></pre></td></tr></table></figure></p>
-<p>5 Oracle数据库提供的日期和时间类型<br>Oracle数据库提供了DATE，TIMESTAMP，TIMESTAMP WITH TIME ZONE和TIMESTAMP WITH LOCAL TIME ZONE四种类型。<br>DATE包含世纪、年、月、日、时、分、秒信息。<br>TIMESTAMP是DATE的扩展，包含年、月、日、时、分、秒和fractional seconds信息。定义TIMESTAMP的格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TIMESTAMP [(fractional_seconds_precision)]</div><div class="line"><span class="comment">// 格式</span></div><div class="line">TIMESTAMP <span class="string">'YYYY-MM-DD HH24:MI:SS.FF'</span></div><div class="line"><span class="comment">// 一个例子</span></div><div class="line">TIMESTAMP <span class="string">'1997-01-31 09:26:50.12'</span></div></pre></td></tr></table></figure></p>
-<p>其中fractional_seconds_precision是可选的，用于指定秒使用含几位小数的浮点数表示，它的取值范围是0到9，默认是6。上述例子中表示采用两位小数，它的秒值是50.12。注意：12不是毫秒值，也不是微秒值。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/05/Java日期前推一个月/" itemprop="url">
-                  Java日期前推一个月
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-05T02:11:02+08:00" content="2015-03-05">
-              2015-03-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/05/Java日期前推一个月/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java日期前推一个月/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/05/Java日期前推一个月/" class="leancloud_visitors" data-flag-title="Java日期前推一个月">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">计算离当前日期之前或之后任意天的日期 </div><div class="line"><span class="comment">/** </span></div><div class="line">* 日期计算 </div><div class="line">* </div><div class="line">* <span class="doctag">@author</span> zhangmingxue </div><div class="line">* </div><div class="line">*/ </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputeDateUtils</span> </span>&#123; </div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离当前日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(<span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(); </div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date beginDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      beginDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> beginDate; </div><div class="line">  &#125; </div><div class="line"></div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离beginDate日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(Date beginDate, <span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    Calendar beginCal=Calendar.getInstance(); </div><div class="line">    beginCal.setTime(beginDate); </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(beginCal.get(Calendar.YEAR),beginCal.get(Calendar.MONTH),beginCal.get(Calendar.DATE));</div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date endDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      endDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> endDate; </div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1811,7 +1874,7 @@ public List&amp;lt;User&amp;gt; list();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1828,7 +1891,7 @@ public List&amp;lt;User&amp;gt; list();
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

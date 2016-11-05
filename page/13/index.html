@@ -301,6 +301,406 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/12/2014-11-12-openstack 中的Routes + webob 的 REST API/" itemprop="url">
+                  openstack 中的Routes + webob 的 REST API
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-12T00:29:00+08:00" content="2014-11-12">
+              2014-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/12/2014-11-12-openstack 中的Routes + webob 的 REST API/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/2014-11-12-openstack 中的Routes + webob 的 REST API/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/12/2014-11-12-openstack 中的Routes + webob 的 REST API/" class="leancloud_visitors" data-flag-title="openstack 中的Routes + webob 的 REST API">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先贴一段代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</div><div class="line"><span class="keyword">from</span> routes <span class="keyword">import</span> Mapper</div><div class="line"><span class="keyword">import</span> webob.dec</div><div class="line"><span class="keyword">import</span> webob.exc</div><div class="line"><span class="keyword">import</span> routes.middleware</div><div class="line"><span class="keyword">import</span> testtools</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyController</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getlist</span><span class="params">(self, mykey)</span>:</span></div><div class="line">        print(<span class="string">"step 4: MyController's getlist(self, mykey) is invoked"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="string">"getlist(), mykey="</span> + mykey</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Test application to call from router."""</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, controller)</span>:</span></div><div class="line">        self._controller = controller</div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></div><div class="line">        print(<span class="string">"step 3: MyApplication is invoked"</span>)</div><div class="line">        </div><div class="line">        action_args = environ[<span class="string">'wsgiorg.routing_args'</span>][<span class="number">1</span>].copy()</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">del</span> action_args[<span class="string">'controller'</span>]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line"></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">del</span> action_args[<span class="string">'format'</span>]</div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        </div><div class="line">        action = action_args.pop(<span class="string">'action'</span>, <span class="keyword">None</span>)</div><div class="line">        controller_method = getattr(self._controller, action)</div><div class="line">        result = controller_method(**action_args)</div><div class="line">        </div><div class="line">        start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)])</div><div class="line">        <span class="keyword">return</span> [result]</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRouter</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""Test router."""</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        route_name = <span class="string">"dummy_route"</span></div><div class="line">        route_path = <span class="string">"/dummies"</span></div><div class="line">        </div><div class="line">        my_application = MyApplication(MyController()) </div><div class="line">        </div><div class="line">        self.mapper = Mapper()</div><div class="line">        self.mapper.connect(route_name, route_path,</div><div class="line">                        controller=my_application,</div><div class="line">                        action=<span class="string">"getlist"</span>,</div><div class="line">                        mykey=<span class="string">"myvalue"</span>,</div><div class="line">                        conditions=&#123;<span class="string">"method"</span>: [<span class="string">'GET'</span>]&#125;)</div><div class="line">        </div><div class="line">        </div><div class="line">        self._router = routes.middleware.RoutesMiddleware(self._dispatch,</div><div class="line">                                                          self.mapper)</div><div class="line"></div><div class="line"><span class="meta">    @webob.dec.wsgify(RequestClass=webob.Request)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, req)</span>:</span></div><div class="line">        <span class="string">"""Route the incoming request to a controller based on self.map.</span></div><div class="line"></div><div class="line">        If no match, return a 404.</div><div class="line"></div><div class="line">        """</div><div class="line">        print(<span class="string">"step 1: MyRouter is invoked"</span>)</div><div class="line">        <span class="keyword">return</span> self._router</div><div class="line"></div><div class="line"><span class="meta">    @staticmethod</span></div><div class="line"><span class="meta">    @webob.dec.wsgify(RequestClass=webob.Request)</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_dispatch</span><span class="params">(req)</span>:</span></div><div class="line">        <span class="string">"""Dispatch the request to the appropriate controller.</span></div><div class="line"></div><div class="line">        Called by self._router after matching the incoming request to a route</div><div class="line">        and putting the information into req.environ.  Either returns 404</div><div class="line">        or the routed WSGI app's response.</div><div class="line"></div><div class="line">        """</div><div class="line">        print(<span class="string">"step 2: RoutesMiddleware is invoked, calling our _dispatch back"</span>)</div><div class="line">        </div><div class="line">        match_dict = req.environ[<span class="string">'wsgiorg.routing_args'</span>][<span class="number">1</span>]</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> match_dict:</div><div class="line">            <span class="keyword">return</span> webob.exc.HTTPNotFound()</div><div class="line">        app = match_dict[<span class="string">'controller'</span>]</div><div class="line">        <span class="keyword">return</span> app</div><div class="line">        </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoutingTestCase</span><span class="params">(testtools.TestCase)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_router</span><span class="params">(self)</span>:</span></div><div class="line">        router = MyRouter()</div><div class="line">        result = webob.Request.blank(<span class="string">'/dummies'</span>).get_response(router)</div><div class="line">        self.assertEqual(result.body, <span class="string">"getlist(), mykey=myvalue"</span>)</div></pre></td></tr></table></figure>
+<p>然后见<a href="http://blog.csdn.net/spch2008/article/details/9004926" target="_blank" rel="external">博客</a>中有较为详细的理解，但是要深入的话还是需要深入阅读文档</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/12/2014-11-12-Python  中的@/" itemprop="url">
+                  Python  中的@
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-12T00:26:00+08:00" content="2014-11-12">
+              2014-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/12/2014-11-12-Python  中的@/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/12/2014-11-12-Python  中的@/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/12/2014-11-12-Python  中的@/" class="leancloud_visitors" data-flag-title="Python  中的@">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1 Decorators<br> for Functions and Methods<br>见<a href="http://legacy.python.org/dev/peps/pep-0318/" target="_blank" rel="external">点击打开链接</a><br>2 @property<br>可以将python定义的函数“当做”属性访问，从而提供更加友好访问方式</p>
+<p>见<a href="http://joy2everyone.iteye.com/blog/910950" target="_blank" rel="external">点击打开链接</a><br>3.@classmethod<br>定义类方法<br>见<a href="http://xuqingkuang.is-programmer.com/2009/3/6/python-technique-classmethod-decorator.7404.html" target="_blank" rel="external">点击打开链接</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/08/21/2014-08-21-Openstack笔记一/" itemprop="url">
+                  Openstack笔记一
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-08-21T10:28:00+08:00" content="2014-08-21">
+              2014-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/08/21/2014-08-21-Openstack笔记一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/21/2014-08-21-Openstack笔记一/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/08/21/2014-08-21-Openstack笔记一/" class="leancloud_visitors" data-flag-title="Openstack笔记一">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>DashBoard<br>setenforce 0</p>
+</li>
+<li><p>Docker<br>1）相关的Github网址：<a href="https://github.com/stackforge/nova-docker" target="_blank" rel="external">nova-docker</a><br>2）需要安装Dokcer：<a href="https://docs.docker.com/installation/centos/" target="_blank" rel="external">centos-docker</a><br>3)  保证Docker镜像的名称与Glance中镜像的名称一致<br>4）保证Docker在Centos中可以独立加载使用镜像<br>5）/etc/sysconfig/docker 中添加other_args=“–exec-driver=lxc –selinux-enabled”</p>
+</li>
+<li><p>Cinder(未测试在Docker中的使用)<br>1）在cinder.conf中iscsi_helper=tgtdadm</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/02/07/2014-02-07-练习2.73-练习2.74/" itemprop="url">
                   练习2.73-练习2.74
                 </a>
@@ -738,6 +1138,150 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="url">
+                  练习1.23-练习1.30
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-20T20:10:00+08:00" content="2014-01-20">
+              2014-01-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/20/2014-01-20-练习1.23-练习1.30/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/20/2014-01-20-练习1.23-练习1.30/" class="leancloud_visitors" data-flag-title="练习1.23-练习1.30">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/'>练习1.23-练习1.30</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>1.练习1.23<br>改后的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (find-divisor-better n a)</div><div class="line">  (cond ((&gt; (square a) n) n)</div><div class="line">	((divides?-better n a) a)</div><div class="line">	(else (find-divisor-better n (next-2 a)))))</div><div class="line"></div><div class="line">(define (next-2 n)</div><div class="line">  (if (= 2 n)</div><div class="line">      (+ 1 n)</div><div class="line">      (+ 2 n)))</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-min-prime-since-better n start-time number)</div><div class="line">  (cond ((= number 0) (display-info start-time (real-time-clock)))</div><div class="line">	((prime? n) (begin</div><div class="line">		      (format #t &quot;~S~%&quot; n)</div><div class="line">		      (find-min-prime-since-better (+ n (next-plus n)) start-time (- number 1))))</div><div class="line">	(else (find-min-prime-since-better (+ n (next-plus n)) start-time number)))</div><div class="line">  #f)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (next-plus n)</div><div class="line">  (if (even? n)</div><div class="line">      1</div><div class="line">      2))</div></pre></td></tr></table></figure>
+<p>电脑跑这些代码的时候，没有固定的运行时间，一直在变。不过结果是改后的基本是没改前的0.5，也可能0.6左右。<br>2.练习1.24<br>代码就不贴出来了，只是将上一题中的判断是否为素数的方法改为费马方法。<br>在检测接近1000000的素数和接近1000的素数时，接近1000000的素数在时间上应该为(log1000000)=6应该大于接近1000的3的素数检查，比值为2:1，实验中计算从1000和1000000开始的1000个素数，1000开始的时间为695，而从1000000开始的时间为1470，比值接近于1:2， 与假设基本相同。<br>但是在<a href="http://www.codesky.net/article/200501/54364.html" target="_blank" rel="external">帖子</a>，那我猜，可能是64位和32位的不同了。<br>3.练习1.25<br>先求次方的结果会导致一个很大的数求余数，这样的时间消耗会很大。<br>4.练习1.26<br>不使用square的结果是每次减半的expmod操作没有了简版的效果，所以时间复杂度会变回O(n) 。<br>5.练习1.27</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (try-it a n)</div><div class="line">    (= (expmod a n n) a))</div><div class="line"></div><div class="line">(define (carmichael-test n number)</div><div class="line">  (cond ((= number 0) true)</div><div class="line">	((try-it number n) (carmichael-test n (- number 1)))</div><div class="line">	(else false)))</div><div class="line"></div><div class="line">(define (car-prime? n)</div><div class="line">  (carmichael-text n (- n 1)))</div></pre></td></tr></table></figure>
+<p>6.练习1.28</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(define (new-expmod base exp m)</div><div class="line">  (define tmpbase 100)</div><div class="line">  (cond ((= exp 0) 1)</div><div class="line">	((even? exp) (begin</div><div class="line">		      (set! tmpbase (new-expmod base (/ exp 2) m))</div><div class="line">		      (if (and (not (= tmpbase (- m 1)))</div><div class="line">			       (not (= tmpbase 1))</div><div class="line">			       (= (remainder (square tmpbase)</div><div class="line">					       m) 1))</div><div class="line">			   0</div><div class="line">			   (remainder (square tmpbase)</div><div class="line">					 m))))</div><div class="line">	(else (remainder (* base (new-expmod base (- exp 1) m))</div><div class="line">			 m))))</div><div class="line">(define (new-try-it n a)</div><div class="line">  (new-expmod a (- n 1) n))</div><div class="line"></div><div class="line"></div><div class="line">(define (new-fermat-test n start)</div><div class="line">  (cond ((= start 1) true)</div><div class="line">	((= (new-try-it n start) 0) false)</div><div class="line">	(else (new-fermat-test n (- start 1)))))</div><div class="line"></div><div class="line">(define (really-prime? n)</div><div class="line"> (new-fermat-test n (if (even? n)</div><div class="line">			(/ n 2)</div><div class="line">			(/ (- n 1) 2))))</div></pre></td></tr></table></figure>
+<p>没有进行优化，但本身也有可能会有更好的方法吧</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="url">
                   练习2.21-练习2.35
                 </a>
@@ -851,150 +1395,6 @@
 <p>15.练习2.35</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">(define (count-leaves tree)</div><div class="line">    (accumulate +</div><div class="line">                0</div><div class="line">                (map (lambda (sub-tree)</div><div class="line">                         (if (pair? sub-tree)        </div><div class="line">                             (count-leaves sub-tree)   </div><div class="line">                             1))                        </div><div class="line">                     tree)))</div><div class="line"></div><div class="line">(define (count-leaves t)</div><div class="line">  (accumulate (lambda (x y) (if (not (pair? x))</div><div class="line">				(+ x y)</div><div class="line">				(+ (count-leaves x)</div><div class="line">				   y)))</div><div class="line">	      0</div><div class="line">	      (map (lambda (x) (if (not (pair? x))</div><div class="line">				   1</div><div class="line">				   x))</div><div class="line">		   (append (filter (lambda (x) (pair? x)) t)</div><div class="line">			   (filter (lambda (x) (not (pair? x))) t)))))</div></pre></td></tr></table></figure>
 <p>```</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="url">
-                  练习1.23-练习1.30
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-20T20:10:00+08:00" content="2014-01-20">
-              2014-01-20
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/20/2014-01-20-练习1.23-练习1.30/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/20/2014-01-20-练习1.23-练习1.30/" class="leancloud_visitors" data-flag-title="练习1.23-练习1.30">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/'>练习1.23-练习1.30</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>1.练习1.23<br>改后的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (find-divisor-better n a)</div><div class="line">  (cond ((&gt; (square a) n) n)</div><div class="line">	((divides?-better n a) a)</div><div class="line">	(else (find-divisor-better n (next-2 a)))))</div><div class="line"></div><div class="line">(define (next-2 n)</div><div class="line">  (if (= 2 n)</div><div class="line">      (+ 1 n)</div><div class="line">      (+ 2 n)))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-min-prime-since-better n start-time number)</div><div class="line">  (cond ((= number 0) (display-info start-time (real-time-clock)))</div><div class="line">	((prime? n) (begin</div><div class="line">		      (format #t &quot;~S~%&quot; n)</div><div class="line">		      (find-min-prime-since-better (+ n (next-plus n)) start-time (- number 1))))</div><div class="line">	(else (find-min-prime-since-better (+ n (next-plus n)) start-time number)))</div><div class="line">  #f)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (next-plus n)</div><div class="line">  (if (even? n)</div><div class="line">      1</div><div class="line">      2))</div></pre></td></tr></table></figure>
-<p>电脑跑这些代码的时候，没有固定的运行时间，一直在变。不过结果是改后的基本是没改前的0.5，也可能0.6左右。<br>2.练习1.24<br>代码就不贴出来了，只是将上一题中的判断是否为素数的方法改为费马方法。<br>在检测接近1000000的素数和接近1000的素数时，接近1000000的素数在时间上应该为(log1000000)=6应该大于接近1000的3的素数检查，比值为2:1，实验中计算从1000和1000000开始的1000个素数，1000开始的时间为695，而从1000000开始的时间为1470，比值接近于1:2， 与假设基本相同。<br>但是在<a href="http://www.codesky.net/article/200501/54364.html" target="_blank" rel="external">帖子</a>，那我猜，可能是64位和32位的不同了。<br>3.练习1.25<br>先求次方的结果会导致一个很大的数求余数，这样的时间消耗会很大。<br>4.练习1.26<br>不使用square的结果是每次减半的expmod操作没有了简版的效果，所以时间复杂度会变回O(n) 。<br>5.练习1.27</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (try-it a n)</div><div class="line">    (= (expmod a n n) a))</div><div class="line"></div><div class="line">(define (carmichael-test n number)</div><div class="line">  (cond ((= number 0) true)</div><div class="line">	((try-it number n) (carmichael-test n (- number 1)))</div><div class="line">	(else false)))</div><div class="line"></div><div class="line">(define (car-prime? n)</div><div class="line">  (carmichael-text n (- n 1)))</div></pre></td></tr></table></figure>
-<p>6.练习1.28</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(define (new-expmod base exp m)</div><div class="line">  (define tmpbase 100)</div><div class="line">  (cond ((= exp 0) 1)</div><div class="line">	((even? exp) (begin</div><div class="line">		      (set! tmpbase (new-expmod base (/ exp 2) m))</div><div class="line">		      (if (and (not (= tmpbase (- m 1)))</div><div class="line">			       (not (= tmpbase 1))</div><div class="line">			       (= (remainder (square tmpbase)</div><div class="line">					       m) 1))</div><div class="line">			   0</div><div class="line">			   (remainder (square tmpbase)</div><div class="line">					 m))))</div><div class="line">	(else (remainder (* base (new-expmod base (- exp 1) m))</div><div class="line">			 m))))</div><div class="line">(define (new-try-it n a)</div><div class="line">  (new-expmod a (- n 1) n))</div><div class="line"></div><div class="line"></div><div class="line">(define (new-fermat-test n start)</div><div class="line">  (cond ((= start 1) true)</div><div class="line">	((= (new-try-it n start) 0) false)</div><div class="line">	(else (new-fermat-test n (- start 1)))))</div><div class="line"></div><div class="line">(define (really-prime? n)</div><div class="line"> (new-fermat-test n (if (even? n)</div><div class="line">			(/ n 2)</div><div class="line">			(/ (- n 1) 2))))</div></pre></td></tr></table></figure>
-<p>没有进行优化，但本身也有可能会有更好的方法吧</p>
 
           
         
@@ -1316,455 +1716,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/15/2014-01-15-练习2.2-练习2.10/" itemprop="url">
-                  练习2.2-练习2.10
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-15T21:29:00+08:00" content="2014-01-15">
-              2014-01-15
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/15/2014-01-15-练习2.2-练习2.10/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/15/2014-01-15-练习2.2-练习2.10/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/15/2014-01-15-练习2.2-练习2.10/" class="leancloud_visitors" data-flag-title="练习2.2-练习2.10">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/15/2014-01-15-练习2.2-练习2.10/'>练习2.2-练习2.10</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>1.练习2.2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (make-segment start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-segment seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-segment seg)</div><div class="line">  (cdr seg))</div><div class="line"></div><div class="line">(define (make-point x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (x-point p)</div><div class="line">  (car p))</div><div class="line"></div><div class="line">(define (y-point p)</div><div class="line">  (cdr p))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (midpoint-segment seg)</div><div class="line">  (make-point (/ (+ (x-point (start-segment seg))</div><div class="line">		    (x-point (end-segment seg))) 2)</div><div class="line">	      (/ (+ (y-point (start-segment seg))</div><div class="line">		    (y-point (end-segment seg))) 2)))</div></pre></td></tr></table></figure>
-<p>2.练习2.3首次定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-rect start end)</div><div class="line">  (cons start end))</div><div class="line"></div><div class="line">(define (start-rect seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-rect seg)</div><div class="line">  (cdr seg))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (width rect)</div><div class="line">  (abs (- (y-point (end-rect rect))</div><div class="line">	  (y-point (start-rect rect)))))</div><div class="line"></div><div class="line">(define (length rect)</div><div class="line">  (abs (- (x-point (end-rect rect))</div><div class="line">	  (x-point (start-rect rect)))))</div><div class="line"></div><div class="line">(define (girth rect)</div><div class="line">  (* (+ (width rect)</div><div class="line">	(length rect))</div><div class="line">     2))</div><div class="line"></div><div class="line">(define (area rect)</div><div class="line">  (* (width rect)</div><div class="line">     (length rect)))</div></pre></td></tr></table></figure>
-<p>二次定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (make-rect start length width)</div><div class="line">  (cons start</div><div class="line">	(cons length width)))</div><div class="line"></div><div class="line">(define (start-rect seg)</div><div class="line">  (car seg))</div><div class="line"></div><div class="line">(define (end-rect seg)</div><div class="line">  (cons (+ (x-point (start-rect seg))</div><div class="line">	   (car (cdr seg)))</div><div class="line">	(+ (y-point (start-rect seg))</div><div class="line">	   (cdr (cdr seg)))))</div></pre></td></tr></table></figure>
-<p>3.练习2.4</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (cons x y)</div><div class="line">  (lambda (m) (m x y)))</div><div class="line"></div><div class="line">(define (car z)</div><div class="line">  (z (lambda (p q) p)))</div><div class="line"></div><div class="line">(define (cdr z)</div><div class="line">  (z (lambda (p q) q)))</div></pre></td></tr></table></figure>
-<p>4.练习2.5</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (cons a b)</div><div class="line">  (* (pow 2 a)</div><div class="line">     (pow 3 b)))</div><div class="line"></div><div class="line">(define (car c)</div><div class="line">  (define (iter n result)</div><div class="line">    (if (not (= (remainder n 2) 0))</div><div class="line">	result</div><div class="line">	(iter (/ n 2) (+ result 1))))</div><div class="line">  (iter c 0))</div><div class="line"></div><div class="line">(define (cdr c)</div><div class="line">  (define (iter n result)</div><div class="line">    (if (not (= (remainder n 3) 0))</div><div class="line">	result</div><div class="line">	(iter (/ n 3) (+ result 1))))</div><div class="line">  (iter c 0))</div></pre></td></tr></table></figure>
-<p>5.练习2.6</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define one</div><div class="line">  (lambda (f) (lambda (x) (f x))))</div><div class="line"></div><div class="line">(define two</div><div class="line">  (lambda (f) (lambda (x) (f (f x)))))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(define (add a b)</div><div class="line">  (lambda (f) (lambda (x) ((b f) ((a f) x)))))</div></pre></td></tr></table></figure>
-<p>6.练习2.7</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (make-interval x y)</div><div class="line">  (cons x y))</div><div class="line"></div><div class="line">(define (upper-bound c)</div><div class="line">  (cdr c))</div><div class="line"></div><div class="line">(define (lower-bound c)</div><div class="line">  (car c))</div></pre></td></tr></table></figure>
-<p>7.练习2.8</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sub-interval x y)</div><div class="line">  (let ((a (- (lower-bound x) (lower-bound y)))</div><div class="line">	(b (- (upper-bound x) (upper-bound y))))</div><div class="line">    (make-interval (min a b)</div><div class="line">		   (max a b))))</div></pre></td></tr></table></figure>
-<p>8.练习2.9</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (width-interval a)</div><div class="line">  (/ (- (upper-bound a)</div><div class="line">	(lower-bound a))</div><div class="line">     2))</div></pre></td></tr></table></figure>
-<p>9.练习2.10</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (div-interval x y)</div><div class="line">  (if (and (&lt;= (lower-bound y) 0) (&gt;= (upper-bound y) 0))</div><div class="line">      (error &quot;ERROR!!!&quot;)</div><div class="line">      (mul-interval x</div><div class="line">		       (make-interval (/ 1.0 (upper-bound y))</div><div class="line">				      (/ 1.0 (lower-bound y))))))</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/14/2014-01-14-练习2.1/" itemprop="url">
-                  练习2.1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-14T22:59:00+08:00" content="2014-01-14">
-              2014-01-14
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/14/2014-01-14-练习2.1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/14/2014-01-14-练习2.1/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/14/2014-01-14-练习2.1/" class="leancloud_visitors" data-flag-title="练习2.1">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/14/2014-01-14-练习2.1/'>练习2.1</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>1.练习2.1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (check-pos-neg a b)</div><div class="line">  (or (and (not (&lt; a 0)) (&gt; b 0))</div><div class="line">      (and (not (&gt; a 0)) (&lt; b 0))))</div><div class="line"></div><div class="line">(define (make-rat n d)</div><div class="line">  (let ((g (gcd (abs n) (abs d)))</div><div class="line">	(posi (check-pos-neg n d)))</div><div class="line">    (cons (/ (if posi</div><div class="line">		 (abs n)</div><div class="line">		 (- (abs n)))</div><div class="line">	     g)</div><div class="line">	  (/ (abs d) g))))</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/13/2014-01-13-练习1.40-练习1.46/" itemprop="url">
-                  练习1.40-练习1.46
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-13T21:01:00+08:00" content="2014-01-13">
-              2014-01-13
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/13/2014-01-13-练习1.40-练习1.46/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/13/2014-01-13-练习1.40-练习1.46/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/13/2014-01-13-练习1.40-练习1.46/" class="leancloud_visitors" data-flag-title="练习1.40-练习1.46">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/13/2014-01-13-练习1.40-练习1.46/'>练习1.40-练习1.46</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>1.练习1.40</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (cubic a b c)</div><div class="line">  (define (cube x)</div><div class="line">    (* x x x))</div><div class="line">  (lambda (x)</div><div class="line">    (+ (cube x)</div><div class="line">       (* a (square x))</div><div class="line">       (* b x)</div><div class="line">       c)))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (newtons-method g guess)</div><div class="line">  (fixed-point (newton-transform g) guess))</div><div class="line"></div><div class="line">(newtons-method (cubic 1 0 0) 1)</div></pre></td></tr></table></figure>
-<p>2.练习1.41</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (double f)</div><div class="line">  (lambda (x) (f (f x))))</div><div class="line"></div><div class="line">(((double (double double)) (lambda (x) (+ x 1))) 5)</div></pre></td></tr></table></figure>
-<p>结果是21，真的很不想解释。(double double)展开是(f (f  (f (f x))))<br>(double (double double))展开是(f’ (f‘ (f’ (f‘ x)))))))，每个f‘为(f (f  (f (f x))))，一共是16个f，所以结果是5+16=21<br>3.练习1.42</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(define (compose f g)</div><div class="line">  (lambda (x) (f (g x))))</div></pre></td></tr></table></figure>
-<p>4.练习1.43</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (repeated f n)</div><div class="line">  (if (= n 1)</div><div class="line">      (lambda (x) (f x))</div><div class="line">      (lambda (x) (f ((repeated f (- n 1)) x)))))</div></pre></td></tr></table></figure>
-<p>5.练习1.44这个有点儿直接了，没有简化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (smooth f)</div><div class="line">  (let ((dx 0.0000001))</div><div class="line">    (lambda (x) (/</div><div class="line">		 (+</div><div class="line">		  (f (- x dx))</div><div class="line">		  (f x)</div><div class="line">		  (f (+ x dx)))</div><div class="line">		 3))))</div><div class="line"></div><div class="line">(((repeated smooth 6) square) 2)</div></pre></td></tr></table></figure>
-<p>6.练习1.45也是没有简化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">(define (average-dump-time n)</div><div class="line">  (floor (/ (log n) (log 2))))</div><div class="line"></div><div class="line">(define (cifanggen x n)</div><div class="line">  (define (product term a next b)</div><div class="line">    (if (&gt; a b)</div><div class="line">	1</div><div class="line">	(* (term a)</div><div class="line">	   (product term (next a) next b)))) </div><div class="line">  (define (cifang x n)</div><div class="line">    (product (lambda (i) x)</div><div class="line">	     1</div><div class="line">	     (lambda (i) (+ i 1))</div><div class="line">	     n))</div><div class="line">  (fixed-point ((repeated average-dump (average-dump-time n)) (lambda (i) (/ x (cifang i (- n 1)))))</div><div class="line">	       n))</div></pre></td></tr></table></figure>
-<p>7.练习1.46<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (iterative-improve good-enough? improve)</div><div class="line">   (lambda (a) (if (good-enough? a (improve a))</div><div class="line">		   (improve a)</div><div class="line">		   ((iterative-improve good-enough? improve) (improve a)))))</div><div class="line"></div><div class="line">(define (fixed-point f guess)</div><div class="line">  (define (good-enough1? a b)</div><div class="line">    (let ((tolerance 0.000001))</div><div class="line">      (&lt; (abs (- a b)) tolerance)))</div><div class="line">  ((iterative-improve good-enough1? f) guess))</div><div class="line"></div><div class="line">(define (sqrt n)</div><div class="line">  (fixed-point (lambda (y) (/ (+ y (/ n y)) 2))</div><div class="line">	       1.0))</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1805,7 +1761,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1822,7 +1778,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

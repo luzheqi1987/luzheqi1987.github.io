@@ -301,6 +301,451 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/04/QT出现重复调用SLOT函数/" itemprop="url">
+                  QT出现重复调用SLOT函数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-04T18:21:36+08:00" content="2016-11-04">
+              2016-11-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index">
+                    <span itemprop="name">QT</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/04/QT出现重复调用SLOT函数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/04/QT出现重复调用SLOT函数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/04/QT出现重复调用SLOT函数/" class="leancloud_visitors" data-flag-title="QT出现重复调用SLOT函数">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="问题表现"><a href="#问题表现" class="headerlink" title="问题表现"></a>问题表现</h2><p>问题是这样的，在每次重复一些操作之后，总会给我多次调用。而且很有规律，第一轮调用<strong>1</strong>次，第二轮调用<strong>2</strong>次，第三轮调用<strong>3</strong>次，以此类推。</p>
+<h2 id="问题修改"><a href="#问题修改" class="headerlink" title="问题修改"></a>问题修改</h2><p>源代码是这样的。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">connect(rtmpSource, SIGNAL(showCameraInterrtpt()), <span class="keyword">this</span>, SLOT(showCameraMessageBox());</div></pre></td></tr></table></figure></p>
+<p>这样就会有问题，默认的connect每次调用都会建立一个连接，改成下面的代码就好了。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">connect(rtmpSource, SIGNAL(showCameraInterrtpt()), <span class="keyword">this</span>, SLOT(showCameraMessageBox()), Qt::UniqueConnection);</div></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/04/QT出现重复调用SLOT函数/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/11/01/LeetCode-174-Dungeon-Game/" itemprop="url">
+                  LeetCode 174. Dungeon Game
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-01T09:47:55+08:00" content="2016-11-01">
+              2016-11-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/01/LeetCode-174-Dungeon-Game/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/LeetCode-174-Dungeon-Game/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/01/LeetCode-174-Dungeon-Game/" class="leancloud_visitors" data-flag-title="LeetCode 174. Dungeon Game">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="原题要求"><a href="#原题要求" class="headerlink" title="原题要求"></a>原题要求</h2><p>The demons had captured the princess <strong>(P)</strong> and imprisoned her in the bottom-right corner of a dungeon. The dungeon consists of M x N rooms laid out in a 2D grid. Our valiant knight <strong>(K)</strong> was initially positioned in the top-left room and must fight his way through the dungeon to rescue the princess.</p>
+<p>The knight has an initial health point represented by a positive integer. If at any point his health point drops to 0 or below, he dies immediately.</p>
+<p>Some of the rooms are guarded by demons, so the knight loses health (negative integers) upon entering these rooms; other rooms are either empty (0’s) or contain magic orbs that increase the knight’s health (positive integers).</p>
+<p>In order to reach the princess as quickly as possible, the knight decides to move only rightward or downward in each step.</p>
+<p><strong>Write a function to determine the knight’s minimum initial health so that he is able to rescue the princess.</strong></p>
+<p>For example, given the dungeon below, the initial health of the knight must be at least 7 if he follows the optimal path <strong>RIGHT-&gt; RIGHT -&gt; DOWN -&gt; DOWN</strong>.</p>
+<p><img src="http://image.qn.jerkybible.com/DungeonGame.png" alt=""></p>
+<p><strong>Notes:</strong></p>
+<p>The knight’s health has no upper bound.<br>Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/11/01/LeetCode-174-Dungeon-Game/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/24/LeetCode-173-Binary-Search-Tree-Iterator/" itemprop="url">
+                  LeetCode 173. Binary Search Tree Iterator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-24T10:53:16+08:00" content="2016-10-24">
+              2016-10-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/24/LeetCode-173-Binary-Search-Tree-Iterator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/LeetCode-173-Binary-Search-Tree-Iterator/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/24/LeetCode-173-Binary-Search-Tree-Iterator/" class="leancloud_visitors" data-flag-title="LeetCode 173. Binary Search Tree Iterator">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="昨天夜里"><a href="#昨天夜里" class="headerlink" title="昨天夜里"></a>昨天夜里</h2><p>昨天夜里，家里很冷，心想着该睡了。突然灵机一动，想到自己很久没有刷题了，要不然带一道题入睡吧。心想着也不要太复杂的题，好久没刷了，太复杂估计一时半会儿想不出来。那就来道<code>Easy</code>的吧，看了一道，太简单了吧。索性换一道<code>Medium</code>难度的吧，于是随机的选了这一道。这一道的要求是时间复杂度<code>O(1)</code>、空间复杂度<code>O(h)</code>，所以还得好好想想。</p>
+<p>我还没有想出来怎么做就睡着了，当然（为什么当然？！），在入睡前我的思绪也没有全在这道题上，可能想着想着就飞了。今儿早一醒，也不想起，就想到了这道题，也是突然灵机一动想出来怎么做，然后迅速的把它搞定了。</p>
+<p>流水结束。</p>
+<h2 id="原题要求"><a href="#原题要求" class="headerlink" title="原题要求"></a>原题要求</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.</div><div class="line"></div><div class="line">Calling next() will return the next smallest number in the BST.</div><div class="line"></div><div class="line">Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.</div></pre></td></tr></table></figure>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/24/LeetCode-173-Binary-Search-Tree-Iterator/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/23/Hexo博客NexT主题修改阅读次数为热度等炫酷文字/" itemprop="url">
                   Hexo博客NexT主题修改“阅读次数”为“热度”等炫酷文字
                 </a>
@@ -397,8 +842,8 @@
 </blockquote>
 <!-- indicate-the-source -->
 <h2 id="为什么要修改“阅读次数”"><a href="#为什么要修改“阅读次数”" class="headerlink" title="为什么要修改“阅读次数”"></a>为什么要修改“阅读次数”</h2><p>应该有很多人都会看到在一些人的博客里，会将“阅读次数”改为“热度：xxx℃”，想想他们为什么这么做，当然还是为了自己的博客看起来更炫酷，更有意思。为此我也打算这么做。</p>
-<h2 id="查找”阅读次数“"><a href="#查找”阅读次数“" class="headerlink" title="查找”阅读次数“"></a>查找”阅读次数“</h2><p>首先在NexT主题的目录中查找”阅读次数“这几个字。查找到的结果如下。<br><img src="http://image.qn.jerkybible.com/%E6%9F%A5%E6%89%BE%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0.png" alt=""></p>
-<p>打开这个文件可以看到，在<code>post</code>中的<code>visitors</code>被定义为“阅读次数”，所以最简单的方法，就是把这里的“阅读次数”改为“热度”。当然这种改法是相当丑陋的了，可以直接增加一项叫做“redu”，如果觉得拼音太low，就叫做“heat”或者“temperature”之类的，改之后的结果如下。<br><img src="http://image.qn.jerkybible.com/%E5%A2%9E%E5%8A%A0%E7%83%AD%E5%BA%A6.png" alt=""><br>
+<h2 id="查找”阅读次数“"><a href="#查找”阅读次数“" class="headerlink" title="查找”阅读次数“"></a>查找”阅读次数“</h2><p>首先在NexT主题的目录中查找”阅读次数“这几个字。查找到的结果如下。<br><img src="http://image.qn.jerkybible.com/%E6%9F%A5%E6%89%BE%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4ucG5n/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>打开这个文件可以看到，在<code>post</code>中的<code>visitors</code>被定义为“阅读次数”，所以最简单的方法，就是把这里的“阅读次数”改为“热度”。当然这种改法是相当丑陋的了，可以直接增加一项叫做“redu”，如果觉得拼音太low，就叫做“heat”或者“temperature”之类的，改之后的结果如下。<br><img src="http://image.qn.jerkybible.com/%E5%A2%9E%E5%8A%A0%E7%83%AD%E5%BA%A6.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4ucG5n/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""><br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/10/23/Hexo博客NexT主题修改阅读次数为热度等炫酷文字/#more" rel="contents">
               阅读全文 &raquo;
@@ -1311,424 +1756,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/" itemprop="url">
-                  [转]如何处理异常? catch Exception OR catch Throwable
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-11T03:52:20+08:00" content="2016-05-11">
-              2016-05-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/" class="leancloud_visitors" data-flag-title="[转]如何处理异常? catch Exception OR catch Throwable">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p><strong>在Java中，当你需要统一处理异常的时候，你是会选择catch (Exception)，还是直接catch (Throwable)？</strong></p>
-</blockquote>
-<h3 id="Java的异常体系"><a href="#Java的异常体系" class="headerlink" title="Java的异常体系"></a>Java的异常体系</h3><ol>
-<li><p><em><u>Throwable</u></em>: Java中所有异常和错误类的父类。只有这个类的实例（或者子类的实例）可以被虚拟机抛出或者被java的throw关键字抛出。同样，只有其或其子类可以出现在catch子句里面。</p>
-</li>
-<li><p><em><u>Error</u></em>: Throwable的子类，表示严重的问题发生了，而且这种错误是不可恢复的。</p>
-</li>
-<li><p><em><u>Exception</u></em>: Throwable的子类，应用程序应该要捕获其或其子类（RuntimeException例外），称为checked exception。比如：IOException, NoSuchMethodException…</p>
-</li>
-<li><p><em><u>RuntimeException</u></em>: Exception的子类，运行时异常，程序可以不捕获，称为unchecked exception。比如：NullPointException.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/11/[转]如何处理异常 catch Exception OR catch Throwable/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/11/25/Java8中Lambda表达式的10个例子/" itemprop="url">
-                  Java8中Lambda表达式的10个例子
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-11-25T14:46:18+08:00" content="2015-11-25">
-              2015-11-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/11/25/Java8中Lambda表达式的10个例子/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/25/Java8中Lambda表达式的10个例子/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/11/25/Java8中Lambda表达式的10个例子/" class="leancloud_visitors" data-flag-title="Java8中Lambda表达式的10个例子">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="例1-用Lambda表达式实现Runnable接口"><a href="#例1-用Lambda表达式实现Runnable接口" class="headerlink" title="例1: 用Lambda表达式实现Runnable接口"></a>例1: 用Lambda表达式实现Runnable接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Before Java 8:  </span></div><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;  </div><div class="line"><span class="meta">@Override</span>  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;  </div><div class="line">    System.out.println(&amp;quot;Before Java8, too much code <span class="keyword">for</span> too little to do&amp;quot;);  </div><div class="line">&#125;  </div><div class="line">&#125;).start();  </div><div class="line"><span class="comment">//Java 8 way:  </span></div><div class="line"><span class="keyword">new</span> Thread( () -&amp;gt; System.out.println(&amp;quot;In Java8, Lambda expression rocks !!&amp;quot;) ).start();</div></pre></td></tr></table></figure>
-<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">too much code, for too little to do </div><div class="line">Lambda expression rocks !!</div></pre></td></tr></table></figure></p>
-<p>这个例子使我们学到了java8中Lambda表达式的书写方式：<br>(参数) -&gt; 表达式<br>(参数) -&gt; 语句<br>(参数) -&gt; { 语句 }<br>例如，如果你的方法只是在控制台打印信息，则可以这么写： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">() -&amp;gt; System.out.println(&amp;quot;Hello Lambda Expressions&amp;quot;);</div></pre></td></tr></table></figure>
-<p>如果你的方法接收两个参数，那么：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(<span class="keyword">int</span> even, <span class="keyword">int</span> odd) -&amp;gt; even + odd</div></pre></td></tr></table></figure></p>
-<p>顺带提一句，一般来说在Lambda表达式中要尽量保持变量的简洁性。这会使你的代码简短而能保持在一行之内。所以像上面的代码可以选择变量名类似a,b或者x,y之类的，比起even和odd来会更好。 </p>
-<h2 id=""><a href="#" class="headerlink" title=""></a>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/11/25/Java8中Lambda表达式的10个例子/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/10/22/Python之在Windows 7下安装PIL/" itemprop="url">
-                  Python之在Windows 7下安装PIL
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-10-22T03:09:28+08:00" content="2015-10-22">
-              2015-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/22/Python之在Windows 7下安装PIL/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/Python之在Windows 7下安装PIL/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/10/22/Python之在Windows 7下安装PIL/" class="leancloud_visitors" data-flag-title="Python之在Windows 7下安装PIL">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在PIL的官方网页上，给出了很多PIL的版本，当选择Win32版本在Windows 7下安装时，会报出无法找到Python的提示，即使正确安装了Python 2.7。在网上查阅后，有人如下回答：</p>
-<p>问题：<br>在64位Win7下安装PIL库，提示注册表中找不到Python2.7（肯定是有的）。<br>原因：<br>PIL官方<a href="http://www.pythonware.com/products/pil/提供的PIL二进制安装库都是32位的。" target="_blank" rel="external">http://www.pythonware.com/products/pil/提供的PIL二进制安装库都是32位的。</a><br>64位程序和32位程序检测注册表的位置是不一样的：<br>64-bit: HKLM|HKCU\SOFTWARE\<br>32-bit: HKLM|HKCU\SOFTWARE\wow6432node\<br>我安装的是Python2.7 x64版，所以相关信息是在 HKLM|HKCU\SOFTWARE\下面，32位程序在HKLM|HKCU\SOFTWARE\wow6432node\下面找Python安装信息，肯定是找不到了。<br>解决：<br>幸好有人提供了非官方的64位库（官方源码编译版）。<br><a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="external">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
-<p>在提供的网址下，下载PIL 64位的版本，果然可以用了。</p>
-<p>注：在linux下安装PIL for Python3.x，可以到<a href="https://github.com/sloonz/pil-py3k下载相应版本。" target="_blank" rel="external">https://github.com/sloonz/pil-py3k下载相应版本。</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1769,7 +1801,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1786,7 +1818,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

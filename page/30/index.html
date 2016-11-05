@@ -301,6 +301,527 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/12/2013-09-12-CODE 7 Word Ladder/" itemprop="url">
+                  CODE 7. Word Ladder
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-12T00:05:00+08:00" content="2013-09-12">
+              2013-09-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/12/2013-09-12-CODE 7 Word Ladder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/12/2013-09-12-CODE 7 Word Ladder/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/12/2013-09-12-CODE 7 Word Ladder/" class="leancloud_visitors" data-flag-title="CODE 7. Word Ladder">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/12/2013-09-12-CODE 7 Word Ladder/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/12/2013-09-12-CODE 7 Word Ladder/'>CODE 7. Word Ladder</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given two words (<em>start</em>and<em>end</em>), and a dictionary, find the length of shortest transformation sequence from<em>start</em>to<em>end</em>, such that:</p>
+<ol>
+<li>Only one letter can be changed at a time </li>
+<li>Each intermediate word must exist in the dictionary</li>
+</ol>
+<p>For example,<br>Given:<br><em>start</em>=<code>&quot;hit&quot;</code><br><em>end</em>=<code>&quot;cog&quot;</code><br><em>dict</em>=<code>[&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;]</code><br>As one shortest transformation is<code>&quot;hit&quot; -&gt; &quot;hot&quot; -&gt; &quot;dot&quot; -&gt; &quot;dog&quot; -&gt; &quot;cog&quot;</code>,<br>return its length<code>5</code>.<br><strong>Note:</strong></p>
+<ul>
+<li>Return 0 if there is no such transformation sequence. </li>
+<li>All words have the same length. </li>
+<li>All words contain only lowercase alphabetic characters.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(String start, String end, HashSet&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (start.equals(end)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	Queue&lt;String&gt; que = <span class="keyword">new</span> LinkedList&lt;String&gt;();</div><div class="line">	que.offer(end);</div><div class="line">	dict.add(start);</div><div class="line">	<span class="keyword">int</span> time = <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> layer = que.size();</div><div class="line">	<span class="keyword">while</span> (!que.isEmpty()) &#123;</div><div class="line">		String now = que.poll();</div><div class="line">		layer--;</div><div class="line">		<span class="keyword">if</span> (now.equals(start)) &#123;</div><div class="line">			<span class="keyword">return</span> time;</div><div class="line">		&#125;</div><div class="line">		isInDic(dict, now, que);</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (layer == <span class="number">0</span> &amp;&amp; !que.isEmpty()) &#123;</div><div class="line">			layer = que.size();</div><div class="line">			time++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">isInDic</span><span class="params">(HashSet&lt;String&gt; dict, String word, Queue&lt;String&gt; que)</span> </span>&#123;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</div><div class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder(word);</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> c = <span class="string">'a'</span>; c &lt;= <span class="string">'z'</span>; c++) &#123;</div><div class="line">			sb.setCharAt(i, c);</div><div class="line">			String t = sb.toString();</div><div class="line">			<span class="keyword">if</span> (dict.contains(t)) &#123;</div><div class="line">				dict.remove(t);</div><div class="line">				que.offer(t);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Konw Something:</p>
+<ol>
+<li>StringBuilder has a method named setCharAt(int arg0,char arg1).</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/" itemprop="url">
+                  CODE 5. Longest Consecutive Sequence
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-10T22:28:00+08:00" content="2013-09-10">
+              2013-09-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/" class="leancloud_visitors" data-flag-title="CODE 5. Longest Consecutive Sequence">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/10/2013-09-10-CODE 5 Longest Consecutive Sequence/'>CODE 5. Longest Consecutive Sequence</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.<br>For example,<br>Given<code>[100, 4, 200, 1, 3, 2]</code>,<br>The longest consecutive elements sequence is<code>[1, 2, 3, 4]</code>. Return its length:<code>4</code>.<br>Your algorithm should run in O(<em>n</em>) complexity.</p>
+<p>My code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestConsecutive</span><span class="params">(<span class="keyword">int</span>[] num)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == num || num.length &lt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	Map&lt;Integer, Integer&gt; results = <span class="keyword">new</span> HashMap&lt;Integer, Integer&gt;();</div><div class="line">	Set&lt;Integer&gt; used = <span class="keyword">new</span> HashSet&lt;Integer&gt;();</div><div class="line">	<span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (used.contains(num[i])) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			used.add(num[i]);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">int</span> left = num[i], right = num[i];</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (results.containsKey(left - <span class="number">1</span>)</div><div class="line">				&amp;&amp; results.get(left - <span class="number">1</span>) &lt;= left - <span class="number">1</span>) &#123;</div><div class="line">			left = results.get(left - <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (results.containsKey(right + <span class="number">1</span>)</div><div class="line">				&amp;&amp; results.get(right + <span class="number">1</span>) &gt;= right + <span class="number">1</span>) &#123;</div><div class="line">			right = results.get(right + <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">		results.put(left, right);</div><div class="line">		results.put(right, left);</div><div class="line"></div><div class="line">		max = max &gt; (right - left + <span class="number">1</span>) ? max : (right - left + <span class="number">1</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/" itemprop="url">
+                  CODE 4. Sum Root to Leaf Numbers
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-09T22:47:00+08:00" content="2013-09-09">
+              2013-09-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/" class="leancloud_visitors" data-flag-title="CODE 4. Sum Root to Leaf Numbers">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/09/2013-09-09-CODE 4 Sum Root to Leaf Numbers/'>CODE 4. Sum Root to Leaf Numbers</a>」</p></blockquote></span>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    elements.remove();
+  }
+})()
+</script>
+
+<p>Given a binary tree containing digits from<code>0-9</code>only, each root-to-leaf path could represent a number.<br>An example is the root-to-leaf path<code>1-&gt;2-&gt;3</code>which represents the number<code>123</code>.<br>Find the total sum of all root-to-leaf numbers.<br>For example,<br>        1<br>       / \<br>      2   3</p>
+<p>The root-to-leaf path<code>1-&gt;2</code>represents the number<code>12</code>.<br>The root-to-leaf path<code>1-&gt;3</code>represents the number<code>13</code>.<br>Return the sum = 12 + 13 =<code>25</code>.</p>
+<p>My Code:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> sum;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumNumbers</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">this</span>.sum = <span class="number">0</span>;</div><div class="line">	dfs(root, <span class="number">0</span>);</div><div class="line">	<span class="keyword">return</span> <span class="keyword">this</span>.sum;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root, <span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root.left &amp;&amp; <span class="keyword">null</span> == root.right) &#123;</div><div class="line">		<span class="keyword">this</span>.sum += root.val + val * <span class="number">10</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != root.left) &#123;</div><div class="line">		dfs(root.left, val * <span class="number">10</span> + root.val);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != root.right) &#123;</div><div class="line">		dfs(root.right, val * <span class="number">10</span> + root.val);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/09/2013-09-09-CODE 3 Surrounded Regions/" itemprop="url">
                   CODE 3. Surrounded Regions
                 </a>
@@ -1348,527 +1869,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/07/Linux常用命令04/" itemprop="url">
-                  Linux常用命令04
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-07T22:32:42+08:00" content="2012-09-07">
-              2012-09-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/07/Linux常用命令04/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/07/Linux常用命令04/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/07/Linux常用命令04/" class="leancloud_visitors" data-flag-title="Linux常用命令04">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.压缩解压命令：gzip，压缩文件。<span style="color: #ff0000;">只能压缩文件，不能压缩目录；不保留源文件。</span></p>
-<p>gunzip，gzip -d，解压缩文件</p>
-<p>2.压缩解压命令：tar，打包目录，tar -[cvfzx] 目录名。</p>
-<p>1）-c，产生.tar打包文件</p>
-<p>2）-v，显示详细信息</p>
-<p>3）-f，指定压缩后的文件名</p>
-<p>4）-z，打包同时压缩/解压缩</p>
-<p>5）-x，解包.tar文件</p>
-<p>3.压缩解压缩命令：zip，压缩文件或目录，默认win和Linux格式。zip 选项[-r] [压缩后文件名] [文件或目录]</p>
-<p>4.压缩解压缩命令：bzip2，压缩文件。bzip2 选项[-k] [文件]，-k产生压缩文件后保留原文件。解压缩，bunzip2 选项[-k] [压缩文件]</p>
-<p>5.网络通信命令：write，向另外一个用户发送信息，以Ctrl+D为结束。write &lt;用户名&gt;</p>
-<p>6.网络通信命令：wall，向所有用户广播信息。wall [message] [文件名]</p>
-<p>7.网络通信命令：ping，测试网络连通性</p>
-<p>8.网络通信命令：ifconfig，查看网络设置信息。ifconfig 选项 [-a] [网卡设备标识]</p>
-<p>9.系统关机命令：shutdown， 关机。shutdown -h now，马上关机</p>
-<p>10.系统关机命令：reboot，重启</p>
-<p>11.Shell技巧：命令补齐，<span style="color: #ff0000;">&lt;tab&gt;</span></p>
-<p>12.Shell技巧：命令历史，history，<span style="color: #ff0000;">上下方向键</span>；清屏，<span style="color: #ff0000;">ctrl+l</span>；删除前面输入的内容，<span style="color: #ff0000;">ctrl+u</span></p>
-<p>13.Shell技巧：命令别名，alias，unalias</p>
-<p>14.Shell技巧：输入输出重定向，同标准I/O一样，Shell对于每一进程预先定义3个文件描述字（0,1,2）。分别对应于：</p>
-<p><span style="color: #ff0000;">     0（STDIN）标准输入，1（STDOUT）标准输出，2（STDERR）标准错误输出</span></p>
-<p><span style="color: #ff0000;">     <span style="color: #000000;">输出重定向：&gt;（覆盖），&gt;&gt;（追加）</span></span></p>
-<p><span style="color: #ff0000;">    <span style="color: #000000;"> 输入重定向：&lt;</span></span></p>
-<p><span style="color: #000000;">    错误输入重定向：2&gt;</span></p>
-<p>15.Shell技巧：管道：将一个命令的输出传送给另一个命令，作为另一个命令的输入</p>
-<p>16.Shell技巧：命令替换符，<code>`，将一个命令的输出作为另一个命令的参数， ls -l</code>which touch`</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/06/Linux常用命令03/" itemprop="url">
-                  Linux常用命令03
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-06T22:37:41+08:00" content="2012-09-06">
-              2012-09-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/06/Linux常用命令03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/06/Linux常用命令03/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/06/Linux常用命令03/" class="leancloud_visitors" data-flag-title="Linux常用命令03">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.文件搜索命令：which，<span style="color: #ff0000;">显示<strong>系统命令</strong>所在目录，包括别名记录</span></p>
-<p><span>                                  whereis，显示<strong>系统命令</strong>所在目录，包括帮助文档所在地</span></p>
-<p>2.文件搜索命令：find，<span style="color: #ff0000;">查找文件或目录，find [搜索路径]  [搜索关键字]</span></p>
-<p>1)-name，根据文件名查找，例如：find /etc -name init；通配符，* 任意字符，？单个字符</p>
-<p>2)-size，根据size查找文件，例如： find / -size +204800，查找大于100MB的文件</p>
-<p>3)-user，根据所有者查找文件，例如：find /home -user XXX</p>
-<p>4)-ctime/atime/mtime，以天为单位查找，c-change（属性修改），a-access，m-modify（内容修改）</p>
-<p>5)-cmin/amin/mmin，以分钟为单位查找，-之内，+超过，例如：find /etc -mmin -120</p>
-<p>6)连接符 -a and，-o or，例如：find /etc -size +163840 -a -size -204800</p>
-<p>7)-type，文件类型，f 二进制文件，l软链接文件，d目录，例如：find /etc -name init* -a -type -d</p>
-<p>8)连接符，find …… -exec （-ok(询问确认)）命令 {}\;</p>
-<p><span>                     {}表示find的查询结果，\为转义符，是一些符合和命令使用本身含义，例如：\rm testfile，;结束</span></p>
-<p><span>                     例如：find /etc -name inittab -exec ls -l {} \;</span></p>
-<p>9)<span style="color: #ff0000;">文件-abc创建，touch – -abc， 文件a b创建：touch “a b”，这样的文件很难删除，可以通过i节点查找并删除，例如：find . -inum 16 -exec rm {} \;</span></p>
-<p>3.文件搜索命令：locate，用来查找文件或目录，locate [搜索关键字]，会存在找不到的现象，因为locate根据系统安装和更新的数据库中查找，如果心文件没有录入数据库中时，则查询不到</p>
-<p>4.文件搜索命令：updatedb，建立整个系统目录文件的数据库</p>
-<p>5.文件搜索命令：grep，<span style="color: #ff0000;">在文件中搜寻字串匹配的行并输出，grep [制定字串] [源文件]，例如：grep ftp /etc/services</span></p>
-<p>6.帮助命令：man</p>
-<p>7.帮助命令：info</p>
-<p>8.帮助命令：whatis/–help/apropos(查看配置文件信息，相当于man-k)/makewhatis(建立whatis搜索使用的数据库)</p>
-<p>9.帮助命令：help，查看 shell内置命令的帮助，例如：help cd</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/05/Linux常用命令02/" itemprop="url">
-                  Linux常用命令02
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-05T23:51:33+08:00" content="2012-09-05">
-              2012-09-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/05/Linux常用命令02/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/Linux常用命令02/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/05/Linux常用命令02/" class="leancloud_visitors" data-flag-title="Linux常用命令02">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. 文件处理命令</p>
-<p>命令名称：cat 显示文件内容</p>
-<p>命令名称：more 分页显示文件内容；（空格）或f显示下一页，（Enter）显示下一行，q或Q退出</p>
-<p>命令名称：head 查看文件的前几行；head -num [文件名]</p>
-<p>命令名称：tail 查看文件的后几行；tail -num [文件名]，-f 动态显示文件内容</p>
-<p>命令名称：ln 产生链接文件；ln -s（软连接） [源文件] [目标文件]</p>
-<p><span>                            <span style="color: #ff0000;">软链接：lrwxrwxrwx –&gt;，文件很小，类似于window里的快捷方式</span></span></p>
-<p><span style="color: #ff0000;">                            硬链接：与原文件的属性完全相同，具有相同的i节点，类似于拷贝，但不同，为<strong><span style="text-decoration: underline;">同步更新</span></strong>，cp -p 不改变时间值，<br></span><span style="color: #ff0000;">                            硬链接不能跨文件系统</span></p>
-<p>2. 权限管理命令：chmod</p>
-<p><span style="color: #ff0000;">     语法：chmod [{ugo}{+-=}{rwx}] [文件或目录]</span></p>
-<p><span style="color: #ff0000;">                                 [mode=421</span><span style="color: #ff0000;">] [文件或目录]</span></p>
-<p><span style="color: #ff0000;">注意：</span></p>
-<p><table border="1" cellspacing="0" cellpadding="0"></table></p>
-<p><tbody></tbody></p>
-<p><tr></tr></p>
-<td colspan="4" width="568">
-
-<p>文件目录权限总结</p>
-<p></p></td><br><p></p>
-<p><tr></tr></p>
-<td width="142">
-
-<p>代表字符</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>权限</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>对文件的含义</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>对目录的含义</p>
-<p></p></td><br><p></p>
-<p><tr></tr></p>
-<td width="142">
-
-<p>r</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>读权限</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>可以查看文件内容</p>
-<p></p></td><p></p>
-<p><td width="142">可以列出目录中的内容</td><br></p>
-<p><tr></tr></p>
-<td width="142">
-
-<p>w</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>写权限</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>可以修改文件内容</p>
-<p></p></td><p></p>
-<p><td width="142">可以在目录中创建、删除文件</td><br></p>
-<p><tr></tr></p>
-<td width="142">
-
-<p>x</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>执行权限</p>
-<p></p></td><p></p>
-<td width="142">
-
-<p>可以执行文件</p>
-<p></p></td><p></p>
-<p><td width="142">可以进入目录</td><br><br><br><br>权限管理命令：chown 改变文件或目录的所有者，chown [用户] [文件或目录]</p>
-<p>权限管理命令：chgrp 改变文件或目录的所属组，chgrp [组名] [文件或目录]</p>
-<p>权限管理命令：umark 显示、设置文件的缺省权限，umark或umark -S，<span style="color: #ff0000;">Linux权限规则：缺省创建的文件不能授予可执行x权限</span></p>
-<p><span style="color: #ff0000;">                              不建议更改，更改的话为umark加权限的掩码，例如 umark 022（755）</span></p>
-<p>&nbsp;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1909,7 +1914,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1926,7 +1931,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

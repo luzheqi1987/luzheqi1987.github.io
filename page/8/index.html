@@ -301,6 +301,400 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="url">
+                  [转]获得每日，每周，每月的0点和24点的时间戳
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:16:07+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" class="leancloud_visitors" data-flag-title="[转]获得每日，每周，每月的0点和24点的时间戳">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://chenp1111.iteye.com/blog/744259" target="_blank" rel="external">原文地址</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获得当天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得当天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周一0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeekmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周日24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeeknight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) ((cal.getTime().getTime()+ (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月第一天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH)); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月最后一天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMaximum(Calendar.DAY_OF_MONTH)); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="url">
+                  Java中Date,Calendar,Timestamp的区别以及相互转换与使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:14:17+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" class="leancloud_visitors" data-flag-title="Java中Date,Calendar,Timestamp的区别以及相互转换与使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1 Java.util.Date<br>包含年、月、日、时、分、秒信息。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String转换为Date</span></div><div class="line">String dateStr=&amp;quot;<span class="number">2013</span>-<span class="number">8</span>-<span class="number">13</span> <span class="number">23</span>:<span class="number">23</span>:<span class="number">23</span>&amp;quot;;</div><div class="line">String pattern=&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;;</div><div class="line">DateFormate dateFormat=<span class="keyword">new</span> SimpleDateFormat(pattern);</div><div class="line">Date date=dateFormat.parse(dateStr);</div><div class="line">date=dateFormat.format(date);</div></pre></td></tr></table></figure></p>
+<p>2 Java.sql.Date<br>包含年、月、日信息。<br>继承自java.util.Date。在数据库相关操作中使用，如rs.getDate，ps.setDate等。rs是指ResultSet，ps是指PreparedStatement。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Date转换为java.sql.Date</span></div><div class="line"><span class="keyword">new</span> java.sql.Date(utilDate.getTime());<span class="comment">// 其中utilDate为java.util.Date类型的对象</span></div></pre></td></tr></table></figure></p>
+<p>3 Java.util.Calendar<br>包含年、月、日、时、分、秒、毫秒信息。<br>JDK1.1引入，用以代替java.util.Date。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Date转为Calendar</span></div><div class="line">Date date=<span class="keyword">new</span> Date();</div><div class="line">Calendar calendar=Calendar.getInstance();</div><div class="line">calendar.setTime(date);</div><div class="line"><span class="comment">// Calendar转为Date</span></div><div class="line">Calendar ca=Calendar.getInstance();  </div><div class="line">Date d =(Date) ca.getTime();</div></pre></td></tr></table></figure></p>
+<p>4 Java.sql.Timestamp<br>包含年、月、日、时、分、秒、纳秒（nano）信息。<br>继承自java.util.Date。比java.sql.Date包含更多信息。在数据库相关操作中使用，如rs.getTimestamp，ps.setTimeStamp等。例如：若数据库中某字段hireDate为Oracle的Date类型，则使用getTimestamp时能够将年、月、日、时、分、秒信息取出；但使用getDate时则只能取出年、月、日信息。因此，一般推荐使用getTimestamp。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Calendar转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(Calendar.getInstance().getTimeInMillis());</div><div class="line"><span class="comment">// java.util.Date转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(date.getTime());</div><div class="line"><span class="comment">// String转换为java.sql.Timestamp，String格式：yyyy-mm-dd hh:mm:ss[.f...] ，方括号表示可选</span></div><div class="line">Timestamp.valueOf(&amp;quot;<span class="number">2013</span>-<span class="number">07</span>-<span class="number">06</span> <span class="number">01</span>:<span class="number">49</span>:<span class="number">30</span>&amp;quot;);</div></pre></td></tr></table></figure></p>
+<p>5 Oracle数据库提供的日期和时间类型<br>Oracle数据库提供了DATE，TIMESTAMP，TIMESTAMP WITH TIME ZONE和TIMESTAMP WITH LOCAL TIME ZONE四种类型。<br>DATE包含世纪、年、月、日、时、分、秒信息。<br>TIMESTAMP是DATE的扩展，包含年、月、日、时、分、秒和fractional seconds信息。定义TIMESTAMP的格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TIMESTAMP [(fractional_seconds_precision)]</div><div class="line"><span class="comment">// 格式</span></div><div class="line">TIMESTAMP <span class="string">'YYYY-MM-DD HH24:MI:SS.FF'</span></div><div class="line"><span class="comment">// 一个例子</span></div><div class="line">TIMESTAMP <span class="string">'1997-01-31 09:26:50.12'</span></div></pre></td></tr></table></figure></p>
+<p>其中fractional_seconds_precision是可选的，用于指定秒使用含几位小数的浮点数表示，它的取值范围是0到9，默认是6。上述例子中表示采用两位小数，它的秒值是50.12。注意：12不是毫秒值，也不是微秒值。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/05/Java日期前推一个月/" itemprop="url">
+                  Java日期前推一个月
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:11:02+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/Java日期前推一个月/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java日期前推一个月/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/Java日期前推一个月/" class="leancloud_visitors" data-flag-title="Java日期前推一个月">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">计算离当前日期之前或之后任意天的日期 </div><div class="line"><span class="comment">/** </span></div><div class="line">* 日期计算 </div><div class="line">* </div><div class="line">* <span class="doctag">@author</span> zhangmingxue </div><div class="line">* </div><div class="line">*/ </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputeDateUtils</span> </span>&#123; </div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离当前日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(<span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(); </div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date beginDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      beginDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> beginDate; </div><div class="line">  &#125; </div><div class="line"></div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离beginDate日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(Date beginDate, <span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    Calendar beginCal=Calendar.getInstance(); </div><div class="line">    beginCal.setTime(beginDate); </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(beginCal.get(Calendar.YEAR),beginCal.get(Calendar.MONTH),beginCal.get(Calendar.DATE));</div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date endDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      endDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> endDate; </div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/04/经典算法题（五）——时针 分针重合/" itemprop="url">
                   经典算法题（五）——时针 分针重合
                 </a>
@@ -1275,437 +1669,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法（一）——如何判断图有环/" itemprop="url">
-                  经典算法（一）——如何判断图有环
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:24:56+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法（一）——如何判断图有环/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法（一）——如何判断图有环/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法（一）——如何判断图有环/" class="leancloud_visitors" data-flag-title="经典算法（一）——如何判断图有环">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. 无向图</p>
-<p>如果存在回路，则必存在一个子图，是一个环路。环路中所有顶点的度&gt;=2。<br>n算法：<br>第一步：删除所有度&lt;=1的顶点及相关的边，并将另外与这些边相关的其它顶点的度减一。</p>
-<p>第二步：将度数变为1的顶点排入队列，并从该队列中取出一个顶点重复步骤一。</p>
-<p>如果最后还有未删除顶点，则存在环，否则没有环。</p>
-<p>n算法分析：<br>由于有m条边，n个顶点。</p>
-<p>i)如果m&gt;=n，则根据图论知识可直接判断存在环路。（证明：如果没有环路，则该图必然是k棵树 k&gt;=1。根据树的性质，边的数目m = n-k。k&gt;=1，所以：m&lt;n）</p>
-<p>ii)如果m&lt;n 则按照上面的算法每删除一个度为0的顶点操作一次（最多n次），或每删除一个度为1的顶点（同时删一条边）操作一次（最多m次）。这两种操作的总数不会超过m+n。由于m&lt;n，所以算法复杂度为O(n)。</p>
-<p>注：<br>该方法，算法复杂度不止O(V)，首先初始时刻统计所有顶点的度的时候，复杂度为(V + E)，即使在后来的循环中E&gt;=V，这样算法的复杂度也只能为O(V + E)。其次，在每次循环时，删除度为1的顶点，那么就必须将与这个顶点相连的点的度减一，并且执行delete node from list[list[node］，这里查找的复杂度为list[list[node］的长度，只有这样才能保证当degree[i]=1时，list[i]里面只有一个点。这样最差的复杂度就为O(EV)了。</p>
-<p>方法2：<br>DFS搜索图，图中的边只可能是树边或反向边，一旦发现反向边，则表明存在环。该算法的复杂度为O(V)。</p>
-<p>接下来介绍有向图是否有环的判定算法，主要有深度优先和拓扑排序2中方法。</p>
-<p>1、拓扑排序，如果能够用拓扑排序完成对图中所有节点的排序的话，就说明这个图中没有环，而如果不能完成，则说明有环。</p>
-<p>2、可以用Strongly Connected Components来做，我们可以回忆一下强连通子图的概念，就是说对于一个图的某个子图，该子图中的任意u-&gt;v,必有v-&gt;u，则这是一个强连通子图。这个限定正好是环的概念。所以我想，通过寻找图的强连通子图的方法应该可以找出一个图中到底有没有环、有几个环。</p>
-<p>3、就是用一个改进的DFS</p>
-<p>刚看到这个问题的时候，我想单纯用DFS就可以解决问题了。但细想一下，是不能够的。如果题目给出的是一个无向图，那么OK，DFS是可以解决的。但无向图得不出正确结果的。比如：A-&gt;B,A-&gt;C-&gt;B,我们用DFS来处理这个图，我们会得出它有环，但其实没有。</p>
-<p>我们可以对DFS稍加变化，来解决这个问题。解决的方法如下：</p>
-<p>图中的一个节点，根据其C[N]的值，有三种状态：</p>
-<p>0，此节点没有被访问过</p>
-<p>-1，被访问过至少1次，其后代节点正在被访问中</p>
-<p>1，其后代节点都被访问过。</p>
-<p>按照这样的假设，当按照DFS进行搜索时，碰到一个节点时有三种可能：</p>
-<p>1、如果C[V]=0，这是一个新的节点，不做处理</p>
-<p>2、如果C[V]=-1，说明是在访问该节点的后代的过程中访问到该节点本身，则图中有环。</p>
-<p>3、如果C[V]=1，类似于2的推导，没有环。 在程序中加上一些特殊的处理，即可以找出图中有几个环，并记录每个环的路径</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/操作系统笔试题/" itemprop="url">
-                  操作系统笔试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:24:06+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/操作系统笔试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/操作系统笔试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/操作系统笔试题/" class="leancloud_visitors" data-flag-title="操作系统笔试题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.基本知识点：<br>1) 操作系统是控制和管理计算机软硬件资源，以尽量合理有效的方法组织多个用户共享多种资源的程序集合。<br>2) 操作系统的基本功能：(1)处理机管理。主要功能包括进程控制、进程调度、进程同步和进程通信。(2)存储器管理。主要功能包括内存分配、地址映射、内存保护和内存扩充。(3)设备管，也叫I/O管理。主要功能包括缓冲区管理、设备分配、设备驱动和设备的无关性处理。(4)文件管理。主要功能包括文件存储空间的管理、文件操作的一般管理、目录管理、文件的读写管理和存取控制。(5)用户界面管理。操作系统的用户界面就是操作系统与用户的接口，包括控制接口和程序接口。<br>3) 现代操作系统的基本特征：并发性、共享性、虚拟性、异步性和不确定性。<br>4) 所谓中断是指系统发生某一事件后，CPU暂停正在执行的程序去执行处理该事件的程序过程，处理中断事件的程序称为中断处理程序，产生中断信号的那个部件称为中断源。中断处理具体过程：保存现场；分析原因，转中断处理程序；恢复现场。<br>5) 进程是一个具有独立功能的程序关于数据集合的一次可以并发执行的运行活动，其基本特征：动态特征、并发特征、独立性、相互制约性。进程的构成：程序、数据和进程控制块。进程有三种基本的调度状态：执行状态、就绪状态和等待状态。<br>6) 进程的引入大大地提高了资源的利用率和系统的吞吐量，而引入线程的目的是为了减少程序并发所付出的系统开销。进程是资源分配的单位，而线程是系统调度的单位。<br>7) 所谓死锁是多个进程间的一种僵持状态。进程死锁的原因:资源竞争及进程推进顺序非法。死锁的4个必要条件：互斥、占有等待、不可剥夺、环路。死锁的处理：鸵鸟策略、预防策略、避免策略、检测与解除死锁。<br>8) 临界资源是一次只允许一个进程使用的资源。临界区是在进程中操作临界资源的程序段。<br>2．进程和线程的区别？<br>答：线程是指进程内的一个执行单元,也是进程内的可调度实体.与进程的区别:(1)调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。(2)并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行。(3)拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源. (4)系统开销：在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销。<br>3.网络编程中设计并发服务器，使用多进程 与 多线程 ，请问有什么区别？<br>解析：(1)进程：子进程是父进程的复制品。子进程获得父进程数据空间、堆和栈的复制品<br>(2)线程：相对与进程而言，线程是一个更加接近与执行体的概念，它可以与同进程的其他线程共享数据，但拥有自己的栈空间，拥有独立的执行序列。<br>两者都可以提高程序的并发度，提高程序运行效率和响应时间。线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源管理和保护；而进程正相反。同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。<br>答:用多进程时每个进程有自己的地址空间，线程则共享地址空间。所有其他区别都是由此而来的：(1)速度：线程产生的速度快，线程间的通信快，切换快等，因为它们在同一个地址空间内。(2)资源利用率：线程的资源利用率比较好也是因为它们在同一个地址空间内。(3)同步问题：线程使用公共变量/内存时需要使用同步机制，还是因为它们在同一个地址空间内。<br>4. 操作系统中常见的进程调度策略有哪几种？<br>答：FCFS(先来先服务)，优先级，时间片轮转，多队列、多级反馈队列。<br>5.进程间的通信如何实现？<br>答：现在最常见的进程间通信的方式有：信号，信号量，消息队列，共享内存，管道。信号是使用信号处理器来进行的，信号量是使用P、V操作来实现的。消息队列是比较高级的一种进程间通信方法，因为它真的可以在进程间传送消息。<br>6.在Windows编程中互斥器(mutex)的作用和临界区(critical section)类似，请说一下二者间的主要区别。<br>答：两者的区别是mutex开业用于进程之间互斥，critical section是线程之间的互斥。<br>7.进程进入等待状态有哪几种方式？<br>答：CPU调度给优先级更高的Thread(线程)，原先Thread 进入Waiting(等待)状态。阻塞的Thread获得资源或者信号，进入Waiting状态。在时间片轮转的情况下，如果时间片到了，也将进入等待状态。<br>8.试说明进程在三个基本状态之间转换的典型原因。<br>答：a.处于就绪状态的进程，当进程调度程序为之分配了处理机后，该进程便由就绪状态变为执行状态。b.当前进程因发生某事件而无法执行，如访问已被占有的临界资源，就会使进程由执行状态变为阻塞状态。c.当前进程因事件片用完而被暂停执行，该进程便由执行状态变为就绪状态。<br>9.同步机构应遵循哪些基本准则？<br>答：a.空闲让进；b.忙则等待；c.有限等待；d.让权等待。<br>10.在单处理机环境下，进程间有哪几种通信方式？<br>答：a.共享存储器系统通信方式；b.消息传递系统通信方式；c.管道通信方式。<br>11.试比较消息队列与管道通信机制。<br>答：a.所谓管道，是指用于连接一个读进程和一个写进程，以实现它们之间通信的共享文件，又称pipe文件，管道通信是属于共享存储系统的。b.消息队列通信机制属于消息传递系统通信机制，存在通信链路，有消息的格式，有若干缓冲队列，采用独特的发送原语和接受原语。<br>12.在请求分页系统中，常采用哪几种页面置换算法？<br>答：a.最佳置换算法；b.先进先出算法；c.最近最久未使用LRU置换算法；d.Clock置换算法；e.此外，还有最少使用置换算法和页面缓冲算法。<br>13.内部碎片和外部碎片<br>为了有效的利用内存，使内存产生更少的碎片，要对内存分页，内存以页为单位来使用，最后一页往往装不满，于是形成了内部碎片。为了共享要分段，在段的换入换出时形成外部碎片，比如5K的段换出后，有一个4k的段进来放到原来5k的地方，于是形成1k的外部碎片。<br>1 虚地址的构成</p>
-<p>一个进程中所包含的具有独立逻辑功能的程序或数据仍被划分为段，并有各自的段号s, 对于段s 中的程序或数据，则按照一定的大小将其划分为不同的页。段页式管理时的进程的虚拟地址空间中的虚拟地址由三部分组成：即段号s ，页号P 和页内相对地址d 。虚拟空间的最小单位是页而不是段，从而内存可用区也就被划分成为着干个大小相等的页面，且每段所拥有的程序和数据在内存中可以分开存放。分段的大小也不再受内存可用区的限制。</p>
-<p>2 段表和页表</p>
-<p>为了实现段页式管理，系统必须为每个作业或进程建立一张段表以管理内存分配与释放、缺段处理、存储保护相地址变换等。另外，由于一个段又被划分成了若干页，每个段又必须建立一张页表以把段中的虚页变换成内存中的实际页面。显然，与页式管理时相同，页表中也要有相应的实现缺页中断处理和页面保护等功能的表项。另外，由于在段页式管理中，页表不再是属于进程而是属于某个段，因此，段表中应有专项指出该段所对应页表的页表始址和页表长度。</p>
-<p>3 动态地址变换过程</p>
-<p>在一般使用段页式存储管理方式的计算机系统中，都在内存中辟出一块固定的区域存放进程的段表和页表。因此，在段页式管理系统中，要对内存中指令或数据进行一次存取的话，至少需要访问三次以上的内存：</p>
-<p>第一次是由段表地址寄存器得段表始址后访问段表，由此取出对应段的页表在内存中的地址。第二次则是访问页表得到所要访问的物理地址。第三次才能访问真正需要访问的物理单元。</p>
-<p>显然，这将使CPU 的执行指令速度大大降低。为了提高地址转换速度，设置快速联想寄存器就显得比段式管理或页式管理时更加需要。在快速联想寄存器中，存放当前最常用的段号s 、页号p 和对应的内存页面与其它控制用栏目。当要访问内存空间某一单元时，可在通过段表、页表进行内存地址查找的同时，根据快速联想寄存器查找其段号和页号。如果所要访问的段或页在快速联想寄存器中，则系统不再访问内存中的段表、页表而直接把快速联想寄存器中的值与页内相对地址d 拼接起来 得到内存地址。总之，因为段页式管理是段式管理的页式管理方案结合而成的，所以具有它们二者的优点。但反过来说，由于管理软件的增加，复杂性和开销也就随之增加了。另外，需要的硬件以及占用的内存也有所增加。更重要的是，如果不采用联想寄存器的方式提高CPU 的访问速度，将会使得执行速度大大下降。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/操作系统面试（二）/" itemprop="url">
-                  操作系统面试（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:22:52+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/操作系统面试（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/操作系统面试（二）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/操作系统面试（二）/" class="leancloud_visitors" data-flag-title="操作系统面试（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1．什么是进程（Process）和线程（Thread）？有何区别？<br>（1） 线程是进程的一部分，所以线程有的时候被称为是轻权进程或者轻量级进程。<br>（2） 一个没有线程的进程是可以被看作单线程的，如果一个进程内拥有多个进程，进程的执行过程不是一条线（线程）的，而是多条线（线程）共同完成的。<br>（3） 系统在运行的时候会为每个进程分配不同的内存区域，但是不会为线程分配内存（线程所使用的资源是它所属的进程的资源），线程组只能共享资源。那就是说，出了CPU之外（线程在运行的时候要占用CPU资源），计算机内部的软硬件资源的分配与线程无关，线程只能共享它所属进程的资源。<br>（4） 与进程的控制表PCB相似，线程也有自己的控制表TCB，但是TCB中所保存的线程状态比PCB表中少多了。<br>（5） 进程是系统所有资源分配时候的一个基本单位，拥有一个完整的虚拟空间地址，并不依赖线程而独立存在。</p>
-<p>2．Windows下的内存是如何管理的？<br>WIndows为每个进程分配了4GB的虚拟地址空间，让每个进程都认为自己拥有4GB的内存空间，4GB怎么来的？ 32位 CPU可以取地址的空间为2的32次方，就是4GB（正如16位CPU有20根寻址线所有拥有2的20次方的寻址空间一样）<br>当我们在Windows中双击一个应用程序图标后，系统为该应用程序创建一个进程，Windows使得每个进程都拥有2GB的地址空间，这2GB地址空间用于程序存放代码，数据，堆栈，自由存储区（堆），另外2GB用于共享系统使用<br>前面的这些地址并不是物理内存中的地址，而是该进程空间中的虚拟地址<br>虚拟空间只是Windows为该进程分配的一个虚拟的地址空间，只有当其和物理内存相关联后才有意义<br>进程被创建时会建立一个 虚拟内从到物理内存的映射表——–页表，根据页表可以将虚拟内存和物理内存关联起来<br>虚拟内存是什么？就是把磁盘拿来当内存用，虚拟内存是一些系统页文件，存放在磁盘上，每个系统页文件大小也为4K，物理内存也被分页，每个页大小也为4K，这样虚拟页文件和物理内存页就可以对应，实际上虚拟内存就是用于物理内存的临时存放的磁盘空间。<br>虚拟内存和物理内存的管理(Windows内存管理的核心)<br>Windows是多任务的系统，在每个进程创建时，系统为每个进程也创建了一个页表，用于虚拟地址到物理地址的转换。比如现在程序在执行进程A，用户切换到了另外一个进程B，则系统会将进程A在内存中的数据存放到页文件中，并更新进程A的页表（使虚拟地址和页文件形成映射）。然后读取进程B的页表，根据页表判断进程B的数据是在内存中还是在页文件中（通过页文件的类型来判断），如果在内存中就直接读取，如果在页面文件中，就将页面文件内容读入物理内存，然后更新页表（使虚拟地址和物理内存形成映射）。这样一看，虚拟内存实际上就是冒牌的物理内存了吧。<br>程序的执行<br>一个PE文件有数据区，代码区，堆栈区（由系统分配，用于管理局部变量），使用OD载入一个程序就可以知道这些都是以二进制的形式保存在文件中。<br>程序刚运行的时候，系统不直接将整个程序载入到物理内存中，也不将其载入到页文件中，而是以程序文件本身作为页文件形成映射（虚拟地址到页文件的映射），建立页表，然后随着程序的执行通过页表来将其虚拟地址转换成物理地址（将页文件读入内存），然后在读取内存中的指令或数据。当进程被切换时，将内存内容保存到页文件，更新页表，如此往复，实现多任务操作。<br>可以知道，程序的代码段，数据段，堆栈区（系统分配）这些虚拟地址区域已经是映射状态，即有相应的物理内存与之对应。系统为每个进程提供了2G的自己的虚拟地址空间，剩下的虚拟地址空间干什么用？<br>剩下的虚拟地址空间就是给程序运行时动态分配内存使用。C++中 new的功能就是动态分配地址空间：</p>
-<p>3．存储过程是什么？有什么用？有什么优点？<br>存储过程（Stored Procedure）是在大型数据库系统中，一组为了完成特定功能的SQL 语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。存储过程在运算时生成执行方式，所以，以后对其再运行时其执行速度很快。</p>
-<p>4.你知道操作系统的内容分为几块吗？什么叫做虚拟内存？他和主存的关系如何？内存管理属于操作系统的内容吗？<br>虚拟内存是计算机系统内存管理的一种技术。它使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。</p>
-<p>5.进程是一个比较重要的概念，那么进程有哪几种状态吗？<br>进程在其生存期内可能处于如下三种基本状态之一:<br>(1) 运行态(Run): 进程占有处理机资源，正在运行。 显然，在单处理机系统中任一时刻只能有一个进程处于此种状态;<br>(2) 就绪态(Ready): 进程本身具备运行条件，但由于处理机的个数少于可运行进程的个数，暂未投入运行。 即相当于等待处理机资源<br>(3) 等待态(Wait): 也称挂起态(Suspended)、封锁态(Blocked)、睡眠态(Sleep)。 进程本身不具备运行条件，即使分给它处理机也不能运行。 进程正等待某一个事件的发生，如等待某一资源被释放，等待与该进程相关的I/O传输的完成信号等。<br>进程的三个基本状态之间是可以相互转换的。具体地说，当一个就绪进程获得处理机时，其状态由就绪变为运行；当一个运行进程被剥夺处理机时，如用完系统分给它的时间片、出现更高优先级别的其它进程，其状态由运行变为就绪；当一个运行进程因某事件受阻时，如所申请资源被占用、启动I/O传输未完成，其状态由运行变为等待；当所等待事件发生时，如得到申请资源、I/O传输完成，其状态由等待变为就绪。</p>
-<p>6. 说出你所知道的保持进程同步的方法?</p>
-<p>为了能够有效的控制多个进程之间的沟通过程，保证沟通过程的有序和和谐，OS必须提供一定的同步机制保证进程之间不会自说自话而是有效的协同工作。比如在共享内存的通信方式中，两个或者多个进程都要对共享的内存进行数据写入，那么怎么才能保证一个进程在写入的过程中不被其它的进程打断，保证数据的完整性呢？又怎么保证读取进程在读取数据的过程中数据不会变动，保证读取出的数据是完整有效的呢？<br>常用的同步方式有： 互斥锁、条件变量、读写锁、记录锁(文件锁)和信号灯.<br>互斥锁<br>顾名思义，锁是用来锁住某种东西的，锁住之后只有有钥匙的人才能对锁住的东西拥有控制权(把锁砸了，把东西偷走的小偷不在我们的讨论范围了)。所谓互斥，从字面上理解就是互相排斥。因此互斥锁从字面上理解就是一点进程拥有了这个锁，它将排斥其它所有的进程访问被锁住的东西，其它的进程如果需要锁就只能等待，等待拥有锁的进程把锁打开后才能继续运行。<br>在实现中，锁并不是与某个具体的变量进行关联，它本身是一个独立的对象。进(线)程在有需要的时候获得此对象，用完不需要时就释放掉。<br>互斥锁的主要特点是互斥锁的释放必须由上锁的进(线)程释放，如果拥有锁的进(线)程不释放，那么其它的进(线)程永远也没有机会获得所需要的互斥锁。互斥锁主要用于线程之间的同步。<br>条件变量<br>上文中提到，对于互斥锁而言，如果拥有锁的进(线)程不释放锁，其它进(线)程永远没机会获得锁，也就永远没有机会继续执行后续的逻辑。在实际环境下，一个线程A需要改变一个共享变量X的值，为了保证在修改的过程中X不会被其它的线程修改，线程A必须首先获得对X的锁。现在假如A已经获得锁了，由于业务逻辑的需要，只有当X的值小于0时，线程A才能执行后续的逻辑，于是线程A必须把互斥锁释放掉，然后继续“忙等”。如下面的伪代码所示：</p>
-<p>// get x lock<br>while(x &lt;= 0){<br>// unlock x ;<br>// wait some time<br>// get x lock<br>}<br>// unlock x<br>这种方式是比较消耗系统的资源的，因为进程必须不停的主动获得锁、检查X条件、释放锁、再获得锁、再检查、再释放，一直到满足运行的条件的时候才可以。因此我们需要另外一种不同的同步方式，当线程X发现被锁定的变量不满足条件时会自动的释放锁并把自身置于等待状态，让出CPU的控制权给其它线程。其它线程此时就有机会去修改X的值，当修改完成后再通知那些由于条件不满足而陷入等待状态的线程。这是一种通知模型的同步方式，大大的节省了CPU的计算资源，减少了线程之间的竞争，而且提高了线程之间的系统工作的效率。这种同步方式就是条件变量。<br>坦率的说，从字面意思上来将，“条件变量”这四个字是不太容易理解的。我们可以把“条件变量”看做是一个对象，一个铃铛，一个会响的铃铛。当一个线程在获得互斥锁之后，由于被锁定的变量不满足继续运行的条件时，该线程就释放互斥锁并把自己挂到这个“铃铛”上。其它的线程在修改完变量后，它就摇摇“铃铛”，告诉那些挂着的线程：“你们等待的东西已经变化了，都醒醒看看现在的它是否满足你们的要求。”于是那些挂着的线程就知道自己醒来看自己是否能继续跑下去了。<br>读写锁<br>互斥锁是排他性锁，条件变量出现后和互斥锁配合工作能够有效的节省系统资源并提高线程之间的协同工作效率。互斥锁的目的是为了独占，条件变量的目的是为了等待和通知。但是现实世界是很复杂di，我们要解决的问题也是多种多样di.从功能上来说，互斥锁和条件变量能够解决基本上所有的问题，但是性能上就不一定完全满足了。人的无休止的欲望促使人发明出针对性更强、性能更好的同步机制来。读写锁就是这么一个玩意儿。<br>考虑一个文件有多个进程要读取其中的内容，但只有1个进程有写的需求。我们知道读文件的内容不会改变文件的内容，这样即使多个进程同时读相同的文件也没什么问题，大家都能和谐共存。当写进程需要写数据时，为了保证数据的一致性，所有读的进程就都不能读数据了，否则很可能出现读出去的数据一半是旧的，一半是新的状况，逻辑就乱掉了。<br>为了防止读数据的时候被写入新的数据，读进程必须对文件加上锁。现在假如我们有2个进程都同时读，如果我们使用上面的互斥锁和条件变量，当其中一个进程在读取数据的时候，另一个进程只能等待，因为它得不到锁。从性能上考虑，等待进程所花费的时间是完全的浪费，因为这个进程完全可以读文件内容而不会影响第一个，但是这个进程没有锁，所以它什么也做不了，只能等，等到花儿都谢了。<br>所以呢，我们需要一种其它类型的同步方式来满足上面的需求，这就是读写锁。<br>读写锁的出现能够有效的解决多进程并行读的问题。每一个需要读取的进程都申请读锁，这样大家互不干扰。当有进程需要写如数据时，首先申请写锁。如果在申请时发现有读(或者写)锁存在，则该写进程必须等待，一直等到所有的读(写)锁完全释放为止。读进程在读取之前首先申请读锁，如果所读数据被写锁锁定，则该读进程也必须等待读锁被释放位置。<br>很自然的，多个读锁是可以共存的，但写锁是完全互相排斥的。<br>记录锁(文件锁)<br>为了增加并行性，我们可以在读写锁的基础上进一步细分被锁对象的粒度。比如一个文件中，读进程可能需要读取该文件的前1k个字节，写进程需要写该文件的最后1k个字节。我们可以对前1k个字节上读锁，对最后1k个自己上写锁，这样两个进程就可并发工作了。记录锁中的所谓“记录”其实是“内容”的概念。使用读写锁可以锁定一部分，而不是整个文件。<br>文件锁可以认为是记录锁的一个特例，当使用记录锁锁定文件的所有内容时，此时的记录锁就可以称为文件锁了。<br>信号灯<br>信号灯可以说是条件变量的升级版。条件变量相当于铃铛，铃铛响后每个挂起的进程还需要自己获得互斥锁并判断所需条件是否满足，信号灯把这两步操作糅合到一起。<br>在Posix.1基本原理一文声称，有了互斥锁和条件变量还提供信号灯的原因是：“本标准提供信号灯的而主要目的是提供一种进程间同步的方式；这些进程可能共享也可能不共享内存区。互斥锁和条件变量是作为线程间的同步机制说明的；这些线程总是共享(某个)内存区。这两者都是已广泛使用了多年的同步方式。每组原语都特别适合于特定的问题”。尽管信号灯的意图在于进程间同步，互斥锁和条件变量的意图在于线程间同步，但是信号灯也可用于线程间，互斥锁和条件变量也可用于进程见。应当根据实际的情况进行决定。<br>信号灯最有用的场景是用以指明可用资源的数量。比如含有10个元素的数组，我们可以创建一个信号灯，初始值为0.每当有进程需要读数组中元素时(假设每次仅能读取1个元素)，就申请使用该信号灯(信号灯的值减1)，当有进程需要写元素时，就申请挂出该信号等(信号灯值加1)。这样信号灯起到了可用资源数量的作用。如果我们限定信号灯的值只能取0和1，就和互斥锁的含义很相同了。<br>7. OS中如何实现物理地址到逻辑地址的转换?<br>在分页系统中页面大小由硬件决定。页表的作用是实现从页号到物理块号的地址映射。逻辑地址转换成物理地址的过程是：用页号p去检索页表，从页表中得到该页的物理块号，把它装人物理地址寄存器中。同时，将页内地址d直接送人物理地址寄存器的块内地址字段中。这样，物理地址寄存器中的内容就是由二者拼接成的实际访问内存的地址，从而完成了从逻辑地址到物理地址的转换。<br>8. 解释一下分页式管理。<br>页是信息的物理单位，分页是为实现离散分配方式，以消减内存的外零头，提高内存的利用率；或者说，分页仅仅是由于系统管理的需要，而不是用户的需要。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1746,7 +1714,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1763,7 +1731,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

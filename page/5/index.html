@@ -301,6 +301,557 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="url">
+                  RAID0、RAID1、RAID0+1、RAID5原理介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-13T10:57:21+08:00" content="2015-04-13">
+              2015-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Storage/" itemprop="url" rel="index">
+                    <span itemprop="name">Storage</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" class="leancloud_visitors" data-flag-title="RAID0、RAID1、RAID0+1、RAID5原理介绍">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>RAID 0又称为Stripe或Striping，它代表了所有RAID级别中最高的存储性能。RAID 0提高存储性能的原理是把连续的数据分散到多个磁盘上存取，这样，系统有数据请求就可以被多个磁盘并行的执行，每个磁盘执行属于它自己的那部分数据请求。这种数据上的并行操作可以充分利用总线的带宽，显著提高磁盘整体存取性能<br>RAID 1又称为Mirror或Mirroring，它的宗旨是最大限度的保证用户数据的可用性和可修复性。 RAID 1的操作方式是把用户写入硬盘的数据百分之百地自动复制到另外一个硬盘上。由于对存储的数据进行百分之百的备份，在所有RAID级别中，RAID 1提供最高的数据安全保障。同样，由于数据的百分之百备份，备份数据占了总存储空间的一半，因而，Mirror的磁盘空间利用率低，存储成本高。<br>RAID 5 是一种存储性能、数据安全和存储成本兼顾的存储解决方案。RAID 5不对存储的数据进行备份，而是把数据和相对应的奇偶校验信息存储到组成RAID5的各个磁盘上，并且奇偶校验信息和相对应的数据分别存储于不同的磁盘上。当RAID5的一个磁盘数据发生损坏后，利用剩下的数据和相应的奇偶校验信息去恢复被损坏的数据。<br>RAID 5可以理解为是RAID 0和RAID 1的折衷方案。RAID 5可以为系统提供数据安全保障，但保障程度要比Mirror低而磁盘空间利用率要比Mirror高。RAID 5具有和RAID 0相近似的数据读取速度，只是多了一个奇偶校验信息，写入数据的速度比对单个磁盘进行写入操作稍慢。同时由于多个数据对应一个奇偶校验信息，RAID 5的磁盘空间利用率要比RAID 1高，存储成本相对较低。<br>在RAID 5中有“写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
+<p>RAID是通过磁盘阵列与数据条块化方法相结合, 以提高数据可用率的一种结构。IBM早于1970年就开始研究此项技术 。RAID 可分为RAID级别1到RAID级别6, 通常称为： RAID 0, RAID 1, RAID 2, RAID 3,RAID 4,RAID 5,RAID6。每一个RAID级别都有自己的强项和弱项. “奇偶校验”定义为用户数据的冗余信息, 当硬盘失效时, 可以重新产生数据。</p>
+<p>RAID 0： RAID 0 并不是真正的RAID结构, 没有数据冗余。 RAID 0 连续地分割数据并并行地读/写于多个磁盘上。 因此具有很高的数据传输率。 但RAID 0在提高性能的同时,并没有提供数据可靠性,如果一个磁盘失效, 将影响整个数据.因此RAID 0 不可应用于需要数据高可用性的关键应用。</p>
+<p>RAID 1： RAID 1通过数据镜像实现数据冗余, 在两对分离的磁盘上产生互为备份的数据。 RAID 1可以提高读的性能,当原始数据繁忙时, 可直接从镜像拷贝中读取数据.RAID 1是磁盘阵列中费用最高的, 但提供了最高的数据可用率。当一个磁盘失效, 系统可以自动地交换到镜像磁盘上, 而不需要重组失效的数据。RAID 2：从概念上讲, RAID 2 同RAID 3类似, 两者都是将数据条块化分布于不同的硬盘上, 条块单位为位或字节。然而RAID 2 使用称为”加重平均纠错码”的编码技术来提供错误检查及恢复。 这种编码技术需要多个磁盘存放检查及恢复信息, 使得RAID 2技术实施更复杂。 因此,在商业环境中很少使用。</p>
+<p>RAID 3：不同于RAID 2, RAID 3使用单块磁盘存放奇偶校验信息。 如果一块磁盘失效, 奇偶盘及其他数据盘可以重新产生数据。 如果奇偶盘失效,则不影响数据使用.RAID 3对于大量的连续数据可提供很好的传输率, 但对于随机数据, 奇偶盘会成为写操作的瓶颈。</p>
+<p>RAID 4：同RAID 2, RAID 3一样, RAID 4, RAID 5也同样将数据条块化并分布于不同的磁盘上, 但条块单位为块或记录. RAID 4使用一块磁盘作为奇偶校验盘, 每次写操作都需要访问奇偶盘, 成为写操作的瓶颈。 在商业应用中很少使用。</p>
+<p>RAID 5：RAID 5没有单独指定的奇偶盘, 而是交叉地存取数据及奇偶校验信息于所有磁盘上。 在RAID5 上, 读/写指针可同时对阵列设备进行操作, 提供了更高的数据流量。 RAID 5更适合于小数据块,随机读写的数据。RAID 3与RAID 5相比, 重要的区别在于RAID 3每进行一次数据传输,需涉及到所有的阵列盘。而对于RAID 5来说, 大部分数据传输只对一块磁盘操作, 可进行并行操作。在RAID 5中有”写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
+<p>RAID 6：RAID 6 与RAID 5相比,增加了第二个独立的奇偶校验信息块。两个独立的奇偶系统使用不同的算法, 数据的可靠性非常高。 即使两块磁盘同时失效,也不会影响数据的使用。 但需要分配给奇偶校验信息更大的磁盘空间,相对于RAID 5有更大的“写损失”。 RAID 6 的写性能非常差, 较差的性能和复杂的实施使得RAID 6很少使用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/13/关于java字节码框架ASM的学习'/" itemprop="url">
+                  关于java字节码框架ASM的学习
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-13T10:29:17+08:00" content="2015-04-13">
+              2015-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/13/关于java字节码框架ASM的学习'/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/关于java字节码框架ASM的学习'/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/13/关于java字节码框架ASM的学习'/" class="leancloud_visitors" data-flag-title="关于java字节码框架ASM的学习">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、什么是ASM<br>　　ASM是一个java字节码操纵框架，它能被用来动态生成类或者增强既有类的功能。ASM 可以直接产生二进制 class 文件，也可以在类被加载入 Java 虚拟机之前动态改变类行为。Java class 被存储在严格格式定义的 .class文件里，这些类文件拥有足够的元数据来解析类中的所有元素：类名称、方法、属性以及 Java 字节码（指令）。ASM从类文件中读入信息后，能够改变类行为，分析类信息，甚至能够根据用户要求生成新类。</p>
+<p>　　使用ASM框架需要导入asm的jar包，下载链接：<a href="http://files.cnblogs.com/liuling/asm-3.2.rar" target="_blank" rel="external">asm-3.2.jar</a>。<br>　　二、如何使用ASM<br>　　ASM框架中的核心类有以下几个：<br>　　①  ClassReader:该类用来解析编译过的class字节码文件。<br>　　②  ClassWriter:该类用来重新构建编译后的类，比如说修改类名、属性以及方法，甚至可以生成新的类的字节码文件。<br>　　③  ClassAdapter:该类也实现了ClassVisitor接口，它将对它的方法调用委托给另一个ClassVisitor对象。<br>　　示例1.通过asm生成类的字节码<br>[java]<br>package com.asm3;</p>
+<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
+<p>import org.objectweb.asm.ClassWriter;<br>import org.objectweb.asm.Opcodes;</p>
+<p>/**</p>
+<ul>
+<li>通过asm生成类的字节码</li>
+<li><p>@author Administrator<br><em>
+</em>/<br>public class GeneratorClass {</p>
+<p> public static void main(String[] args) throws IOException {</p>
+<pre><code>//生成一个类只需要ClassWriter组件即可
+ClassWriter cw = new ClassWriter(0);
+//通过visit方法确定类的头部信息
+cw.visit(Opcodes.V1_5, Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT+Opcodes.ACC_INTERFACE,
+        &amp;quot;com/asm3/Comparable&amp;quot;, null, &amp;quot;java/lang/Object&amp;quot;, new String[]{&amp;quot;com/asm3/Mesurable&amp;quot;});
+//定义类的属性
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;LESS&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(-1)).visitEnd();
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;EQUAL&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(0)).visitEnd();
+cw.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_FINAL+Opcodes.ACC_STATIC,
+        &amp;quot;GREATER&amp;quot;, &amp;quot;I&amp;quot;, null, new Integer(1)).visitEnd();
+//定义类的方法
+cw.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_ABSTRACT, &amp;quot;compareTo&amp;quot;,
+        &amp;quot;(Ljava/lang/Object;)I&amp;quot;, null, null).visitEnd();
+cw.visitEnd(); //使cw类已经完成
+//将cw转换成字节数组写到文件里面去
+byte[] data = cw.toByteArray();
+File file = new File(&amp;quot;D://Comparable.class&amp;quot;);
+FileOutputStream fout = new FileOutputStream(file);
+fout.write(data);
+fout.close();
+</code></pre><p> }<br>}<br>[/java]</p>
+</li>
+</ul>
+<p>　生成一个类的字节码文件只需要用到ClassWriter类即可，生成Comparable.class后用javap指令对其进行反编译：javap -c Comparable.class &gt;test.txt  ,编译后的结果如下<br>[java]<br>public interface com.asm3.Comparable extends com.asm3.Mesurable {<br>  public static final int LESS;</p>
+<p>  public static final int EQUAL;</p>
+<p>  public static final int GREATER;</p>
+<p>  public abstract int compareTo(java.lang.Object);<br>}<br>[/java]</p>
+<p>　　示例2.修改类的字节码文件<br>[java]<br>package com.asm5;</p>
+<p>public class C {<br>    public void m() throws InterruptedException{<br>        Thread.sleep(100);<br>    }<br>}<br>[/java]<br>将C.java类的内容改为如下：<br>[java]<br>package com.asm5;</p>
+<p>public class C {<br>    public static long timer;<br>    public void m() throws InterruptedException{<br>        timer -= System.currentTimeMillis();<br>        Thread.sleep(100);<br>        timer += System.currentTimeMillis();<br>    }<br>}<br>[/java]<br>　为了弄清楚ASM是如何实现的，我们先编译这两个类，然后比对它们的TraceClassVisitor的输出，我们可以发现如下的不同（粗体表示）</p>
+<p><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LSUB<br>PUTSTATIC C.timer : J</strong><br>LDC 100<br>INVOKESTATIC java/lang/Thread.sleep(J)V<br><strong>GETSTATIC C.timer : J<br>INVOKESTATIC java/lang/System.currentTimilis()J<br>LADD<br>PUTSTATIC C.timer : J</strong><br>RETURN<br>MAXSTACK=4<br>MAXLOCALS=1</p>
+<p>　　通过比对上面的指令，我们可以发现必须在m()方法的最前面增加四条指令，在RETURN指令前也增加四条指令，同时这四条必须位于xRETURN和ATHROW之前，因为这些指令都会结束方法的执行。</p>
+<p>具体代码如下：</p>
+<p>AddTimeClassAdapter.java<br>[java]<br>package com.asm5;</p>
+<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassVisitor;<br>import org.objectweb.asm.FieldVisitor;<br>import org.objectweb.asm.MethodAdapter;<br>import org.objectweb.asm.MethodVisitor;<br>import org.objectweb.asm.Opcodes;</p>
+<p>public class AddTimeClassAdapter extends ClassAdapter {<br>    private String owner;<br>    private boolean isInterface;<br>    public AddTimeClassAdapter(ClassVisitor cv) {<br>        super(cv);<br>    }<br>    @Override<br>    public void visit(int version, int access, String name, String signature,<br>            String superName, String[] interfaces) {<br>        cv.visit(version, access, name, signature, superName, interfaces);<br>        owner = name;<br>        isInterface = (access &amp; Opcodes.ACC_INTERFACE) != 0;<br>    }<br>    @Override<br>    public MethodVisitor visitMethod(int access, String name, String desc,<br>            String signature, String[] exceptions) {<br>        MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);<br>        if(!name.equals(&quot;&lt;init&gt;&quot;) &amp;&amp; !isInterface &amp;&amp; mv!=null){<br>            //为方法添加计时功能<br>            mv = new AddTimeMethodAdapter(mv);<br>        }<br>        return mv;<br>    }<br>    @Override<br>    public void visitEnd() {<br>        //添加字段<br>        if(!isInterface){<br>            FieldVisitor fv = cv.visitField(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC, &quot;timer&quot;, &quot;J&quot;, null, null);<br>            if(fv!=null){<br>                fv.visitEnd();<br>            }<br>        }<br>        cv.visitEnd();<br>    }</p>
+<pre><code>class AddTimeMethodAdapter extends MethodAdapter{
+    public AddTimeMethodAdapter(MethodVisitor mv) {
+        super(mv);
+    }
+    @Override
+    public void visitCode() {
+        mv.visitCode();
+        mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+        mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
+        mv.visitInsn(Opcodes.LSUB);
+        mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+    }
+    @Override
+    public void visitInsn(int opcode) {
+        if((opcode&amp;gt;=Opcodes.IRETURN &amp;amp;&amp;amp; opcode&amp;lt;=Opcodes.RETURN) || opcode==Opcodes.ATHROW){
+            mv.visitFieldInsn(Opcodes.GETSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, &amp;quot;java/lang/System&amp;quot;, &amp;quot;currentTimeMillis&amp;quot;, &amp;quot;()J&amp;quot;);
+            mv.visitInsn(Opcodes.LADD);
+            mv.visitFieldInsn(Opcodes.PUTSTATIC, owner, &amp;quot;timer&amp;quot;, &amp;quot;J&amp;quot;);
+        }
+        mv.visitInsn(opcode);
+    }
+    @Override
+    public void visitMaxs(int maxStack, int maxLocal) {
+        mv.visitMaxs(maxStack+4, maxLocal);
+    }
+}
+</code></pre><p>}<br>[/java]<br>Generator.java<br>[java]<br>package com.asm5;</p>
+<p>import java.io.File;<br>import java.io.FileNotFoundException;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
+<p>import org.objectweb.asm.ClassAdapter;<br>import org.objectweb.asm.ClassReader;<br>import org.objectweb.asm.ClassWriter;</p>
+<p>public class Generator {</p>
+<pre><code>public static void main(String[] args){
+    try {
+        ClassReader cr = new ClassReader(&amp;quot;com/asm5/C&amp;quot;);
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        ClassAdapter classAdapter = new AddTimeClassAdapter(cw);
+        //使给定的访问者访问Java类的ClassReader
+        cr.accept(classAdapter, ClassReader.SKIP_DEBUG);
+        byte[] data = cw.toByteArray();
+        File file = new File(System.getProperty(&amp;quot;user.dir&amp;quot;) + &amp;quot;\\WebRoot\\WEB-INF\\classes\\com\\asm5\\C.class&amp;quot;);
+        FileOutputStream fout = new FileOutputStream(file);
+        fout.write(data);
+        fout.close();
+        System.out.println(&amp;quot;success!&amp;quot;);
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}<br>[/java]<br>下面是一个测试类：<br>[java]<br>package com.asm5;</p>
+<p>public class Test {<br>    public static void main(String[] args) throws InterruptedException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {<br>        C c = new C();<br>        c.m();<br>        Class cc = c.getClass();<br>        System.out.println(cc.getField(&quot;timer&quot;).get(c));<br>    }<br>}<br>[/java]<br>输出结果为：100</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/" itemprop="url">
+                  [转]Spring MVC源码分析——初始化过程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-08T16:02:03+08:00" content="2015-04-08">
+              2015-04-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/08/[转]Spring MVC源码分析——初始化过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/08/[转]Spring MVC源码分析——初始化过程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/08/[转]Spring MVC源码分析——初始化过程/" class="leancloud_visitors" data-flag-title="[转]Spring MVC源码分析——初始化过程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转载自<a href="http://www.jmatrix.org/" target="_blank" rel="external">jmatrix</a><br>本文链接地址: <a href="http://www.jmatrix.org/spring/453.html" target="_blank" rel="external">Spring MVC源码分析——初始化过程</a></p>
+<p>1.<strong>概述</strong></p>
+<p>对于Web开发者，MVC模型是大家再熟悉不过的了，SpringMVC中，满足条件的请求进入到负责请求分发的DispatcherServlet，DispatcherServlet根据请求url到控制器的映射（HandlerMapping中保存），HandlerMapping最终返回HandlerExecutionChain，其中包含了具体的处理对象handler（也即我们编程时写的controller）以及一系列的拦截器interceptors，此时DispatcherServlet会根据返回的HandlerExecutionChain中的handler找到支持这一处理器类型的适配器（handlerAdapter），在处理器适配器中最终会去调用控制器的请求响应方法并返回结果视图（ModelAndView），得到结果视图后，通过render方法完成结果的显示。</p>
+<p>HanderMapping的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/1.jpg" alt=""></p>
+<p>HandlerAdapter的继承体系：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/2.jpg" alt=""></p>
+<p>同样的视图解析器ViewResolver针对不同的输出格式也有一系列的实现类，具体可自己看。</p>
+<p>2.<strong>实现分析</strong><br>以我自己的一个web项目中spring mvc的配置为例：<br>[xml]<br>&lt;context:component-scan base-package=&quot;cn.ds.log&quot; /&gt;<br>&lt;bean id=&quot;defaultHandlerMapping&quot;<br>    class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot; /&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean<br>    class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter&quot;&gt;<br>&lt;/bean&gt;<br>&lt;bean id=&quot;viewResolver&quot;<br>    class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name=&quot;prefix&quot;&gt;<br>        &lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;<br>    &lt;/property&gt;<br>    &lt;property name=&quot;suffix&quot;&gt;<br>        &lt;value&gt;.jsp&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/bean&gt;<br>[/xml]<br>这里因为是采用全注解的方式，所以先通过context:component-scan配置让spring自定扫描的包路径，接着配置handlerMapping、handlerAdapter及ViewResolver，几乎包含了SpringMVC的配置中需要涉及的所有元素。后面需要涉及具体的HanderMapping等的实现时，将以这里配置中的实现为例进行分析，其它的大家“同理可解”。</p>
+<p>2.1 <strong>Spring MVC初始化流程</strong><br>DispatcherServlet的继承体系如：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/3.jpg" alt=""><br>看到它们继承自HttpServlet，你就知道初始化过程应该是从init方法开始了，整个初始化的流程为：<br><img src="http://www.jmatrix.org/wp-content/uploads/2013/08/4.jpg" alt=""></p>
+<p>很简单是么？我也觉得是，至少从上面的时序图看来是这样，不过前提是你已经很了解Spring IOC的实现原理了。上面的时序图中，在5的initStragegies()中除了调用6,7的函数外，还有几个类似的初始化函数，因为这里主要是为了理解整个的流程，所以我都省略了。上面流程可能需要分析的地方就在于3,4步，我们看看initWebApplicationContext函数的实现：<br>[java]<br>protected WebApplicationContext initWebApplicationContext() {<br>        WebApplicationContext rootContext =<br>                WebApplicationContextUtils.getWebApplicationContext(getServletContext());<br>        WebApplicationContext wac = null;</p>
+<pre><code>    if (this.webApplicationContext != null) {
+        // A context instance was injected at construction time -&amp;amp;gt; use it
+        wac = this.webApplicationContext;
+        if (wac instanceof ConfigurableWebApplicationContext) {
+            ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;
+            if (!cwac.isActive()) {
+                ……
+                configureAndRefreshWebApplicationContext(cwac);
+            }
+        }
+    }
+    if (wac == null) {
+        wac = findWebApplicationContext();
+    }
+    if (wac == null) {
+        // No context instance is defined for this servlet -&amp;amp;gt; create a local one
+        wac = createWebApplicationContext(rootContext);
+    }
+
+    if (!this.refreshEventReceived) {
+        // Either the context is not a ConfigurableApplicationContext with refresh
+        // support or the context injected at construction time had already been
+        // refreshed -&amp;amp;gt; trigger initial onRefresh manually here.
+        onRefresh(wac);
+    }
+
+    if (this.publishContext) {
+        ……
+    }
+
+    return wac;
+}
+</code></pre><p>[/java]<br>看起来貌似有点复杂，其实理解了IOC容器的实现原理（可以看下“spring ioc源码分析”一文，⊙﹏⊙多年前弄的，这次暑假实习时又以读书报告的形式写了，感觉当年肿么可以写得这么乱……也是一种成长，不打算修改）就很简单，函数一开始会去获取WebApplicationContext对象，这个对象在ContextLoaderListener初始化IOC容器时就已经把它set到ServletContext的属性中，而且它也正是ConfigurableWebApplicationContext的实例，第一个if语句其实就是如果此时SpringIOC容器没有初始化的话就在这里启动IOC容器的初始化过程，因为看“省略（1）”中的代码你就知道，它会在这里调用refresh函数，“世人”都知道这就是IOC容器启动的入口，这里会解析配置文件springmvc-servlet.xml。</p>
+<p>这里最终要执行onRefresh()，而这个就是SpringMVC初始化的入口。</p>
+<p>（注：其实这里也可以配置log4j，通过其打印的info信息来看IOC与MVC的初始化顺序）</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC/" itemprop="url">
                   [转]Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC
                 </a>
@@ -1895,513 +2446,11 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="url">
-                  [转]Spring4新特性——泛型限定式依赖注入
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-06T03:53:17+08:00" content="2015-04-06">
-              2015-04-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——泛型限定式依赖注入">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
-<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
-<p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
-<p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
-<p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
-<p>@Repository<br>public class UserRepository extends BaseRepository&lt;User&gt; {<br>}  </p>
-<p>@Repository<br>public class OrganizationRepository extends BaseRepository&lt;Organization&gt; {<br>}<br>[/java]<br> 对于Repository，我们一般是这样实现的：首先写一个模板父类，把通用的crud等代码放在BaseRepository；然后子类继承后，只需要添加额外的实现。</p>
-<p>1.3、Service<br>1.3.1、以前Service写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    private BaseRepository&lt;M&gt; repository;<br>    public void setRepository(BaseRepository&lt;M&gt; repository) {<br>        this.repository = repository;<br>    }<br>    public void save(M m) {<br>        repository.save(m);<br>    }<br>}<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>    @Autowired<br>    public void setUserRepository(UserRepository userRepository) {<br>        setRepository(userRepository);<br>    }<br>}  </p>
-<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>    @Autowired<br>    public void setOrganizationRepository(OrganizationRepository organizationRepository) {<br>        setRepository(organizationRepository);<br>    }<br>}<br>[/java]<br>可以看到，以前必须再写一个setter方法，然后指定注入的具体类型，然后进行注入；</p>
-<p>1.3.2、泛型Service的写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    @Autowired<br>    protected BaseRepository&lt;M&gt; repository;  </p>
-<pre><code>public void save(M m) {  
-    repository.save(m);  
-}  
-</code></pre><p>}  </p>
-<p>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}  </p>
-<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>}<br>[/java]<br> 大家可以看到，现在的写法非常简洁。支持泛型式依赖注入。</p>
-<p>这个也是我之前非常想要的一个功能，这样对于那些基本的CRUD式代码，可以简化更多的代码。</p>
-<p>如果大家用过Spring data jpa的话，以后注入的话也可以使用泛型限定式依赖注入 ：<br>[java]<br>@Autowired<br>private Repository&lt;User&gt; userRepository;<br>[/java]<br> 对于泛型依赖注入，最好使用setter注入，这样万一子类想变，比较容易切换。比如<a href="https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。" target="_blank" rel="external">https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="url">
-                  SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-05T14:53:58+08:00" content="2015-04-05">
-              2015-04-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" class="leancloud_visitors" data-flag-title="SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/'>SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p> 一、SpringMVC使用@ResponseBody时返回json的日期格式</p>
-<pre><code> @ResponseBody 返回json字符串的核心类是org.springframework.http.converter.json.MappingJacksonHttpMessageConverter，它使用了Jackson 这个开源的第三方类库。主要是以下两个jar包：jackson-core-asl-1.6.4.jar；jackson-mapper-asl-1.6.4.jar。
-出现问题： 使用@ResponseBody时返回json字符串的日期格式。Date类型属性默认返回一个Long型的时间戳，怎样能够返回自定义的日期格式？
-解决方案：目前有两种方式实现,
-         1、局部修改(网上较多，但不推荐)；
-      继承Jackson的抽象类：JsonSerializer&lt;T&gt;，然后在javabean的属性getter()上添加注解@JsonSerialize即可实现。
-     代码如下：
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 自定义返回JSON 数据格中日期格式化处理 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomDateSerializer</span> <span class="keyword">extends</span> <span class="title">JsonSerializer</span>&amp;<span class="title">lt</span></span>;Date&amp;gt; &#123;  </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">            JsonGenerator jsonGenerator,   </div><div class="line">            SerializerProvider provider)  </div><div class="line">            <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">        jsonGenerator.writeString(sdf.format(value));  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@JsonSerialize</span>(using = CustomDateSerializer.class)  </div><div class="line"><span class="function"><span class="keyword">public</span> Date <span class="title">getCreateDate</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> createDate;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<pre><code>     2、全局修改(强烈推荐)：
- MappingJacksonHttpMessageConverter主要通过ObjectMapper来实现返回json字符串。这里我们继承该类，注册一个JsonSerializer&lt;T&gt;。然后在配置文件中注入自定义的ObjectMapper。
-代码如下：
-</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ObjectMapper;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ser.CustomSerializerFactory;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 解决Date类型返回json格式为自定义格式 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomObjectMapper</span> <span class="keyword">extends</span> <span class="title">ObjectMapper</span> </span>&#123;  </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomObjectMapper</span><span class="params">()</span></span>&#123;  </div><div class="line">        CustomSerializerFactory factory = <span class="keyword">new</span> CustomSerializerFactory();  </div><div class="line">        factory.addGenericMapping(Date.class, <span class="keyword">new</span> JsonSerializer&amp;lt;Date&amp;gt;()&#123;  </div><div class="line">            <span class="meta">@Override</span>  </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">                    JsonGenerator jsonGenerator,   </div><div class="line">                    SerializerProvider provider)  </div><div class="line">                    <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">                SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">                jsonGenerator.writeString(sdf.format(value));  </div><div class="line">            &#125;  </div><div class="line">        &#125;);  </div><div class="line">        <span class="keyword">this</span>.setSerializerFactory(factory);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>   spring-servlet.xml中配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&amp;lt;mvc:annotation-driven&amp;gt;  </div><div class="line">        &amp;lt;mvc:message-converters&amp;gt;  </div><div class="line">            &amp;lt;bean <span class="class"><span class="keyword">class</span></span>=&amp;quot;org.springframework.http.converter.json.MappingJacksonHttpMessageConverter&amp;quot;&amp;gt;  </div><div class="line">                &amp;lt;property name=&amp;quot;objectMapper&amp;quot; ref=&amp;quot;customObjectMapper&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;  </div><div class="line">            &amp;lt;/bean&amp;gt;  </div><div class="line">        &amp;lt;/mvc:message-converters&amp;gt;  </div><div class="line">    &amp;lt;/mvc:annotation-driven&amp;gt;  </div><div class="line">   &amp;lt;bean id=&amp;quot;customObjectMapper&amp;quot; <span class="class"><span class="keyword">class</span></span>=&amp;quot;com.pmc.dwa.common.custom.CustomObjectMapper&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;</div></pre></td></tr></table></figure></p>
-<p> 二、@DatetimeFormat使用注意<br>     1、 使用@DatetimeFormat很简单，这里需要注意的是：使用时要引入一个类库joda-time-1.3.jar，否则会无法访问相应路径(400错误)。<br>ps：该注解可以作用在METHOD，FIELD以及PARAMETER级别上。<br>使用介绍参考：<a href="http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k" target="_blank" rel="external">http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k</a><br>   2、因为springMVC没有提供默认的日期转换器，前段页面传递过来日期字符串怎么转换为日期类型，如果没有提供全局日期转换器或者数据绑定的基础上，可以使用@DatetimeFormat注解完成。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="url">
-                  关于spring 3.0.5的 标签的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-05T14:48:47+08:00" content="2015-04-05">
-              2015-04-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/05/关于spring 3.0.5的 标签的使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/05/关于spring 3.0.5的 标签的使用/" class="leancloud_visitors" data-flag-title="关于spring 3.0.5的 标签的使用">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>spring mvc 的<mvc;resources mapping="***" location="***">标签是在spring3.0.4出现的，主要是用来进行静态资源的访问。在spring3.0.4出来的时候spring还没有更新其schema所以在配置文件中有可能找不到<mvc:resources>标签，这个问题在spring3.0.5中已经解决，而且网上也有很多其他的解决方案，我在这里就不记录了。 </mvc:resources></mvc;resources></p>
-<p>首先使用spring mvc需要配置其使用的servlet.在web.xml中:<br>[xml]<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>    &lt;/servlet&gt;  </p>
-<pre><code>&amp;lt;servlet-mapping&amp;gt;  
-    &amp;lt;servlet-name&amp;gt;springMVC&amp;lt;/servlet-name&amp;gt;  
-    &amp;lt;url-pattern&amp;gt;/&amp;lt;/url-pattern&amp;gt;  
-&amp;lt;/servlet-mapping&amp;gt;  
-</code></pre><p>[/xml]<br>这里给 servlet-name定义的名称是springMVC,这样的话会在web-inf下spring会自动扫描一个XML文件名叫springMVC-servlet.xml文件，这里都是spring自动扫描的，如果你没有提供，将会报一个文件查找不到的异常。看了下org.springframework.web.servlet.DispatcherServlet加载这个文件的过程，貌似这个文件存放的地址也是可以进行设置的，具体怎么搞我还没有研究。 </p>
-<p>由于spring mvc拦截了所有请求，所以当你设置<br>[xml]<br>&lt;servlet-mapping&gt;<br>&lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>&lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>[/xml]<br>的时候会影响到静态资源文件的获取，这样就需要有这个标签来帮你分类完成获取静态资源的责任。 </p>
-<p>springMVC-servlet.xml文件<br>[xml]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns=&quot;<a href="http://www.springframework.org/schema/beans&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/beans&amp;quot</a>;<br>    xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>;<br>    xmlns:mvc=&quot;<a href="http://www.springframework.org/schema/mvc&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/mvc&amp;quot</a>;<br>    xsi:schemaLocation=&quot;<a href="http://www.springframework.org/schema/beans" target="_blank" rel="external">http://www.springframework.org/schema/beans</a> <a href="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" target="_blank" rel="external">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</a><br>    <a href="http://www.springframework.org/schema/mvc" target="_blank" rel="external">http://www.springframework.org/schema/mvc</a> <a href="http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt" target="_blank" rel="external">http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt</a>;     </p>
-<pre><code>&amp;lt;mvc:resources mapping=&amp;quot;/javascript/**&amp;quot; location=&amp;quot;/static_resources/javascript/&amp;quot;/&amp;gt;  
-&amp;lt;mvc:resources mapping=&amp;quot;/styles/**&amp;quot; location=&amp;quot;/static_resources/css/&amp;quot;/&amp;gt;  
-&amp;lt;mvc:resources mapping=&amp;quot;/images/**&amp;quot; location=&amp;quot;/static_resources/images/&amp;quot;/&amp;gt;  
-&amp;lt;mvc:default-servlet-handler /&amp;gt;  
-
-&amp;lt;bean class=&amp;quot;org.springframework.web.servlet.view.InternalResourceViewResolver&amp;quot;&amp;gt;  
-    &amp;lt;property name=&amp;quot;prefix&amp;quot; value=&amp;quot;/WEB-INF/views/&amp;quot;/&amp;gt;  
-    &amp;lt;property name=&amp;quot;suffix&amp;quot; value=&amp;quot;.jsp&amp;quot;/&amp;gt;  
-&amp;lt;/bean&amp;gt;  
-</code></pre><p>&lt;/beans&gt;<br>[/xml]<br>这里可以看到我所有的页面引用到/styles/**的资源都从/static_resources/css里面进行查找。 </p>
-<p>页面的一段静态资源访问的代码。<br>[html]<br>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;<a href="http://java.sun.com/jstl/core&quot;%&amp;gt" target="_blank" rel="external">http://java.sun.com/jstl/core&quot;%&amp;gt</a>;<br>&lt;HTML&gt;<br>&lt;HEAD&gt;<br>  &lt;TITLE&gt; ABCDEFG &lt;/TITLE&gt;<br>&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;&lt;c:url value=’/styles/siteboard.css’/&gt;&quot;&gt;<br>…<br>…<br>…<br>[/html]</p>
-<p>可能这个标签的真谛就是为了引用资源的访问不会类似CONTROLLER一样被拦截，区分出关注的资源的访问，一般我们在springMVC里面的拦截都会配置为”/“，拦截所有的。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2442,7 +2491,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">319</span>
+              <span class="site-state-item-count">322</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2459,7 +2508,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
