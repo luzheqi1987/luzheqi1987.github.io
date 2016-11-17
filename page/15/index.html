@@ -30,7 +30,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -64,7 +64,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -279,6 +279,440 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/07/2014-01-07-练习1.10-练习1.17/" itemprop="url">
+                  练习1.10-练习1.17
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-07T20:47:00+08:00" content="2014-01-07">
+              2014-01-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/07/2014-01-07-练习1.10-练习1.17/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/07/2014-01-07-练习1.10-练习1.17/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/07/2014-01-07-练习1.10-练习1.17/" class="leancloud_visitors" data-flag-title="练习1.10-练习1.17">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/07/2014-01-07-练习1.10-练习1.17/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/07/2014-01-07-练习1.10-练习1.17/'>练习1.10-练习1.17</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>1.练习1.10<br>这个是阿克曼函数，真的很牛，花了我很长时间。<br>表达式的求值就不说了。<br>(define (f n) (A 0 n)) ——-2n<br>(define (g n) (A 1 n))——-2的n次方<br>(define (h n) (A 2 n))——-n个2的次方，例如：(h 4)表示为2的2次方的2次方的2次方<br>2.练习1.11<br>递归计算过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (f1 n)</div><div class="line">  (if (&lt; n 3)</div><div class="line">      n</div><div class="line">      (+ (f1 (- n 1))</div><div class="line">	 (* 2 (f1 (- n 2)))</div><div class="line">	 (* 3 (f1 (- n 3))))))</div></pre></td></tr></table></figure>
+<p>迭代计算过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (f2 n)</div><div class="line">  (f2-iter 2 1 0 3 n))</div><div class="line"></div><div class="line">(define (f2-iter a b c num n)</div><div class="line">  (cond ((&lt; n 3) n)</div><div class="line">	((&gt; num n) a)</div><div class="line">	(else (f2-iter (+ a</div><div class="line">			  (* 2 b)</div><div class="line">			  (* 3 c))</div><div class="line">		       a b (+ num 1) n))))</div></pre></td></tr></table></figure>
+<p>解释一下迭代计算过程吧，利用a b c 三个数字保存临时的数据，num表示目前计算的状态，当num&gt;n时，表示已经求得的结果在a中。<br>下面的结果是<a href="http://blog.csdn.net/keyboardota/article/details/10564653" target="_blank" rel="external">别人的例子</a>，不是有多好，只是给我很大的启发，参数的移动可以增强程序的灵活性，不错！！我得记住这一点。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (myf-iter a b c n)</div><div class="line">  (format #t &quot;Caculating n, n is ~S, a is ~S, b is ~S, c is ~S ~%&quot; n a b c)</div><div class="line">  (if (= n 0)</div><div class="line">      a</div><div class="line">  (myf-iter b c ( + (* 3 a) (* 2 b) c) (- n 1))))</div><div class="line"></div><div class="line">(define (newf n)</div><div class="line">  (myf-iter 0 1 2 n))</div></pre></td></tr></table></figure>
+<p>3.练习1.12</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (yanghui row col)</div><div class="line">  (cond ((&gt; col row) -1)</div><div class="line">	((or (= 1 col) (= row col)) 1)</div><div class="line">	(else (+ (yanghui (- row 1) (- col 1))</div><div class="line">		 (yanghui (- row 1) col)))))</div></pre></td></tr></table></figure>
+<p>row表示第几行，col表示第row行的第几个数数字。当col为row行的第1个或者最后一个数的时候，结果为1；否则，结果为row－1行的col－1的数加上row－1行的col的数。4.练习1.13<br>不知道证明的对不对，对0和1的求值略去。<br>假设在n-1和n时，满足方程，代入n＋1的方程 Φn ＋Φn －1=Φn ＋1，接着证明(Υn＋Υn-1)/根5小于0.5，上式可变为Υn-1(Υ+1)/根5，可知Υn-1/根5小于0.5，而(Υ+1)/根5明显小于1，所以这个式子小于0.5，所以根据数学归纳法。。。<br>5.练习1.14<br>2的11次？<br>6.练习1.15<br>都是logn？<br>7.练习1.16</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (fast-expt-iter a b n)</div><div class="line">  (cond ((= n 1) (* a b))</div><div class="line">	((not (even? n)) (fast-expt-iter (* a b) b (- n 1)))</div><div class="line">       	(else (fast-expt-iter a (square b) (/ n 2)))))</div><div class="line"></div><div class="line">(define (fast-expt b n)</div><div class="line">  (fast-expt-iter 1 b n))</div></pre></td></tr></table></figure>
+<p>通过这道题，我总结到了，在目前的lisp学习中，主要是递归过程，所以应该在最开始的时候将出口留好，而不是放在随后的过程中。<br>8.练习1.17</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (* a b)</div><div class="line">  (cond ((= b 1) a)</div><div class="line">	((even? b) (double (* a (halve b))))</div><div class="line">	(else (+ a (* a (- b 1))))))</div></pre></td></tr></table></figure>
+<p>这道题，额，没考虑b为0的时候，看来测试用例做的不够全面啊。改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (* a b)</div><div class="line">  (cond ((= b 0) 0)</div><div class="line">	((even? b) (double (* a (halve b))))</div><div class="line">	(else (+ a (* a (- b 1))))))</div></pre></td></tr></table></figure>
+<p>即可！不过貌似也没考虑正负数什么了，说白了就是练习，理解这种“折半”的计算方式。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="url">
+                  练习1.1－练习1.9
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-06T21:20:00+08:00" content="2014-01-06">
+              2014-01-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/06/2014-01-06-练习1.1－练习1.9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/06/2014-01-06-练习1.1－练习1.9/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/06/2014-01-06-练习1.1－练习1.9/" class="leancloud_visitors" data-flag-title="练习1.1－练习1.9">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/06/2014-01-06-练习1.1－练习1.9/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/06/2014-01-06-练习1.1－练习1.9/'>练习1.1－练习1.9</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<ol>
+<li>练习1.1<br>这个题没有什么好说的了，只要把代码敲出来，运行一遍就可以了。</li>
+<li>练习1.2<br>这个题应该不算难吧，没有看过别人的答案，我把我的贴出来吧。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">(/ (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))</div><div class="line">   (* 3 (- 6 2) (- 2 7)))</div></pre></td></tr></table></figure>
+<p>3.练习1.3我的方法是求出3个数的和，再将减去最小的数，算不上最好的方法吧，马马虎虎。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(define (sumofmax2 x y z)</div><div class="line">  (- (+ x y z)</div><div class="line">     (cond ((and (&lt; x y) (&lt; x z)) x)</div><div class="line">	   ((and (&lt; y x) (&lt; y z)) y)</div><div class="line">	   (else z))))</div></pre></td></tr></table></figure>
+<p>4.练习1.4这个函数首先判断b是否大于0，根据判断结果使用加法或者减法，这也是Lisp的奇妙之出，可以将运算符作为返回值。<br>5.练习1.5<br>这个题我没有亲自试验，且从理论上分析下吧。<br>Scheme的解释器用的是应用序，所以在求表达式(test 0 (p))时首先会将(p)进行展开，可以看到p的实现时他自己，所以会进入一个无穷的递归，最终导致“死机”或者奔溃。<br>而在使用正则序时，解释器先不去求参数的值，而是将参数替换到过程中去，将过程展开，接着看展开的结果中是否还有其他过程，有的话继续展开，将过程完全展开后再进行计算，然后根据计算结果归约。<br>本题最后假设：特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。<br>所以当正则序先展开为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(if (= 0 0)</div><div class="line">     0</div><div class="line">    (p))</div></pre></td></tr></table></figure>
+<p>时，只会求if表达式中的谓词部分，根据谓词部分再判断展开那部分，这道题的if中的谓词为t，所以不会展开（p），所以时可以终止的。6.练习1.6<br>这道题类似于上一题，特殊形式if的求值规则总是一样的。其中谓词部分先行求值，根据其结果确定随后求值的子表达式。但是自定义的函数new-if时没有这种求值规则的，所以会不断的展开sqrt-iter函数，而不会由于new-if中的条件判断而中止。<br>7.练习1.7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.99999999999999)</div><div class="line">       (&lt; (/ guess old-guess) 1.00000000000001)))</div><div class="line"></div><div class="line">(define (average x y)</div><div class="line">  (/ (+ x y) 2))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (average guess (/ x guess)))</div><div class="line"></div><div class="line">(define (sqrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (sqrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (sqrt x)</div><div class="line">  (sqrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
+<p>8.练习1.8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(define (good-enough? guess old-guess)</div><div class="line">  (and (&gt; (/ guess old-guess) 0.9999)</div><div class="line">       (&lt; (/ guess old-guess) 1.0001)))</div><div class="line"></div><div class="line">(define (improve guess x)</div><div class="line">  (/ (+ (/ x (* guess guess)) (* 2 guess)) 3))</div><div class="line"></div><div class="line">(define (cbrt-iter guess old-guess x)</div><div class="line">  (if (good-enough? guess old-guess)</div><div class="line">      guess</div><div class="line">      (cbrt-iter (improve guess x) guess x)))</div><div class="line"></div><div class="line">(define (cbrt x)</div><div class="line">  (cbrt-iter 1.0 0.1 x))</div></pre></td></tr></table></figure>
+<p>9.练习1.9第一个是递归计算过程，因为在无法在一开始确定inc的参数，要推迟计算。<br>第二个是迭代计算过程，因为在计算的过程中只需要保存参数的值就可以了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="url">
+                  别人的Emacs配置1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-04T17:24:00+08:00" content="2014-01-04">
+              2014-01-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index">
+                    <span itemprop="name">Emacs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/01/04/2014-01-04-别人的Emacs配置1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/04/2014-01-04-别人的Emacs配置1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/04/2014-01-04-别人的Emacs配置1/" class="leancloud_visitors" data-flag-title="别人的Emacs配置1">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原地址：<a href="http://blog.csdn.net/shyanyang/article/details/7979866" target="_blank" rel="external">点击打开链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div></pre></td><td class="code"><pre><div class="line">;;使用C-x C-e检测配置的正确性</div><div class="line">(global-linum-mode t);显示行号</div><div class="line">(setq column-number-mode t);显示列号</div><div class="line">(setq auto-image-file-mode t);让Emacs可以直接打开和显示图片</div><div class="line">(auto-compression-mode t);打开压缩文件时自动解压缩</div><div class="line">;(setq global-font-lock-mode t);进行语法加亮</div><div class="line">(setq x-select-enable-clipboard t);允许emacs和外部其他程序的粘贴</div><div class="line">(setq mouse-yank-at-point t);使用鼠标中键可以粘贴</div><div class="line">(set-scroll-bar-mode nil);;取消滚动栏</div><div class="line">(tool-bar-mode nil);取消工具栏</div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(display-time-mode 1);;启用时间显示设置，在minibuffer上面的那个杠上</div><div class="line">(setq display-time-24hr-format t);;时间使用24小时制</div><div class="line">(setq display-time-day-and-date t);;时间显示包括日期和具体时间</div><div class="line">(setq display-time-use-mail-icon t);;时间栏旁边启用邮件设置</div><div class="line">(setq display-time-interval 10);;时间的变化频率，单位多少来着？</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;;;;;;;;;;;; 显示时间设置结束 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</div><div class="line">(setq visible-bell t)</div><div class="line">;;关闭烦人的出错时的提示声</div><div class="line">(setq inhibit-startup-message t)</div><div class="line">;;关闭emacs启动时的画面</div><div class="line"></div><div class="line">;(setq font-lock-maximum-decoration t)</div><div class="line">;(setq font-lock-global-modes &apos;(not shell-mode text-mode))</div><div class="line">;(setq font-lock-verbose t)</div><div class="line">;(setq font-lock-maximum-size &apos;((t . 1048576) (vm-mode . 5250000)))</div><div class="line">;; 语法高亮。除 shell-mode 和 text-mode 之外的模式中使用语法高亮。</div><div class="line"></div><div class="line">(fset &apos;yes-or-no-p &apos;y-or-n-p)</div><div class="line">;; 改变 Emacs 固执的要你回答 yes 的行为。按 y 或空格键表示 yes，n 表示 no。</div><div class="line"></div><div class="line">(ansi-color-for-comint-mode-on)</div><div class="line">;真正shell－mode乱码解决。</div><div class="line"></div><div class="line">(setq default-fill-column 80)</div><div class="line">;默认显示 80列就换行</div><div class="line"></div><div class="line">(setq default-fill-column 120)</div><div class="line">;;把 fill-column 设为 60. 这样的文字更好读</div><div class="line"></div><div class="line">(setq default-major-mode &apos;text-mode)</div><div class="line">(add-hook &apos;text-mode-hook &apos;turn-on-auto-fill)</div><div class="line">;;设置缺省主模式是text，,并进入auto-fill次模式.而不是基本模式fundamental-mode</div><div class="line"></div><div class="line">(show-paren-mode t);显示括号匹配</div><div class="line">(setq show-paren-style &apos;parenthesis)</div><div class="line">;;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。</div><div class="line"></div><div class="line">(mouse-avoidance-mode &apos;animate)</div><div class="line">;;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。</div><div class="line"></div><div class="line">;;;;;;;disable tip of the day</div><div class="line">(setq ecb-tip-of-the-day nil)</div><div class="line"></div><div class="line">(setq-default indent-tabs-mode nil)</div><div class="line">(setq default-tab-width 4)</div><div class="line">(setq tab-stop-list ())</div><div class="line">;;不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的。</div><div class="line"></div><div class="line">(setq-default make-backup-files nil);不要生成临时文件</div><div class="line">(setq backup-directory-alist &apos;((&quot;.&quot; . &quot;~/.autosave&quot;)))</div><div class="line">;;设置自动备份文件保存的目录,以免把你的磁盘弄得乱七八糟(你可以</div><div class="line">;;去掉这一行试试看:P ~/.autosave 表示 主目录下的一个叫.autosave 的子目录，</div><div class="line">;;按照前面的方法设置主目录。</div><div class="line"></div><div class="line">;;最大化</div><div class="line">(defun my-maximized ()  </div><div class="line">  (interactive)  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_HORZ&quot; 0))  </div><div class="line">  (x-send-client-message  </div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0)))  </div><div class="line">(my-maximized)</div><div class="line"></div><div class="line">;;自动插入匹配的括号</div><div class="line">;;C/C++  mode</div><div class="line"></div><div class="line">(defun my-c-mode-auto-pair ()</div><div class="line">  (interactive)</div><div class="line">  (make-local-variable &apos;skeleton-pair-alist)</div><div class="line">  (setq skeleton-pair-alist  &apos;(</div><div class="line">;;    (?&apos; _ &quot;&apos;&quot;)</div><div class="line">    (?\&quot; _ &quot;\&quot;&quot;)</div><div class="line">    (?\(  _ &quot;)&quot;)</div><div class="line">    (?\[  _ &quot;]&quot;)</div><div class="line">    (?&#123; \n &gt; _ \n ?&#125; &gt;)))</div><div class="line">  (setq skeleton-pair t)</div><div class="line">  (local-set-key (kbd &quot;(&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;&#123;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">;;  (local-set-key (kbd &quot;&apos;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;\&quot;&quot;) &apos;skeleton-pair-insert-maybe)</div><div class="line">  (local-set-key (kbd &quot;[&quot;) &apos;skeleton-pair-insert-maybe))</div><div class="line">(add-hook &apos;c-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">(add-hook &apos;c++-mode-hook &apos;my-c-mode-auto-pair)</div><div class="line">;;输入左边的括号，就会自动补全右边的部分.包括(), &quot;&quot;, [] , &#123;&#125; , 等等。</div><div class="line"></div><div class="line">;;;;自动补齐</div><div class="line">(defun my-indent-or-complete ();;;;如果在单词中间就补齐，否则就是tab</div><div class="line">   (interactive)</div><div class="line">   (if (looking-at &quot;\\&gt;&quot;)</div><div class="line">       (hippie-expand nil)</div><div class="line">       (indent-for-tab-command))</div><div class="line"> )</div><div class="line"></div><div class="line">(global-set-key [(control tab)] &apos;my-indent-or-complete)</div><div class="line"></div><div class="line">;;;hippie的自动补齐策略，优先调用了senator的分析结果：</div><div class="line">(autoload &apos;senator-try-expand-semantic &quot;senator&quot;)</div><div class="line"></div><div class="line">(setq hippie-expand-try-functions-list</div><div class="line">       &apos;(</div><div class="line">        senator-try-expand-semantic</div><div class="line">        try-expand-dabbrev</div><div class="line">        try-expand-dabbrev-visible</div><div class="line">        try-expand-dabbrev-all-buffers</div><div class="line">        try-expand-dabbrev-from-kill</div><div class="line">        try-expand-list</div><div class="line">        try-expand-list-all-buffers</div><div class="line">        try-expand-line</div><div class="line">        try-expand-line-all-buffers</div><div class="line">        try-complete-file-name-partially</div><div class="line">        try-complete-file-name</div><div class="line">        try-expand-whole-kill</div><div class="line">        )</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">;;;; 当输入&quot;.&quot;或&quot;&gt;&quot;时，在另一个窗口中列出结构体或类的成员</div><div class="line"></div><div class="line">;; (defun my-c-mode-cedet-hook ()</div><div class="line"></div><div class="line">;;   (local-set-key &quot;.&quot; &apos;semantic-complete-self-insert)</div><div class="line">;;   (local-set-key &quot;&gt;&quot; &apos;semantic-complete-self-insert))</div><div class="line"></div><div class="line">;; (add-hook &apos;c-mode-common-hook &apos;my-c-mode-cedet-hook)</div><div class="line">;; (add-hook &apos;c++-mode-commom-hook &apos;my-c-mode-cedet-hook)</div><div class="line"></div><div class="line">;;配置CEDET</div><div class="line">(load-file &quot;~/.emacs.d/my_plus/cedet-1.0/common/cedet.el&quot;)</div><div class="line">(semantic-load-enable-excessive-code-helpers)</div><div class="line">(global-ede-mode t)</div><div class="line">(require &apos;semantic-ia)</div><div class="line">(require &apos;semantic-gcc)</div><div class="line">(global-srecode-minor-mode 1)</div><div class="line">(semantic-load-enable-semantic-debugging-helpers)</div><div class="line">(global-set-key [f12] &apos;semantic-ia-fast-jump);代码跳转</div><div class="line">;;</div><div class="line">(global-set-key [S-f12]</div><div class="line">                (lambda ()</div><div class="line">                  (interactive)</div><div class="line">                  (if (ring-empty-p (oref semantic-mru-bookmark-ring ring))</div><div class="line">                      (error &quot;Semantic Bookmark ring is currently empty&quot;))</div><div class="line">                  (let* ((ring (oref semantic-mru-bookmark-ring ring))</div><div class="line">                         (alist (semantic-mrub-ring-to-assoc-list ring))</div><div class="line">                         (first (cdr (car alist))))</div><div class="line">                    (if (semantic-equivalent-tag-p (oref first tag)</div><div class="line">                                                   (semantic-current-tag))</div><div class="line">                        (setq first (cdr (car (cdr alist)))))</div><div class="line">                    (semantic-mrub-switch-tags first))))</div><div class="line">;;代码跳转（跳回上次的位置）</div><div class="line"></div><div class="line">(require &apos;eassist nil &apos;noerror)</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">(define-key c-mode-base-map [M-f12] &apos;eassist-switch-h-cpp)</div><div class="line">));;;;;eassist.el就提供了一个在C++的头文件和实现文件间跳转</div><div class="line"></div><div class="line">(setq eassist-header-switches</div><div class="line">      &apos;((&quot;h&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;c&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;hh&quot; . (&quot;cc&quot; &quot;CC&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;C&quot;))</div><div class="line">        (&quot;hpp&quot; . (&quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;hxx&quot; . (&quot;cxx&quot; &quot;cpp&quot; &quot;c++&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;h++&quot; . (&quot;c++&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;cc&quot; &quot;CC&quot; &quot;C&quot;))</div><div class="line">        (&quot;H&quot; . (&quot;C&quot; &quot;CC&quot; &quot;cc&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot; &quot;mm&quot; &quot;m&quot;))</div><div class="line">        (&quot;HH&quot; . (&quot;CC&quot; &quot;cc&quot; &quot;C&quot; &quot;cpp&quot; &quot;cxx&quot; &quot;c++&quot;))</div><div class="line">        (&quot;cpp&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cxx&quot; . (&quot;hxx&quot; &quot;hpp&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c++&quot; . (&quot;h++&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;CC&quot; . (&quot;HH&quot; &quot;hh&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;cc&quot; . (&quot;hh&quot; &quot;HH&quot; &quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;C&quot; . (&quot;hpp&quot; &quot;hxx&quot; &quot;h++&quot; &quot;HH&quot; &quot;hh&quot; &quot;H&quot; &quot;h&quot;))</div><div class="line">        (&quot;c&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;m&quot; . (&quot;h&quot;))</div><div class="line">        (&quot;mm&quot; . (&quot;h&quot;))));;;;填补eassist-switch-h-cpp扩展名不全的BUG</div><div class="line"></div><div class="line">;(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">;(defun my-c-mode-common-hook()</div><div class="line">(add-hook &apos;c-mode-common-hook</div><div class="line">          (lambda ()</div><div class="line">;(define-key c-mode-base-map [M-S-f12] &apos;semantic-analyze-proto-impl-toggle);;;;;在函数和声明和实现间跳转，不是这个功能不是十分准确，一般在cpp中函数实现处想跳到函数声明处正常，但是从声明处跳到实现处的话cedet不一定能找到cpp文件的位置。</div><div class="line"></div><div class="line">(define-key c-mode-base-map (kbd &quot;M-n&quot;) &apos;semantic-ia-complete-symbol-menu);;;;;;代码补全</div><div class="line">))</div><div class="line"></div><div class="line"></div><div class="line">;;;;;;;;;;;;;;配置ecb</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/ecb-2.40&quot;)</div><div class="line">(require &apos;ecb)</div><div class="line">(ecb-activate)</div><div class="line"></div><div class="line"></div><div class="line">;;定制ecb窗口布局</div><div class="line">(custom-set-variables  </div><div class="line">  ;; custom-set-variables was added by Custom.  </div><div class="line">  ;; If you edit it by hand, you could mess it up, so be careful.  </div><div class="line">  ;; Your init file should contain only one such instance.  </div><div class="line">  ;; If there is more than one, they won&apos;t work right.  </div><div class="line"> &apos;(ecb-fix-window-size t)  </div><div class="line"> &apos;(ecb-layout-window-sizes nil)  </div><div class="line"> &apos;(ecb-options-version &quot;2.40&quot;)  </div><div class="line"> ;; &apos;(ecb-primary-secondary-mouse-buttons (quote mouse-1--mouse-2))  </div><div class="line"> &apos;(ecb-windows-width 0.18))</div><div class="line"></div><div class="line">;颜色配置</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus&quot;)</div><div class="line">(require &apos;color-theme)</div><div class="line">(color-theme-initialize)</div><div class="line">(color-theme-calm-forest)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [f1] &apos;shell)                              ; 进入shell</div><div class="line">(global-set-key [S-f9] &apos;gdb)                              ; 调试</div><div class="line">;(setq compile-command &quot;g++ &quot;)                            ; 编译</div><div class="line">(global-set-key [f9] &apos;compile)</div><div class="line"></div><div class="line">;; c-mode公共设置</div><div class="line">(add-hook &apos;c-mode-common-hook &apos;my-c-mode-common-hook)</div><div class="line">(defun my-c-mode-common-hook ()</div><div class="line">  (setq default-tab-width 4)</div><div class="line">  (setq tab-width 4)</div><div class="line">  (setq c-basic-offset 4)</div><div class="line">  (hs-minor-mode t)</div><div class="line">  (define-key c-mode-base-map [(tab)] &apos;my-indent-or-complete)</div><div class="line">  (define-key c-mode-base-map [(meta ?/)] &apos;semantic-ia-complete-symbol-menu)</div><div class="line">  ;;;最后两行是代码自动补齐的快捷键</div><div class="line">)</div><div class="line"></div><div class="line"></div><div class="line">(global-set-key [S-f10] &apos;comment-or-uncomment-region)     ; 注释 / 取消注释</div><div class="line">(global-set-key [f10] &apos;c-indent-line-or-region)           ; 格式化代码</div><div class="line"></div><div class="line">;全屏</div><div class="line">(defun my-fullscreen ()</div><div class="line">  (interactive)</div><div class="line">  (x-send-client-message</div><div class="line">   nil 0 nil &quot;_NET_WM_STATE&quot; 32</div><div class="line">   &apos;(2 &quot;_NET_WM_STATE_FULLSCREEN&quot; 0))</div><div class="line">  ;; (x-send-client-message  </div><div class="line">  ;;  nil 0 nil &quot;_NET_WM_STATE&quot; 32  </div><div class="line">  ;;  &apos;(2 &quot;_NET_WM_STATE_MAXIMIZED_VERT&quot; 0))</div><div class="line">  )</div><div class="line">;; (my-fullscreen)</div><div class="line"></div><div class="line">(global-set-key [f11] &apos;my-fullscreen) ; emacs全屏</div><div class="line"></div><div class="line">;gdb快捷键设置</div><div class="line">(add-hook &apos;gdb-mode-hook &apos;(lambda ()</div><div class="line">                            (define-key c-mode-base-map [(f5)] &apos;gud-go)</div><div class="line">                            (define-key c-mode-base-map [(f7)] &apos;gud-step)</div><div class="line">                            (define-key c-mode-base-map [(f8)] &apos;gud-next)</div><div class="line">                            (define-key c-mode-base-map [(f6)] &apos;gud-cont)))</div><div class="line"></div><div class="line">;;代码折叠</div><div class="line">(global-set-key [f2] &apos;hs-toggle-hiding)</div><div class="line"></div><div class="line">;;;auctex配置</div><div class="line">(load &quot;auctex.el&quot; nil t t)</div><div class="line">(load &quot;preview-latex.el&quot; nil t t)</div><div class="line">(add-hook &apos;LaTeX-mode-hook #&apos;LaTeX-install-toolbar)</div><div class="line">(add-hook &apos;LaTeX-mode-hook &apos;turn-on-reftex) ; with AUCTeX LaTeX mode</div><div class="line">(add-hook &apos;latex-mode-hook &apos;turn-on-reftex) ; with Emacs latex mode</div><div class="line">(add-hook &apos;LaTeX-mode-hook (lambda()</div><div class="line">                              (add-to-list &apos;TeX-command-list &apos;(&quot;XeLaTeX&quot; &quot;%`xelatex%(mode)%&apos; %t&quot; TeX-run-TeX nil t))</div><div class="line">                              (setq TeX-command-default &quot;XeLaTeX&quot;)</div><div class="line">                                 (setq TeX-save-query  nil )</div><div class="line">                                  (setq TeX-show-compilation t)</div><div class="line">                                                               ))</div><div class="line">(setq TeX-auto-save t)</div><div class="line">(setq TeX-parse-self t)</div><div class="line">(setq-default TeX-master nil)</div><div class="line">(setq TeX-engine &apos;xetex)</div><div class="line">(setq TeX-PDF-mode t)</div><div class="line"></div><div class="line">;;;;;;;;;;;;weibo;;;;;;;;;;</div><div class="line">;;;;;;使用M-x weibo-timeline</div><div class="line">(add-to-list &apos;load-path &quot;~/.emacs.d/my_plus/austin------weibo.emacs-0cf9784&quot;)</div><div class="line">(require &apos;weibo)</div><div class="line"></div><div class="line">;;;;;;保存上次emacs关闭时的状态</div><div class="line">(load &quot;desktop&quot;)</div><div class="line">(desktop-load-default)</div><div class="line">(desktop-read)</div><div class="line"></div><div class="line">;;当emacs退出时保存文件打开状态</div><div class="line"></div><div class="line">(add-hook &apos;kill-emacs-hook</div><div class="line">          &apos;(lambda()(desktop-save &quot;~/&quot;)))</div><div class="line"></div><div class="line">;;;;;;;;;;;;;;;;w3m设置;;;;;;;;;;;;;;;;;</div><div class="line">;; (add-to-list &apos;load-path &quot;/usr/share/emacs/site-lisp/w3m/&quot;)</div><div class="line">;; (require &apos;w3m)</div><div class="line">;; (setq w3m-home-page &quot;http://www.google.com.hk&quot;) ;设置主页</div><div class="line">;; (require &apos;mime-w3m)</div><div class="line">;;  ;设置显示图片</div><div class="line">;; (setq w3m-default-display-inline-images t)</div><div class="line">;; (setq w3m-default-toggle-inline-images t)</div><div class="line">;; ;;显示图标</div><div class="line">;; (setq w3m-show-graphic-icons-in-header-line t)</div><div class="line">;; (setq w3m-show-graphic-icons-in-mode-line t)</div><div class="line">;; ;;启用cookie</div><div class="line">;; (setq w3m-use-cookies t)</div><div class="line">;; ;;设定w3m运行的参数，分别为使用cookie和使用框架</div><div class="line">;; (setq w3m-command-arguments &apos;(&quot;-cookie&quot; &quot;-F&quot;))</div><div class="line"></div><div class="line">;; ;;;解决wrong type argument: stringp, nil问题</div><div class="line">;; (setq debug-on-error t);;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1481,7 +1915,7 @@ HWorld::~HWorld()
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/'>CODE 147. Evaluate Reverse Polish Notation</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/'>CODE 147. Evaluate Reverse Polish Notation</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -1498,7 +1932,9 @@ HWorld::~HWorld()
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -1507,510 +1943,6 @@ HWorld::~HWorld()
 <pre><code>[&quot;2&quot;, &quot;1&quot;, &quot;+&quot;, &quot;3&quot;, &quot;*&quot;] -&gt; ((2 + 1) * 3) -&gt; 9
 [&quot;4&quot;, &quot;13&quot;, &quot;5&quot;, &quot;/&quot;, &quot;+&quot;] -&gt; (4 + (13 / 5)) -&gt; 6
 </code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(String[] tokens)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Stack&lt;Integer&gt; numbers = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">		<span class="keyword">for</span> (String token : tokens) &#123;</div><div class="line">			<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>) || token.equals(<span class="string">"-"</span>) || token.equals(<span class="string">"*"</span>)</div><div class="line">					|| token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">				<span class="keyword">int</span> number2 = numbers.pop();</div><div class="line">				<span class="keyword">int</span> number1 = numbers.pop();</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>)) &#123;</div><div class="line">					numbers.push(number1 + number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"-"</span>)) &#123;</div><div class="line">					numbers.push(number1 - number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"*"</span>)) &#123;</div><div class="line">					numbers.push(number1 * number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">					numbers.push(number1 / number2);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				numbers.push(Integer.valueOf(token));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> numbers.pop();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="url">
-                  CODE 146. Max Points on a Line
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-28T22:16:00+08:00" content="2013-11-28">
-              2013-11-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" class="leancloud_visitors" data-flag-title="CODE 146. Max Points on a Line">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/'>CODE 146. Max Points on a Line</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>Given n points<br> on a 2D plane, find the maximum number of points that lie on the same straight line.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPoints</span><span class="params">(Point[] points)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line"></div><div class="line">	Map&lt;Float, Integer&gt; kmap = <span class="keyword">new</span> HashMap&lt;Float, Integer&gt;();</div><div class="line">	<span class="keyword">int</span> size = points.length;</div><div class="line">	<span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> sum_cloumn = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (size &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> size;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">		sum_cloumn = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> add = <span class="number">1</span>;</div><div class="line">		kmap.clear();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (j == i) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x == points[j].x &amp;&amp; points[i].y == points[j].y) &#123;</div><div class="line">				add++;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">float</span> k = <span class="number">0</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x != points[j].x) &#123;</div><div class="line">				k = (<span class="keyword">float</span>) (points[j].y - points[i].y)</div><div class="line">						/ (points[j].x - points[i].x);</div><div class="line">				<span class="keyword">if</span> (kmap.containsKey(k)) &#123;</div><div class="line">					kmap.put(k, kmap.get(k) + <span class="number">1</span>);</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					kmap.put(k, <span class="number">1</span>);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				sum_cloumn++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (Float f : kmap.keySet()) &#123;</div><div class="line">			<span class="keyword">if</span> (kmap.get(f) &gt; sum_cloumn) &#123;</div><div class="line">				sum_cloumn = kmap.get(f);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		sum_cloumn += add;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (sum_cloumn &gt; total) &#123;</div><div class="line">			total = sum_cloumn;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="url">
-                  CODE 144. Insertion Sort List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-27T19:56:00+08:00" content="2013-11-27">
-              2013-11-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" class="leancloud_visitors" data-flag-title="CODE 144. Insertion Sort List">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/'>CODE 144. Insertion Sort List</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>###<br>Sort a linked list using insertion sort.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">insertionSortList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ListNode node = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode tmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != tmp) &#123;</div><div class="line">		ListNode next = tmp.next;</div><div class="line">		<span class="keyword">if</span> (node.next == <span class="keyword">null</span>) &#123;</div><div class="line">			tmp.next = node.next;</div><div class="line">			node.next = tmp;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			ListNode tmpNode = node;</div><div class="line">			<span class="keyword">while</span> (<span class="keyword">null</span> != tmpNode.next &amp;&amp; tmpNode.next.val &lt;= tmp.val) &#123;</div><div class="line">				tmpNode = tmpNode.next;</div><div class="line">			&#125;</div><div class="line">			tmp.next = tmpNode.next;</div><div class="line">			tmpNode.next = tmp;</div><div class="line">		&#125;</div><div class="line">		tmp = next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> node.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/26/2013-11-26-CODE 145 Sort List/" itemprop="url">
-                  CODE 145. Sort List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-26T22:35:00+08:00" content="2013-11-26">
-              2013-11-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/26/2013-11-26-CODE 145 Sort List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/26/2013-11-26-CODE 145 Sort List/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/26/2013-11-26-CODE 145 Sort List/" class="leancloud_visitors" data-flag-title="CODE 145. Sort List">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 145 Sort List/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/26/2013-11-26-CODE 145 Sort List/'>CODE 145. Sort List</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>Sort a linked list in O(n log n)<br> time using constant space complexity.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ArrayList&lt;Integer&gt; its = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	ListNode tmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != tmp) &#123;</div><div class="line">		its.add(tmp.val);</div><div class="line">		tmp = tmp.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span>[] is = <span class="keyword">new</span> <span class="keyword">int</span>[its.size()];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; its.size(); i++) &#123;</div><div class="line">		is[i] = its.get(i);</div><div class="line">	&#125;</div><div class="line">	Arrays.sort(is);</div><div class="line">	tmp = head;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; its.size(); i++) &#123;</div><div class="line">		tmp.val = is[i];</div><div class="line">		tmp = tmp.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -2084,7 +2016,7 @@ HWorld::~HWorld()
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">322</span>
+              <span class="site-state-item-count">325</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2226,22 +2158,22 @@ HWorld::~HWorld()
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
@@ -2286,7 +2218,7 @@ HWorld::~HWorld()
 
   
     
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="http://resource.qn.jerkybible.com/blog/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
     <script src="/js/src/hook-duoshuo.js"></script>
   
 
@@ -2417,11 +2349,11 @@ HWorld::~HWorld()
   
   
   
-  <link rel="stylesheet" href="/vendors/algolia-instant-search/instantsearch.min.css">
+  <link rel="stylesheet" href="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.css">
 
   
   
-  <script src="/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  <script src="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.js"></script>
   
 
   <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>

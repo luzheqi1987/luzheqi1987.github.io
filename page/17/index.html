@@ -30,7 +30,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -64,7 +64,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -301,6 +301,517 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="url">
+                  CODE 137. Word Break II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-24T15:50:00+08:00" content="2013-11-24">
+              2013-11-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/24/2013-11-24-CODE 137 Word Break II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/24/2013-11-24-CODE 137 Word Break II/" class="leancloud_visitors" data-flag-title="CODE 137. Word Break II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/'>CODE 137. Word Break II</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.<br>Return all such possible sentences.<br>For example, given<br>s = <code>&quot;catsanddog&quot;</code>,<br>dict = <code>[&quot;cat&quot;, &quot;cats&quot;, &quot;and&quot;, &quot;sand&quot;, &quot;dog&quot;]</code>.<br>A solution is <code>[&quot;cats and dog&quot;, &quot;cat sand dog&quot;]</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Set&lt;String&gt; unused = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">		<span class="keyword">boolean</span> touched = <span class="keyword">false</span>;</div><div class="line">		Map&lt;Integer, Set&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Set&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (String dic : dict) &#123;</div><div class="line">			<span class="keyword">if</span> (!s.contains(dic)) &#123;</div><div class="line">				unused.add(dic);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		dict.removeAll(unused);</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">			<span class="keyword">for</span> (String sub : dict) &#123;</div><div class="line">				String subTmp = s.substring(i);</div><div class="line">				<span class="keyword">int</span> start = i;</div><div class="line">				<span class="keyword">while</span> (subTmp.contains(sub)) &#123;</div><div class="line">					<span class="keyword">int</span> index = subTmp.indexOf(sub);</div><div class="line">					<span class="keyword">if</span> (map.containsKey(start + index)) &#123;</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						map.put(start + index, <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125;</div><div class="line">					subTmp = subTmp.substring(index + sub.length());</div><div class="line">					start = start + index + sub.length();</div><div class="line">					<span class="keyword">if</span> (start &gt;= s.length()) &#123;</div><div class="line">						touched = <span class="keyword">true</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!touched) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> wbreak(s, s.length(), map, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function">ArrayList&lt;String&gt; <span class="title">wbreak</span><span class="params">(String s, <span class="keyword">int</span> length,</span></span></div><div class="line">			Map&lt;Integer, Set&lt;Integer&gt;&gt; map, <span class="keyword">int</span> x) &#123;</div><div class="line">		<span class="keyword">if</span> (!map.containsKey(x)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line">		ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> index : map.get(x)) &#123;</div><div class="line">			String subString = s.substring(x, index);</div><div class="line">			<span class="keyword">if</span> (index &gt;= length) &#123;</div><div class="line">				results.add(subString);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				ArrayList&lt;String&gt; subResults = wbreak(s, length, map, index);</div><div class="line">				<span class="keyword">if</span> (subResults.isEmpty()) &#123;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">for</span> (String subResult : subResults) &#123;</div><div class="line">						String result = subString + <span class="string">" "</span> + subResult;</div><div class="line">						results.add(result);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/23/2013-11-23-CODE 136 Word Break/" itemprop="url">
+                  CODE 136. Word Break
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-23T21:22:00+08:00" content="2013-11-23">
+              2013-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/23/2013-11-23-CODE 136 Word Break/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/23/2013-11-23-CODE 136 Word Break/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/23/2013-11-23-CODE 136 Word Break/" class="leancloud_visitors" data-flag-title="CODE 136. Word Break">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 136 Word Break/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 136 Word Break/'>CODE 136. Word Break</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.<br>For example, given<br>s = <code>&quot;leetcode&quot;</code>,<br>dict = <code>[&quot;leet&quot;, &quot;code&quot;]</code>.<br>Return true because <code>&quot;leetcode&quot;</code> can be segmented as <code>&quot;leet
+ code&quot;</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span><span class="params">(String s, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == s || <span class="string">""</span>.equals(s) || dict.contains(s)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	Set&lt;String&gt; unused = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">	<span class="keyword">boolean</span> touched = <span class="keyword">false</span>;</div><div class="line">	Map&lt;Integer, Set&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Set&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (String sub : dict) &#123;</div><div class="line">		<span class="keyword">if</span> (!s.contains(sub)) &#123;</div><div class="line">			unused.add(sub);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	dict.removeAll(unused);</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">		<span class="keyword">for</span> (String sub : dict) &#123;</div><div class="line">			String subTmp = s.substring(i);</div><div class="line">			<span class="keyword">int</span> start = i;</div><div class="line">			<span class="keyword">while</span> (subTmp.contains(sub)) &#123;</div><div class="line">				<span class="keyword">int</span> index = subTmp.indexOf(sub);</div><div class="line">				<span class="keyword">if</span> (map.containsKey(start + index)) &#123;</div><div class="line">					map.get(start + index)</div><div class="line">							.add(start + index + sub.length());</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					map.put(start + index, <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">					map.get(start + index)</div><div class="line">							.add(start + index + sub.length());</div><div class="line">				&#125;</div><div class="line">				subTmp = subTmp.substring(index + sub.length());</div><div class="line">				start = start + index + sub.length();</div><div class="line">				<span class="keyword">if</span> (start &gt;= s.length()) &#123;</div><div class="line">					touched = <span class="keyword">true</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (!touched) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> wreak(s.length(), map, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wreak</span><span class="params">(<span class="keyword">int</span> length, Map&lt;Integer, Set&lt;Integer&gt;&gt; map, <span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">if</span> (!map.containsKey(x)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> index : map.get(x)) &#123;</div><div class="line">		<span class="keyword">if</span> (index &gt;= length) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">boolean</span> result = wreak(length, map, index);</div><div class="line">		<span class="keyword">if</span> (result) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/" itemprop="url">
+                  CODE 135. Copy List with Random Pointer
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-23T18:11:00+08:00" content="2013-11-23">
+              2013-11-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/" class="leancloud_visitors" data-flag-title="CODE 135. Copy List with Random Pointer">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 135 Copy List with Random Pointer/'>CODE 135. Copy List with Random Pointer</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.<br>Return a deep copy of the list.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> RandomListNode <span class="title">copyRandomList</span><span class="params">(RandomListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	Map&lt;Integer, RandomListNode&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, RandomListNode&gt;();</div><div class="line"></div><div class="line">	RandomListNode cpyList = <span class="keyword">new</span> RandomListNode(<span class="number">0</span>);</div><div class="line">	RandomListNode cpyListTmp = cpyList;</div><div class="line">	RandomListNode headTmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != headTmp) &#123;</div><div class="line">		<span class="keyword">int</span> val = headTmp.label;</div><div class="line">		<span class="keyword">if</span> (map.containsKey(val)) &#123;</div><div class="line">			RandomListNode newnode = map.get(val);</div><div class="line">			cpyListTmp.next = newnode;</div><div class="line">			cpyListTmp = cpyListTmp.next;</div><div class="line">			headTmp = headTmp.next;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			RandomListNode newnode = <span class="keyword">new</span> RandomListNode(val);</div><div class="line">			cpyListTmp.next = newnode;</div><div class="line">			cpyListTmp = cpyListTmp.next;</div><div class="line">			headTmp = headTmp.next;</div><div class="line">			map.put(val, newnode);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	cpyListTmp = cpyList;</div><div class="line">	headTmp = head;</div><div class="line">	<span class="keyword">while</span> (<span class="keyword">null</span> != headTmp) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == headTmp.random) &#123;</div><div class="line">			cpyListTmp.next.random = <span class="keyword">null</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			cpyListTmp.next.random = map.get(headTmp.random.label);</div><div class="line">		&#125;</div><div class="line">		cpyListTmp = cpyListTmp.next;</div><div class="line">		headTmp = headTmp.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> cpyList.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/23/2013-11-23-CODE 134 Single Number II/" itemprop="url">
                   CODE 134. Single Number II
                 </a>
@@ -396,7 +907,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 134 Single Number II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 134 Single Number II/'>CODE 134. Single Number II</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 134 Single Number II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 134 Single Number II/'>CODE 134. Single Number II</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -413,7 +924,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -564,7 +1077,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 133 Single Number/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 133 Single Number/'>CODE 133. Single Number</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 133 Single Number/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 133 Single Number/'>CODE 133. Single Number</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -581,7 +1094,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -732,7 +1247,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 132 Candy/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 132 Candy/'>CODE 132. Candy</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 132 Candy/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/23/2013-11-23-CODE 132 Candy/'>CODE 132. Candy</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -749,7 +1264,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -905,7 +1422,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/22/2013-11-22-CODE 131 Gas Station/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/22/2013-11-22-CODE 131 Gas Station/'>CODE 131. Gas Station</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/22/2013-11-22-CODE 131 Gas Station/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/22/2013-11-22-CODE 131 Gas Station/'>CODE 131. Gas Station</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -922,7 +1439,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -1073,7 +1592,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/19/2013-11-19-CODE 6 Word Ladder II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/19/2013-11-19-CODE 6 Word Ladder II/'>CODE 6. Word Ladder II</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/19/2013-11-19-CODE 6 Word Ladder II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/19/2013-11-19-CODE 6 Word Ladder II/'>CODE 6. Word Ladder II</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -1090,7 +1609,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -1256,7 +1777,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/18/2013-11-18-CODE 130 Clone Graph/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/18/2013-11-18-CODE 130 Clone Graph/'>CODE 130. Clone Graph</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/18/2013-11-18-CODE 130 Clone Graph/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/18/2013-11-18-CODE 130 Clone Graph/'>CODE 130. Clone Graph</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -1273,7 +1794,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -1431,7 +1954,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/'>CODE 41. Reverse Linked List II</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/'>CODE 41. Reverse Linked List II</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -1448,522 +1971,15 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
 
 <p>Reverse a linked list from position m to n. Do it in-place and in one-pass.<br>For example:<br>Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code>, m =<br> 2 and n = 4,<br>return <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</code>.<br>Note:<br>Given m, n satisfy the following condition:<br>1 ≤ m ≤ n ≤ length of list.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseBetween</span><span class="params">(ListNode head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ListNode tmpHead = head;</div><div class="line">	Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">	<span class="keyword">int</span> number = <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (tmpHead != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">while</span> (tmpHead != <span class="keyword">null</span> &amp;&amp; number &lt; m) &#123;</div><div class="line">			tmpHead = tmpHead.next;</div><div class="line">			number++;</div><div class="line">		&#125;</div><div class="line">		ListNode tmp = tmpHead;</div><div class="line">		<span class="keyword">while</span> (tmp != <span class="keyword">null</span> &amp;&amp; number &lt;= n) &#123;</div><div class="line">			stack.push(tmp.val);</div><div class="line">			tmp = tmp.next;</div><div class="line">			number++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (number &gt; n) &#123;</div><div class="line">			<span class="keyword">while</span> (!stack.isEmpty()) &#123;</div><div class="line">				tmpHead.val = stack.pop();</div><div class="line">				tmpHead = tmpHead.next;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/17/2013-11-17-CODE 42 Subsets II/" itemprop="url">
-                  CODE 42. Subsets II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-17T14:32:00+08:00" content="2013-11-17">
-              2013-11-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/17/2013-11-17-CODE 42 Subsets II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/17/2013-11-17-CODE 42 Subsets II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/17/2013-11-17-CODE 42 Subsets II/" class="leancloud_visitors" data-flag-title="CODE 42. Subsets II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 42 Subsets II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 42 Subsets II/'>CODE 42. Subsets II</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>Given a collection of integers that might contain duplicates, S, return all possible subsets.<br>Note:</p>
-<ul>
-<li>Elements in a subset must be in non-descending order.</li>
-<li>The solution set must not contain duplicate subsets.</li>
-</ul>
-<p>For example,<br>If S = <code>[1,2,2]</code>,<br> a solution is:<br>    [<br>      [2],<br>      [1],<br>      [1,2,2],<br>      [2,2],<br>      [1,2],<br>      []<br>    ]</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsetsWithDup(<span class="keyword">int</span>[] S) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == S || S.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		result.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">		<span class="keyword">return</span> result;</div><div class="line">	&#125;</div><div class="line">	Arrays.sort(S);</div><div class="line">	ArrayList&lt;Integer&gt; sList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S.length; i++) &#123;</div><div class="line">		sList.add(S[i]);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S.length; i++) &#123;</div><div class="line">		ArrayList&lt;Integer&gt; element = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		element.add(S[i]);</div><div class="line">		<span class="keyword">if</span> (!result.contains(element)) &#123;</div><div class="line">			result.add(element);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> end = result.size();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> num = <span class="number">2</span>; num &lt;= S.length; num++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) &#123;</div><div class="line">			ArrayList&lt;Integer&gt; oldElement = result.get(i);</div><div class="line">			<span class="keyword">int</span> j = sList.indexOf(oldElement.get(oldElement.size() - <span class="number">1</span>)) + <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> (oldElement.size() &gt; <span class="number">1</span>) &#123;</div><div class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> m = oldElement.size() - <span class="number">2</span>; m &gt;= <span class="number">0</span>; m--) &#123;</div><div class="line">					<span class="keyword">if</span> (oldElement.get(m) == oldElement.get(oldElement</div><div class="line">							.size() - <span class="number">1</span>)) &#123;</div><div class="line">						j++;</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						<span class="keyword">break</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">for</span> (; j &lt; S.length; j++) &#123;</div><div class="line">				ArrayList&lt;Integer&gt; element = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">				element.addAll(oldElement);</div><div class="line">				element.add(S[j]);</div><div class="line">				<span class="keyword">if</span> (!result.contains(element)) &#123;</div><div class="line">					result.add(element);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		start = end;</div><div class="line">		end = result.size();</div><div class="line">	&#125;</div><div class="line">	result.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/" itemprop="url">
-                  CODE 51. Search in Rotated Sorted Array II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-17T14:13:00+08:00" content="2013-11-17">
-              2013-11-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/" class="leancloud_visitors" data-flag-title="CODE 51. Search in Rotated Sorted Array II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 51 Search in Rotated Sorted Array II/'>CODE 51. Search in Rotated Sorted Array II</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>Follow up for “Search in Rotated Sorted Array”:<br>What if duplicates are allowed?<br>Would this affect the run-time complexity? How and why?<br>Write a function to determine if a given target is in the array.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">  		<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="keyword">int</span> pivot = <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (; pivot &lt; A.length; pivot++) &#123;</div><div class="line">		<span class="keyword">if</span> (A[pivot] &lt; A[pivot - <span class="number">1</span>]) &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> end = <span class="number">0</span>;</div><div class="line">	<span class="keyword">if</span> (pivot == A.length) &#123;</div><div class="line">		end = A.length - <span class="number">1</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">if</span> (A[<span class="number">0</span>] &lt;= target &amp;&amp; A[pivot - <span class="number">1</span>] &gt;= target) &#123;</div><div class="line">			start = <span class="number">0</span>;</div><div class="line">			end = pivot - <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			start = pivot;</div><div class="line">			end = A.length - <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (start &lt; end) &#123;</div><div class="line">		<span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (A[mid] &lt; target) &#123;</div><div class="line">			start = mid + <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (A[mid] &gt; target) &#123;</div><div class="line">			end = mid;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (A[start] == target) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" itemprop="url">
-                  CODE 53. Remove Duplicates from Sorted Array II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-17T14:06:00+08:00" content="2013-11-17">
-              2013-11-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/" class="leancloud_visitors" data-flag-title="CODE 53. Remove Duplicates from Sorted Array II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 53 Remove Duplicates from Sorted Array II/'>CODE 53. Remove Duplicates from Sorted Array II</a>」</p></blockquote></span>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    elements.remove();
-  }
-})()
-</script>
-
-<p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?<br>For example,<br>Given sorted array A = <code>[1,1,1,2,2,3]</code>,<br>Your function should return length = <code>5</code>,<br> and A is now <code>[1,1,2,2,3]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		<span class="keyword">if</span> (A.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> length = A.length;</div><div class="line">		<span class="keyword">int</span> cur = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> nxt = <span class="number">1</span>;</div><div class="line">		<span class="keyword">boolean</span> morethan2 = <span class="keyword">false</span>;</div><div class="line">		<span class="keyword">for</span> (; nxt &lt; A.length; nxt++) &#123;</div><div class="line">			<span class="keyword">if</span> (A[nxt] != A[nxt - <span class="number">1</span>]) &#123;</div><div class="line">				A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">				cur++;</div><div class="line">				morethan2 = <span class="keyword">false</span>;</div><div class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> (!morethan2) &#123;</div><div class="line">				A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">				cur++;</div><div class="line">				morethan2 = <span class="keyword">true</span>;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				length--;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		A[cur] = A[nxt - <span class="number">1</span>];</div><div class="line">		<span class="keyword">return</span> length;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
 
           
         
@@ -2037,7 +2053,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">322</span>
+              <span class="site-state-item-count">325</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2179,22 +2195,22 @@
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
@@ -2239,7 +2255,7 @@
 
   
     
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="http://resource.qn.jerkybible.com/blog/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
     <script src="/js/src/hook-duoshuo.js"></script>
   
 
@@ -2370,11 +2386,11 @@
   
   
   
-  <link rel="stylesheet" href="/vendors/algolia-instant-search/instantsearch.min.css">
+  <link rel="stylesheet" href="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.css">
 
   
   
-  <script src="/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  <script src="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.js"></script>
   
 
   <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>

@@ -30,7 +30,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -64,7 +64,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -301,6 +301,459 @@
             
               
                 
+                <a class="post-title-link" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="url">
+                  Spring MVC 之 @RequestMapping（2）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-04T09:03:25+08:00" content="2015-06-04">
+              2015-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/04/Spring MVC 之 RequestMapping（2）/" class="leancloud_visitors" data-flag-title="Spring MVC 之 @RequestMapping（2）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>一、从头开始</p>
+<p>   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">        HttpServletRequest processedRequest = request;</div><div class="line">        HandlerExecutionChain mappedHandler = null;</div><div class="line">        AsyncExecutionChain asyncChain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        try &#123;</div><div class="line">            ModelAndView mv = null;</div><div class="line">            Exception dispatchException = null;</div><div class="line">            try &#123;</div><div class="line">                processedRequest = checkMultipart(request);</div><div class="line">                // 确定当前请求的处理器（HandlerExecutionChain 包含Handler和Interceptor列表）</div><div class="line">                mappedHandler = getHandler(processedRequest, false);</div><div class="line">                if (mappedHandler == null || mappedHandler.getHandler() == null) &#123;</div><div class="line">                    noHandlerFound(processedRequest, response);//404异常</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                // 确定当前请求的处理器适配器</div><div class="line">                HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());</div><div class="line">                //......省略诸多代码......</div><div class="line">                // 调用处理处理器方法，返回ModelAndView对象</div><div class="line">                mv = ha.handle(processedRequest, response, mappedHandler.getHandler());</div><div class="line">            &#125;//处理返回结果</div><div class="line">        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>  下面展开getHandler是怎么做的：
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/02/Spring MVC 之 RequestMapping（1）/" itemprop="url">
+                  Spring MVC 之 @RequestMapping（1）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-02T13:04:16+08:00" content="2015-06-02">
+              2015-06-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/02/Spring MVC 之 RequestMapping（1）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/02/Spring MVC 之 RequestMapping（1）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/02/Spring MVC 之 RequestMapping（1）/" class="leancloud_visitors" data-flag-title="Spring MVC 之 @RequestMapping（1）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>一、从@AutoWaired开始</p>
+<pre><code>在@AutoWaired中有下面的一段代码，其中populateBean负责属性的加载。而initializeBean完成属性属性加载后的自定义操作。
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Object exposedObject = bean;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            populateBean(beanName, mbd, instanceWrapper);</div><div class="line">            <span class="keyword">if</span> (exposedObject != <span class="keyword">null</span>) &#123;</div><div class="line">                exposedObject = initializeBean(beanName, exposedObject, mbd);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>来看一下initializeBean的实现。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/02/Spring MVC 之 RequestMapping（1）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/28/Spring MVC 之 contextannotation-driven/" itemprop="url">
+                  Spring MVC 之 &lt;context:annotation-driven/>
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-28T13:03:12+08:00" content="2015-05-28">
+              2015-05-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/28/Spring MVC 之 contextannotation-driven/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/28/Spring MVC 之 contextannotation-driven/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/28/Spring MVC 之 contextannotation-driven/" class="leancloud_visitors" data-flag-title="Spring MVC 之 &lt;context:annotation-driven/>">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>一、解析类</p>
+<p>通常如果我们希望通过注解的方式来进行Spring MVC开发，我们都会在<em>*</em>-servlet.xml中加入<mvc:annotation-driven/>标签来告诉Spring我们的目的。找到对应的实现类是org.springframework.web.servlet.config.AnnotationDrivenBeanDefinitionParser。<br>通过阅读类注释文档，我们发现这个类主要是用来向工厂中注册了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">RequestMappingHandlerMapping </div><div class="line">BeanNameUrlHandlerMapping</div><div class="line">RequestMappingHandlerAdapter</div><div class="line">HttpRequestHandlerAdapter</div><div class="line">SimpleControllerHandlerAdapter</div><div class="line">ExceptionHandlerExceptionResolver </div><div class="line">ResponseStatusExceptionResolver </div><div class="line">DefaultHandlerExceptionResolver</div></pre></td></tr></table></figure></p>
+<p>前两个是HandlerMapping接口的实现类，用来处理请求映射的。其中第一个是处理@RequestMapping注解的。第二个会将controller类的名字映射为请求url。</p>
+<p>中间三个是用来处理请求的。具体点说就是确定调用哪个controller的哪个方法来处理当前请求。第一个处理@Controller注解的处理器，支持自定义方法参数和返回值（很酷）。第二个是处理继承HttpRequestHandler的处理器。第三个处理继承自Controller接口的处理器。</p>
+<p>后面三个是用来处理异常的解析器。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/28/Spring MVC 之 contextannotation-driven/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/21/Spring MVC 之 @Autowired/" itemprop="url">
                   Spring MVC 之 @Autowired
                 </a>
@@ -396,7 +849,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/'>Spring MVC 之 @Autowired</a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/21/Spring MVC 之 @Autowired/'>Spring MVC 之 @Autowired</a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -413,7 +866,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -583,7 +1038,7 @@
             <blockquote>
 <p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
 </blockquote>
-<span class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/'>Spring MVC 之 &lt;context:component-scan/></a>」</p></blockquote></span>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/05/19/Spring MVC 之 contextcomponent-scan/'>Spring MVC 之 &lt;context:component-scan/></a>」</p></blockquote></div>
 <script type="text/javascript">
 (function() {
   Element.prototype.remove = function() {
@@ -600,7 +1055,9 @@
   var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
   if (white_list.indexOf(domain) >= 0) {
     var elements = document.getElementsByClassName('source');
-    elements.remove();
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
   }
 })()
 </script>
@@ -1398,688 +1855,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-09T10:22:48+08:00" content="2015-05-09">
-              2015-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<p>接上一篇文章 <a href="http://blog.jerkybible.com/2015/05/08/Spring 使用简单Demo进行源码调试（一）/">Spring 使用简单Demo进行源码调试（一）</a></p>
-<p>在运行到下面语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(&amp;quot;bean.xml&amp;quot;);<span class="comment">// 读取bean.xml中的内容</span></div></pre></td></tr></table></figure></p>
-<p>该构造函数首先进入下面ClassPathXmlApplicationContext类中这段代码。代码中configLocations为我们的配置文件，及[bean.xml]；refresh表示是否刷新，这里为true，表示刷新配置；parent表示上级上下文，这里为null表示没有上级上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * 使用上一级上下文创建新的ClassPathXmlApplicationContext,</div><div class="line">	 * 从XML中加载定义</div><div class="line">	 * <span class="doctag">@param</span> configLocations 资源地址列表</div><div class="line">	 * <span class="doctag">@param</span> refresh 是否刷新上下文,</div><div class="line">	 * <span class="doctag">@param</span> parent 上一级上下文</div><div class="line">	 */</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassPathXmlApplicationContext</span><span class="params">(String[] configLocations, <span class="keyword">boolean</span> refresh, ApplicationContext parent)</span></div><div class="line">			<span class="keyword">throws</span> BeansException </span>&#123;			</div><div class="line">		<span class="comment">//parent = null;</span></div><div class="line">		<span class="comment">//refresh= true;</span></div><div class="line">		<span class="comment">//configLocations=[bean.xml];</span></div><div class="line">		<span class="keyword">super</span>(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		<span class="keyword">if</span> (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/08/Spring 使用简单Demo进行源码调试（一）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（一）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-08T06:33:01+08:00" content="2015-05-08">
-              2015-05-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/08/Spring 使用简单Demo进行源码调试（一）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/Spring 使用简单Demo进行源码调试（一）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/08/Spring 使用简单Demo进行源码调试（一）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（一）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<p><strong>第一步</strong><br>在源码调试之前，需要将spring源码进行编译，这里选择的是3.2.x版本，这个版本在导入eclipse都会出现bug，但是不影响目前的调试。</p>
-<p><strong>第二步</strong><br>将编译后的源码导入eclispe，如下图所示：<br><img src="/images/spring源码导入eclipse-242x300.png" alt="spring源码导入eclipse"><br>可以看到有两个工程报错，分别是spring—orm-hibernate4和spring-webmvc-tiles3，暂且不去管它，因为目前不会影响到后续的源码调试。</p>
-<p><strong>第三步</strong><br>新建一个工程，Test，然后右键该工程，选择Build path -》 Configure Build Path…，然后把当前所有的没有报错的工程加入到Projects里，如下图所示：<br><img src="/images/加入未报错工程-300x234.png" alt="加入未报错工程"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/08/Spring 使用简单Demo进行源码调试（一）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/04/java实现文件操作/" itemprop="url">
-                  java实现文件操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-04T09:57:38+08:00" content="2015-05-04">
-              2015-05-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/04/java实现文件操作/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/04/java实现文件操作/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/04/java实现文件操作/" class="leancloud_visitors" data-flag-title="java实现文件操作">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.java实现文件复制、剪切文件和删除<br>[java]<br>import java.io.File;<br>import java.io.FileInputStream;<br>import java.io.FileOutputStream;<br>import java.io.IOException;</p>
-<p>/**</p>
-<ul>
-<li>Java实现文件复制、剪切、删除操作</li>
-<li>文件指文件或文件夹</li>
-<li>文件分割符统一用&quot;\&quot;<br>*/</li>
-</ul>
-<p>public class FileOperateDemo {</p>
-<pre><code>/**
- * 复制文件或文件夹
- * @param srcPath 源文件或源文件夹的路径
- * @param destDir 目标文件所在的目录
- * @return
- */
-public static boolean copyGeneralFile(String srcPath, String destDir) {
-    boolean flag = false;
-    File file = new File(srcPath);
-    if(!file.exists()) { // 源文件或源文件夹不存在
-        return false;
-    }
-
-    if(file.isFile()) {    // 文件复制
-        flag = copyFile(srcPath, destDir);
-    }
-    else if(file.isDirectory()) { // 文件夹复制
-        flag = copyDirectory(srcPath, destDir);
-    }
-
-    return flag;
-}
-
-/**
- * 默认的复制文件方法，默认会覆盖目标文件夹下的同名文件
- * @param srcPath
- *            源文件绝对路径
- * @param destDir
- *            目标文件所在目录
- * @return boolean
- */
-public static boolean copyFile(String srcPath, String destDir) {
- return copyFile(srcPath, destDir, true/**overwriteExistFile*/); // 默认覆盖同名文件
-}
-
-/**
- * 默认的复制文件夹方法，默认会覆盖目标文件夹下的同名文件夹
- * @param srcPath    源文件夹路径
- * @param destPath    目标文件夹所在目录
- * @return boolean
- */
-public static boolean copyDirectory(String srcPath, String destDir) {
- return copyDirectory(srcPath, destDir, true/**overwriteExistDir*/);
-}
-
-/**
- * 复制文件到目标目录
- * @param srcPath
- *            源文件绝对路径
- * @param destDir
- *            目标文件所在目录
- * @param overwriteExistFile
- *            是否覆盖目标目录下的同名文件
- * @return boolean
- */
-public static boolean copyFile(String srcPath, String destDir, boolean overwriteExistFile) {
-    boolean flag = false;
-
-    File srcFile = new File(srcPath);
-    if (!srcFile.exists() || !srcFile.isFile()) { // 源文件不存在
-        return false;
-    }
-
-    //获取待复制文件的文件名
-    String fileName = srcFile.getName();
-    String destPath = destDir + File.separator +fileName;
-    File destFile = new File(destPath);
-    if (destFile.getAbsolutePath().equals(srcFile.getAbsolutePath())) { // 源文件路径和目标文件路径重复
-        return false;
-    }
-    if(destFile.exists() &amp;amp;&amp;amp; !overwriteExistFile) {    // 目标目录下已有同名文件且不允许覆盖
-        return false;
-    }
-
-    File destFileDir = new File(destDir);
-    if(!destFileDir.exists() &amp;amp;&amp;amp; !destFileDir.mkdirs()) { // 目录不存在并且创建目录失败直接返回
-     return false;
-    }
-
-    try {
-        FileInputStream fis = new FileInputStream(srcPath);
-        FileOutputStream fos = new FileOutputStream(destFile);
-        byte[] buf = new byte[1024];
-        int c;
-        while ((c = fis.read(buf)) != -1) {
-            fos.write(buf, 0, c);
-        }
-        fos.flush();
-        fis.close();
-        fos.close();
-
-        flag = true;
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-    return flag;
-}
-
-/**
- * 
- * @param srcPath    源文件夹路径
- * @param destPath    目标文件夹所在目录
- * @return
- */
-public static boolean copyDirectory(String srcPath, String destDir, boolean overwriteExistDir) {
-    if(destDir.contains(srcPath))
-       return false;
-    boolean flag = false;
-
-    File srcFile = new File(srcPath);
-    if (!srcFile.exists() || !srcFile.isDirectory()) { // 源文件夹不存在
-        return false;
-    }
-
-    //获得待复制的文件夹的名字，比如待复制的文件夹为&amp;quot;E:\\dir\\&amp;quot;则获取的名字为&amp;quot;dir&amp;quot;
-    String dirName = srcFile.getName();
-
-    //目标文件夹的完整路径
-    String destDirPath = destDir + File.separator + dirName + File.separator;
-    File destDirFile = new File(destDirPath);
-    if(destDirFile.getAbsolutePath().equals(srcFile.getAbsolutePath())) {
-     return false;
-    }
-    if(destDirFile.exists() &amp;amp;&amp;amp; destDirFile.isDirectory() &amp;amp;&amp;amp; !overwriteExistDir) {    // 目标位置有一个同名文件夹且不允许覆盖同名文件夹，则直接返回false
-        return false;
-    }
-
-    if(!destDirFile.exists() &amp;amp;&amp;amp; !destDirFile.mkdirs()) {  // 如果目标目录不存在并且创建目录失败
-     return false;
-    }
-
-    File[] fileList = srcFile.listFiles();    //获取源文件夹下的子文件和子文件夹
-    if(fileList.length==0) {    // 如果源文件夹为空目录则直接设置flag为true，这一步非常隐蔽，debug了很久
-        flag = true;
-    }
-    else {
-        for(File temp: fileList) {
-            if(temp.isFile()) {    // 文件
-                flag = copyFile(temp.getAbsolutePath(), destDirPath, overwriteExistDir);     // 递归复制时也继承覆盖属性
-            }
-            else if(temp.isDirectory()) {    // 文件夹
-                flag = copyDirectory(temp.getAbsolutePath(), destDirPath, overwriteExistDir);   // 递归复制时也继承覆盖属性
-            }
-
-            if(!flag) {
-                break;
-            }
-        }
-    }
-
-    return flag;
-}
-
-/**
- * 删除文件或文件夹
- * @param path
- *            待删除的文件的绝对路径
- * @return boolean
- */
-public static boolean deleteFile(String path) {
-    boolean flag = false;
-
-    File file = new File(path);
-    if (!file.exists()) { // 文件不存在直接返回
-        return flag;
-    }
-    flag = file.delete();
-
-    return flag;
-}
-
-/**
- * 由上面方法延伸出剪切方法：复制+删除
- * @param  destDir 同上
- */
-public static boolean cutGeneralFile(String srcPath, String destDir) {
- boolean flag = false;
-    if(copyGeneralFile(srcPath, destDir) &amp;amp;&amp;amp; deleteFile(srcPath)) { // 复制和删除都成功
-     flag = true;
-    }
-
-    return flag;
-}
-
-public static void main(String[] args) {
- /** 测试复制文件 */
- System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/test/&amp;quot;));  // 一般正常场景
- System.out.println(copyGeneralFile(&amp;quot;d://notexistfile&amp;quot;, &amp;quot;d://test/&amp;quot;));      // 复制不存在的文件或文件夹
- System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/&amp;quot;));      // 待复制文件与目标文件在同一目录下
- System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;d://test/test/&amp;quot;));  // 覆盖目标目录下的同名文件
- System.out.println(copyFile(&amp;quot;d://test/&amp;quot;, &amp;quot;d://test2&amp;quot;, false)); // 不覆盖目标目录下的同名文件
- System.out.println(copyGeneralFile(&amp;quot;d://test/test.html&amp;quot;, &amp;quot;notexist://noexistdir/&amp;quot;)); // 复制文件到一个不可能存在也不可能创建的目录下
-
- System.out.println(&amp;quot;---------&amp;quot;);
-
- /** 测试复制文件夹 */
- System.out.println(copyGeneralFile(&amp;quot;d://test/&amp;quot;, &amp;quot;d://test2/&amp;quot;));
-
- System.out.println(&amp;quot;---------&amp;quot;);
-
- /** 测试删除文件 */
- System.out.println(deleteFile(&amp;quot;d://a/&amp;quot;));
-}
-</code></pre><p>}<br>[/java]</p>
-<p>2.验证传入路径是否为正确的路径名(Windows系统，其他系统未使用)<br>[java]<br>// 验证字符串是否为正确路径名的正则表达式<br>private static String matches = &quot;[A-Za-z]:\\[^:?\&quot;&gt;&lt;<em>]</em>&quot;;<br>// 通过 sPath.matches(matches) 方法的返回值判断是否正确<br>// sPath 为路径字符串<br>[/java]</p>
-<p>3.通用的文件夹或文件删除方法，直接调用此方法，即可实现删除文件夹或文件，包括文件夹下的所有文件<br>[java]<br>/** </p>
-<ul>
-<li>根据路径删除指定的目录或文件，无论存在与否<br><em>@param sPath  要删除的目录或文件 
-</em>@return 删除成功返回 true，否则返回 false。<br>*/<br>public boolean DeleteFolder(String sPath) {<br>flag = false;<br>file = new File(sPath);<br>// 判断目录或文件是否存在<br>if (!file.exists()) {  // 不存在返回 false  <pre><code>return flag;  
-</code></pre>} else {  <pre><code>// 判断是否为文件  
-if (file.isFile()) {  // 为文件时调用删除文件方法  
-    return deleteFile(sPath);  
-} else {  // 为目录时调用删除目录方法  
-    return deleteDirectory(sPath);  
-}  
-</code></pre>}<br>}<br>[/java]</li>
-</ul>
-<p>4.实现删除文件的方法，<br>[java]<br>/** </p>
-<ul>
-<li>删除单个文件 </li>
-<li>@param   sPath    被删除文件的文件名 </li>
-<li>@return 单个文件删除成功返回true，否则返回false<br>*/<br>public boolean deleteFile(String sPath) {<br> flag = false;<br> file = new File(sPath);<br> // 路径为文件且不为空则进行删除<br> if (file.isFile() &amp;&amp; file.exists()) {  <pre><code>file.delete();  
-flag = true;  
-</code></pre> }<br> return flag;<br>}<br>[/java]</li>
-</ul>
-<p>5.实现删除文件夹的方法，<br>[java]<br>/** </p>
-<ul>
-<li>删除目录（文件夹）以及目录下的文件 </li>
-<li>@param   sPath 被删除目录的文件路径 </li>
-<li>@return  目录删除成功返回true，否则返回false<br>*/<br>public boolean deleteDirectory(String sPath) {<br> //如果sPath不以文件分隔符结尾，自动添加文件分隔符<br> if (!sPath.endsWith(File.separator)) {  <pre><code>sPath = sPath + File.separator;  
-</code></pre> }<br> File dirFile = new File(sPath);<br> //如果dir对应的文件不存在，或者不是一个目录，则退出<br> if (!dirFile.exists() || !dirFile.isDirectory()) {  <pre><code>return false;  
-</code></pre> }<br> flag = true;<br> //删除文件夹下的所有文件(包括子目录)<br> File[] files = dirFile.listFiles();<br> for (int i = 0; i &lt; files.length; i++) {  <pre><code>//删除子文件  
-if (files[i].isFile()) {  
-    flag = deleteFile(files[i].getAbsolutePath());  
-    if (!flag) break;  
-} //删除子目录  
-else {  
-    flag = deleteDirectory(files[i].getAbsolutePath());  
-    if (!flag) break;  
-}  
-</code></pre> }<br> if (!flag) return false;<br> //删除当前目录<br> if (dirFile.delete()) {  <pre><code>return true;  
-</code></pre> } else {  <pre><code>return false;  
-</code></pre> }<br>}<br>[/java] </li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2125,7 +1900,7 @@ else {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">322</span>
+              <span class="site-state-item-count">325</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2267,22 +2042,22 @@ else {
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
@@ -2327,7 +2102,7 @@ else {
 
   
     
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="http://resource.qn.jerkybible.com/blog/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
     <script src="/js/src/hook-duoshuo.js"></script>
   
 
@@ -2458,11 +2233,11 @@ else {
   
   
   
-  <link rel="stylesheet" href="/vendors/algolia-instant-search/instantsearch.min.css">
+  <link rel="stylesheet" href="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.css">
 
   
   
-  <script src="/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  <script src="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.js"></script>
   
 
   <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>

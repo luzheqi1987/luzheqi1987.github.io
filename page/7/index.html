@@ -30,7 +30,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -64,7 +64,7 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -279,6 +279,436 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" itemprop="url">
+                  [转]第一章 Web MVC简介 —— 跟开涛学SpringMVC
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-03T06:12:55+08:00" content="2015-04-03">
+              2015-04-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" class="leancloud_visitors" data-flag-title="[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>私塾在线学习网原创内容（<a href="http://sishuok.com）" target="_blank" rel="external">http://sishuok.com）</a><br>原创内容，转载请注明私塾在线【<a href="http://sishuok.com/forum/blogPost/list/5050.html】" target="_blank" rel="external">http://sishuok.com/forum/blogPost/list/5050.html】</a></p>
+<p>Web MVC简介<br>1.1、Web开发中的请求-响应模型：<br><img src="http://sishuok.com/forum/upload/2012/7/1/2fc5edc55fa262fddccecc1816f5ff7b__1.JPG" alt=""><br>在Web世界里，具体步骤如下：<br>1、  Web浏览器（如IE）发起请求，如访问<a href="http://sishuok.com" target="_blank" rel="external">http://sishuok.com</a><br>2、  Web服务器（如Tomcat）接收请求，处理请求（比如用户新增，则将把用户保存一下），最后产生响应（一般为html）。<br>3、web服务器处理完成后，返回内容给web客户端（一般就是我们的浏览器），客户端对接收的内容进行处理（如web浏览器将会对接收到的html内容进行渲染以展示给客户）。</p>
+<p>因此，在Web世界里：<br>都是Web客户端发起请求，Web服务器接收、处理并产生响应。<br>一般Web服务器是不能主动通知Web客户端更新内容。虽然现在有些技术如服务器推（如Comet）、还有现在的HTML5 websocket可以实现Web服务器主动通知Web客户端。<br>到此我们了解了在web开发时的请求/响应模型，接下来我们看一下标准的MVC模型是什么。</p>
+<p>1.2、标准MVC模型概述<br>MVC模型：是一种架构型的模式，本身不引入新功能，只是帮助我们将开发的结构组织的更加合理，使展示与模型分离、流程控制逻辑、业务逻辑调用与展示逻辑分离。如图1-2<br><img src="http://sishuok.com/forum/upload/2012/7/1/a633b31a42f0224c9bf66cd3cc886e04__2.JPG" alt=""><br>图1-2</p>
+<p>首先让我们了解下MVC（Model-View-Controller）三元组的概念：</p>
+<p><strong>Model（模型）</strong>：数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领域模型或JavaBean组件（包含数据和行为），不过现在一般都分离开来：Value Object（数据） 和 服务层（行为）。也就是模型提供了模型数据查询和模型数据的状态更新等功能，包括数据和业务。 </p>
+<p><strong>View（视图）</strong>：负责进行模型的展示，一般就是我们见到的用户界面，客户想看到的东西。 </p>
+<p><strong>Controller（控制器）</strong>：接收用户请求，委托给模型进行处理（状态改变），处理完毕后把返回的模型数据返回给视图，由视图负责展示。 也就是说控制器做了个调度员的工作，。 </p>
+<p>从图1-1我们还看到，在标准的MVC中模型能主动推数据给视图进行更新（观察者设计模式，在模型上注册视图，当模型更新时自动更新视图），但在Web开发中模型是无法主动推给视图（无法主动更新用户界面），因为在Web开发是请求-响应模型。 </p>
+<p>那接下来我们看一下在Web里MVC是什么样子，我们称其为 Web MVC 来区别标准的MVC。<br>1.3、Web MVC概述</p>
+<p>模型-视图-控制器概念和标准MVC概念一样，请参考1.2，我们再看一下Web MVC标准架构，如图1-3：<br><img src="http://sishuok.com/forum/upload/2012/7/1/baa1df353ed98b79231b535bc1f73dea__3.JPG" alt=""><br>如图1-3，在Web MVC模式下，模型无法主动推数据给视图，如果用户想要视图更新，需要再发送一次请求（即请求-响应模型）。<br>概念差不多了，我们接下来了解下Web端开发的发展历程，和使用代码来演示一下Web MVC是如何实现的，还有为什么要使用MVC这个模式呢？</p>
+<p>1.4、Web端开发发展历程<br>此处我们只是简单的叙述比较核心的历程，如图1-4<br><img src="http://sishuok.com/forum/upload/2012/7/1/41f193e4f961be27d511789df2ee7680__4.JPG" alt=""><br>图1-4</p>
+<p>1.4.1、<strong>CGI</strong>：（Common Gateway Interface）公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。<br>1.4.2、<strong>Servlet</strong>：一种JavaEE web组件技术，是一种在服务器端执行的web组件，用于接收web用户请求并处理，最后动态产生响应给用户。但每次请求只产生一个线程（而且有线程池），轻量级。而且能利用许多JavaEE技术（如JDBC等）。本质就是在java代码里面 输出 html流。但表现逻辑、控制逻辑、业务逻辑调用混杂。如图1-5<br><img src="http://sishuok.com/forum/upload/2012/7/1/799db5c79c85cb59b68b915916f8dddc__5.JPG" alt=""><br>图1-5<br>如图1-5，这种做法是绝对不可取的，控制逻辑、表现代码、业务逻辑对象调用混杂在一起，最大的问题是直接在Java代码里面输出Html，这样前端开发人员无法进行页面风格等的设计与修改，即使修改也是很麻烦，因此实际项目这种做法不可取。</p>
+<p>1.4.3、<strong>JSP</strong>：（Java Server Page）：一种在服务器端执行的web组件，是一种运行在标准的HTML页面中嵌入脚本语言（现在只支持Java）的模板页面技术。本质就是在html代码中嵌入java代码。JSP最终还是会被编译为Servlet，只不过比纯Servlet开发页面更简单、方便。但表现逻辑、控制逻辑、业务逻辑调用还是混杂。如图1-6<br><img src="http://sishuok.com/forum/upload/2012/7/1/7486df5510b6068a360d8f0c6bbb706c__6.JPG" alt=""><br>图1-6<br>如图1-6，这种做法也是绝对不可取的，控制逻辑、表现代码、业务逻辑对象调用混杂在一起，但比直接在servlet里输出html要好一点，前端开发人员可以进行简单的页面风格等的设计与修改（但如果嵌入的java脚本太多也是很难修改的），因此实际项目这种做法不可取。<br><img src="http://sishuok.com/forum/upload/2012/7/1/c59e61daa2ed98f75aab1ae3397fb235__7.JPG" alt=""><br>JSP本质还是Servlet，最终在运行时会生成一个Servlet（如tomcat，将在tomcat\work\Catalina\web应用名\org\apache\jsp下生成），但这种使得写html简单点，但仍是控制逻辑、表现代码、业务逻辑对象调用混杂在一起。</p>
+<p>1.4.4、<strong>Model1</strong>：可以认为是JSP的增强版，可以认为是jsp+javabean如图1-7<br>特点：使用<jsp:usebean>标准动作，自动将请求参数封装为JavaBean组件；还必须使用java脚本执行控制逻辑。<br><img src="http://sishuok.com/forum/upload/2012/7/1/c25b9ce9064a37ab93ffe02711b3ecc7__8.JPG" alt=""><br>图1-7</jsp:usebean></p>
+<p>此处我们可以看出，使用<jsp:usebean>标准动作可以简化javabean的获取/创建，及将请求参数封装到javabean，再看一下Model1架构，如图1-8。<br><img src="http://sishuok.com/forum/upload/2012/7/1/d3b5b2ec88706fff7ef4b98d110837d1__9.JPG" alt=""><br>图1-8 Model1架构<br>Model1架构中，JSP负责控制逻辑、表现逻辑、业务对象（javabean）的调用，只是比纯JSP简化了获取请求参数和封装请求参数。同样是不好的，在项目中应该严禁使用（或最多再demo里使用）。<br>1.4.5、<strong>Model2</strong>：在JavaEE世界里，它可以认为就是Web MVC模型<br>Model2架构其实可以认为就是我们所说的Web MVC模型，只是控制器采用Servlet、模型采用JavaBean、视图采用JSP，如图1-9<br><img src="http://sishuok.com/forum/upload/2012/7/1/a6b7b2ca293e610a7a2b32e47a16d718__10.JPG" alt=""><br>图1-9 Model2架构<br>具体代码事例如下：<br><img src="http://sishuok.com/forum/upload/2012/7/1/254a61cd5c20f1e8f0e1012f02cdaa31__11.JPG" alt=""><br><img src="http://sishuok.com/forum/upload/2012/7/1/0ec4c098750790295eaad2f1b3a4dc82__12.JPG" alt=""><br>从Model2架构可以看出，视图和模型分离了，控制逻辑和展示逻辑分离了。</jsp:usebean></p>
+<p>但我们也看到严重的缺点：</p>
+<p>1．  1、控制器：<br>1．1．1、控制逻辑可能比较复杂，其实我们可以按照规约，如请求参数submitFlag=toAdd，我们其实可以直接调用toAdd方法，来简化控制逻辑；而且每个模块基本需要一个控制器，造成控制逻辑可能很复杂；<br>1．1．2、请求参数到模型的封装比较麻烦，如果能交给框架来做这件事情，我们可以从中得到解放；<br>1．1．3、选择下一个视图，严重依赖Servlet API，这样很难或基本不可能更换视图；<br>1．1．4、给视图传输要展示的模型数据，使用Servlet API，更换视图技术也要一起更换，很麻烦。 </p>
+<p>1.2、模型：<br>1．2．1、此处模型使用JavaBean，可能造成JavaBean组件类很庞大，一般现在项目都是采用三层架构，而不采用JavaBean。<br><img src="http://sishuok.com/forum/upload/2012/7/1/1570f54f6a52301d8ea58fe8fa9efb29__14.JPG" alt=""><br>1.3、视图<br>1．3．1、现在被绑定在JSP，很难更换视图，比如Velocity、FreeMarker；比如我要支持Excel、PDF视图等等。<br>1.4.5、<strong>服务到工作者</strong>：Front Controller + Application Controller + Page Controller + Context<br>即，前端控制器+应用控制器+页面控制器（也有称其为动作）+上下文，也是Web MVC，只是责任更加明确，详情请参考《核心J2EE设计模式》和《企业应用架构模式》如图1-10：<br><img src="http://sishuok.com/forum/upload/2012/7/1/e7fae17e52bb3664d0d3f4ea8db7ae55__15.JPG" alt=""><br>图1-10<br>运行流程如下：<br><img src="http://sishuok.com/forum/upload/2012/7/1/925c5ff2cc8613c898b05a4817db1f56__16.JPG" alt=""><br>职责：<br><strong>Front Controller</strong>：前端控制器，负责为表现层提供统一访问点，从而避免Model2中出现的重复的控制逻辑（由前端控制器统一回调相应的功能方法，如前边的根据submitFlag=login转调login方法）；并且可以为多个请求提供共用的逻辑（如准备上下文等等），将选择具体视图和具体的功能处理（如login里边封装请求参数到模型，并调用业务逻辑对象）分离。<br><strong>Application Controller</strong>：应用控制器，前端控制器分离选择具体视图和具体的功能处理之后，需要有人来管理，应用控制器就是用来选择具体视图技术（视图的管理）和具体的功能处理（页面控制器/命令对象/动作管理），一种策略设计模式的应用，可以很容易的切换视图/页面控制器，相互不产生影响。<br><strong>Page Controller(Command)</strong>：页面控制器/动作/处理器：功能处理代码，收集参数、封装参数到模型，转调业务对象处理模型，返回逻辑视图名交给前端控制器（和具体的视图技术解耦），由前端控制器委托给应用控制器选择具体的视图来展示，可以是命令设计模式的实现。页面控制器也被称为处理器或动作。<br><strong>Context</strong>：上下文，还记得Model2中为视图准备要展示的模型数据吗，我们直接放在request中（Servlet API相关），有了上下文之后，我们就可以将相关数据放置在上下文，从而与协议无关（如Servlet API）的访问/设置模型数据，一般通过ThreadLocal模式实现。 </p>
+<p>到此，我们回顾了整个web开发架构的发展历程，可能不同的web层框架在细节处理方面不同，但的目的是一样的：<br>干净的web表现层：<br>    模型和视图的分离；<br>控制器中的控制逻辑与功能处理分离（收集并封装参数到模型对象、业务对象调用）；<br>控制器中的视图选择与具体视图技术分离。<br>轻薄的web表现层：<br>    做的事情越少越好，薄薄的，不应该包含无关代码；<br>       只负责收集并组织参数到模型对象，启动业务对象的调用；<br>       控制器只返回逻辑视图名并由相应的应用控制器来选择具体使用的视图策略；<br>       尽量少使用框架特定API，保证容易测试。</p>
+<p>到此我们了解Web MVC的发展历程，接下来让我们了解下Spring MVC到底是什么、架构及来个HelloWorld了解下具体怎么使用吧。<br>本章具体代码请参考 springmvc-chapter1工程。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/02/各种树的平均查找效率/" itemprop="url">
+                  各种树的平均查找效率
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-02T12:40:24+08:00" content="2015-04-02">
+              2015-04-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/02/各种树的平均查找效率/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/各种树的平均查找效率/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/02/各种树的平均查找效率/" class="leancloud_visitors" data-flag-title="各种树的平均查找效率">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>BST：二叉搜索树<br>查找最好时间复杂度为O(lgn),最坏为O(n);<br>删除和插入的时间复杂度与查找差不多</p>
+<p>AVL：二叉平衡树<br>查找时间复杂度为O(lgn)<br>插入的时候做多需要一次旋转，时间复杂度为O(lgn)<br>删除的时候需要的时间复杂度为O(2lgn)</p>
+<p>红黑树：<br>查找时间复杂度为2O(lg(n+1))<br>删除和插入的时间复杂度为O(lgn)</p>
+<p>B树：<br>从叶节点插入心的节点，<br>从磁盘读写效率上讲，查找、删除和插入的时间复杂度要小于任何二叉树</p>
+<p>B+树<br>非叶节点只是为了索引第一个节点<br>之后叶节点之间可以相互索引，大型数据库采用的结构</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="url">
+                  同一进程中的线程究竟共享哪些资源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-02T12:39:39+08:00" content="2015-04-02">
+              2015-04-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/02/同一进程中的线程究竟共享哪些资源/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/02/同一进程中的线程究竟共享哪些资源/" class="leancloud_visitors" data-flag-title="同一进程中的线程究竟共享哪些资源">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>线程共享的环境包括：进程代码段、进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)、进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。<br>进程拥有这许多共性的同时，还拥有自己的个性。有了这些个性，线程才能实现并发性。这些个性包括：</p>
+<p>1.线程ID<br>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标<br>识线程。<br>2.寄存器组的值<br>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线<br>程切换到另一个线程上时，必须将原有的线程的寄存器集合的状态保存，以便<br>将来该线程在被重新切换到时能得以恢复。<br>3.线程的堆栈<br>堆栈是保证线程独立运行所必须的。<br>线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程<br>必须拥有自己的函数堆栈，使得函数调用可以正常执行，不受其他线程的影<br>响。</p>
+<p>4.错误返回码<br>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用<br>后设置了errno值，而在该线程还没有处理这个错误，另外一个线程就在此时<br>被调度器投入运行，这样错误值就有可能被修改。<br>所以，不同的线程应该拥有自己的错误返回码变量。</p>
+<p>5.线程的信号屏蔽码<br>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自<br>己管理。但所有的线程都共享同样的信号处理器。</p>
+<p>6.线程的优先级<br>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参<br>数，这个参数就是线程的优先级。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1304,531 +1734,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/22/计算两个日期相差的天数,Calendar用法/" itemprop="url">
-                  计算两个日期相差的天数,Calendar用法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-22T11:28:46+08:00" content="2015-03-22">
-              2015-03-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/22/计算两个日期相差的天数,Calendar用法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/22/计算两个日期相差的天数,Calendar用法/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/22/计算两个日期相差的天数,Calendar用法/" class="leancloud_visitors" data-flag-title="计算两个日期相差的天数,Calendar用法">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**   </span></div><div class="line">     * 计算两个日期之间相差的天数   </div><div class="line">     * <span class="doctag">@param</span> date1   </div><div class="line">     * <span class="doctag">@param</span> date2   </div><div class="line">     * <span class="doctag">@return</span>   </div><div class="line">     */    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">daysBetween</span><span class="params">(Date date1,Date date2)</span>     </span></div><div class="line">    &#123;     </div><div class="line">        Calendar cal = Calendar.getInstance();     </div><div class="line">        cal.setTime(date1);     </div><div class="line">        <span class="keyword">long</span> time1 = cal.getTimeInMillis();                  </div><div class="line">        cal.setTime(date2);     </div><div class="line">        <span class="keyword">long</span> time2 = cal.getTimeInMillis();          </div><div class="line">        <span class="keyword">long</span> between_days=(time2-time1)/(<span class="number">1000</span>*<span class="number">3600</span>*<span class="number">24</span>);     </div><div class="line"></div><div class="line">       <span class="keyword">return</span> Integer.parseInt(String.valueOf(between_days));            </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>2.如何知道某个月有多少天？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getDayByMonth</span><span class="params">(String datetime)</span></span>&#123;  </div><div class="line">    StringBuffer buffer = <span class="keyword">new</span> StringBuffer();  </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat( &amp;quot;yyyy-MM&amp;quot;);   </div><div class="line">    Calendar calendar = <span class="keyword">new</span> GregorianCalendar();   </div><div class="line">    <span class="keyword">try</span> &#123;  </div><div class="line">        Date date = sdf.parse(datetime);  </div><div class="line">        calendar.setTime(date);   </div><div class="line">        <span class="keyword">int</span> day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);  </div><div class="line">        <span class="keyword">if</span>(day &amp;lt; <span class="number">10</span>)&#123;  </div><div class="line">            buffer = buffer.append(&amp;quot;-&amp;quot;).append(&amp;quot;<span class="number">0</span>&amp;quot;).append(String.valueOf(day));  </div><div class="line">        &#125;<span class="keyword">else</span>&#123;  </div><div class="line">            buffer = buffer.append(&amp;quot;-&amp;quot;).append(String.valueOf(day));  </div><div class="line">        &#125;  </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123;  </div><div class="line">        e.printStackTrace();  </div><div class="line">    &#125;   </div><div class="line">    <span class="keyword">return</span> buffer.toString();  </div><div class="line">&#125;  </div><div class="line">``` </div><div class="line"></div><div class="line"><span class="number">3</span>\. Calendar 的add用法：  </div><div class="line">add() 的功能非常强大，add 可以对 Calendar 的字段进行计算。如果需要减去值，那么使用负数值就可以了，如 add(field, -value)。  </div><div class="line"></div><div class="line">add() 有两条规则：  </div><div class="line"></div><div class="line">当被修改的字段超出它可以的范围时，那么比它大的字段会自动修正。如：  </div><div class="line">```java</div><div class="line">Calendar cal1 = Calendar.getInstance();  </div><div class="line">cal1.set(<span class="number">2000</span>, <span class="number">7</span>, <span class="number">31</span>, <span class="number">0</span>, <span class="number">0</span> , <span class="number">0</span>); <span class="comment">//2000-8-31  </span></div><div class="line">cal1.add(Calendar.MONTH, <span class="number">1</span>); <span class="comment">//2000-9-31 =&amp;gt; 2000-10-1，对吗？  </span></div><div class="line">System.out.println(cal1.getTime()); <span class="comment">//结果是 2000-9-30  </span></div><div class="line">[/java]</div><div class="line">另一个规则是，如果比它小的字段是不可变的（由 Calendar 的实现类决定），那么该小字段会修正到变化最小的值。  </div><div class="line"></div><div class="line">以上面的例子，<span class="number">9</span>-<span class="number">31</span> 就会变成 <span class="number">9</span>-<span class="number">30</span>，因为变化最小。  </div><div class="line"></div><div class="line">```java</div><div class="line">Calendar calendar = Calendar.getInstance();  </div><div class="line"><span class="comment">// 从一个 Calendar 对象中获取 Date 对象  </span></div><div class="line">Date date = calendar.getTime();  </div><div class="line">calendar.add(Calendar.DAY_OF_YEAR,<span class="number">2</span>);  </div><div class="line">System.out.println(&amp;quot;date=&amp;quot;+date);  </div><div class="line">System.out.println(calendar.getTime());  </div><div class="line"></div><div class="line">结果：  </div><div class="line">date=Thu Aug <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span>:<span class="number">42</span> CST <span class="number">2010</span>  </div><div class="line">Sat Aug <span class="number">28</span> <span class="number">18</span>:<span class="number">00</span>:<span class="number">42</span> CST <span class="number">2010</span></div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/22/[转]Spring 实现数据库读写分离/" itemprop="url">
-                  [转]Spring 实现数据库读写分离
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-22T00:31:12+08:00" content="2015-03-22">
-              2015-03-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/22/[转]Spring 实现数据库读写分离/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/22/[转]Spring 实现数据库读写分离/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/22/[转]Spring 实现数据库读写分离/" class="leancloud_visitors" data-flag-title="[转]Spring 实现数据库读写分离">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.cnblogs.com/surge/p/3582248.html" target="_blank" rel="external">原文地址</a><br>现在大型的电子商务系统，在数据库层面大都采用读写分离技术，就是一个Master数据库，多个Slave数据库。Master库负责数据更新和实时数据查询，Slave库当然负责非实时数据查询。因为在实际的应用中，数据库都是读多写少（读取数据的频率高，更新数据的频率相对较少），而读取数据通常耗时比较长，占用数据库服务器的CPU较多，从而影响用户体验。我们通常的做法就是把查询从主库中抽取出来，采用多个从库，使用负载均衡，减轻每个从库的查询压力。</p>
-<p>　　采用读写分离技术的目标：有效减轻Master库的压力，又可以把用户查询数据的请求分发到不同的Slave库，从而保证系统的健壮性。我们看下采用读写分离的背景。</p>
-<p>　　随着网站的业务不断扩展，数据不断增加，用户越来越多，数据库的压力也就越来越大，采用传统的方式，比如：数据库或者SQL的优化基本已达不到要求，这个时候可以采用读写分离的策 略来改变现状。</p>
-<p>　　具体到开发中，如何方便的实现读写分离呢?目前常用的有两种方式：</p>
-<p>　　1 第一种方式是我们最常用的方式，就是定义2个数据库连接，一个是MasterDataSource,另一个是SlaveDataSource。更新数据时我们读取MasterDataSource，查询数据时我们读取SlaveDataSource。这种方式很简单，我就不赘述了。</p>
-<p>　　2 第二种方式动态数据源切换，就是在程序运行时，把数据源动态织入到程序中，从而选择读取主库还是从库。主要使用的技术是：annotation，Spring AOP ，反射。下面会详细的介绍实现方式。</p>
-<p>　　　在介绍实现方式之前，我们先准备一些必要的知识，spring 的AbstractRoutingDataSource 类</p>
-<p>　　   AbstractRoutingDataSource这个类 是spring2.0以后增加的，我们先来看下AbstractRoutingDataSource的定义：</p>
-<p>　　　　public abstract class AbstractRoutingDataSource extends AbstractDataSource implements InitializingBean  {}</p>
-<p>　　  AbstractRoutingDataSource继承了AbstractDataSource ，而AbstractDataSource 又是DataSource 的子类。DataSource   是javax.sql 的数据源接口，定义如下：</p>
-<p>[java]<br>public interface DataSource  extends CommonDataSource,Wrapper {</p>
-<p>  /**</p>
-<ul>
-<li>&lt;p&gt;Attempts to establish a connection with the data source that</li>
-<li>this &lt;code&gt;DataSource&lt;/code&gt; object represents.<br>*</li>
-<li>@return  a connection to the data source</li>
-<li><p>@exception SQLException if a database access error occurs<br>*/<br>Connection getConnection() throws SQLException;</p>
-<p>/**</p>
-</li>
-<li>&lt;p&gt;Attempts to establish a connection with the data source that</li>
-<li>this &lt;code&gt;DataSource&lt;/code&gt; object represents.<br>*</li>
-<li>@param username the database user on whose behalf the connection is</li>
-<li>being made</li>
-<li>@param password the user’s password</li>
-<li>@return  a connection to the data source</li>
-<li>@exception SQLException if a database access error occurs</li>
-<li>@since 1.4<br>*/<br>Connection getConnection(String username, String password)<br>throws SQLException;</li>
-</ul>
-<p>}<br>[/java]<br>　DataSource 接口定义了2个方法，都是获取数据库连接。我们在看下AbstractRoutingDataSource 如何实现了DataSource接口：<br>[java]<br>public Connection getConnection() throws SQLException {<br>        return determineTargetDataSource().getConnection();<br>    }</p>
-<pre><code>public Connection getConnection(String username, String password) throws SQLException {
-    return determineTargetDataSource().getConnection(username, password);
-}
-</code></pre><p>[/java]</p>
-<p>很显然就是调用自己的determineTargetDataSource()  方法获取到connection。determineTargetDataSource方法定义如下：<br>[java]<br>protected DataSource determineTargetDataSource() {<br>        Assert.notNull(this.resolvedDataSources, &quot;DataSource router not initialized&quot;);<br>        Object lookupKey = determineCurrentLookupKey();<br>        DataSource dataSource = this.resolvedDataSources.get(lookupKey);<br>        if (dataSource == null &amp;&amp; (this.lenientFallback || lookupKey == null)) {<br>            dataSource = this.resolvedDefaultDataSource;<br>        }<br>        if (dataSource == null) {<br>            throw new IllegalStateException(&quot;Cannot determine target DataSource for lookup key [&quot; + lookupKey + &quot;]&quot;);<br>        }<br>        return dataSource;<br>    }<br>[/java]</p>
-<p>　我们最关心的还是下面2句话：</p>
-<p>　　  Object lookupKey = determineCurrentLookupKey();<br>        DataSource dataSource = this.resolvedDataSources.get(lookupKey);</p>
-<pre><code>determineCurrentLookupKey方法返回lookupKey,resolvedDataSources方法就是根据lookupKey从Map中获得数据源。resolvedDataSources 和determineCurrentLookupKey定义如下：
-</code></pre><p>　　private Map<object, datasource=""> resolvedDataSources;</object,></p>
-<p>　　protected abstract Object determineCurrentLookupKey()</p>
-<p>　　看到以上定义，我们是不是有点思路了，resolvedDataSources是Map类型，我们可以把MasterDataSource和SlaveDataSource存到Map中，如下：</p>
-<p>　　　　key　　　　　　　　value</p>
-<p>　　　　master　　           MasterDataSource</p>
-<p>　　　　slave                  SlaveDataSource</p>
-<p>　　我们在写一个类DynamicDataSource  继承AbstractRoutingDataSource，实现其determineCurrentLookupKey() 方法，该方法返回Map的key，master或slave。</p>
-<p>　　好了，说了这么多，有点烦了，下面我们看下怎么实现。</p>
-<p> 　　上面已经提到了我们要使用的技术，我们先看下annotation的定义：<br>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target(ElementType.METHOD)<br>public @interface DataSource {<br>    String value();<br>}<br>[/java]</p>
-<p>我们还需要实现spring的抽象类AbstractRoutingDataSource，就是实现determineCurrentLookupKey方法：<br>[java]<br>public class DynamicDataSource extends AbstractRoutingDataSource {</p>
-<pre><code>@Override
-protected Object determineCurrentLookupKey() {
-    // TODO Auto-generated method stub
-    return DynamicDataSourceHolder.getDataSouce();
-}
-</code></pre><p>}</p>
-<p>public class DynamicDataSourceHolder {<br>    public static final ThreadLocal&lt;String&gt; holder = new ThreadLocal&lt;String&gt;();</p>
-<pre><code>public static void putDataSource(String name) {
-    holder.set(name);
-}
-
-public static String getDataSouce() {
-    return holder.get();
-}
-</code></pre><p>}<br>[/java]</p>
-<p> 从DynamicDataSource 的定义看出，他返回的是DynamicDataSourceHolder.getDataSouce()值，我们需要在程序运行时调用DynamicDataSourceHolder.putDataSource()方法，对其赋值。下面是我们实现的核心部分，也就是AOP部分，DataSourceAspect定义如下:<br>[java]<br>public class DataSourceAspect {</p>
-<pre><code>public void before(JoinPoint point)
-{
-    Object target = point.getTarget();
-    String method = point.getSignature().getName();
-
-    Class&amp;lt;?&amp;gt;[] classz = target.getClass().getInterfaces();
-
-    Class&amp;lt;?&amp;gt;[] parameterTypes = ((MethodSignature) point.getSignature())
-            .getMethod().getParameterTypes();
-    try {
-        Method m = classz[0].getMethod(method, parameterTypes);
-        if (m != null &amp;amp;&amp;amp; m.isAnnotationPresent(DataSource.class)) {
-            DataSource data = m
-                    .getAnnotation(DataSource.class);
-            DynamicDataSourceHolder.putDataSource(data.value());
-            System.out.println(data.value());
-        }
-
-    } catch (Exception e) {
-        // TODO: handle exception
-    }
-}
-</code></pre><p>}<br>[/java]</p>
-<p>   为了方便测试，我定义了2个数据库，shop模拟Master库，test模拟Slave库，shop和test的表结构一致，但数据不同，数据库配置如下：<br>[java]<br>&lt;bean id=&quot;masterdataSource&quot;<br>        class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;<br>        &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;<br>        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/shop&quot; /&gt;<br>        &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;<br>        &lt;property name=&quot;password&quot; value=&quot;yangyanping0615&quot; /&gt;<br>    &lt;/bean&gt;</p>
-<pre><code>&amp;lt;bean id=&amp;quot;slavedataSource&amp;quot;
-    class=&amp;quot;org.springframework.jdbc.datasource.DriverManagerDataSource&amp;quot;&amp;gt;
-    &amp;lt;property name=&amp;quot;driverClassName&amp;quot; value=&amp;quot;com.mysql.jdbc.Driver&amp;quot; /&amp;gt;
-    &amp;lt;property name=&amp;quot;url&amp;quot; value=&amp;quot;jdbc:mysql://127.0.0.1:3306/test&amp;quot; /&amp;gt;
-    &amp;lt;property name=&amp;quot;username&amp;quot; value=&amp;quot;root&amp;quot; /&amp;gt;
-    &amp;lt;property name=&amp;quot;password&amp;quot; value=&amp;quot;yangyanping0615&amp;quot; /&amp;gt;
-&amp;lt;/bean&amp;gt;
-
-    &amp;lt;beans:bean id=&amp;quot;dataSource&amp;quot; class=&amp;quot;com.air.shop.common.db.DynamicDataSource&amp;quot;&amp;gt;
-    &amp;lt;property name=&amp;quot;targetDataSources&amp;quot;&amp;gt;  
-          &amp;lt;map key-type=&amp;quot;java.lang.String&amp;quot;&amp;gt;  
-              &amp;lt;!-- write --&amp;gt;
-             &amp;lt;entry key=&amp;quot;master&amp;quot; value-ref=&amp;quot;masterdataSource&amp;quot;/&amp;gt;  
-             &amp;lt;!-- read --&amp;gt;
-             &amp;lt;entry key=&amp;quot;slave&amp;quot; value-ref=&amp;quot;slavedataSource&amp;quot;/&amp;gt;  
-          &amp;lt;/map&amp;gt;  
-
-    &amp;lt;/property&amp;gt;  
-    &amp;lt;property name=&amp;quot;defaultTargetDataSource&amp;quot; ref=&amp;quot;masterdataSource&amp;quot;/&amp;gt;  
-&amp;lt;/beans:bean&amp;gt;
-
-&amp;lt;bean id=&amp;quot;transactionManager&amp;quot;
-    class=&amp;quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&amp;quot;&amp;gt;
-    &amp;lt;property name=&amp;quot;dataSource&amp;quot; ref=&amp;quot;dataSource&amp;quot; /&amp;gt;
-&amp;lt;/bean&amp;gt;
-
-&amp;lt;!-- 配置SqlSessionFactoryBean --&amp;gt;
-&amp;lt;bean id=&amp;quot;sqlSessionFactory&amp;quot; class=&amp;quot;org.mybatis.spring.SqlSessionFactoryBean&amp;quot;&amp;gt;
-    &amp;lt;property name=&amp;quot;dataSource&amp;quot; ref=&amp;quot;dataSource&amp;quot; /&amp;gt;
-    &amp;lt;property name=&amp;quot;configLocation&amp;quot; value=&amp;quot;classpath:config/mybatis-config.xml&amp;quot; /&amp;gt;
-&amp;lt;/bean&amp;gt;
-</code></pre><p>[/java]</p>
-<p>在spring的配置中增加aop配置<br>[java]<br>&lt;!– 配置数据库注解aop –&gt;<br>    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;<br>    &lt;beans:bean id=&quot;manyDataSourceAspect&quot; class=&quot;com.air.shop.proxy.DataSourceAspect&quot; /&gt;<br>    &lt;aop:config&gt;<br>        &lt;aop:aspect id=&quot;c&quot; ref=&quot;manyDataSourceAspect&quot;&gt;<br>            &lt;aop:pointcut id=&quot;tx&quot; expression=&quot;execution(<em> com.air.shop.mapper.</em>.*(..))&quot;/&gt;<br>            &lt;aop:before pointcut-ref=&quot;tx&quot; method=&quot;before&quot;/&gt;<br>        &lt;/aop:aspect&gt;<br>    &lt;/aop:config&gt;<br>    &lt;!– 配置数据库注解aop –&gt;<br>[/java]</p>
-<p>下面是MyBatis的UserMapper的定义，为了方便测试，登录读取的是Master库，用户列表读取Slave库<br>[java]<br>public interface UserMapper {<br>    @DataSource(&quot;master&quot;)<br>    public void add(User user);</p>
-<pre><code>@DataSource(&amp;quot;master&amp;quot;)
-public void update(User user);
-
-@DataSource(&amp;quot;master&amp;quot;)
-public void delete(int id);
-
-@DataSource(&amp;quot;slave&amp;quot;)
-public User loadbyid(int id);
-
-@DataSource(&amp;quot;master&amp;quot;)
-public User loadbyname(String name);
-
-@DataSource(&amp;quot;slave&amp;quot;)
-public List&amp;lt;User&amp;gt; list();
-</code></pre><p>}<br>[/java]</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="url">
-                  Hibernate中使用count(*)取得表中记录总数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-11T05:40:45+08:00" content="2015-03-11">
-              2015-03-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/11/Hibernate中使用count取得表中记录总数/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/11/Hibernate中使用count取得表中记录总数/" class="leancloud_visitors" data-flag-title="Hibernate中使用count(*)取得表中记录总数">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//第一种方法：</span></div><div class="line">  String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  Integer count = (Integer)getHibernateTemplate().find(hql).listIterator().next();</div><div class="line">  <span class="keyword">return</span> count.intValue();</div><div class="line"></div><div class="line"><span class="comment">//第二种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  <span class="keyword">return</span> ((Integer)getHibernateTemplate().iterate(hql).next()).intValue();</div><div class="line"></div><div class="line"><span class="comment">//第三种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line"> Query query =  getHibernateTemplate().createQuery( getSession(),hql);</div><div class="line"> <span class="keyword">return</span> ((Integer)query.uniqueResult()).intValue();</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1874,7 +1779,7 @@ public List&amp;lt;User&amp;gt; list();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">322</span>
+              <span class="site-state-item-count">325</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2016,22 +1921,22 @@ public List&amp;lt;User&amp;gt; list();
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
@@ -2076,7 +1981,7 @@ public List&amp;lt;User&amp;gt; list();
 
   
     
-    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="http://resource.qn.jerkybible.com/blog/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
     <script src="/js/src/hook-duoshuo.js"></script>
   
 
@@ -2207,11 +2112,11 @@ public List&amp;lt;User&amp;gt; list();
   
   
   
-  <link rel="stylesheet" href="/vendors/algolia-instant-search/instantsearch.min.css">
+  <link rel="stylesheet" href="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.css">
 
   
   
-  <script src="/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  <script src="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.js"></script>
   
 
   <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>
