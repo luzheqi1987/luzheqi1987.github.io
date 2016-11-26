@@ -64,7 +64,8 @@
 
 
 
-<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<script src="https://use.fontawesome.com/f4fcbffa46.js"></script>
+<!--<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />-->
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -279,6 +280,148 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" itemprop="url">
+                  OpenCV HOG+SVM 分类器训练与检测
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-09-05T21:27:58+08:00" content="2012-09-05">
+              2012-09-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenCV/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenCV</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/09/05/OpenCV HOG+SVM 分类器训练与检测/" class="leancloud_visitors" data-flag-title="OpenCV HOG+SVM 分类器训练与检测">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>先从检测说起。</strong></p>
+<p>现有的OpenCV版本中有完整的基于HOG+SVM的检测代码，主要用到HOGDescriptor这个类。两个关键函数：</p>
+<p> hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());<span style="color: #339966;">//导入分类器，默认采用的是Dalal提出的算法模型，其实是svm训练得到的支持向量</span></p>
+<p> hog.detectMultiScale(img, found, 0, Size(8,8), Size(32,32), 1.05, 2);<span style="color: #339966;">//多尺度遍历，可以检测一定范围内的行人目标，当然现有的模型是基于64*128行人大小的，所以对中小目标检测效果不佳</span></p>
+<p>在程序框架建立过程中，问题没有出现多少，毕竟熟能生巧，意外的收获是：opencv众所周知地没有注释难以看懂，但是对于一个可执行程序，都用一个函数来说明程序实现功能，在一定程度上缓和我对opencv的反感吧。其实opencv的代码风格其他方面真的很好，今后可以借鉴之。先列举其一吧：</p>
+<p>void help()<br>{<br> printf(<br>  <span style="color: #800080;"> “\nDemonstrate the use of the HoG descriptor using\n”</span><br><span style="color: #800080;">   “  HOGDescriptor::hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());\n”</span><br><span style="color: #800080;">   “Usage:\n”</span><br><span style="color: #00ffff;"><span style="color: #800080;">   “./peopledetect (&lt;image_filename&gt; | &lt;image_list&gt;.txt)\n\n”</span> <span style="color: #000000;">);</span></span><br>}</p>
+<p><strong>再来说训练。</strong></p>
+<p>不同于Cascade，opencv中没有专门对hog特征的svm的训练，必须自己按照需要，选择特征算子和分类器，这里我先选了hog和svm(与latent svm 区分)。在调试过程中出现了很多bug，变量找不到定义（包含头文件）、无法解析的外部符号Link 2019 （找到函数的实现文件），这些问题也都一一解决了。我不得不再吐槽一下，像这种无注释源文件的真心没辙，网上百度、google都有可能找不到解决方案，还得一个个include和添加cpp去实验，以后写代码一定好写好注释，方便别人阅读嘛。</p>
+<p>总结一下：</p>
+<ul>
+<li>项目属性中除了包含core、imgproc、highgui等常用的lib和头文件，在此情况下（训练和检测）要包含ml（machine learning）和objdetect（object detect）的lib和头文件。</li>
+<li>工程文件中还要用到/opencv2.0/modules/objdetect/src下面的inner_functions.cpp文件，用在需要线性插值的地方。<br>&nbsp;</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1877,144 +2020,6 @@ EJB Persistence provider的一个实现类。如果不是使用多个厂商的 E
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/08/05/[转]wordpress基础主题文件的组成/" itemprop="url">
-                  [转]wordpress基础主题文件的组成
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-08-05T22:53:06+08:00" content="2012-08-05">
-              2012-08-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/08/05/[转]wordpress基础主题文件的组成/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/05/[转]wordpress基础主题文件的组成/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/08/05/[转]wordpress基础主题文件的组成/" class="leancloud_visitors" data-flag-title="[转]wordpress基础主题文件的组成">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>首先你需要给自己即将制作的主题起一个名字，比如我将要做的这个主题，它的名字叫newtheme，然后新建一个文件夹，文件夹的名字就是newtheme，这个文件夹的名字确定后尽量就不要修改了哦，否则会出错误的。下面给大家看看这个newtheme文件夹内都有什么文件。</p>
-<div>
-
-<p>[caption id=”attachment_45” align=”aligncenter” width=”600”]<a href="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/newtheme.jpg" target="_blank" rel="external"><img src="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/newtheme.jpg" alt="" title="newtheme"></a> WordPress主题文件的构成[/caption]</p>
-<p></p></div><br>解释一下每个文件都是干什么用的，header.php、index.php、sidebar.php、footer.php、style.css是主题的核心文件，css规定的是网页的外观，即网页用什么背景，字体多大号，哪里需要显示图片等等，后面会再讲解css的问题的；四个php文件呢，其实就是把一个完整的网页给用小刀切割成了四大块，每一块区域显示各自的内容，就像我们玩过的拼图游戏一样。下面也贴一张图片，相信大家看了会有更直观的感受的。<p></p>
-<p><a href="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/anatomy-wordpress.jpg" target="_blank" rel="external"><img src="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/anatomy-wordpress.jpg" alt="" title="anatomy-wordpress"></a></p>
-<p>那么其余那几个php文件是干什么的呢？single.php是用来显示一篇一篇的文章的，page.php是用来显示在wordpress后台添加的页面的，比如留言板页面，作者介绍页面等，archive.php是用来按类别显示文章的，比如显示2012年4月份的所有文章，比如发表在wordpress这个文章类别里的文章，而404.php则是用来显示错误页面的，比如有人访问了一个你的网站上不存在的页面，404.php就会显示在他的电脑屏幕上。</p>
-<p>其实，上面结构图中的四个php文件以及style.css文件才是一个主题最核心的，而single.php等文件即使没有也没关系，wordpress程序会自动的用核心文件替换single.php文件的，不过显示效果可能不是特别好；因此，我们这个主题还是把single.php等文件添加上了。</p>
-<p>可能你已经看过别人的主题，文件夹里的文件会特别多，但请注意，我们将要制作的是一个基础性主题，咱们暂时不需要那些很复杂很花哨的效果，所以文件数目会比较有限；总要明白，饭得一口一口吃，不能一口吃成个胖子的道理。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2060,7 +2065,7 @@ EJB Persistence provider的一个实现类。如果不是使用多个厂商的 E
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">325</span>
+              <span class="site-state-item-count">326</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2129,6 +2134,10 @@ EJB Persistence provider的一个实现类。如果不是使用多个厂商的 E
               
                 <li class="links-of-blogroll-item">
                   <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://koihik.github.io/" title="Koihik's Blog" target="_blank">Koihik's Blog</a>
                 </li>
               
             </ul>

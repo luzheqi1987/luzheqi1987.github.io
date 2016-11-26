@@ -64,7 +64,8 @@
 
 
 
-<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<script src="https://use.fontawesome.com/f4fcbffa46.js"></script>
+<!--<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />-->
 
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
@@ -279,6 +280,226 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/11/19/2014-11-19-Python.Paste指南之Deploy(1)-概念/" itemprop="url">
+                  Python.Paste指南之Deploy(1)-概念
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-19T17:06:00+08:00" content="2014-11-19">
+              2014-11-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/11/19/2014-11-19-Python.Paste指南之Deploy(1)-概念/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/19/2014-11-19-Python.Paste指南之Deploy(1)-概念/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/19/2014-11-19-Python.Paste指南之Deploy(1)-概念/" class="leancloud_visitors" data-flag-title="Python.Paste指南之Deploy(1)-概念">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转自: <a href="http://wanglianghuaihua.blog.163.com/blog/static/5425153120138273471531/" target="_blank" rel="external">点击打开链接</a></p>
+<pre><code>Paste.Deploy主要是用来载入WSGI中的Web App使用，其核心函数是loadapp(),下文中PD就指代Paste.Deploy。
+&gt; OS:Ubuntu12.04 2012年11月17日 第一版 主要是对官方文档的一个翻译，外加自己的一些理解 本文的Paste.Deploy使用主要是针对WSGI
+##1 简介及安装
+Paste Deployment是一种机制，通过loadapp函数和一个配置文件或者egg包来载入WSGI应用。安装很简单，如下两种方式：
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo pip install PasteDeploy</div></pre></td></tr></table></figure>
+
+
+或者可以从github上进行源码安装
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hg clone http://bitbucket.org/ianb/pastedeploy</div><div class="line">$ cd pastedeploy</div><div class="line">$ sudo python setup.py develop</div></pre></td></tr></table></figure>
+
+
+2 配置文件Config Flie
+一个配置文件后缀为ini，内容被分为很多段（section），PD只关心带有前缀的段，比如`[app:main]`或者`[filter:errors]`，总的来说，一个section的标识就是`[type:name]`,不是这种类型的section将会被忽略。
+一个section的内容是以`键=值`来标示的。#是一个注释。在段的定义中，有以下几类：
+</code></pre><ul>
+<li><p>[app:main]:定义WSGI应用，main表示只有一个应用，有多个应用的话main改为应用名字</p>
+</li>
+<li><p>[server:main]:定义WSGI的一个server。</p>
+</li>
+<li><p>[composite:xxx]：表示需要将一个请求调度定向（dispatched）到多个,或者多种应用上。以下是一个简单的例子，例子中，使用了composite，通过urlmap来实现载入多应用。</p>
+</li>
+<li><p>[fliter:]：定义“过滤器”，将应用进行进一步的封装。</p>
+</li>
+<li><p>[DEFAULT]：定义一些默认变量的值。</p>
+</li>
+</ul>
+<p>以下是一个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[composite:main]</div><div class="line">use = egg:Paste#urlmap</div><div class="line">/ = home</div><div class="line">/blog = blog</div><div class="line">/wiki = wiki</div><div class="line">/cms = config:cms.ini</div><div class="line"></div><div class="line">[app:home]</div><div class="line">use = egg:Paste#static</div><div class="line">document_root = %(here)s/htdocs</div><div class="line"></div><div class="line">[filter-app:blog]</div><div class="line">use = egg:Authentication#auth</div><div class="line">next = blogapp</div><div class="line">roles = admin</div><div class="line">htpasswd = /home/me/users.htpasswd</div><div class="line"></div><div class="line">[app:blogapp]</div><div class="line">use = egg:BlogApp</div><div class="line">database = sqlite:/home/me/blog.db</div><div class="line"></div><div class="line">[app:wiki]</div><div class="line">use = call:mywiki.main:application</div><div class="line">database = sqlite:/home/me/wiki.db</div></pre></td></tr></table></figure>
+<p>下面会进行分段的讲解</p>
+<p>###2.1 composite</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[composite:main]</div><div class="line">use = egg:Paste#urlmap</div><div class="line">/ = home</div><div class="line">/blog = blog</div><div class="line">/wiki = wiki</div><div class="line">/cms = config:cms.ini</div></pre></td></tr></table></figure>
+<p>这是一个composite段，表示这将会根据一些条件将web请求调度到不同的应用。<code>use = egg:Paste#urlmap</code>表示我们奖使用<code>Paste</code>egg包中<code>urlmap</code>来实现composite，这一个段(urlmap)可以算是一个通用的composite程序了。根据web请求的path的前缀进行一个到应用的映射(map)。这些被映射的程序就包括blog,home,wiki,config:cms.ini（映射到了另外一个配置文件，PD再根据这个文件进行载入）###2.2 App type1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[app:home]</div><div class="line">use = egg:Paste#static</div><div class="line">document_root = %(here)s/htdocs</div></pre></td></tr></table></figure>
+<p>app是一个callable object，接受的参数(environ,start_response)，这是paste系统交给application的，符合WSGI规范的参数. app需要完成的任务是响应envrion中的请求，准备好响应头和消息体，然后交给start_response处理，并返回响应消息体。<code>egg:Paste#static</code>也是Paste包中的一个简单程序，它只处理静态文件。它需要一个配置文件document_root,后面的值可以是一个变量,形式为%（var）s相应的值应该在[DEFAULT]字段指明以便Paste读取。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[app:test]</div><div class="line">use = egg:Paste#static</div><div class="line">document_root = %(path)s/htdocs</div><div class="line">[DEFAULT]</div><div class="line">path = /etc/test</div></pre></td></tr></table></figure>
+<p>###2.3 fliter<br>filter是一个callable object，其唯一参数是(app)，这是WSGI的application对象，filter需要完成的工作是将application包装成另一个application（“过滤”），并返回这个包装后的application。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[filter-app:blog]</div><div class="line">use = egg:Authentication#auth</div><div class="line">next = blogapp</div><div class="line">roles = admin</div><div class="line">htpasswd = /home/me/users.htpasswd</div><div class="line"></div><div class="line">[app:blogapp]</div><div class="line">use = egg:BlogApp</div><div class="line">database = sqlite:/home/me/blog.db</div></pre></td></tr></table></figure>
+<p><code>[filter-app:blog]</code>fliter-app字段表明你希望对某个应用进行包装，需要包装的应用通过next指明（表明在下一个段中），这个字段的意思就是，在正式调用blogapp之前，我会调用egg:Authentication#auth进行一个用户的验证，随后才会调用blogapp进行处理。后面的[app:blogapp]则是定义了blogapp，并指明了需要的database参数。</p>
+<p>###2.4 App type2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[app:wiki]</div><div class="line">use = call:mywiki.main:application</div><div class="line">database = sqlite:/home/me/wiki.db</div></pre></td></tr></table></figure>
+<p>这个段和之前的app段定义类似，不同的是对于wiki这个应用，我们没有使用egg包，而是直接对mywiki.main这个模块中的application对象使用了call方法。python，中一切皆对象，作为WSGI app的可以是一个函数，一个类，或者一个实例，使用call的话，相应的函数，类，实例中必须实现call()方法。此类app的格式用冒号分割: <code>call(表示使用call方法):模块的完成路径名字:应用变量的完整名字</code></p>
+<p>##3 基本使用<br>PD的主要使用就是通过读取配置文件载入WSGI应用。如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> paste.deploy <span class="keyword">import</span> loadapp</div><div class="line">wsgi_app = loadapp(<span class="string">'config:/path/to/config.ini'</span>)</div></pre></td></tr></table></figure>
+<p>注意，这里需要指明绝对路径。</p>
+<p>##4 更多关于配置文件</p>
+<p>###4.1 App<br>单个配置文件中可以定义多个应用个，每个应用有自己独立的段。应用的定义以[app:name]的格式，[app:main]表示只有一个应用。应用的定义支持以下五种格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[app:myapp]</div><div class="line">use = config:another_config_file.ini#app_name</div><div class="line">#使用另外一个配置文件</div><div class="line"></div><div class="line">[app:myotherapp]</div><div class="line">use = egg:MyApp</div><div class="line">#使用egg包中的内容</div><div class="line"></div><div class="line">[app:mythirdapp]</div><div class="line">use = call:my.project:myapplication</div><div class="line">#使用模块中的callable对象</div><div class="line"></div><div class="line">[app:mylastapp]</div><div class="line">use = myotherapp</div><div class="line">#使用另外一个section</div><div class="line"></div><div class="line">[app:myfacapp]</div><div class="line">paste.app_factory = myapp.modulename:app_factory</div><div class="line">#使用工厂函数</div></pre></td></tr></table></figure>
+<p>其中，最后一种方式，将一个app指向了某些python代码。此模式下，必须执行app协议，以app_factory表示，后面的值需要import的东西，在这个例子中myapp.modulename被载入，并从其中取得了app_factory的实例。<br>app_factory是一个callable object，其接受的参数是一些关于application的配置信息：<code>(global_conf,**kwargs)</code>，<code>global_conf</code>是在ini文件中default section中定义的一系列key-value对，而<code>**kwargs</code>，即一些本地配置，是在ini文件中，app:xxx section中定义的一系列key-value对。app_factory返回值是一个application对象<br>在app的配置中，use参数以后配置就算结束了。其余的键值参数将会作为参数，传递到factory中，如下：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[app:blog]</div><div class="line">use = egg:MyBlog</div><div class="line">database = mysql://localhost/blogdb #这是参数</div><div class="line">blogname = This Is My Blog! #这是参数</div></pre></td></tr></table></figure>
+</code></pre><p>###4.2 全局配置<br>全局配置主要是用于多个应用共用一些变量，这些变量我们规定放在段[DEFAULT]中，如果需要覆盖，可以在自己的app中重新定义，如下：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[DEFAULT]</div><div class="line">admin_email = webmaster@example.com</div><div class="line">[app:main]</div><div class="line">use = ...</div><div class="line">set admin_email = bob@example.com</div></pre></td></tr></table></figure>
+</code></pre><p>###4.3 composite app<br>composite是一个运行着像是app，但是实际上是由多个应用组成的。urlmap就是composite app的一个例子，url不同的path对应了不同的应用。如下：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[composite:main]</div><div class="line">use = egg:Paste#urlmap</div><div class="line">/ = mainapp</div><div class="line">/files = staticapp</div><div class="line"></div><div class="line">[app:mainapp]</div><div class="line">use = egg:MyApp</div><div class="line"></div><div class="line">[app:staticapp]</div><div class="line">use = egg:Paste#static</div><div class="line">document_root = /path/to/docroot</div></pre></td></tr></table></figure>
+</code></pre><p>在loadapp函数的执行中，composite app被实例化，它同时还会访问配置文件中定义的其他应用。</p>
+<p>###4.4 app定义高级用法<br>在app段中，你可以定义fliters和servers，通过<code>fliter:</code>和<code>server:</code> PD通过loadserver和loadfilter函数进行调用，工作机制都一样，返回不同的对象。</p>
+<p>####4.4.1 filter composition<br>应用filter的方式很多，重要的是看你filter的数量和组织形式。下面会一一介绍应用fliter的几种方式：<br>1.使用<code>filter-with</code></p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[app:main]</div><div class="line">use = egg:MyEgg</div><div class="line">filter-with = printdebug</div><div class="line"></div><div class="line">[filter:printdebug]</div><div class="line">use = egg:Paste#printdebug</div><div class="line"># and you could have another filter-with here, and so on...</div></pre></td></tr></table></figure>
+</code></pre><p>2.使用<code>fliter-app</code></p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[fliter-app:printdebug]</div><div class="line">use = egg:Paste</div><div class="line">next = main</div><div class="line"></div><div class="line">[app:main]</div><div class="line">use = egg:MyEgg</div></pre></td></tr></table></figure>
+</code></pre><p>3.使用pipeline<br>当使用多个filter的时候需要使用pipeline的方式，它需要提供一个key参数pipeline,后面的值是一个列表，最后以应用结尾。如下：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[pipeline:main]</div><div class="line">pipeline = filter1 egg:FilterEgg#filter2 filter3 app</div><div class="line"></div><div class="line">[filter:filter1]</div><div class="line">...</div></pre></td></tr></table></figure>
+</code></pre><p>假设在ini文件中, 某条pipeline的顺序是filter1, filter2, filter3，app, 那么，最终运行的app_real是这样组织的： app_real = filter1(filter2(filter3(app)))<br>在app真正被调用的过程中，filter1.<strong>call</strong>(environ,start_response)被首先调用，若某种检查未通过，filter1做出反应；否则交给filter2.<strong>call</strong>(environ,start_response)进一步处理，若某种检查未通过，filter2做出反应，中断链条，否则交给filter3.<strong>call</strong>(environ,start_response)处理，若filter3的某种检查都通过了，最后交给app.<strong>call</strong>(environ,start_response)进行处理。</p>
+<p>###4.5 读取配置文件<br>如果希望在不创建应用的情况下得到配置文件，可以使用appconfig(uri)函数，将会以字典形式返回使用的配置。这个字典包括了全局很本地的配置信息，所以可以通过属性方法获得相应的attributes （.local_conf and .global_conf）</p>
+<p>##5 其他</p>
+<p>###5.1 如何引用Egg包<br>egg是python的一个包，pip easy_install等都是安装egg包的方式。关注egg包要注意： +某一egg包是有标准说明的<br>python setup.py name +有entry point，不用太在意，这个只是说明调用程序的参数。</p>
+<p>###5.2 定义factory函数<br>工厂函数的定义还是遵循之前提到的应用的协议。目前，用于工厂函数的协议有以下：<br><em>paste.app_factory
+</em>paste.composite_factory<br><em>paste.filter_factory
+</em>paste.server_factory<br>所有的这些都希望有一个含有<strong>call</strong>方法的（函数，方法，类）。<br>1.<code>paste.app_factory</code></p>
+<pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">app_factory</span><span class="params">(global_config, **local_conf)</span>:</span></div><div class="line">    <span class="keyword">return</span> wsgi_app</div></pre></td></tr></table></figure>
+</code></pre><p>global_config是一个字典，而local_conf则是关键字参数。返回一个wsgi_app（含有call方法。）<br>2.paste.composite_factory`</p>
+<pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">composite_factory</span><span class="params">(loader, global_config, **local_conf)</span>:</span></div><div class="line">   <span class="keyword">return</span> wsgi_app</div></pre></td></tr></table></figure>
+</code></pre><p>loader是一个对象，有几个有趣的方法,get_app(name_or_uri, global_conf=None)根据name返回一个wsgi应用，get_filter（）和get_server（）也是一样。看一个更加复杂的例子，举例一个pipeline应用：</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def pipeline_factory(loader, global_config, pipeline):</div><div class="line">    # space-separated list of filter and app names:</div><div class="line">    pipeline = pipeline.split()</div><div class="line">    filters = [loader.get_filter(n) for n in pipeline[:-1]]</div><div class="line">    app = loader.get_app(pipeline[-1])</div><div class="line">    filters.reverse() # apply in reverse order!</div><div class="line">    for filter in filters:</div><div class="line">      app = filter(app)</div><div class="line">    return app</div></pre></td></tr></table></figure>
+</code></pre><p>相应的配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">[composite:main]</div><div class="line">use = &lt;pipeline_factory_uri&gt;</div><div class="line">pipeline = egg:Paste#printdebug session myapp</div><div class="line"></div><div class="line">[filter:session]</div><div class="line">use = egg:Paste#session</div><div class="line">store = memory</div><div class="line"></div><div class="line">[app:myapp]</div><div class="line">use = egg:MyApp</div></pre></td></tr></table></figure>
+<p>3.<code>paste.filter_factory</code> fliter的工厂函数和app的共产函数类似，除了它返回的是一个filter,fliter是一个仅仅把一个wsgi应用作为唯一参数的callable对象，返回一个被filter了的应用。 以下是一个例子，这个filter会检查CGI中REMOTE_USER变量是否存在，并创建一个简单的认证过滤器。</p>
+<pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">auth_filter_factory</span><span class="params">(global_conf, req_usernames)</span>:</span></div><div class="line">    <span class="comment"># space-separated list of usernames:</span></div><div class="line">    req_usernames = req_usernames.split()</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">filter</span><span class="params">(app)</span>:</span></div><div class="line">        <span class="keyword">return</span> AuthFilter(app, req_usernames)</div><div class="line">    <span class="keyword">return</span> filter</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthFilter</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, app, req_usernames)</span>:</span></div><div class="line">        self.app = app</div><div class="line">        self.req_usernames = req_usernames</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></div><div class="line">    <span class="keyword">if</span> environ.get(<span class="string">'REMOTE_USER'</span>) <span class="keyword">in</span> self.req_usernames:</div><div class="line">            <span class="keyword">return</span> self.app(environ, start_response)</div><div class="line">    start_response(</div><div class="line">            <span class="string">'403 Forbidden'</span>, [(<span class="string">'Content-type'</span>, <span class="string">'text/html'</span>)])</div><div class="line">    <span class="keyword">return</span> [<span class="string">'You are forbidden to view this resource'</span>]</div></pre></td></tr></table></figure>
+</code></pre><p>4.<code>paste.filter_app_factory</code> 和paste.filter_factory类似，接受一个wsgi应用参数，返回一个WSGI应用，所以如果改变以上代码的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AuthFilter</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, app, global_conf, req_usernames)</span>:</span></div><div class="line">        ....</div></pre></td></tr></table></figure>
+<p>那么，类 AuthFilter就会作为一个filter_app_factory函数使用。<br>5.<code>paste.server_factory</code><br>与以上不同的是，函数返回的是一个server,一个server也是一个callable对象，以一个WSGI应用作为参数，而后为这个应用服务。</p>
+<pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">server_factory</span><span class="params">(global_conf, host, port)</span>:</span></div><div class="line">    port = int(port)</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">serve</span><span class="params">(app)</span>:</span></div><div class="line">        s = Server(app, host=host, port=port)</div><div class="line">        s.serve_forever()</div><div class="line">    <span class="keyword">return</span> serve</div></pre></td></tr></table></figure>
+</code></pre><p>Server的实现用户可以自定义，可以参考python包wsgiref<br>6.<code>paste.server_runner</code> 与 paste.server_factory类似，不同的是参数格式。</p>
+<p>##6 其他一些值得讨论的问题<br>ConfigParser（PD底层用到这个来解析ini文件）解析ini文件不是很有效率，是否需要更改？<br>在配置文件中的对象是否需要是python风格的，而不是字符串的形式？</p>
+<blockquote>
+<p>Paste Deployment currently does not require other parts of Paste, and is distributed as a separate package.<br><a href="http://pythonpaste.org/deploy/#defining-factories" target="_blank" rel="external"></a><a href="http://pythonpaste.org/deploy/#defining-factories" target="_blank" rel="external">http://pythonpaste.org/deploy/#defining-factories</a><a href="http://pythonpaste.org/deploy/" target="_blank" rel="external"></a><a href="http://pythonpaste.org/deploy/" target="_blank" rel="external">http://pythonpaste.org/deploy/</a> <a href="http://pythonpaste.org/script/#paster-serve" target="_blank" rel="external"></a><a href="http://pythonpaste.org/script/#paster-serve" target="_blank" rel="external">http://pythonpaste.org/script/#paster-serve</a><a href="http://kevinzheng.sinaapp.com/?p=104" target="_blank" rel="external"></a><a href="http://kevinzheng.sinaapp.com/?p=104" target="_blank" rel="external">http://kevinzheng.sinaapp.com/?p=104</a><a href="http://blog.csdn.net/icycolawater/article/details/7045287" target="_blank" rel="external"></a><a href="http://blog.csdn.net/icycolawater/article/details/7045287" target="_blank" rel="external">http://blog.csdn.net/icycolawater/article/details/7045287</a></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1669,170 +1890,6 @@ httpd.serve_forever()
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="url">
-                  练习2.21-练习2.35
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-20T20:10:00+08:00" content="2014-01-20">
-              2014-01-20
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/01/20/2014-01-20-练习2.21-练习2.35/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/20/2014-01-20-练习2.21-练习2.35/" class="leancloud_visitors" data-flag-title="练习2.21-练习2.35">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/'>练习2.21-练习2.35</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>1.练习2.21</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (square-list items)</div><div class="line">  (if (null? items)</div><div class="line">      &apos;()</div><div class="line">      (cons (square (car items)) (square-list (cdr items)))))</div><div class="line"></div><div class="line">(define (square-list items)</div><div class="line">  (map (lambda (x) (square x)) items))</div></pre></td></tr></table></figure>
-<p>2.练习2.22<br>3.练习2.23</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (for-each f items)</div><div class="line">  (define (iter f items)</div><div class="line">    (if (null? items)</div><div class="line">	true</div><div class="line">	(begin</div><div class="line">	  (f (car items))</div><div class="line">	  (iter f (cdr items)))))</div><div class="line">  (iter f items))</div></pre></td></tr></table></figure>
-<p>4.练习2.24<br>5.练习2.25</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(car (cdr (car (cdr (cdr (list 1 3 (list 5 7) 9))))))</div><div class="line"></div><div class="line">(car (car (list (list 7))))</div><div class="line"></div><div class="line">(car (cdr (car (cdr (car (cdr (car (cdr (car (cdr (car (cdr (list 1 (list 2 (list 3 (list 4 (list 5 (list 6 7))))))))))))))))))</div></pre></td></tr></table></figure>
-<p>6.练习2.26</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(1 2 3 4 5 6)</div><div class="line">((1 2 3) 4 5 6)</div><div class="line">((1 2 3) ( 4 5 6))</div></pre></td></tr></table></figure>
-<p>7.练习2.27</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (deep-reverse items)</div><div class="line">  (define (reverse-iter tmpitems result)</div><div class="line">    (if (null? tmpitems)</div><div class="line">	result</div><div class="line">	(reverse-iter (cdr tmpitems)</div><div class="line">		      (cons (if (number? (car tmpitems))</div><div class="line">				(car tmpitems)</div><div class="line">				(reverse-iter (car tmpitems) &apos;()))</div><div class="line">			    result))))</div><div class="line">  (reverse-iter items &apos;()))</div></pre></td></tr></table></figure>
-<p>8.练习2.28</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (fringe trees)</div><div class="line">  (cond ((null? trees) &apos;())</div><div class="line">	((not (pair? trees)) (list trees))</div><div class="line">	(else (append (fringe (car trees)) (fringe (cdr trees))))))</div></pre></td></tr></table></figure>
-<p>9.练习2.29</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">(define (make-mobile left right)</div><div class="line">  (list left right))</div><div class="line"></div><div class="line">(define (make-branch length structure)</div><div class="line">  (list length structure))</div><div class="line"></div><div class="line">(define (left-branch _mobile)</div><div class="line">  (car _mobile))</div><div class="line"></div><div class="line">(define (right-branch _mobile)</div><div class="line">  (car (cdr _mobile)))</div><div class="line"></div><div class="line">(define (branch-length _branch)</div><div class="line">  (car _branch))</div><div class="line"></div><div class="line">(define (branch-structure _branch)</div><div class="line">  (car (cdr _branch)))</div><div class="line"></div><div class="line">(define (total-weigh _mobile)</div><div class="line">  (if (not (pair? _mobile))</div><div class="line">      _mobile</div><div class="line">      (+ (total-weigh (branch-structure (left-branch _mobile)))</div><div class="line">	 (total-weigh (branch-structure (right-branch _mobile))))))</div><div class="line"></div><div class="line">(define (balance-weight _mobile)</div><div class="line">  (define (iter _mobile result)</div><div class="line">    (if (not (pair? _mobile))</div><div class="line">      true</div><div class="line">      (and result</div><div class="line">	   (= (* (branch-length (left-branch _mobile))</div><div class="line">		 (total-weigh (branch-structure (left-branch _mobile))))</div><div class="line">	      (* (branch-length (right-branch _mobile))</div><div class="line">		 (total-weigh (branch-structure (right-branch _mobile)))))</div><div class="line">	   (balance-weight (branch-structure (left-branch _mobile)))</div><div class="line">	   (balance-weight (branch-structure (right-branch _mobile))))))</div><div class="line">  (iter _mobile true))</div></pre></td></tr></table></figure>
-<p>10.练习2.30</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (square-tree tree)</div><div class="line">  (cond ((null? tree) &apos;())</div><div class="line">	((not (pair? tree)) (square tree))</div><div class="line">	(else (cons (square-tree (car tree))</div><div class="line">		    (square-tree (cdr tree))))))</div><div class="line"></div><div class="line">(define (square-tree tree)</div><div class="line">  (map (lambda (sub-tree)</div><div class="line">	 (if (pair? sub-tree)</div><div class="line">	     (square-tree sub-tree)</div><div class="line">	     (square sub-tree)))</div><div class="line">       tree))</div></pre></td></tr></table></figure>
-<p>11.练习2.31</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (tree-map f tree)</div><div class="line">  (map (lambda (sub-tree)</div><div class="line">	 (if (pair? sub-tree)</div><div class="line">	     (tree-map f sub-tree)</div><div class="line">	     (f sub-tree)))</div><div class="line">       tree))</div></pre></td></tr></table></figure>
-<p>12.练习2.32</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```plain</div><div class="line">(define (subsets s)</div><div class="line">  (if (null? s)</div><div class="line">      (list &apos;())</div><div class="line">      (let ((rest (subsets (cdr s))))</div><div class="line">	(append rest (map (lambda (x) (cons (car s) x)) rest)))))</div></pre></td></tr></table></figure>
-<p>13.练习2.33</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(define (map p sequence)</div><div class="line">  (accumulate (lambda (x y)</div><div class="line">		(cons (p x) y))</div><div class="line">	      &apos;()</div><div class="line">	      sequence))</div><div class="line"></div><div class="line">(define (append seq1 seq2)</div><div class="line">  (accumulate cons seq2 seq1))</div><div class="line"></div><div class="line">(define (length sequence)</div><div class="line">  (accumulate (lambda (x y) (+ 1 y)) 0 sequence))</div></pre></td></tr></table></figure>
-<p>14.练习2.34</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (horner-eval x coefficient-sequence)</div><div class="line">  (accumulate (lambda (this-coeff higher-terms) (+ this-coeff (* x higher-terms)))</div><div class="line">	      0</div><div class="line">	      coefficient-sequence))</div></pre></td></tr></table></figure>
-<p>15.练习2.35</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">(define (count-leaves tree)</div><div class="line">    (accumulate +</div><div class="line">                0</div><div class="line">                (map (lambda (sub-tree)</div><div class="line">                         (if (pair? sub-tree)        </div><div class="line">                             (count-leaves sub-tree)   </div><div class="line">                             1))                        </div><div class="line">                     tree)))</div><div class="line"></div><div class="line">(define (count-leaves t)</div><div class="line">  (accumulate (lambda (x y) (if (not (pair? x))</div><div class="line">				(+ x y)</div><div class="line">				(+ (count-leaves x)</div><div class="line">				   y)))</div><div class="line">	      0</div><div class="line">	      (map (lambda (x) (if (not (pair? x))</div><div class="line">				   1</div><div class="line">				   x))</div><div class="line">		   (append (filter (lambda (x) (pair? x)) t)</div><div class="line">			   (filter (lambda (x) (not (pair? x))) t)))))</div></pre></td></tr></table></figure>
-<p>```</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1878,7 +1935,7 @@ httpd.serve_forever()
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">325</span>
+              <span class="site-state-item-count">326</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1947,6 +2004,10 @@ httpd.serve_forever()
               
                 <li class="links-of-blogroll-item">
                   <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://koihik.github.io/" title="Koihik's Blog" target="_blank">Koihik's Blog</a>
                 </li>
               
             </ul>
