@@ -302,6 +302,1369 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="url">
+                  [转]Spring4新特性——Web开发的增强
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:00:32+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——Web开发的增强/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——Web开发的增强">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
+<p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
+<pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
+public String view2() {  
+    return &amp;quot;{\&amp;quot;id\&amp;quot; : 1}&amp;quot;;  
+}  
+</code></pre><p>}<br>[/java]<br> 其实现就是在@@RestController中加入@ResponseBody：<br>[java]<br>@org.springframework.stereotype.Controller<br>@org.springframework.web.bind.annotation.ResponseBody<br>public @interface RestController {<br>}<br>[/java]<br>这样当你开发Rest服务器端的时候，spring-mvc配置文件需要的代码极少，可能就仅需如下一行：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>2、mvc:annotation-driven配置变化<br>统一风格；将 enableMatrixVariables改为enable-matrix-variables属性；将ignoreDefaultModelOnRedirect改为ignore-default-model-on-redirect。</p>
+<p>3、提供AsyncRestTemplate用于客户端非阻塞异步支持。<br>3.1、服务器端<br>对于服务器端的springmvc开发可以参考<a href="https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc</a><br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/api&quot;)<br>      public Callable&lt;User&gt; api() {<br>        System.out.println(&quot;=====hello&quot;);<br>        return new Callable&lt;User&gt;() {<br>            @Override<br>            public User call() throws Exception {<br>                Thread.sleep(10L * 1000); //暂停两秒<br>                User user = new User();<br>                user.setId(1L);<br>                user.setName(&quot;haha&quot;);<br>                return user;<br>            }<br>        };<br>    }<br>}<br>[/java]<br>非常简单，服务器端暂停10秒再返回结果（但是服务器也是非阻塞的）。具体参考我github上的代码。</p>
+<p>3.2、客户端<br>[java]<br>public static void main(String[] args) {<br>    AsyncRestTemplate template = new AsyncRestTemplate();<br>    //调用完后立即返回（没有阻塞）<br>    ListenableFuture&lt;ResponseEntity&lt;User&gt;&gt; future = template.getForEntity(&quot;<a href="http://localhost:9080/spring4/api&amp;quot" target="_blank" rel="external">http://localhost:9080/spring4/api&amp;quot</a>;, User.class);<br>    //设置异步回调<br>    future.addCallback(new ListenableFutureCallback&lt;ResponseEntity&lt;User&gt;&gt;() {<br>        @Override<br>        public void onSuccess(ResponseEntity&lt;User&gt; result) {<br>            System.out.println(&quot;======client get result : &quot; + result.getBody());<br>        }  </p>
+<pre><code>    @Override  
+    public void onFailure(Throwable t) {  
+        System.out.println(&amp;quot;======client failure : &amp;quot; + t);  
+    }  
+});  
+System.out.println(&amp;quot;==no wait&amp;quot;);  
+</code></pre><p>}<br>[/java]<br> 此处使用Future来完成非阻塞，这样的话我们也需要给它一个回调接口来拿结果； Future和Callable是一对，一个消费结果，一个产生结果。调用完模板后会立即返回，不会阻塞；有结果时会调用其回调。</p>
+<p>AsyncRestTemplate默认使用SimpleClientHttpRequestFactory，即通过java.net.HttpURLConnection实现；另外我们也可以使用apache的http components；使用template.setAsyncRequestFactory(new HttpComponentsAsyncClientHttpRequestFactory());设置即可。</p>
+<p>另外在开发时尽量不要自己注册如：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;<br>[/java]<br>尽量使用<br>[java]<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>它设计的已经足够好，使用子元素可以配置我们需要的配置。</p>
+<p>且不要使用老版本的：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>[/java]<br>否则可能得到如下异常：<br>写道<br>[text]<br>Circular view path [login]: would dispatch back to the current handler URL [/spring4/login] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)<br>[/text]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="url">
+                  [转]Spring4新特性——核心容器的其他改进
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:57:38+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——核心容器的其他改进">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989379" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989379</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>1、Map依赖注入：<br>[java]<br>@Autowired<br>private Map&lt;String, BaseService&gt; map;<br>[/java]<br>这样会注入：key是bean名字；value就是所有实现了BaseService的Bean，假设使用上一篇的例子，则会得到：<br>[java]<br>{organizationService=com.sishuok.spring4.service.OrganizationService@617029, userService=com.sishuok.spring4.service.UserService@10ac73b}<br>[/java]</p>
+<p>2、List/数组注入：<br>[java]<br>@Autowired<br>private List&lt;BaseService&gt; list;<br>[/java]<br> 这样会注入所有实现了BaseService的Bean；但是顺序是不确定的，如果我们想要按照某个顺序获取；在Spring4中可以使用@Order或实现Ordered接口来实现，如：<br>[java]<br>@Order(value = 1)<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>这种方式在一些需要多态的场景下是非常有用的。</p>
+<p>3、@Lazy可以延迟依赖注入：<br>[java]<br>@Lazy<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>[java]<br>@Lazy<br>@Autowired<br>private UserService userService;<br>[/java]<br> 我们可以把@Lazy放在@Autowired之上，即依赖注入也是延迟的；当我们调用userService时才会注入。即延迟依赖注入到使用时。同样适用于@Bean。</p>
+<p>4、@Conditional<br>@Conditional类似于@Profile（一般用于如我们有开发环境、测试环境、正式机环境，为了方便切换不同的环境可以使用@Profile指定各个环境的配置，然后通过某个配置来开启某一个环境，方便切换），但是@Conditional的优点是允许自己定义规则。可以指定在如@Component、@Bean、@Configuration等注解的类上，以绝对Bean是否创建等。首先来看看使用@Profile的用例，假设我们有个用户模块：<br>1、在测试/开发期间调用本机的模拟接口方便开发；<br>2、在部署到正式机时换成调用远程接口；<br>[java]<br>public abstract class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Profile(&quot;local&quot;)<br>@Service<br>public class LocalUserService extends UserService {<br>}  </p>
+<p>@Profile(&quot;remote&quot;)<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>我们在写测试用例时，可以指定我们使用哪个Profile：<br>[java]<br>@ActiveProfiles(&quot;remote&quot;)<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations =  &quot;classpath:spring-config.xml&quot;)<br>public class ServiceTest {  </p>
+<pre><code>@Autowired  
+private UserService userService;  
+</code></pre><p>}<br>[/java]<br>  这种方式非常简单。如果想自定义如@Profile之类的注解等，那么@Conditional就派上用场了；假设我们系统中有好多本地/远程接口，那么我们定义两个注解@Local和@Remote注解要比使用@Profile方便的多；如：</p>
+<p>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Local {<br>}  </p>
+<p>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Remote {<br>}<br>[/java]<br>[java]<br>public class CustomCondition implements Condition {  </p>
+<pre><code>@Override  
+public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {  
+    boolean isLocalBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Local&amp;quot;);  
+    boolean isRemoteBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Remote&amp;quot;);  
+    //如果bean没有注解@Local或@Remote，返回true，表示创建Bean  
+    if(!isLocalBean &amp;amp;&amp;amp; !isRemoteBean) {  
+        return true;  
+    }  
+
+    boolean isLocalProfile = context.getEnvironment().acceptsProfiles(&amp;quot;local&amp;quot;);  
+
+    //如果profile=local 且 bean注解了@Local，则返回true 表示创建bean；  
+    if(isLocalProfile) {  
+        return isLocalBean;  
+    }  
+
+    //否则默认返回注解了@Remote或没有注解@Remote的Bean  
+    return isRemoteBean;  
+}  
+</code></pre><p>}<br>[/java]<br> 然后我们使用这两个注解分别注解我们的Service：<br>[java]<br>@Local<br>@Service<br>public class LocalUserService extends UserService {<br>}<br>[/java]<br>[java]<br>@Remote<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>首先在@Local和@Remote注解上使用@Conditional(CustomCondition.class)指定条件，然后使用@Local和@Remote注解我们的Service，这样当加载Service时，会先执行条件然后判断是否加载为Bean。@Profile就是这样实现的，其Condition是：org.springframework.context.annotation.ProfileCondition。可以去看下源码，很简单。</p>
+<p>5、基于CGLIB的类代理不再要求类必须有空参构造器了：<br>这是一个很好的特性，使用构造器注入有很多好处，比如可以只在创建Bean时注入依赖，然后就不变了，如果使用setter注入，是允许别人改的。当然我们可以使用spring的字段级别注入。如果大家使用过如Shiro，我们可能要对Controller加代理。如果是类级别代理，此时要求Controller必须有空参构造器，有时候挺烦人的。spring如何实现的呢？其内联了objenesis类库，通过它来实现，可以去其官网看看介绍。这样就支持如下方式的构造器注入了：</p>
+<p>[java]<br>@Controller<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>}<br>[/java]<br>org.springframework.cglib.proxy.Enhancer在其github和maven仓库中的source中竟然木有，其github：<a href="https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？" target="_blank" rel="external">https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="url">
+                  [转]Spring4新特性——泛型限定式依赖注入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:53:17+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——泛型限定式依赖注入">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
+<p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
+<p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
+<p>@Repository<br>public class UserRepository extends BaseRepository&lt;User&gt; {<br>}  </p>
+<p>@Repository<br>public class OrganizationRepository extends BaseRepository&lt;Organization&gt; {<br>}<br>[/java]<br> 对于Repository，我们一般是这样实现的：首先写一个模板父类，把通用的crud等代码放在BaseRepository；然后子类继承后，只需要添加额外的实现。</p>
+<p>1.3、Service<br>1.3.1、以前Service写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    private BaseRepository&lt;M&gt; repository;<br>    public void setRepository(BaseRepository&lt;M&gt; repository) {<br>        this.repository = repository;<br>    }<br>    public void save(M m) {<br>        repository.save(m);<br>    }<br>}<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>    @Autowired<br>    public void setUserRepository(UserRepository userRepository) {<br>        setRepository(userRepository);<br>    }<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>    @Autowired<br>    public void setOrganizationRepository(OrganizationRepository organizationRepository) {<br>        setRepository(organizationRepository);<br>    }<br>}<br>[/java]<br>可以看到，以前必须再写一个setter方法，然后指定注入的具体类型，然后进行注入；</p>
+<p>1.3.2、泛型Service的写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    @Autowired<br>    protected BaseRepository&lt;M&gt; repository;  </p>
+<pre><code>public void save(M m) {  
+    repository.save(m);  
+}  
+</code></pre><p>}  </p>
+<p>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>}<br>[/java]<br> 大家可以看到，现在的写法非常简洁。支持泛型式依赖注入。</p>
+<p>这个也是我之前非常想要的一个功能，这样对于那些基本的CRUD式代码，可以简化更多的代码。</p>
+<p>如果大家用过Spring data jpa的话，以后注入的话也可以使用泛型限定式依赖注入 ：<br>[java]<br>@Autowired<br>private Repository&lt;User&gt; userRepository;<br>[/java]<br> 对于泛型依赖注入，最好使用setter注入，这样万一子类想变，比较容易切换。比如<a href="https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。" target="_blank" rel="external">https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="url">
+                  SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T14:53:58+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" class="leancloud_visitors" data-flag-title="SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/</p><p>访问原文「<a href='http://blog.jerkybible.com/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/'>SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p> 一、SpringMVC使用@ResponseBody时返回json的日期格式</p>
+<pre><code> @ResponseBody 返回json字符串的核心类是org.springframework.http.converter.json.MappingJacksonHttpMessageConverter，它使用了Jackson 这个开源的第三方类库。主要是以下两个jar包：jackson-core-asl-1.6.4.jar；jackson-mapper-asl-1.6.4.jar。
+出现问题： 使用@ResponseBody时返回json字符串的日期格式。Date类型属性默认返回一个Long型的时间戳，怎样能够返回自定义的日期格式？
+解决方案：目前有两种方式实现,
+         1、局部修改(网上较多，但不推荐)；
+      继承Jackson的抽象类：JsonSerializer&lt;T&gt;，然后在javabean的属性getter()上添加注解@JsonSerialize即可实现。
+     代码如下：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 自定义返回JSON 数据格中日期格式化处理 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomDateSerializer</span> <span class="keyword">extends</span> <span class="title">JsonSerializer</span>&amp;<span class="title">lt</span></span>;Date&amp;gt; &#123;  </div><div class="line"></div><div class="line">    <span class="meta">@Override</span>  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">            JsonGenerator jsonGenerator,   </div><div class="line">            SerializerProvider provider)  </div><div class="line">            <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">        SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">        jsonGenerator.writeString(sdf.format(value));  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@JsonSerialize</span>(using = CustomDateSerializer.class)  </div><div class="line"><span class="function"><span class="keyword">public</span> Date <span class="title">getCreateDate</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="keyword">return</span> createDate;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<pre><code>     2、全局修改(强烈推荐)：
+ MappingJacksonHttpMessageConverter主要通过ObjectMapper来实现返回json字符串。这里我们继承该类，注册一个JsonSerializer&lt;T&gt;。然后在配置文件中注入自定义的ObjectMapper。
+代码如下：
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;  </div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;  </div><div class="line"><span class="keyword">import</span> java.util.Date;  </div><div class="line"></div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonGenerator;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.JsonProcessingException;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.JsonSerializer;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ObjectMapper;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.SerializerProvider;  </div><div class="line"><span class="keyword">import</span> org.codehaus.jackson.map.ser.CustomSerializerFactory;  </div><div class="line"></div><div class="line"><span class="comment">/** </span></div><div class="line"> * <span class="doctag">@description</span> 解决Date类型返回json格式为自定义格式 </div><div class="line"> * <span class="doctag">@author</span> aokunsang </div><div class="line"> * <span class="doctag">@date</span> 2013-5-28 </div><div class="line"> */  </div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomObjectMapper</span> <span class="keyword">extends</span> <span class="title">ObjectMapper</span> </span>&#123;  </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomObjectMapper</span><span class="params">()</span></span>&#123;  </div><div class="line">        CustomSerializerFactory factory = <span class="keyword">new</span> CustomSerializerFactory();  </div><div class="line">        factory.addGenericMapping(Date.class, <span class="keyword">new</span> JsonSerializer&amp;lt;Date&amp;gt;()&#123;  </div><div class="line">            <span class="meta">@Override</span>  </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(Date value,   </span></span></div><div class="line">                    JsonGenerator jsonGenerator,   </div><div class="line">                    SerializerProvider provider)  </div><div class="line">                    <span class="keyword">throws</span> IOException, JsonProcessingException &#123;  </div><div class="line">                SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;);  </div><div class="line">                jsonGenerator.writeString(sdf.format(value));  </div><div class="line">            &#125;  </div><div class="line">        &#125;);  </div><div class="line">        <span class="keyword">this</span>.setSerializerFactory(factory);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>   spring-servlet.xml中配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&amp;lt;mvc:annotation-driven&amp;gt;  </div><div class="line">        &amp;lt;mvc:message-converters&amp;gt;  </div><div class="line">            &amp;lt;bean <span class="class"><span class="keyword">class</span></span>=&amp;quot;org.springframework.http.converter.json.MappingJacksonHttpMessageConverter&amp;quot;&amp;gt;  </div><div class="line">                &amp;lt;property name=&amp;quot;objectMapper&amp;quot; ref=&amp;quot;customObjectMapper&amp;quot;&amp;gt;&amp;lt;/property&amp;gt;  </div><div class="line">            &amp;lt;/bean&amp;gt;  </div><div class="line">        &amp;lt;/mvc:message-converters&amp;gt;  </div><div class="line">    &amp;lt;/mvc:annotation-driven&amp;gt;  </div><div class="line">   &amp;lt;bean id=&amp;quot;customObjectMapper&amp;quot; <span class="class"><span class="keyword">class</span></span>=&amp;quot;com.pmc.dwa.common.custom.CustomObjectMapper&amp;quot;&amp;gt;&amp;lt;/bean&amp;gt;</div></pre></td></tr></table></figure></p>
+<p> 二、@DatetimeFormat使用注意<br>     1、 使用@DatetimeFormat很简单，这里需要注意的是：使用时要引入一个类库joda-time-1.3.jar，否则会无法访问相应路径(400错误)。<br>ps：该注解可以作用在METHOD，FIELD以及PARAMETER级别上。<br>使用介绍参考：<a href="http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k" target="_blank" rel="external">http://www.captaindebug.com/2011/08/using-spring-3-datetimeformat.html#.UaR3mWWZk0k</a><br>   2、因为springMVC没有提供默认的日期转换器，前段页面传递过来日期字符串怎么转换为日期类型，如果没有提供全局日期转换器或者数据绑定的基础上，可以使用@DatetimeFormat注解完成。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="url">
+                  关于spring 3.0.5的 标签的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T14:48:47+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/关于spring 3.0.5的 标签的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/关于spring 3.0.5的 标签的使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/关于spring 3.0.5的 标签的使用/" class="leancloud_visitors" data-flag-title="关于spring 3.0.5的 标签的使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>spring mvc 的<mvc;resources mapping="***" location="***">标签是在spring3.0.4出现的，主要是用来进行静态资源的访问。在spring3.0.4出来的时候spring还没有更新其schema所以在配置文件中有可能找不到<mvc:resources>标签，这个问题在spring3.0.5中已经解决，而且网上也有很多其他的解决方案，我在这里就不记录了。 </mvc:resources></mvc;resources></p>
+<p>首先使用spring mvc需要配置其使用的servlet.在web.xml中:<br>[xml]<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>    &lt;/servlet&gt;  </p>
+<pre><code>&amp;lt;servlet-mapping&amp;gt;  
+    &amp;lt;servlet-name&amp;gt;springMVC&amp;lt;/servlet-name&amp;gt;  
+    &amp;lt;url-pattern&amp;gt;/&amp;lt;/url-pattern&amp;gt;  
+&amp;lt;/servlet-mapping&amp;gt;  
+</code></pre><p>[/xml]<br>这里给 servlet-name定义的名称是springMVC,这样的话会在web-inf下spring会自动扫描一个XML文件名叫springMVC-servlet.xml文件，这里都是spring自动扫描的，如果你没有提供，将会报一个文件查找不到的异常。看了下org.springframework.web.servlet.DispatcherServlet加载这个文件的过程，貌似这个文件存放的地址也是可以进行设置的，具体怎么搞我还没有研究。 </p>
+<p>由于spring mvc拦截了所有请求，所以当你设置<br>[xml]<br>&lt;servlet-mapping&gt;<br>&lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;<br>&lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>[/xml]<br>的时候会影响到静态资源文件的获取，这样就需要有这个标签来帮你分类完成获取静态资源的责任。 </p>
+<p>springMVC-servlet.xml文件<br>[xml]<br>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns=&quot;<a href="http://www.springframework.org/schema/beans&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/beans&amp;quot</a>;<br>    xmlns:xsi=&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot" target="_blank" rel="external">http://www.w3.org/2001/XMLSchema-instance&amp;quot</a>;<br>    xmlns:mvc=&quot;<a href="http://www.springframework.org/schema/mvc&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/mvc&amp;quot</a>;<br>    xsi:schemaLocation=&quot;<a href="http://www.springframework.org/schema/beans" target="_blank" rel="external">http://www.springframework.org/schema/beans</a> <a href="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" target="_blank" rel="external">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</a><br>    <a href="http://www.springframework.org/schema/mvc" target="_blank" rel="external">http://www.springframework.org/schema/mvc</a> <a href="http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt" target="_blank" rel="external">http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&amp;gt</a>;     </p>
+<pre><code>&amp;lt;mvc:resources mapping=&amp;quot;/javascript/**&amp;quot; location=&amp;quot;/static_resources/javascript/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:resources mapping=&amp;quot;/styles/**&amp;quot; location=&amp;quot;/static_resources/css/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:resources mapping=&amp;quot;/images/**&amp;quot; location=&amp;quot;/static_resources/images/&amp;quot;/&amp;gt;  
+&amp;lt;mvc:default-servlet-handler /&amp;gt;  
+
+&amp;lt;bean class=&amp;quot;org.springframework.web.servlet.view.InternalResourceViewResolver&amp;quot;&amp;gt;  
+    &amp;lt;property name=&amp;quot;prefix&amp;quot; value=&amp;quot;/WEB-INF/views/&amp;quot;/&amp;gt;  
+    &amp;lt;property name=&amp;quot;suffix&amp;quot; value=&amp;quot;.jsp&amp;quot;/&amp;gt;  
+&amp;lt;/bean&amp;gt;  
+</code></pre><p>&lt;/beans&gt;<br>[/xml]<br>这里可以看到我所有的页面引用到/styles/**的资源都从/static_resources/css里面进行查找。 </p>
+<p>页面的一段静态资源访问的代码。<br>[html]<br>&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;<a href="http://java.sun.com/jstl/core&quot;%&amp;gt" target="_blank" rel="external">http://java.sun.com/jstl/core&quot;%&amp;gt</a>;<br>&lt;HTML&gt;<br>&lt;HEAD&gt;<br>  &lt;TITLE&gt; ABCDEFG &lt;/TITLE&gt;<br>&lt;link type=&quot;text/css&quot; rel=&quot;stylesheet&quot; href=&quot;&lt;c:url value=’/styles/siteboard.css’/&gt;&quot;&gt;<br>…<br>…<br>…<br>[/html]</p>
+<p>可能这个标签的真谛就是为了引用资源的访问不会类似CONTROLLER一样被拦截，区分出关注的资源的访问，一般我们在springMVC里面的拦截都会配置为”/“，拦截所有的。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" itemprop="url">
+                  [转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T14:42:33+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC/" class="leancloud_visitors" data-flag-title="[转]第二章 Spring MVC入门 —— 跟开涛学SpringMVC">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>2．1、Spring Web MVC是什么<br>Spring Web MVC是一种基于Java的实现了Web MVC设计模式的请求驱动类型的轻量级Web框架，即使用了MVC架构模式的思想，将web层进行职责解耦，基于请求驱动指的就是使用请求-响应模型，框架的目的就是帮助我们简化开发，Spring Web MVC也是要简化我们日常Web开发的。</p>
+<p>另外还有一种基于组件的、事件驱动的Web框架在此就不介绍了，如Tapestry、JSF等。</p>
+<p>Spring Web MVC也是服务到工作者模式的实现，但进行可优化。前端控制器是DispatcherServlet；应用控制器其实拆为处理器映射器(Handler Mapping)进行处理器管理和视图解析器(View Resolver)进行视图管理；页面控制器/动作/处理器为Controller接口（仅包含ModelAndView handleRequest(request, response) 方法）的实现（也可以是任何的POJO类）；支持本地化（Locale）解析、主题（Theme）解析及文件上传等；提供了非常灵活的数据验证、格式化和数据绑定机制；提供了强大的约定大于配置（惯例优先原则）的契约式编程支持。<br>2．2、Spring Web MVC能帮我们做什么<br>√让我们能非常简单的设计出干净的Web层和薄薄的Web层；<br>√进行更简洁的Web层的开发；<br>√天生与Spring框架集成（如IoC容器、AOP等）；<br>√提供强大的约定大于配置的契约式编程支持；<br>√能简单的进行Web层的单元测试；<br>√支持灵活的URL到页面控制器的映射；<br>√非常容易与其他视图技术集成，如Velocity、FreeMarker等等，因为模型数据不放在特定的API里，而是放在一个Model里（Map数据结构实现，因此很容易被其他框架使用）；<br>√非常灵活的数据验证、格式化和数据绑定机制，能使用任何对象进行数据绑定，不必实现特定框架的API；<br>√提供一套强大的JSP标签库，简化JSP开发；<br>√支持灵活的本地化、主题等解析；<br>√更加简单的异常处理；<br>√对静态资源的支持；<br>√支持Restful风格。<br>2．3、Spring Web MVC架构<br>Spring Web MVC框架也是一个基于请求驱动的Web框架，并且也使用了前端控制器模式来进行设计，再根据请求映射规则分发给相应的页面控制器（动作/处理器）进行处理。首先让我们整体看一下Spring Web MVC处理请求的流程：</p>
+<p>2.3.1、Spring Web MVC处理请求的流程<br>如图2-1<br><img src="http://sishuok.com/forum/upload/2012/7/14/529024df9d2b0d1e62d8054a86d866c9__1.JPG" alt=""><br>图2-1<br>具体执行步骤如下：<br>1、  首先用户发送请求————&gt;前端控制器，前端控制器根据请求信息（如URL）来决定选择哪一个页面控制器进行处理并把请求委托给它，即以前的控制器的控制逻辑部分；图2-1中的1、2步骤；<br>2、  页面控制器接收到请求后，进行功能处理，首先需要收集和绑定请求参数到一个对象，这个对象在Spring Web MVC中叫命令对象，并进行验证，然后将命令对象委托给业务对象进行处理；处理完毕后返回一个ModelAndView（模型数据和逻辑视图名）；图2-1中的3、4、5步骤；<br>3、  前端控制器收回控制权，然后根据返回的逻辑视图名，选择相应的视图进行渲染，并把模型数据传入以便视图渲染；图2-1中的步骤6、7；<br>4、  前端控制器再次收回控制权，将响应返回给用户，图2-1中的步骤8；至此整个结束。</p>
+<p>问题：<br>1、  请求如何给前端控制器？<br>2、  前端控制器如何根据请求信息选择页面控制器进行功能处理？<br>3、  如何支持多种页面控制器呢？<br>4、  如何页面控制器如何使用业务对象？<br>5、  页面控制器如何返回模型数据？<br>6、  前端控制器如何根据页面控制器返回的逻辑视图名选择具体的视图进行渲染？<br>7、  不同的视图技术如何使用相应的模型数据？</p>
+<p>首先我们知道有如上问题，那这些问题如何解决呢？请让我们先继续，在后边依次回答。</p>
+<p>2.3.2、Spring Web MVC架构<br>1、Spring Web MVC核心架构图，如图2-2<br><img src="http://sishuok.com/forum/upload/2012/7/14/57ea9e7edeebd5ee2ec0cf27313c5fb6__2.JPG" alt=""><br>图2-2<br>架构图对应的DispatcherServlet核心代码如下：</p>
+<p>[java]<br>//前端控制器分派方法<br>protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {<br>        HttpServletRequest processedRequest = request;<br>        HandlerExecutionChain mappedHandler = null;<br>        int interceptorIndex = -1;  </p>
+<pre><code>try {  
+    ModelAndView mv;  
+    boolean errorView = false;  
+
+    try {  
+           //检查是否是请求是否是multipart（如文件上传），如果是将通过MultipartResolver解析  
+        processedRequest = checkMultipart(request);  
+           //步骤2、请求到处理器（页面控制器）的映射，通过HandlerMapping进行映射  
+        mappedHandler = getHandler(processedRequest, false);  
+        if (mappedHandler == null || mappedHandler.getHandler() == null) {  
+            noHandlerFound(processedRequest, response);  
+            return;  
+        }  
+           //步骤3、处理器适配，即将我们的处理器包装成相应的适配器（从而支持多种类型的处理器）  
+        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());  
+
+          // 304 Not Modified缓存支持  
+        //此处省略具体代码  
+
+        // 执行处理器相关的拦截器的预处理（HandlerInterceptor.preHandle）  
+        //此处省略具体代码  
+
+        // 步骤4、由适配器执行处理器（调用处理器相应功能处理方法）  
+        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());  
+
+        // Do we need view name translation?  
+        if (mv != null &amp;amp;&amp;amp; !mv.hasView()) {  
+            mv.setViewName(getDefaultViewName(request));  
+        }  
+
+        // 执行处理器相关的拦截器的后处理（HandlerInterceptor.postHandle）  
+        //此处省略具体代码  
+    }  
+    catch (ModelAndViewDefiningException ex) {  
+        logger.debug(&amp;quot;ModelAndViewDefiningException encountered&amp;quot;, ex);  
+        mv = ex.getModelAndView();  
+    }  
+    catch (Exception ex) {  
+        Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);  
+        mv = processHandlerException(processedRequest, response, handler, ex);  
+        errorView = (mv != null);  
+    }  
+
+    //步骤5 步骤6、解析视图并进行视图的渲染  
+</code></pre><p>//步骤5 由ViewResolver解析View（viewResolver.resolveViewName(viewName, locale)）<br>//步骤6 视图在渲染时会把Model传入（view.render(mv.getModelInternal(), request, response);）<br>            if (mv != null &amp;&amp; !mv.wasCleared()) {<br>                render(mv, processedRequest, response);<br>                if (errorView) {<br>                    WebUtils.clearErrorRequestAttributes(request);<br>                }<br>            }<br>            else {<br>                if (logger.isDebugEnabled()) {<br>                    logger.debug(&quot;Null ModelAndView returned to DispatcherServlet with name ‘&quot; + getServletName() +<br>                            &quot;’: assuming HandlerAdapter completed request handling&quot;);<br>                }<br>            }  </p>
+<pre><code>        // 执行处理器相关的拦截器的完成后处理（HandlerInterceptor.afterCompletion）  
+        //此处省略具体代码  
+
+    catch (Exception ex) {  
+        // Trigger after-completion for thrown exception.  
+        triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);  
+        throw ex;  
+    }  
+    catch (Error err) {  
+        ServletException ex = new NestedServletException(&amp;quot;Handler processing failed&amp;quot;, err);  
+        // Trigger after-completion for thrown exception.  
+        triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);  
+        throw ex;  
+    }  
+
+    finally {  
+        // Clean up any resources used by a multipart request.  
+        if (processedRequest != request) {  
+            cleanupMultipart(processedRequest);  
+        }  
+    }  
+}  
+</code></pre><p>[/java]<br>核心架构的具体流程步骤如下：<br>1、  首先用户发送请求——&gt;DispatcherServlet，前端控制器收到请求后自己不进行处理，而是委托给其他的解析器进行处理，作为统一访问点，进行全局的流程控制；<br>2、  DispatcherServlet——&gt;HandlerMapping， HandlerMapping将会把请求映射为HandlerExecutionChain对象（包含一个Handler处理器（页面控制器）对象、多个HandlerInterceptor拦截器）对象，通过这种策略模式，很容易添加新的映射策略；<br>3、  DispatcherServlet——&gt;HandlerAdapter，HandlerAdapter将会把处理器包装为适配器，从而支持多种类型的处理器，即适配器设计模式的应用，从而很容易支持很多类型的处理器；<br>4、  HandlerAdapter——&gt;处理器功能处理方法的调用，HandlerAdapter将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；并返回一个ModelAndView对象（包含模型数据、逻辑视图名）；<br>5、  ModelAndView的逻辑视图名——&gt; ViewResolver， ViewResolver将把逻辑视图名解析为具体的View，通过这种策略模式，很容易更换其他视图技术；<br>6、  View——&gt;渲染，View会根据传进来的Model模型数据进行渲染，此处的Model实际是一个Map数据结构，因此很容易支持其他视图技术；<br>7、返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。</p>
+<p>此处我们只是讲了核心流程，没有考虑拦截器、本地解析、文件上传解析等，后边再细述。</p>
+<p>到此，再来看我们前边提出的问题： </p>
+<p>1、  请求如何给前端控制器？这个应该在web.xml中进行部署描述，在HelloWorld中详细讲解。<br>2、  前端控制器如何根据请求信息选择页面控制器进行功能处理？ 我们需要配置HandlerMapping进行映射<br>3、  如何支持多种页面控制器呢？配置HandlerAdapter从而支持多种类型的页面控制器<br>4、  如何页面控制器如何使用业务对象？可以预料到，肯定利用Spring IoC容器的依赖注入功能<br>5、  页面控制器如何返回模型数据？使用ModelAndView返回<br>6、  前端控制器如何根据页面控制器返回的逻辑视图名选择具体的视图进行渲染？ 使用ViewResolver进行解析<br>7、  不同的视图技术如何使用相应的模型数据？ 因为Model是一个Map数据结构，很容易支持其他视图技术</p>
+<p>在此我们可以看出具体的核心开发步骤：<br>1、  DispatcherServlet在web.xml中的部署描述，从而拦截请求到Spring Web MVC<br>2、  HandlerMapping的配置，从而将请求映射到处理器<br>3、  HandlerAdapter的配置，从而支持多种类型的处理器<br>4、  ViewResolver的配置，从而将逻辑视图名解析为具体视图技术<br>5、处理器（页面控制器）的配置，从而进行功能处理</p>
+<p>上边的开发步骤我们会在Hello World中详细验证。</p>
+<p>2．4、Spring Web MVC优势<br>1、清晰的角色划分：前端控制器（DispatcherServlet）、请求到处理器映射（HandlerMapping）、处理器适配器（HandlerAdapter）、视图解析器（ViewResolver）、处理器或页面控制器（Controller）、验证器（   Validator）、命令对象（Command  请求参数绑定到的对象就叫命令对象）、表单对象（Form Object 提供给表单展示和提交到的对象就叫表单对象）。<br>2、分工明确，而且扩展点相当灵活，可以很容易扩展，虽然几乎不需要；<br>3、由于命令对象就是一个POJO，无需继承框架特定API，可以使用命令对象直接作为业务对象；<br>4、和Spring 其他框架无缝集成，是其它Web框架所不具备的；<br>5、可适配，通过HandlerAdapter可以支持任意的类作为处理器；<br>6、可定制性，HandlerMapping、ViewResolver等能够非常简单的定制；<br>7、功能强大的数据验证、格式化、绑定机制；<br>8、利用Spring提供的Mock对象能够非常简单的进行Web层单元测试；<br>9、本地化、主题的解析的支持，使我们更容易进行国际化和主题的切换。<br>10、强大的JSP标签库，使JSP编写更容易。<br>………………还有比如RESTful风格的支持、简单的文件上传、约定大于配置的契约式编程支持、基于注解的零配置支持等等。</p>
+<p>到此我们已经简单的了解了Spring Web MVC，接下来让我们来个实例来具体使用下这个框架。<br>2．5、Hello World入门<br>2.5.1、准备开发环境和运行环境：<br>☆开发工具：eclipse<br>☆运行环境：tomcat6.0.20<br>☆工程：动态web工程（springmvc-chapter2）<br>☆spring框架下载：<br>spring-framework-3.1.1.RELEASE-with-docs.zip<br>☆依赖jar包：<br>1、  Spring框架jar包：<br>为了简单，将spring-framework-3.1.1.RELEASE-with-docs.zip/dist/下的所有jar包拷贝到项目的WEB-INF/lib目录下；<br>2、  Spring框架依赖的jar包：<br>需要添加Apache commons logging日志，此处使用的是commons.logging-1.1.1.jar；<br>需要添加jstl标签库支持，此处使用的是jstl-1.1.2.jar和standard-1.1.2.jar；<br>2.5.2、前端控制器的配置<br>在我们的web.xml中添加如下配置：</p>
+<p>[xml]<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;chapter2&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>&lt;/servlet&gt;<br>&lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;chapter2&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>[/xml]<br>load-on-startup：表示启动容器时初始化该Servlet；<br>url-pattern：表示哪些请求交给Spring Web MVC处理， “/” 是用来定义默认servlet映射的。也可以如“*.html”表示拦截所有以html为扩展名的请求。</p>
+<p>自此请求已交给Spring Web MVC框架处理，因此我们需要配置Spring的配置文件，默认DispatcherServlet会加载WEB-INF/[DispatcherServlet的Servlet名字]-servlet.xml配置文件。本示例为WEB-INF/ chapter2-servlet.xml。</p>
+<p>2.5.3、在Spring配置文件中配置HandlerMapping、HandlerAdapter<br>具体配置在WEB-INF/ chapter2-servlet.xml文件中：</p>
+<p>[xml]<br>&lt;!– HandlerMapping –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot;/&gt;  </p>
+<p>&lt;!– HandlerAdapter –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&quot;/&gt;<br>[/xml]<br>BeanNameUrlHandlerMapping：表示将请求的URL和Bean名字映射，如URL为 “上下文/hello”，则Spring配置文件必须有一个名字为“/hello”的Bean，上下文默认忽略。<br>SimpleControllerHandlerAdapter：表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean可以作为Spring Web MVC中的处理器。如果需要其他类型的处理器可以通过实现HadlerAdapter来解决。<br>2.5.4、在Spring配置文件中配置ViewResolver<br>具体配置在WEB-INF/ chapter2-servlet.xml文件中：</p>
+<p>[xml]<br>&lt;!– ViewResolver –&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name=&quot;viewClass&quot; value=&quot;org.springframework.web.servlet.view.JstlView&quot;/&gt;<br>    &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;<br>    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;<br>&lt;/bean&gt;<br>[/xml]<br>InternalResourceViewResolver：用于支持Servlet、JSP视图解析；<br>    viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包；<br>    prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀），比如传进来的逻辑视图名为hello，则该该jsp视图页面应该存放在“WEB-INF/jsp/hello.jsp”；</p>
+<p>2.5.5、开发处理器/页面控制器</p>
+<p>[java]<br>package cn.javass.chapter2.web.controller;<br>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;<br>import org.springframework.web.servlet.ModelAndView;<br>import org.springframework.web.servlet.mvc.Controller;<br>public class HelloWorldController implements Controller {<br>    @Override<br>    public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) throws Exception {<br>       //1、收集参数、验证参数<br>       //2、绑定参数到命令对象<br>       //3、将命令对象传入业务对象进行业务处理<br>       //4、选择下一个页面<br>       ModelAndView mv = new ModelAndView();<br>       //添加模型数据 可以是任意的POJO对象<br>       mv.addObject(&quot;message&quot;, &quot;Hello World!&quot;);<br>       //设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面<br>       mv.setViewName(&quot;hello&quot;);<br>       return mv;<br>    }<br>}<br>[/java]<br>org.springframework.web.servlet.mvc.Controller：页面控制器/处理器必须实现Controller接口，注意别选错了；后边我们会学习其他的处理器实现方式；<br>public ModelAndView handleRequest(HttpServletRequest req, HttpServletResponse resp) ：功能处理方法，实现相应的功能处理，比如收集参数、验证参数、绑定参数到命令对象、将命令对象传入业务对象进行业务处理、最后返回ModelAndView对象；<br>ModelAndView：包含了视图要实现的模型数据和逻辑视图名；“mv.addObject(“message”, “Hello World!”);<br>”表示添加模型数据，此处可以是任意POJO对象；“mv.setViewName(“hello”);”表示设置逻辑视图名为“hello”，视图解析器会将其解析为具体的视图，如前边的视图解析器InternalResourceVi。wResolver会将其解析为“WEB-INF/jsp/hello.jsp”。</p>
+<p>我们需要将其添加到Spring配置文件(WEB-INF/chapter2-servlet.xml)，让其接受Spring IoC容器管理:<br>[xml]<br>&lt;!– 处理器 –&gt;<br>&lt;bean name=&quot;/hello&quot; class=&quot;cn.javass.chapter2.web.controller.HelloWorldController&quot;/&gt;  </p>
+<p>name=&quot;/hello&quot;：前边配置的BeanNameUrlHandlerMapping，表示如过请求的URL为 “上下文/hello”，则将会交给该Bean进行处理。<br>[/xml]<br>2.5.6、开发视图页面<br>创建 /WEB-INF/jsp/hello.jsp视图页面：</p>
+<p>[html]<br>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot; pageEncoding=&quot;UTF-8&quot;%&gt;<br>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;<a href="http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt" target="_blank" rel="external">http://www.w3.org/TR/html4/loose.dtd&quot;&amp;gt</a>;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;<br>&lt;title&gt;Hello World&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>${message}<br>&lt;/body&gt;<br>&lt;/html&gt;<br>[/html]<br>${message}：表示显示由HelloWorldController处理器传过来的模型数据。<br>2.5.6、启动服务器运行测试<br>通过请求：<a href="http://localhost:9080/springmvc-chapter2/hello，如果页面输出“Hello" target="_blank" rel="external">http://localhost:9080/springmvc-chapter2/hello，如果页面输出“Hello</a> World! ”就表明我们成功了！</p>
+<p>2.5.7、运行流程分析<br>如图2-3</p>
+<p>图2-3<br>运行步骤：<br>1、  首先用户发送请求<a href="http://localhost:9080/springmvc-chapter2/hello——&gt;web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；" target="_blank" rel="external">http://localhost:9080/springmvc-chapter2/hello——&gt;web容器，web容器根据“/hello”路径映射到DispatcherServlet（url-pattern为/）进行处理；</a><br>2、  DispatcherServlet——&gt;BeanNameUrlHandlerMapping进行请求到处理的映射，BeanNameUrlHandlerMapping将“/hello”路径直接映射到名字为“/hello”的Bean进行处理，即HelloWorldController，BeanNameUrlHandlerMapping将其包装为HandlerExecutionChain（只包括HelloWorldController处理器，没有拦截器）；<br>3、  DispatcherServlet——&gt; SimpleControllerHandlerAdapter，SimpleControllerHandlerAdapter将HandlerExecutionChain中的处理器（HelloWorldController）适配为SimpleControllerHandlerAdapter；<br>4、  SimpleControllerHandlerAdapter——&gt; HelloWorldController处理器功能处理方法的调用，SimpleControllerHandlerAdapter将会调用处理器的handleRequest方法进行功能处理，该处理方法返回一个ModelAndView给DispatcherServlet；<br>5、  hello（ModelAndView的逻辑视图名）——&gt;InternalResourceViewResolver， InternalResourceViewResolver使用JstlView，具体视图页面在/WEB-INF/jsp/hello.jsp；<br>6、  JstlView（/WEB-INF/jsp/hello.jsp）——&gt;渲染，将在处理器传入的模型数据(message=HelloWorld！)在视图中展示出来；<br>7、  返回控制权给DispatcherServlet，由DispatcherServlet返回响应给用户，到此一个流程结束。</p>
+<p>到此HelloWorld就完成了，步骤是不是有点多？而且回忆下我们主要进行了如下配置：</p>
+<p>1、  前端控制器DispatcherServlet；<br>2、  HandlerMapping<br>3、  HandlerAdapter<br>4、  ViewResolver<br>5、  处理器/页面控制器<br>6、  视图</p>
+<p>因此，接下来几章让我们详细看看这些配置，先从DispatcherServlet开始吧。</p>
+<p>2．6、POST中文乱码解决方案<br>spring Web MVC框架提供了org.springframework.web.filter.CharacterEncodingFilter用于解决POST方式造成的中文乱码问题，具体配置如下：</p>
+<p>[xml]<br>&lt;filter&gt;<br>    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;<br>    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;<br>    &lt;init-param&gt;<br>        &lt;param-name&gt;encoding&lt;/param-name&gt;<br>        &lt;param-value&gt;utf-8&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>&lt;/filter&gt;<br>&lt;filter-mapping&gt;<br>    &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;<br>    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br>&lt;/filter-mapping&gt;<br>[/xml]<br>以后我们项目及所有页面的编码均为UTF-8。</p>
+<p>2.7、Spring3.1新特性<br>一、Spring2.5之前，我们都是通过实现Controller接口或其实现来定义我们的处理器类。</p>
+<p>二、Spring2.5引入注解式处理器支持，通过@Controller 和 @RequestMapping注解定义我们的处理器类。并且提供了一组强大的注解：</p>
+<p>需要通过处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter来开启支持@Controller 和 @RequestMapping注解的处理器。</p>
+<p>@Controller：用于标识是处理器类；<br>@RequestMapping：请求到处理器功能方法的映射规则；<br>@RequestParam：请求参数到处理器功能处理方法的方法参数上的绑定；<br>@ModelAttribute：请求参数到命令对象的绑定；<br>@SessionAttributes：用于声明session级别存储的属性，放置在处理器类上，通常列出模型属性（如@ModelAttribute）对应的名称，则这些属性会透明的保存到session中；<br>@InitBinder：自定义数据绑定注册支持，用于将请求参数转换到命令对象属性的对应类型；</p>
+<p>三、Spring3.0引入RESTful架构风格支持(通过@PathVariable注解和一些其他特性支持),且又引入了更多的注解支持：<br>@CookieValue：cookie数据到处理器功能处理方法的方法参数上的绑定；<br>@RequestHeader：请求头（header）数据到处理器功能处理方法的方法参数上的绑定；<br>@RequestBody：请求的body体的绑定（通过HttpMessageConverter进行类型转换）；<br>@ResponseBody：处理器功能处理方法的返回值作为响应体（通过HttpMessageConverter进行类型转换）；<br>@ResponseStatus：定义处理器功能处理方法/异常处理器返回的状态码和原因；<br>@ExceptionHandler：注解式声明异常处理器；<br>@PathVariable：请求URI中的模板变量部分到处理器功能处理方法的方法参数上的绑定，从而支持RESTful架构风格的URI；</p>
+<p>四、还有比如：<br>JSR-303验证框架的无缝支持（通过@Valid注解定义验证元数据）；<br>使用Spring 3开始的ConversionService进行类型转换（PropertyEditor依然有效），支持使用@NumberFormat 和 @DateTimeFormat来进行数字和日期的格式化；<br>HttpMessageConverter（Http输入/输出转换器，比如JSON、XML等的数据输出转换器）；<br>ContentNegotiatingViewResolver，内容协商视图解析器，它还是视图解析器，只是它支持根据请求信息将同一模型数据以不同的视图方式展示（如json、xml、html等），RESTful架构风格中很重要的概念（同一资源，多种表现形式）；<br>Spring 3 引入 一个  mvc XML的命名空间用于支持mvc配置，包括如：<br>    <mvc:annotation-driven>：<br>      自动注册基于注解风格的处理器需要的DefaultAnnotationHandlerMapping、AnnotationMethodHandlerAdapter<br>      支持Spring3的ConversionService自动注册<br>      支持JSR-303验证框架的自动探测并注册（只需把JSR-303实现放置到classpath）<br>      自动注册相应的HttpMessageConverter（用于支持@RequestBody  和 @ResponseBody）（如XML输入输出转换器（只需将JAXP实现放置到classpath）、JSON输入输出转换器（只需将Jackson实现放置到classpath））等。<br>    <mvc:interceptors>：注册自定义的处理器拦截器；<br>    <mvc:view-controller>：和ParameterizableViewController类似，收到相应请求后直接选择相应的视图；<br>    <mvc:resources>：逻辑静态资源路径到物理静态资源路径的支持；<br>    <mvc:default-servlet-handler>：当在web.xml 中DispatcherServlet使用<url-pattern>/</url-pattern> 映射时，能映射静态资源（当Spring Web MVC框架没有处理请求对应的控制器时（如一些静态资源），转交给默认的Servlet来响应静态文件，否则报404找不到资源错误，）。</mvc:default-servlet-handler></mvc:resources></mvc:view-controller></mvc:interceptors></mvc:annotation-driven></p>
+<p>……等等。</p>
+<p>五、Spring3.1新特性：<br>对Servlet 3.0的全面支持。</p>
+<p>@EnableWebMvc：用于在基于Java类定义Bean配置中开启MVC支持，和XML中的<mvc:annotation-driven>功能一样；</mvc:annotation-driven></p>
+<p>新的@Contoller和@RequestMapping注解支持类：处理器映射RequestMappingHandlerMapping 和 处理器适配器RequestMappingHandlerAdapter组合来代替Spring2.5开始的处理器映射DefaultAnnotationHandlerMapping和处理器适配器AnnotationMethodHandlerAdapter，提供更多的扩展点，它们之间的区别我们在处理器映射一章介绍。</p>
+<p>新的@ExceptionHandler 注解支持类：ExceptionHandlerExceptionResolver来代替Spring3.0的AnnotationMethodHandlerExceptionResolver，在异常处理器一章我们再详细讲解它们的区别。</p>
+<p>@RequestMapping的”consumes” 和 “produces” 条件支持：用于支持@RequestBody 和 @ResponseBody，<br>1consumes指定请求的内容是什么类型的内容，即本处理方法消费什么类型的数据，如consumes=”application/json”表示JSON类型的内容，Spring会根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换；<br>2produces指定生产什么类型的内容，如produces=”application/json”表示JSON类型的内容，Spring的根据相应的HttpMessageConverter进行请求内容区数据到@RequestBody注解的命令对象的转换，Spring会根据相应的HttpMessageConverter进行模型数据（返回值）到JSON响应内容的转换<br>3以上内容，本章第×××节详述。</p>
+<p>URI模板变量增强：URI模板变量可以直接绑定到@ModelAttribute指定的命令对象、@PathVariable方法参数在视图渲染之前被合并到模型数据中（除JSON序列化、XML混搭场景下）。</p>
+<p>@Validated：JSR-303的javax.validation.Valid一种变体（非JSR-303规范定义的，而是Spring自定义的），用于提供对Spring的验证器（org.springframework.validation.Validator）支持，需要Hibernate Validator 4.2及更高版本支持；</p>
+<p>@RequestPart：提供对“multipart/form-data”请求的全面支持，支持Servlet 3.0文件上传（javax.servlet.http.Part）、支持内容的HttpMessageConverter（即根据请求头的Content-Type，来判断内容区数据是什么类型，如JSON、XML，能自动转换为命令对象），比@RequestParam更强大（只能对请求参数数据绑定，key-alue格式），而@RequestPart支持如JSON、XML内容区数据的绑定；详见本章的第×××节；</p>
+<p>Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当进入另一个请求时作为该请求的输入，典型场景如重定向（POST-REDIRECT-GET模式，1、POST时将下一次需要的数据放在FlashMap；2、重定向；3、通过GET访问重定向的地址，此时FlashMap会把1放到FlashMap的数据取出放到请求中，并从FlashMap中删除；从而支持在两次请求之间保存数据并防止了重复表单提交）。<br>Spring Web MVC提供FlashMapManager用于管理FlashMap，默认使用SessionFlashMapManager，即数据默认存储在session中。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" itemprop="url">
+                  spring4.1.x源码GroovyDynamicElementReader报错问题解决
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-05T12:12:56+08:00" content="2015-04-05">
+              2015-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/05/spring4.1.x源码GroovyDynamicElementReader报错问题解决/" class="leancloud_visitors" data-flag-title="spring4.1.x源码GroovyDynamicElementReader报错问题解决">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>从github上下载spring4源码后，只有spring-bean-groovy项目报错，提示GroovyDynamicElementReader这个类不存在。<br>解决方式为安装一个eclipse的groovy插件。</p>
+<p>在eclipse的Help-&gt;Eclipse Marketplace中，搜索groovy然后安装，如下图：</p>
+<p><img src="/images/groovy1-206x300.png" alt="groovy1"><br><img src="/images/groovy2-207x300.png" alt="groovy2"></p>
+<p>安装完成后clean一下spring-bean-groovy项目就OK了。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/03/C++中得运算符重载/" itemprop="url">
+                  C++中得运算符重载
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-03T11:56:20+08:00" content="2015-04-03">
+              2015-04-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/03/C++中得运算符重载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/03/C++中得运算符重载/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/03/C++中得运算符重载/" class="leancloud_visitors" data-flag-title="C++中得运算符重载">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>(一) C++不允许用户自己定义新的运算符，只能对已有的C++运算符进行重载。<br>(二) C++允许重载的运算符C++中绝大部分的运算符允许重载.<br>不能重载的运算符只有5个：<br>(1) 成员访问运算符.<br>(2) 作用域运算符∷<br>(3) 条件运算符?:<br>(4) 成员指针运算符<em><br>(5) 编译预处理命令的开始符号#<br>(三) 重载不能改变运算符运算对象(即操作数)的个数。<br>(四) 重载不能改变运算符的优先级别。<br>(五) 重载运算符的函数不能有默认的参数，否则就改变了运算符参数个数<br>(六) 重载的运算符必须和用户定义的自定义类型的对象一起使用，其参数至少应有一个是类对象(或类对象的引用)。也就是说，参数不能全部是C++的标准类型，以防止用户修改用于标准类型数据的运算符的性质。<br>(七) 用于类对象的运算符一般必须重载，但有两个例外，运算符“=”和“&amp;”不必用户重载。<br>① 赋值运算符(=)可以用于每一个类对象，可以利用它在同类对象之间相互赋值。<br>② 地址运算符&amp;也不必重载，它能返回类对象在内存中的起始地址。<br>// 前面已经说过，C++内置运算符只能计算内置的数据类型 。所以当我们要使用自定义类型时 就必须要进行重载..<br>总之，当C++语言原有的一个运算符被重载之后，它原先所具有的语义并没有消失，只相当于针对一个特定的类定义了一个新的运算符。<br>运算符重载可以使用成员函数和友元函数两种形式。可以参考以下的经验：<br>(1)只能使用成员函数重载的运算符有：=、()、[]、-&gt;、new、delete。<br>(2)单目运算符最好重载为成员函数。<br>(3) 对于复合的赋值运算符如+=、-=、</em>=、/=、&amp;=、!=、~=、%=、&gt;&gt;=、&lt;&lt;=建议重载为成员函数。<br>(4) 对于其它运算符，建议重载为友元函数。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/03/das-vs-nas-vs-san/" itemprop="url">
                   DAS vs NAS vs SAN
                 </a>
@@ -576,1171 +1939,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/各种树的平均查找效率/" itemprop="url">
-                  各种树的平均查找效率
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:40:24+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/各种树的平均查找效率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/各种树的平均查找效率/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/各种树的平均查找效率/" class="leancloud_visitors" data-flag-title="各种树的平均查找效率">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>BST：二叉搜索树<br>查找最好时间复杂度为O(lgn),最坏为O(n);<br>删除和插入的时间复杂度与查找差不多</p>
-<p>AVL：二叉平衡树<br>查找时间复杂度为O(lgn)<br>插入的时候做多需要一次旋转，时间复杂度为O(lgn)<br>删除的时候需要的时间复杂度为O(2lgn)</p>
-<p>红黑树：<br>查找时间复杂度为2O(lg(n+1))<br>删除和插入的时间复杂度为O(lgn)</p>
-<p>B树：<br>从叶节点插入心的节点，<br>从磁盘读写效率上讲，查找、删除和插入的时间复杂度要小于任何二叉树</p>
-<p>B+树<br>非叶节点只是为了索引第一个节点<br>之后叶节点之间可以相互索引，大型数据库采用的结构</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="url">
-                  同一进程中的线程究竟共享哪些资源
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:39:39+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/同一进程中的线程究竟共享哪些资源/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/同一进程中的线程究竟共享哪些资源/" class="leancloud_visitors" data-flag-title="同一进程中的线程究竟共享哪些资源">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>线程共享的环境包括：进程代码段、进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)、进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。<br>进程拥有这许多共性的同时，还拥有自己的个性。有了这些个性，线程才能实现并发性。这些个性包括：</p>
-<p>1.线程ID<br>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标<br>识线程。<br>2.寄存器组的值<br>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线<br>程切换到另一个线程上时，必须将原有的线程的寄存器集合的状态保存，以便<br>将来该线程在被重新切换到时能得以恢复。<br>3.线程的堆栈<br>堆栈是保证线程独立运行所必须的。<br>线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程<br>必须拥有自己的函数堆栈，使得函数调用可以正常执行，不受其他线程的影<br>响。</p>
-<p>4.错误返回码<br>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用<br>后设置了errno值，而在该线程还没有处理这个错误，另外一个线程就在此时<br>被调度器投入运行，这样错误值就有可能被修改。<br>所以，不同的线程应该拥有自己的错误返回码变量。</p>
-<p>5.线程的信号屏蔽码<br>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自<br>己管理。但所有的线程都共享同样的信号处理器。</p>
-<p>6.线程的优先级<br>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参<br>数，这个参数就是线程的优先级。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/c-public-protected-private/" itemprop="url">
-                  C++ public , protected, private
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T13:20:55+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/c-public-protected-private/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/c-public-protected-private/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/c-public-protected-private/" class="leancloud_visitors" data-flag-title="C++ public , protected, private">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当private,public,protected单纯的作为一个类中的成员权限设置时：<br>private: 只能由该类中的函数、其友元函数访问,不能被任何其他访问，该类的对象也不能访问.</p>
-<p>protected: 可以被该类中的函数、子类的函数、以及其友元函数访问,但不能被该类的对象访问</p>
-<p>public: 可以被该类中的函数、子类的函数、其友元函数访问,也可以由该类的对象访问<br>注：友元函数包括两种：设为友元的全局函数，设为友元类中的成员函数</p>
-<p>当private,public,protected作为继承方式时：</p>
-<p>对于公有继承方式：<br>(1)父类的public成员成为子类的public成员，允许类以外的代码访问这些成员；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他不可见。这里保护成员同于私有成员。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员可见，而私有成员不可见。这里保护成员同于公有成员。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>所以，在公有继承时，派生类的对象可以访问基类中的公有成员；派生类的成员函数可以访问基类中的公有成员和保护成员。这里，一定要区分清楚派生类的对象和派生类中的成员函数对基类的访问是不同的。</p>
-<p>对于私有继承方式：</p>
-<p>(1)父类的public成员成为子类的private成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的private成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员是可见的，而私有成员是不可见的。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>所有成员都是不可见的。</p>
-<p>所以，在私有继承时，基类的成员只能由直接派生类访问，而无法再往下继承。</p>
-<p>对于保护继承方式：</p>
-<p>(1)父类的public成员成为子类的protected成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的public成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>这种继承方式与私有继承方式的情况相同。两者的区别仅在于对派生类的成员而言，对基类成员有不同的可见性。</p>
-<p>上述所说的可见性也就是可访问性。关于可访问性还有另的一种说法。这种规则中，称派生类的对象对基类访问为水平访问，称派生类的派生类对基类的访问为垂直访问。</p>
-<p>一般规则如下：</p>
-<p>公有继承时，水平访问和垂直访问对基类中的公有成员不受限制；<br>私有继承时，水平访问和垂直访问对基类中的公有成员也不能访问；<br>保护继承时，对于垂直访问同于公有继承，对于水平访问同于私有继承。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/http返回码/" itemprop="url">
-                  http返回码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T13:20:06+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/http返回码/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/http返回码/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/http返回码/" class="leancloud_visitors" data-flag-title="http返回码">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>HTTP协议状态码表示的意思主要分为五类 ,大体是 :<br><del>~</del><del>~</del><del>~</del><del>~</del><del>~</del>~~~<br>1×× 　　保留<br>2×× 　　表示请求成功地接收<br>3×× 　　为完成请求客户需进一步细化请求<br>4×× 　　客户错误<br>5×× 　　服务器错误</p>
-<p>100 Continue<br>指示客户端应该继续请求。回送用于通知客户端此次请求已经收到，并且没有被服务器拒绝。<br>客户端应该继续发送剩下的请求数据或者请求已经完成，或者忽略回送数据。服务器必须发送<br>最后的回送在请求之后。</p>
-<p>101 Switching Protocols<br>服务器依照客服端请求，通过Upgrade头信息，改变当前连接的应用协议。服务器将根据Upgrade头立刻改变协议<br>在101回送以空行结束的时候。</p>
-<h1 id="Successful"><a href="#Successful" class="headerlink" title="Successful"></a>Successful</h1><p>200 OK<br>指示客服端的请求已经成功收到，解析，接受。</p>
-<p>201 Created<br>请求已经完成并一个新的返回资源被创建。被创建的资源可能是一个URI资源，通常URI资源在Location头指定。回送应该包含一个实体数据<br>并且包含资源特性以及location通过用户或者用户代理来选择合适的方法。实体数据格式通过煤体类型来指定即content-type头。最开始服务 器<br>必须创建指定的资源在返回201状态码之前。如果行为没有被立刻执行，服务器应该返回202。</p>
-<p>202 Accepted<br>请求已经被接受用来处理。但是处理并没有完成。请求可能或者根本没有遵照执行，因为处理实际执行过程中可能被拒绝。</p>
-<p>203 Non-Authoritative Information</p>
-<p>204 No Content<br>服务器已经接受请求并且没必要返回实体数据，可能需要返回更新信息。回送可能包含新的或更新信息由entity-headers呈现。</p>
-<p>205 Reset Content<br>服务器已经接受请求并且用户代理应该重新设置文档视图。</p>
-<p>206 Partial Content<br>服务器已经接受请求GET请求资源的部分。请求必须包含一个Range头信息以指示获取范围可能必须包含If-Range头信息以成立请求条件。</p>
-<h1 id="Redirection"><a href="#Redirection" class="headerlink" title="Redirection"></a>Redirection</h1><p>300 Multiple Choices<br>请求资源符合任何一个呈现方式。</p>
-<p>301 Moved Permanently<br>请求的资源已经被赋予一个新的URI。</p>
-<p>302 Found<br>通过不同的URI请求资源的临时文件。<br>303 See Other</p>
-<p>304 Not Modified<br>如果客服端已经完成一个有条件的请求并且请求是允许的，但是这个文档并没有改变，服务器应该返回304状态码。304<br>状态码一定不能包含信息主体，从而通常通过一个头字段后的第一个空行结束。</p>
-<p>305 Use Proxy<br>请求的资源必须通过代理（由Location字段指定）来访问。Location资源给出了代理的URI。</p>
-<p>306 Unused</p>
-<p>307 Temporary Redirect</p>
-<h1 id="Client-Error"><a href="#Client-Error" class="headerlink" title="Client Error"></a>Client Error</h1><p>400 Bad Request<br>因为错误的语法导致服务器无法理解请求信息。</p>
-<p>401 Unauthorized<br>如果请求需要用户验证。回送应该包含一个WWW-Authenticate头字段用来指明请求资源的权限。</p>
-<p>402 Payment Required<br>保留状态码</p>
-<p>403 Forbidden<br>服务器接受请求，但是被拒绝处理。</p>
-<p>404 Not Found<br>服务器已经找到任何匹配Request-URI的资源。</p>
-<p>405 Menthod Not Allowed<br>Request-Line 请求的方法不被允许通过指定的URI。</p>
-<p>406 Not Acceptable</p>
-<p>407 Proxy Authentication Required</p>
-<p>408 Reqeust Timeout<br>客服端没有提交任何请求在服务器等待处理时间内。</p>
-<p>409 Conflict</p>
-<p>410 Gone</p>
-<p>411 Length Required<br>服务器拒绝接受请求在没有定义Content-Length字段的情况下。</p>
-<p>412 Precondition Failed</p>
-<p>413 Request Entity Too Large<br>服务器拒绝处理请求因为请求数据超过服务器能够处理的范围。服务器可能关闭当前连接来阻止客服端继续请求。</p>
-<p>414 Request-URI Too Long<br>服务器拒绝服务当前请求因为URI的长度超过了服务器的解析范围。</p>
-<p>415 Unsupported Media Type<br>服务器拒绝服务当前请求因为请求数据格式并不被请求的资源支持。</p>
-<p>416 Request Range Not Satisfialbe</p>
-<p>417 Expectation Failed</p>
-<h1 id="Server-Error"><a href="#Server-Error" class="headerlink" title="Server Error"></a>Server Error</h1><p>500 Internal Server Error<br>服务器遭遇异常阻止了当前请求的执行</p>
-<p>501 Not Implemented<br>服务器没有相应的执行动作来完成当前请求。</p>
-<p>502 Bad Gateway</p>
-<p>503 Service Unavailable<br>因为临时文件超载导致服务器不能处理当前请求。</p>
-<p>504 Gateway Timeout</p>
-<p>505 Http Version Not Supported</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="url">
-                  Remember that ordinal parameters are 1-based!
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T08:36:05+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/Remember that ordinal parameters are 1-based!/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/Remember that ordinal parameters are 1-based!/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/Remember that ordinal parameters are 1-based!/" class="leancloud_visitors" data-flag-title="Remember that ordinal parameters are 1-based!">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">exception</div><div class="line"></div><div class="line">javax.servlet.ServletException: java.lang.IndexOutOfBoundsException:</div><div class="line"></div><div class="line">        Remember that ordinal parameters are <span class="number">1</span>-based!</div></pre></td></tr></table></figure>
-<p>是因为在HQL语句中出错。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/26/用Java进行3DES加密解/" itemprop="url">
-                  用Java进行3DES加密解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-26T10:46:53+08:00" content="2015-03-26">
-              2015-03-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/26/用Java进行3DES加密解/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/26/用Java进行3DES加密解/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/26/用Java进行3DES加密解/" class="leancloud_visitors" data-flag-title="用Java进行3DES加密解">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近一个合作商提出使用3DES交换数据，本来他们有现成的代码，可惜只有.net版本，我们的服务器都是Linux，而且应用都是Java。于是对照他们提供的代码改了一个Java的版本出来，主要是不熟悉3DES，折腾了一天，终于搞定。</p>
-<p>所谓3DES，就是把DES做三次，当然不是简单地DES DES DES就行了，中途有些特定的排列。这个我可不关心，呵呵，我的目的是使用它。</p>
-<p>在网上搜索了一下3DES，找到很少资料。经过朋友介绍，找到GNU Crypto和Bouncy Castle两个Java扩充包，里面应该有3DES的实现吧。</p>
-<p>从GNU Crypto入手，找到一个TripleDES的实现类，发现原来3DES还有一个名字叫DESede，在网上搜索TripleDES和DESede，呵呵，终于发现更多的资料了。</p>
-<p>Java的安全API始终那么难用，先创建一个cipher看看算法在不在吧<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div></pre></td></tr></table></figure></p>
-<p>如果没有抛异常的话，就证明这个算法是有效的</p>
-<p>突然想看看JDK有没有内置DESede，于是撇开Crypto，直接测试，发现可以正确运行。在jce.jar里面找到相关的类，JDK内置了。</p>
-<p>于是直接用DES的代码来改&amp;测试，最后代码变成这样</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">SecureRandom sr = <span class="keyword">new</span> SecureRandom();</div><div class="line">DESedeKeySpec dks = <span class="keyword">new</span> DESedeKeySpec(PASSWORD_CRYPT_KEY.getBytes());</div><div class="line">SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">SecretKey securekey = keyFactory.generateSecret(dks);</div><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">cipher.init(Cipher.ENCRYPT_MODE, securekey, sr);</div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> String(Hex.encodeHex(cipher.doFinal(str.getBytes())));</div></pre></td></tr></table></figure>
-<p>需要留意的是，要使用DESede的Spec、Factory和Cipher才行</p>
-<p>事情还没完结，合作商给过来的除了密钥之外，还有一个IV向量。搜索了一下，发现有一个IvParameterSpec类，于是代码变成这样</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SecureRandom sr = <span class="keyword">new</span> SecureRandom();</div><div class="line">DESedeKeySpec dks = <span class="keyword">new</span> DESedeKeySpec(PASSWORD_CRYPT_KEY.getBytes());</div><div class="line">SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">SecretKey securekey = keyFactory.generateSecret(dks);</div><div class="line">IvParameterSpec iv = <span class="keyword">new</span> IvParameterSpec(PASSWORD_IV.getBytes());</div><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede&amp;quot;);</div><div class="line">cipher.init(Cipher.ENCRYPT_MODE, securekey, iv, sr);</div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> String(Hex.encodeHex(cipher.doFinal(str.getBytes())));</div></pre></td></tr></table></figure>
-<p>但是，运行报错了</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.security.InvalidAlgorithmParameterException: ECB mode cannot use IV</div></pre></td></tr></table></figure>
-<p>ECB是什么呢？我的代码完全没有写ECB什么的</p>
-<p>又上网搜索，结果把DES的来龙去脉都搞清楚了</p>
-<p><a href="http://www.tropsoft.com/strongenc/des.htm" target="_blank" rel="external">http://www.tropsoft.com/strongenc/des.htm</a></p>
-<p>ECB是其中一种字串分割方式，除了DES以外，其他加密方式也会使用这种分割方式的，而Java默认产生的DES算法就是用ECB方法，ECB不需要向量，当然也就不支持向量了</p>
-<p>除了ECB，DES还支持CBC、CFB、OFB，而3DES只支持ECB和CBC两种</p>
-<p><a href="http://www.tropsoft.com/strongenc/des3.htm" target="_blank" rel="external">http://www.tropsoft.com/strongenc/des3.htm</a></p>
-<p>CBC支持并且必须有向量，具体算法这里就不说了。合作商给的.net代码没有声明CBC模式，似乎是.net默认的方式就是CBC的</p>
-<p>于是把模式改成CBC</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Cipher cipher = Cipher.getInstance(&amp;quot;DESede/CBC/PKCS5Padding&amp;quot;);</div></pre></td></tr></table></figure>
-<p>成功运行了</p>
-<p>后话：</p>
-<p>搜索的过程中，找到一个不错的讨论</p>
-<p><a href="http://www.lslnet.com/linux/dosc1/21/linux-197579.htm" target="_blank" rel="external">http://www.lslnet.com/linux/dosc1/21/linux-197579.htm</a> 在CBC（不光是DES算法）模式下，iv通过随机数（或伪随机）机制产生是一种比较常见的方法。iv的作用主要是用于产生密文的第一个block，以使最终生成的密文产生差异（明文相同的情况下），使密码攻击变得更为困难，除此之外iv并无其它用途。因此iv通过随机方式产生是一种十分简便、有效的途径。此外，在IPsec中采用了DES-CBC作为缺省的加密方式，其使用的iv是通讯包的时间戳。从原理上来说，这与随机数机制并无二致。</p>
-<p>看来，向量的作用其实就是salt</p>
-<p>最大的好处是，可以令到即使相同的明文，相同的密钥，能产生不同的密文</p>
-<p>例如，我们用DES方式在数据保存用户密码的时候，可以另外增加一列，把向量同时保存下来，并且每次用不同的向量。这样的好处是，即使两个用户的密码是一样的，数据库保存的密文，也会不一样，就能降低猜测的可能性</p>
-<p>另外一种用法，就是类似IPsec的做法，两部主机互传数据，保证两部机的时钟同步的前提下（可以取样到分钟或更高的单位避免偏差），用时钟的变化值作为向量，就能增加被sniffer数据的解密难度</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/26/[转]使用JAVA实现AES加密/" itemprop="url">
-                  [转]使用JAVA实现AES加密
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-26T10:44:13+08:00" content="2015-03-26">
-              2015-03-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/26/[转]使用JAVA实现AES加密/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/26/[转]使用JAVA实现AES加密/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/26/[转]使用JAVA实现AES加密/" class="leancloud_visitors" data-flag-title="[转]使用JAVA实现AES加密">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://blog.csdn.net/hbcui1984/article/details/5201247" target="_blank" rel="external">原文地址</a><br>1. 因子<br>       上次介绍了《JAVA实现AES加密》，中间提到近些年DES使用越来越少，原因就在于其使用56位密钥，比较容易被破解，近些年来逐渐被AES替代，AES已经变成目前对称加密中最流行算法之一；AES可以使用128、192、和256位密钥，并且用128位分组加密和解密数据。本文就简单介绍如何通过JAVA实现AES加密。<br>2. JAVA实现<br>闲话少许，掠过AES加密原理及算法，关于这些直接搜索专业网站吧，我们直接看JAVA的具体实现。<br>2.1 加密<br>代码有详细解释，不多废话。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 加密</div><div class="line"> * </div><div class="line"> * <span class="doctag">@param</span> content 需要加密的内容</div><div class="line"> * <span class="doctag">@param</span> password  加密密码</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encrypt(String content, String password) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;           </div><div class="line">                KeyGenerator kgen = KeyGenerator.getInstance(&amp;quot;AES&amp;quot;);</div><div class="line">                kgen.init(<span class="number">128</span>, <span class="keyword">new</span> SecureRandom(password.getBytes()));</div><div class="line">                SecretKey secretKey = kgen.generateKey();</div><div class="line">                <span class="keyword">byte</span>[] enCodeFormat = secretKey.getEncoded();</div><div class="line">                SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(enCodeFormat, &amp;quot;AES&amp;quot;);</div><div class="line">                Cipher cipher = Cipher.getInstance(&amp;quot;AES&amp;quot;);<span class="comment">// 创建密码器</span></div><div class="line">                <span class="keyword">byte</span>[] byteContent = content.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;);</div><div class="line">                cipher.init(Cipher.ENCRYPT_MODE, key);<span class="comment">// 初始化</span></div><div class="line">                <span class="keyword">byte</span>[] result = cipher.doFinal(byteContent);</div><div class="line">                <span class="keyword">return</span> result; <span class="comment">// 加密</span></div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2.2 解密<br>代码有详细注释，不多废话<br>注意：解密的时候要传入byte数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**解密 </span></div><div class="line"> * <span class="doctag">@param</span> content  待解密内容 </div><div class="line"> * <span class="doctag">@param</span> password 解密密钥 </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decrypt(<span class="keyword">byte</span>[] content, String password) &#123;  </div><div class="line">        <span class="keyword">try</span> &#123;  </div><div class="line">                 KeyGenerator kgen = KeyGenerator.getInstance(&amp;quot;AES&amp;quot;);  </div><div class="line">                 kgen.init(<span class="number">128</span>, <span class="keyword">new</span> SecureRandom(password.getBytes()));  </div><div class="line">                 SecretKey secretKey = kgen.generateKey();  </div><div class="line">                 <span class="keyword">byte</span>[] enCodeFormat = secretKey.getEncoded();  </div><div class="line">                 SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(enCodeFormat, &amp;quot;AES&amp;quot;);              </div><div class="line">                 Cipher cipher = Cipher.getInstance(&amp;quot;AES&amp;quot;);<span class="comment">// 创建密码器  </span></div><div class="line">                cipher.init(Cipher.DECRYPT_MODE, key);<span class="comment">// 初始化  </span></div><div class="line">                <span class="keyword">byte</span>[] result = cipher.doFinal(content);  </div><div class="line">                <span class="keyword">return</span> result; <span class="comment">// 加密  </span></div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2.3 测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">String content = &amp;quot;test&amp;quot;;  </div><div class="line">String password = &amp;quot;<span class="number">12345678</span>&amp;quot;;  </div><div class="line"><span class="comment">//加密  </span></div><div class="line">System.out.println(&amp;quot;加密前：&amp;quot; + content);  </div><div class="line"><span class="keyword">byte</span>[] encryptResult = encrypt(content, password);  </div><div class="line"><span class="keyword">try</span> &#123;  </div><div class="line">        String encryptResultStr = <span class="keyword">new</span> String(encryptResult,&amp;quot;utf-<span class="number">8</span>&amp;quot;);  </div><div class="line">        <span class="comment">//解密  </span></div><div class="line">        <span class="keyword">byte</span>[] decryptResult = decrypt(encryptResultStr.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;),password);  </div><div class="line">        System.out.println(&amp;quot;解密后：&amp;quot; + <span class="keyword">new</span> String(decryptResult));  </div><div class="line">&#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;  </div><div class="line">        e.printStackTrace();  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>则，系统会报出如下异常：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">javax.crypto.IllegalBlockSizeException: Input length must be multiple of <span class="number">16</span> when decrypting with padded cipher</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.AESCipher.engineDoFinal(DashoA13*..)</div><div class="line">        at javax.crypto.Cipher.doFinal(DashoA13*..)</div></pre></td></tr></table></figure></p>
-<p>这主要是因为加密后的byte数组是不能强制转换成字符串的，换言之：字符串和byte数组在这种情况下不是互逆的；要避免这种情况，我们需要做一些修订，可以考虑将二进制数据转换成十六进制表示，主要有如下两个方法：</p>
-<p>2.4.1将二进制转换成16进制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**将二进制转换成16进制 </span></div><div class="line"> * <span class="doctag">@param</span> buf </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">parseByte2HexStr</span><span class="params">(<span class="keyword">byte</span> buf[])</span> </span>&#123;  </div><div class="line">        StringBuffer sb = <span class="keyword">new</span> StringBuffer();  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; buf.length; i++) &#123;  </div><div class="line">                String hex = Integer.toHexString(buf[i] &amp;amp; <span class="number">0xFF</span>);  </div><div class="line">                <span class="keyword">if</span> (hex.length() == <span class="number">1</span>) &#123;  </div><div class="line">                        hex = <span class="string">'0'</span> + hex;  </div><div class="line">                &#125;  </div><div class="line">                sb.append(hex.toUpperCase());  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> sb.toString();  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>2.4.2 将16进制转换为二进制<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**将16进制转换为二进制 </span></div><div class="line"> * <span class="doctag">@param</span> hexStr </div><div class="line"> * <span class="doctag">@return</span> </div><div class="line"> */  </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] parseHexStr2Byte(String hexStr) &#123;  </div><div class="line">        <span class="keyword">if</span> (hexStr.length() &amp;lt; <span class="number">1</span>)  </div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">        <span class="keyword">byte</span>[] result = <span class="keyword">new</span> <span class="keyword">byte</span>[hexStr.length()/<span class="number">2</span>];  </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i&amp;lt; hexStr.length()/<span class="number">2</span>; i++) &#123;  </div><div class="line">                <span class="keyword">int</span> high = Integer.parseInt(hexStr.substring(i*<span class="number">2</span>, i*<span class="number">2</span>+<span class="number">1</span>), <span class="number">16</span>);  </div><div class="line">                <span class="keyword">int</span> low = Integer.parseInt(hexStr.substring(i*<span class="number">2</span>+<span class="number">1</span>, i*<span class="number">2</span>+<span class="number">2</span>), <span class="number">16</span>);  </div><div class="line">                result[i] = (<span class="keyword">byte</span>) (high * <span class="number">16</span> + low);  </div><div class="line">        &#125;  </div><div class="line">        <span class="keyword">return</span> result;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>然后，我们再修订以上测试代码，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">String content = &amp;quot;test&amp;quot;;  </div><div class="line">String password = &amp;quot;<span class="number">12345678</span>&amp;quot;;  </div><div class="line"><span class="comment">//加密  </span></div><div class="line">System.out.println(&amp;quot;加密前：&amp;quot; + content);  </div><div class="line"><span class="keyword">byte</span>[] encryptResult = encrypt(content, password);  </div><div class="line">String encryptResultStr = parseByte2HexStr(encryptResult);  </div><div class="line">System.out.println(&amp;quot;加密后：&amp;quot; + encryptResultStr);  </div><div class="line"><span class="comment">//解密  </span></div><div class="line"><span class="keyword">byte</span>[] decryptFrom = parseHexStr2Byte(encryptResultStr);  </div><div class="line"><span class="keyword">byte</span>[] decryptResult = decrypt(decryptFrom,password);  </div><div class="line">System.out.println(&amp;quot;解密后：&amp;quot; + <span class="keyword">new</span> String(decryptResult));</div></pre></td></tr></table></figure></p>
-<p>测试结果如下：<br>加密前：test<br>加密后：73C58BAFE578C59366D8C995CD0B9D6D<br>解密后：test</p>
-<p>2.5 另外一种加密方式<br>还有一种加密方式，大家可以参考如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** </span></div><div class="line">      * 加密 </div><div class="line">      * </div><div class="line">      * <span class="doctag">@param</span> content 需要加密的内容 </div><div class="line">      * <span class="doctag">@param</span> password  加密密码 </div><div class="line">      * <span class="doctag">@return</span> </div><div class="line">      */  </div><div class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encrypt2(String content, String password) &#123;  </div><div class="line">             <span class="keyword">try</span> &#123;  </div><div class="line">                     SecretKeySpec key = <span class="keyword">new</span> SecretKeySpec(password.getBytes(), &amp;quot;AES&amp;quot;);  </div><div class="line">                     Cipher cipher = Cipher.getInstance(&amp;quot;AES/ECB/NoPadding&amp;quot;);  </div><div class="line">                     <span class="keyword">byte</span>[] byteContent = content.getBytes(&amp;quot;utf-<span class="number">8</span>&amp;quot;);  </div><div class="line">                     cipher.init(Cipher.ENCRYPT_MODE, key);<span class="comment">// 初始化  </span></div><div class="line">                     <span class="keyword">byte</span>[] result = cipher.doFinal(byteContent);  </div><div class="line">                     <span class="keyword">return</span> result; <span class="comment">// 加密  </span></div><div class="line">             &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (NoSuchPaddingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (InvalidKeyException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (IllegalBlockSizeException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125; <span class="keyword">catch</span> (BadPaddingException e) &#123;  </div><div class="line">                     e.printStackTrace();  </div><div class="line">             &#125;  </div><div class="line">             <span class="keyword">return</span> <span class="keyword">null</span>;  </div><div class="line">     &#125;</div></pre></td></tr></table></figure></p>
-<p>这种加密方式有两种限制<br>密钥必须是16位的<br>待加密内容的长度必须是16的倍数，如果不是16的倍数，就会出如下异常：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">javax.crypto.IllegalBlockSizeException: Input length not multiple of <span class="number">16</span> bytes</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.a(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.SunJCE_f.b(DashoA13*..)</div><div class="line">        at com.sun.crypto.provider.AESCipher.engineDoFinal(DashoA13*..)</div><div class="line">        at javax.crypto.Cipher.doFinal(DashoA13*..)</div></pre></td></tr></table></figure></p>
-<p>要解决如上异常，可以通过补全传入加密内容等方式进行避免。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="url">
-                  [转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-25T02:52:51+08:00" content="2015-03-25">
-              2015-03-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" class="leancloud_visitors" data-flag-title="[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://wjlvivid.iteye.com/blog/2017955" target="_blank" rel="external">原文地址</a></p>
-<p>输入“33/12/2011”，用SimpleDateFormat parse()方法,转化为Date(2012,01,02).这样处理相当“33/12/2011”是正常输入，如果需要”33/12/2011”报错，即把”33/12/2011”当作错误格式，刚开始自己写了段逻辑判断：</p>
-<p>把转成的日期再反转回来，再比较是否一致，即使用format方法再转换成字符串，和传入的那个串作比较，如果不相等，则证明传入的那个日期格式是错误的</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getDestDateStrFromSrcDateStr</span><span class="params">(String dateStr,</span></span></div><div class="line">        String srcDateFormat, String descDateFormat)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">final</span> SimpleDateFormat src_sdf = <span class="keyword">new</span> SimpleDateFormat(srcDateFormat);</div><div class="line">        <span class="keyword">final</span> Date date = src_sdf.parse(dateStr);</div><div class="line"></div><div class="line">        <span class="comment">//把转成的日期再反转回来，再比较是否一致</span></div><div class="line">        <span class="keyword">if</span> (srcDateFormat.length() != dateStr.length()</div><div class="line">                || !dateStr.equals(src_sdf.format(date)))</div><div class="line">        &#123;</div><div class="line">            LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                    srcDateFormat,</div><div class="line">                    dateStr);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                    ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//把转成的date类型转换为目标格式日期字符串（yyyyMMdd)</span></div><div class="line">        <span class="keyword">final</span> SimpleDateFormat dest_sdf = <span class="keyword">new</span> SimpleDateFormat(</div><div class="line">                descDateFormat);</div><div class="line">        LOGGER.info(&amp;quot;the converted dest date str:&#123;&#125;&amp;quot;</div><div class="line">                + dest_sdf.format(date));</div><div class="line">        <span class="keyword">return</span> dest_sdf.format(date);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (java.text.ParseException e)</div><div class="line">    &#123;</div><div class="line">        LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                srcDateFormat,</div><div class="line">                dateStr);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>总觉得这种方法显得很笨拙，后来找找API，发现有一个方法：setLenient(false)可以直接使用。哎~何必费这么大劲呢<br>测试方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.text.DateFormat;</div><div class="line"><span class="keyword">import</span> java.text.ParseException;</div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ParseException </span>&#123;</div><div class="line">		DateFormat format = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;dd/MM/yyyy&amp;quot;);</div><div class="line">		format.setLenient(<span class="keyword">false</span>);</div><div class="line">		Date date = format.parse(&amp;quot;<span class="number">33</span>/<span class="number">12</span>/<span class="number">2011</span>&amp;quot;);</div><div class="line">		System.out.println(date);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1781,7 +1984,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">326</span>
+              <span class="site-state-item-count">334</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1877,7 +2080,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
