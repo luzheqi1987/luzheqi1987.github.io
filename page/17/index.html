@@ -302,6 +302,691 @@
             
               
                 
+                <a class="post-title-link" href="/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/" itemprop="url">
+                  [转]cocos2d-x 2x 菜鸟编塔防 01 准备工作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-12-16T19:37:00+08:00" content="2013-12-16">
+              2013-12-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/COCOS2D-X/" itemprop="url" rel="index">
+                    <span itemprop="name">COCOS2D-X</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/12/16/2013-12-16-cocos2d-x 2x 菜鸟编塔防 01 准备工作/" class="leancloud_visitors" data-flag-title="[转]cocos2d-x 2x 菜鸟编塔防 01 准备工作">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://farsa.blog.51cto.com/6172595/1132161" target="_blank" rel="external">点击打开链接</a></p>
+<h4 id="一-前言"><a href="#一-前言" class="headerlink" title="一.前言"></a>一.前言</h4><p>最近在学习2dx，看了几个源码，手很是痒痒，下面跟我一下编写一个类似保卫大萝卜的塔防游戏吧。</p>
+<hr>
+<h4 id="二-不废话开始编代码。"><a href="#二-不废话开始编代码。" class="headerlink" title="二.不废话开始编代码。"></a>二.不废话开始编代码。</h4><p>我用的cocos2d-x 的版本是2.04 ，编辑器是vs2010.首先创建一个工程，我们取名字叫“TDgame”。<br>之后我们添加几个常用到的模块。<br> 1.动画管理器，AnimationManager类<br> AnimationManager类这是个单例的类,大家要问这样弄个单例类出来有什么好处呢，有什么作用呢，一开始我也是不明白，最后看了看魔塔的源代码，总结了一下：1. 实现了一体化，也就是说把所有的动画加载都放到一个函数中，我们可以让这个函数出现在想要的位置上，比如,我们有一大堆的精灵动画，如果在游戏中加载起来会让游戏有点卡，这时候我们就可以创建一个进入游戏时的加载页面，同时执行加载动画。一般游戏也都是这么做的。</p>
+<ol>
+<li>规范代码，有利于编写代码。</li>
+</ol>
+<p>好了它的优点和作用就说到这吧，肯定还有很多，我也就不知道了。</p>
+<p>关于单例的问题大家可以看看这篇文章<br><a href="http://www.zilongshanren.com/cocos2d-x-design-pattern" target="_blank" rel="external">http://www.zilongshanren.com/cocos2d-x-design-pattern-singleton1/</a></p>
+<p>回到主题，首先我们粘贴一段代码。</p>
+<hr>
+<h2 id="第一步：复制黏贴"><a href="#第一步：复制黏贴" class="headerlink" title="第一步：复制黏贴"></a>第一步：复制黏贴</h2><p>在魔塔的源代码中有一个单例类的模板，无脑的复制黏贴，这个模板是动画管理器AnimationManager的基类，这个有什么用呢，其实用处很简单就是一个单例的模板让继承他的子类都变成单例模式，下次再做别的游戏时用到直接继承，多方便。当然你也可以不用这个模板，直接让AnimationManager变成单例类。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _SINGLETON_H </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _SINGLETON_H </span></div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">class</span> Singleton </div><div class="line">&#123; </div><div class="line"><span class="keyword">public</span>: </div><div class="line">    <span class="comment">//获取类的唯一实例 </span></div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> T* <span class="title">instance</span><span class="params">()</span></span>; </div><div class="line">    <span class="comment">//释放类的唯一实例 </span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">release</span><span class="params">()</span></span>; </div><div class="line"><span class="keyword">protected</span>: </div><div class="line">    Singleton(<span class="keyword">void</span>)&#123;&#125; </div><div class="line">    ~Singleton(<span class="keyword">void</span>)&#123;&#125; </div><div class="line">    <span class="keyword">static</span> T* <span class="number">_</span>instance; </div><div class="line">&#125;; </div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">inline</span> T* Singleton&lt;T&gt;::instance() </div><div class="line">&#123; </div><div class="line">    <span class="keyword">if</span>(!<span class="number">_</span>instance) </div><div class="line">        <span class="number">_</span>instance = <span class="keyword">new</span> T; </div><div class="line">    <span class="keyword">return</span> <span class="number">_</span>instance; </div><div class="line">&#125; </div><div class="line"> </div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; </div><div class="line"><span class="keyword">void</span> Singleton&lt;T&gt;::release() </div><div class="line">&#123; </div><div class="line">    <span class="keyword">if</span> (!<span class="number">_</span>instance) </div><div class="line">        <span class="keyword">return</span>; </div><div class="line">    <span class="keyword">delete</span> <span class="number">_</span>instance; </div><div class="line">    <span class="number">_</span>instance = <span class="number">0</span>; </div><div class="line">&#125; </div><div class="line"> </div><div class="line"><span class="comment">//cpp文件中需要先声明静态变量 </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> DECLARE_SINGLETON_MEMBER(_Ty)   \ </span></div><div class="line">    <span class="keyword">template</span> &lt;&gt; <span class="number">_</span>Ty* Singleton&lt;<span class="number">_</span>Ty&gt;::<span class="number">_</span>instance = <span class="literal">NULL</span>; </div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span><span class="comment">//_SINGLETON_H</span></span></div></pre></td></tr></table></figure>
+<p>好了这样我们的标准的单例基类就写好了,记住这是一个.h文件 注意：<br>1.子类要在子类的cpp文件开始写上DECLARE_SINGLETON_MEMBER(子类的名字)<br>2.子类最好写上构造和析构函数</p>
+<hr>
+<h2 id="第二步：编写动画管理器AnimationManager类"><a href="#第二步：编写动画管理器AnimationManager类" class="headerlink" title="第二步：编写动画管理器AnimationManager类"></a>第二步：编写动画管理器AnimationManager类</h2><p>先看代码：###AnimationManager.h</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _ANIMATION_MANAGER_H_ </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _ANIMATION_MANAGER_H_ </span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cocos2d.h"</span> </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Singleton.h"</span> </span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"type.h"</span> </span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cocos2d; </div><div class="line"> </div><div class="line"><span class="keyword">class</span> AnimationManager : <span class="keyword">public</span> Singleton&lt;AnimationManager&gt; </div><div class="line">&#123; </div><div class="line"><span class="keyword">public</span>: </div><div class="line">    AnimationManager(); </div><div class="line">    ~AnimationManager(); </div><div class="line">    <span class="comment">//初始化动画模版缓存表 </span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">initAnimationMap</span><span class="params">()</span></span>; </div><div class="line">    <span class="comment">//根据名字得到一个动画模板 </span></div><div class="line">    <span class="function">CCAnimation* <span class="title">getAnimation</span><span class="params">(<span class="keyword">int</span> key)</span></span>; </div><div class="line">    <span class="comment">//创建一个动画实例 </span></div><div class="line">    <span class="function">CCAnimate* <span class="title">createAnimate</span><span class="params">(<span class="keyword">int</span> key)</span></span>; </div><div class="line">    <span class="comment">//创建一个动画实例 </span></div><div class="line">    <span class="function">CCAnimate* <span class="title">createAnimate</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* key)</span></span>; </div><div class="line">    <span class="comment">//清空所有缓存 </span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">releaseAllCacha</span><span class="params">()</span></span>; </div><div class="line"><span class="keyword">protected</span>: </div><div class="line">    <span class="comment">//加载勇士行走动画模版 </span></div><div class="line">    <span class="function">CCAnimation* <span class="title">createAnimationByDirection</span><span class="params">(HeroDirection direction)</span></span>; </div><div class="line">&#125;; </div><div class="line"><span class="comment">//定义动画管理器实例的别名 </span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> sAnimationMgr AnimationManager::instance() </span></div><div class="line"> </div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<h3 id="AnimationManager-cpp"><a href="#AnimationManager-cpp" class="headerlink" title="AnimationManager.cpp"></a>AnimationManager.cpp</h3><pre><code class="c++"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"AnimationManager.h"</span> </span>
+DECLARE_SINGLETON_MEMBER(AnimationManager); 
+
+
+
+AnimationManager::AnimationManager() 
+{ 
+
+} 
+
+AnimationManager::~AnimationManager() 
+{ 
+
+} 
+
+<span class="keyword">bool</span> AnimationManager::initAnimationMap() 
+{ 
+    <span class="keyword">bool</span> sRet = <span class="literal">false</span>; 
+    <span class="keyword">do</span>  
+    { 
+        <span class="comment">//1.添加图片进内存 </span>
+        CCTexture2D * creepTexture = CCTextureCache::sharedTextureCache()-&gt;addImage(<span class="string">"boy.png"</span>); 
+        CC_BREAK_IF(!creepTexture); 
+        <span class="comment">//2.加载各个方向的敌人动画 </span>
+        <span class="keyword">char</span> temp[<span class="number">20</span>]; 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aDown); 
+        <span class="comment">//加载勇士向下走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kDown), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aRight); 
+        <span class="comment">//加载勇士向右走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kRight), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aLeft); 
+        <span class="comment">//加载勇士向左走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kLeft), temp); 
+        <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, aUp); 
+        <span class="comment">//加载勇士向上走的动画 </span>
+        CCAnimationCache::sharedAnimationCache()-&gt;addAnimation(createAnimationByDirection(kUp), temp); 
+
+        sRet = <span class="literal">true</span>; 
+    } <span class="keyword">while</span> (<span class="number">0</span>); 
+    <span class="keyword">return</span> sRet; 
+} 
+
+CCAnimation* AnimationManager::getAnimation( <span class="keyword">int</span> key ) 
+{ 
+    <span class="keyword">char</span> temp[<span class="number">20</span>]; 
+    <span class="built_in">sprintf</span>(temp, <span class="string">"%d"</span>, key); 
+    <span class="keyword">return</span> CCAnimationCache::sharedAnimationCache()-&gt;animationByName(temp); 
+} 
+
+CCAnimate* AnimationManager::createAnimate( <span class="keyword">int</span> key ) 
+{ 
+    <span class="comment">//获取指定动画模版 </span>
+    CCAnimation* anim = getAnimation(key); 
+    <span class="keyword">if</span>(anim) 
+    { 
+        <span class="comment">//根据动画模版生成一个动画实例 </span>
+    <span class="comment">//  return cocos2d::CCAnimate::actionWithAnimation(anim); </span>
+        <span class="keyword">return</span> cocos2d::CCAnimate::create(anim); 
+    } 
+    <span class="keyword">return</span> <span class="literal">NULL</span>; 
+} 
+
+CCAnimate* AnimationManager::createAnimate( <span class="keyword">const</span> <span class="keyword">char</span>* key ) 
+{ 
+    <span class="comment">//获取指定动画模版 </span>
+    CCAnimation* anim = CCAnimationCache::sharedAnimationCache()-&gt;animationByName(key); 
+    <span class="keyword">if</span>(anim) 
+    { 
+        <span class="comment">//根据动画模版生成一个动画实例 </span>
+        <span class="keyword">return</span> cocos2d::CCAnimate::create(anim); 
+    } 
+    <span class="keyword">return</span> <span class="literal">NULL</span>; 
+} 
+
+CCAnimation* AnimationManager::createAnimationByDirection( HeroDirection direction ) 
+{ 
+    <span class="comment">//3.生产剪切动画 </span>
+    CCTexture2D * creepTexture=CCTextureCache::sharedTextureCache()-&gt;textureForKey(<span class="string">"boy.png"</span>); 
+    CCSpriteFrame *frame0, *frame1, *frame2, *frame3; 
+    frame0 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">0</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame1 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">1</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame2 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">2</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    frame3 = CCSpriteFrame::createWithTexture(creepTexture, cocos2d::CCRectMake(<span class="number">47</span>*<span class="number">3</span>, <span class="number">95</span>*direction, <span class="number">47</span>, <span class="number">95</span>)); 
+    CCArray * animFrames = <span class="keyword">new</span> CCArray(<span class="number">4</span>); 
+    animFrames-&gt;addObject(frame0); 
+    animFrames-&gt;addObject(frame1); 
+    animFrames-&gt;addObject(frame2); 
+    animFrames-&gt;addObject(frame3); 
+    CC_SAFE_RETAIN(animFrames); 
+    CCAnimation * animation= CCAnimation::createWithSpriteFrames(animFrames,<span class="number">0.5f</span>); 
+
+    animFrames-&gt;release(); 
+    <span class="keyword">return</span> animation; 
+} 
+
+<span class="keyword">void</span> AnimationManager::releaseAllCacha() 
+{ 
+
+}
+</code></pre>
+<p>建立完这个动画管理单例后，用法也是很简单,只需要调用那几个getXXXX 就行，当然这个动画管理器功能还比较简单，因为我是个新手所以不能一下吧所有的功能都写上，还是先用到哪些写那些。</p>
+<hr>
+<h2 id="第三步：全局数据"><a href="#第三步：全局数据" class="headerlink" title="第三步：全局数据"></a>第三步：全局数据</h2><p>之后我们在建立一个单例类，来保存一些全局数据<br>HWorld.h</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">ifndef</span> __HWORLD_H__ </span>
+<span class="meta">#<span class="meta-keyword">define</span> __HWORLD_H__ </span>
+
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cocos2d.h"</span> </span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"type.h"</span> </span>
+<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Singleton.h"</span> </span>
+<span class="keyword">using</span> <span class="keyword">namespace</span> cocos2d; 
+<span class="keyword">class</span> HWorld: 
+    <span class="keyword">public</span> Singleton&lt;HWorld&gt; 
+{ 
+<span class="keyword">public</span>: 
+    HWorld(); 
+    ~HWorld(); 
+    <span class="comment">//初始化 </span>
+    <span class="function"><span class="keyword">bool</span> <span class="title">initHWorld</span><span class="params">()</span></span>; 
+    <span class="comment">//清空所有缓存 </span>
+    <span class="function"><span class="keyword">void</span> <span class="title">releaseAll</span><span class="params">()</span></span>; 
+<span class="keyword">public</span>: 
+    <span class="comment">//路点数组 </span>
+    CCPointArray * <span class="number">_</span>wayPoint;    
+}; 
+<span class="comment">//定义动画管理器实例的别名 </span>
+<span class="meta">#<span class="meta-keyword">define</span> sHWorld HWorld::instance() </span>
+<span class="meta">#<span class="meta-keyword">endif</span></span>
+</code></pre>
+<p>HWorld.cpp</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HWorld.h"</span>  </span>
+DECLARE_SINGLETON_MEMBER(HWorld);  
+
+<span class="keyword">bool</span> HWorld::initHWorld()  
+{  
+    <span class="keyword">return</span> <span class="literal">true</span>;  
+}  
+
+<span class="keyword">void</span> HWorld::releaseAll()  
+{  
+}  
+
+HWorld::HWorld()  
+{  
+}  
+
+HWorld::~HWorld()  
+{  
+}
+</code></pre>
+<p>目前这个类里面之后一个路点的数组，这个数组中保存了地图上需要转弯地方的坐标,其他的东西以后再添加。<br>当然还有我们的枚举，把它放在一个.h文件中，方便查看<br>type.h</p>
+<pre><code class="c++"><span class="meta">#<span class="meta-keyword">ifndef</span> __TYPE_H__  </span>
+<span class="meta">#<span class="meta-keyword">define</span> __TYPE_H__  </span>
+
+<span class="keyword">typedef</span> <span class="keyword">enum</span> {  
+    kDown =  <span class="number">0</span>,<span class="comment">//向下方向  </span>
+    kLeft = <span class="number">1</span>,<span class="comment">//向左方向  </span>
+    kRight= <span class="number">2</span>,<span class="comment">//向右方向  </span>
+    kUp = <span class="number">3</span>,<span class="comment">//向上方向  </span>
+    kNormal,  
+} HeroDirection;<span class="comment">//勇士方向  </span>
+
+
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    aDown = <span class="number">0</span>,<span class="comment">//向下行走动画  </span>
+    aLeft,<span class="comment">//向左行走动画  </span>
+    aRight,<span class="comment">//向右行走动画  </span>
+    aUp,<span class="comment">//向上行走动画  </span>
+    aFight,<span class="comment">//刀光动画  </span>
+} AnimationKey;<span class="comment">//动画模版键值  </span>
+<span class="comment">//定义怪物的类型  </span>
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    kHighBlood=<span class="number">0</span>,<span class="comment">//高血量怪物  </span>
+    kQuick = <span class="number">1</span>,  
+
+}CreepType;  
+<span class="comment">//----------------定义一个creep中所用到的tag--------  </span>
+<span class="keyword">typedef</span> <span class="keyword">enum</span> 
+{  
+    kSprite =<span class="number">0</span>,<span class="comment">//精灵的标签  </span>
+    kSpeedAction = <span class="number">1</span>,<span class="comment">//控制速度的action所用的标签  </span>
+    kFoveverAction = <span class="number">2</span>,<span class="comment">//控制精灵帧的action标签  </span>
+}CreepTag;  
+ <span class="keyword">enum</span>   
+{  
+    kZMap = <span class="number">0</span>,<span class="comment">//地图的zOrder  </span>
+    kZNPC,  
+    kZTeleport,  
+    kZHero,<span class="comment">//勇士精灵的zOrder  </span>
+    kZTip,<span class="comment">//提示信息的zOrder  </span>
+};<span class="comment">//GameLayer中各部分的显示zOrder及tag  </span>
+<span class="meta">#<span class="meta-keyword">endif</span></span>
+</code></pre>
+<hr>
+<p>好了，生成一下。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" itemprop="url">
+                  CODE 147. Evaluate Reverse Polish Notation
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-28T22:23:00+08:00" content="2013-11-28">
+              2013-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/" class="leancloud_visitors" data-flag-title="CODE 147. Evaluate Reverse Polish Notation">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 147 Evaluate Reverse Polish Notation/'>CODE 147. Evaluate Reverse Polish Notation</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Evaluate the value of an arithmetic expression in <a href="http://en.wikipedia.org/wiki/Reverse_Polish_notation" target="_blank" rel="external">Reverse Polish Notation</a>.<br>Valid operators are <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>.<br> Each operand may be an integer or another expression.<br>Some examples:</p>
+<pre><code>[&quot;2&quot;, &quot;1&quot;, &quot;+&quot;, &quot;3&quot;, &quot;*&quot;] -&gt; ((2 + 1) * 3) -&gt; 9
+[&quot;4&quot;, &quot;13&quot;, &quot;5&quot;, &quot;/&quot;, &quot;+&quot;] -&gt; (4 + (13 / 5)) -&gt; 6
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">evalRPN</span><span class="params">(String[] tokens)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Stack&lt;Integer&gt; numbers = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">		<span class="keyword">for</span> (String token : tokens) &#123;</div><div class="line">			<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>) || token.equals(<span class="string">"-"</span>) || token.equals(<span class="string">"*"</span>)</div><div class="line">					|| token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">				<span class="keyword">int</span> number2 = numbers.pop();</div><div class="line">				<span class="keyword">int</span> number1 = numbers.pop();</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"+"</span>)) &#123;</div><div class="line">					numbers.push(number1 + number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"-"</span>)) &#123;</div><div class="line">					numbers.push(number1 - number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"*"</span>)) &#123;</div><div class="line">					numbers.push(number1 * number2);</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (token.equals(<span class="string">"/"</span>)) &#123;</div><div class="line">					numbers.push(number1 / number2);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				numbers.push(Integer.valueOf(token));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> numbers.pop();</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="url">
+                  CODE 146. Max Points on a Line
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-28T22:16:00+08:00" content="2013-11-28">
+              2013-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" class="leancloud_visitors" data-flag-title="CODE 146. Max Points on a Line">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/'>CODE 146. Max Points on a Line</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given n points<br> on a 2D plane, find the maximum number of points that lie on the same straight line.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPoints</span><span class="params">(Point[] points)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line"></div><div class="line">	Map&lt;Float, Integer&gt; kmap = <span class="keyword">new</span> HashMap&lt;Float, Integer&gt;();</div><div class="line">	<span class="keyword">int</span> size = points.length;</div><div class="line">	<span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> sum_cloumn = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (size &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> size;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">		sum_cloumn = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> add = <span class="number">1</span>;</div><div class="line">		kmap.clear();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (j == i) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x == points[j].x &amp;&amp; points[i].y == points[j].y) &#123;</div><div class="line">				add++;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">float</span> k = <span class="number">0</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x != points[j].x) &#123;</div><div class="line">				k = (<span class="keyword">float</span>) (points[j].y - points[i].y)</div><div class="line">						/ (points[j].x - points[i].x);</div><div class="line">				<span class="keyword">if</span> (kmap.containsKey(k)) &#123;</div><div class="line">					kmap.put(k, kmap.get(k) + <span class="number">1</span>);</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					kmap.put(k, <span class="number">1</span>);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				sum_cloumn++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (Float f : kmap.keySet()) &#123;</div><div class="line">			<span class="keyword">if</span> (kmap.get(f) &gt; sum_cloumn) &#123;</div><div class="line">				sum_cloumn = kmap.get(f);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		sum_cloumn += add;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (sum_cloumn &gt; total) &#123;</div><div class="line">			total = sum_cloumn;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="url">
                   CODE 144. Insertion Sort List
                 </a>
@@ -1452,516 +2137,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/" itemprop="url">
-                  CODE 139. Linked List Cycle II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-24T22:01:00+08:00" content="2013-11-24">
-              2013-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/" class="leancloud_visitors" data-flag-title="CODE 139. Linked List Cycle II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 139 Linked List Cycle II/'>CODE 139. Linked List Cycle II</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return <code>null</code>.<br>Follow up:<br>Can you solve it without using extra space?<br><a href="http://blog.csdn.net/sysucph/article/details/15378043" target="_blank" rel="external">点击打开链接</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	<span class="comment">// Empty linked list</span></div><div class="line">	<span class="keyword">if</span> (head == <span class="keyword">null</span>)</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">	ListNode fast = head;</div><div class="line">	ListNode slow = head;</div><div class="line"></div><div class="line">	<span class="comment">// Find meeting point</span></div><div class="line">	<span class="keyword">while</span> (fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>) &#123;</div><div class="line">		slow = slow.next;</div><div class="line">		fast = fast.next.next;</div><div class="line">		<span class="keyword">if</span> (fast == slow)</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">// Error - there is no meeting point, and therefore no loop</span></div><div class="line">	<span class="keyword">if</span> (fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>)</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">	<span class="comment">/*</span></div><div class="line">	 * Move slow to Head. Keep fast at meeting Point. Each are k steps from</div><div class="line">	 * the loop Start. If they move at the same pace, they must meet at Loop</div><div class="line">	 * Start.</div><div class="line">	 */</div><div class="line">	slow = head;</div><div class="line"></div><div class="line">	<span class="keyword">while</span> (slow != fast) &#123;</div><div class="line">		slow = slow.next;</div><div class="line">		fast = fast.next;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">// Now fast points to the start of the loop.</span></div><div class="line">	<span class="keyword">return</span> fast;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" itemprop="url">
-                  CODE 138. Linked List Cycle
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-24T16:07:00+08:00" content="2013-11-24">
-              2013-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" class="leancloud_visitors" data-flag-title="CODE 138. Linked List Cycle">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/'>CODE 138. Linked List Cycle</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a linked list, determine if it has a cycle in it.<br>Follow up:<br>Can you solve it without using extra space?</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">     <span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">     <span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">     <span class="keyword">if</span>(<span class="keyword">null</span> == head)&#123;</div><div class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     &#125;</div><div class="line"> 	ListNode first = head;</div><div class="line"> 	ListNode second = head;</div><div class="line"> 	<span class="keyword">while</span>(first.next != <span class="keyword">null</span> &amp;&amp; first.next.next !=<span class="keyword">null</span>)&#123;</div><div class="line"> 		<span class="keyword">if</span>(first.next.equals(second) || first.next.next.equals(second))&#123;</div><div class="line"> 			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"> 		&#125;</div><div class="line"> 		first = first.next.next;</div><div class="line"> 		second = second.next;</div><div class="line"> 	&#125;</div><div class="line"> 	<span class="keyword">if</span>(first.next != <span class="keyword">null</span> &amp;&amp; first.next.equals(second))&#123;</div><div class="line"> 		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"> 	&#125;</div><div class="line"> 	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="url">
-                  CODE 137. Word Break II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-24T15:50:00+08:00" content="2013-11-24">
-              2013-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/24/2013-11-24-CODE 137 Word Break II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/24/2013-11-24-CODE 137 Word Break II/" class="leancloud_visitors" data-flag-title="CODE 137. Word Break II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/'>CODE 137. Word Break II</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.<br>Return all such possible sentences.<br>For example, given<br>s = <code>&quot;catsanddog&quot;</code>,<br>dict = <code>[&quot;cat&quot;, &quot;cats&quot;, &quot;and&quot;, &quot;sand&quot;, &quot;dog&quot;]</code>.<br>A solution is <code>[&quot;cats and dog&quot;, &quot;cat sand dog&quot;]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Set&lt;String&gt; unused = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">		<span class="keyword">boolean</span> touched = <span class="keyword">false</span>;</div><div class="line">		Map&lt;Integer, Set&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Set&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (String dic : dict) &#123;</div><div class="line">			<span class="keyword">if</span> (!s.contains(dic)) &#123;</div><div class="line">				unused.add(dic);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		dict.removeAll(unused);</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">			<span class="keyword">for</span> (String sub : dict) &#123;</div><div class="line">				String subTmp = s.substring(i);</div><div class="line">				<span class="keyword">int</span> start = i;</div><div class="line">				<span class="keyword">while</span> (subTmp.contains(sub)) &#123;</div><div class="line">					<span class="keyword">int</span> index = subTmp.indexOf(sub);</div><div class="line">					<span class="keyword">if</span> (map.containsKey(start + index)) &#123;</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						map.put(start + index, <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125;</div><div class="line">					subTmp = subTmp.substring(index + sub.length());</div><div class="line">					start = start + index + sub.length();</div><div class="line">					<span class="keyword">if</span> (start &gt;= s.length()) &#123;</div><div class="line">						touched = <span class="keyword">true</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!touched) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> wbreak(s, s.length(), map, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function">ArrayList&lt;String&gt; <span class="title">wbreak</span><span class="params">(String s, <span class="keyword">int</span> length,</span></span></div><div class="line">			Map&lt;Integer, Set&lt;Integer&gt;&gt; map, <span class="keyword">int</span> x) &#123;</div><div class="line">		<span class="keyword">if</span> (!map.containsKey(x)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line">		ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> index : map.get(x)) &#123;</div><div class="line">			String subString = s.substring(x, index);</div><div class="line">			<span class="keyword">if</span> (index &gt;= length) &#123;</div><div class="line">				results.add(subString);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				ArrayList&lt;String&gt; subResults = wbreak(s, length, map, index);</div><div class="line">				<span class="keyword">if</span> (subResults.isEmpty()) &#123;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">for</span> (String subResult : subResults) &#123;</div><div class="line">						String result = subString + <span class="string">" "</span> + subResult;</div><div class="line">						results.add(result);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2007,7 +2182,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">334</span>
+              <span class="site-state-item-count">337</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

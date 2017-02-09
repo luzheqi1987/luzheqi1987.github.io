@@ -302,6 +302,523 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/15/2013-09-15-CODE 13 Triangle/" itemprop="url">
+                  CODE 13. Triangle
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-15T18:57:00+08:00" content="2013-09-15">
+              2013-09-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/15/2013-09-15-CODE 13 Triangle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/15/2013-09-15-CODE 13 Triangle/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/15/2013-09-15-CODE 13 Triangle/" class="leancloud_visitors" data-flag-title="CODE 13. Triangle">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 13 Triangle/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 13 Triangle/'>CODE 13. Triangle</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.<br>For example, given the following triangle</p>
+<pre><code>[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+</code></pre><p>The minimum path sum from top to bottom is <code>11</code> (i.e., 2 + 3 + 5 + 1 =<br> 11).<br>Note:<br>Bonus point if you are able to do this using only O(n)<br> extra space, where n is<br> the total number of rows in the triangle.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == triangle || <span class="number">0</span> == triangle.size()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">int</span> layerNumer = triangle.size();</div><div class="line">	ArrayList&lt;Integer&gt; tmpLengths = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	tmpLengths.add(triangle.get(<span class="number">0</span>).get(<span class="number">0</span>));</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; layerNumer; i++) &#123;</div><div class="line">		ArrayList&lt;Integer&gt; layer = triangle.get(i);</div><div class="line">		layer.set(<span class="number">0</span>, layer.get(<span class="number">0</span>) + tmpLengths.get(<span class="number">0</span>));</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; layer.size(); k++) &#123;</div><div class="line">			<span class="keyword">if</span> (k == layer.size() - <span class="number">1</span>) &#123;</div><div class="line">				layer.set(k, layer.get(k) + tmpLengths.get(k - <span class="number">1</span>));</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> (tmpLengths.get(k) &gt; tmpLengths.get(k - <span class="number">1</span>)) &#123;</div><div class="line">					layer.set(k, tmpLengths.get(k - <span class="number">1</span>) + layer.get(k));</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					layer.set(k, tmpLengths.get(k) + layer.get(k));</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		tmpLengths.clear();</div><div class="line">		tmpLengths.addAll(layer);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> min = tmpLengths.get(<span class="number">0</span>);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; layerNumer; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (tmpLengths.get(i) &lt; min) &#123;</div><div class="line">			min = tmpLengths.get(i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> min;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/" itemprop="url">
+                  CODE 10. Best Time to Buy and Sell Stock III
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-15T16:57:00+08:00" content="2013-09-15">
+              2013-09-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/" class="leancloud_visitors" data-flag-title="CODE 10. Best Time to Buy and Sell Stock III">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 10 Best Time to Buy and Sell Stock III/'>CODE 10. Best Time to Buy and Sell Stock III</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Say you have an array for which the ith element<br> is the price of a given stock on day i.<br>Design an algorithm to find the maximum profit. You may complete at most two transactions.<br>Note:<br>You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == prices || prices.length &lt;= <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span>[] diff = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">		diff[i] = prices[i] - prices[i - <span class="number">1</span>];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> maxFinal = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; diff.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (diff[i] &lt;= <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> max1 = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> max2 = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</div><div class="line">			tmp += diff[j];</div><div class="line">			<span class="keyword">if</span> (tmp &gt; max1) &#123;</div><div class="line">				max1 = tmp;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (tmp &lt; <span class="number">0</span>) &#123;</div><div class="line">				tmp = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		tmp = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; diff.length; j++) &#123;</div><div class="line">			tmp += diff[j];</div><div class="line">			<span class="keyword">if</span> (tmp &gt; max2) &#123;</div><div class="line">				max2 = tmp;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (tmp &lt; <span class="number">0</span>) &#123;</div><div class="line">				tmp = <span class="number">0</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (maxFinal &lt; max1 + max2) &#123;</div><div class="line">			maxFinal = max1 + max2;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> maxFinal;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" itemprop="url">
+                  CODE 11. Best Time to Buy and Sell Stock II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-15T16:56:00+08:00" content="2013-09-15">
+              2013-09-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" class="leancloud_visitors" data-flag-title="CODE 11. Best Time to Buy and Sell Stock II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/'>CODE 11. Best Time to Buy and Sell Stock II</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Say you have an array for which the ith element<br> is the price of a given stock on day i.<br>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell<br> the stock before you buy again).</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">		<span class="comment">// Start typing your Java solution below</span></div><div class="line">		<span class="comment">// DO NOT write main() function</span></div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == prices || prices.length &lt;= <span class="number">1</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span>[] diff = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">		<span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">			diff[i] = prices[i] - prices[i - <span class="number">1</span>];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; diff.length; i++) &#123;</div><div class="line">			<span class="keyword">if</span> (diff[i] &gt; <span class="number">0</span>) &#123;</div><div class="line">				max += diff[i];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> max;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/15/2013-09-15-CODE 12 Best Time to Buy and Sell Stock/" itemprop="url">
                   CODE 12. Best Time to Buy and Sell Stock
                 </a>
@@ -1499,448 +2016,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/26/Linux软件包管理（上）/" itemprop="url">
-                  Linux软件包管理（上）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-26T23:06:04+08:00" content="2012-09-26">
-              2012-09-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/26/Linux软件包管理（上）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/26/Linux软件包管理（上）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/26/Linux软件包管理（上）/" class="leancloud_visitors" data-flag-title="Linux软件包管理（上）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.二进制软件包管理（RPM，YUM）</p>
-<p>RPM软件包的一个例子：sudo-1.7.21pl-5.el5.i386.rpm</p>
-<p>其中包括软件名（sudo），版本号（1.7.2pl），发行号（5.el5），硬件平台（i386）</p>
-<p>（1）卸载</p>
-<p>rpm -e sudo，注意：如果其他软件包有依赖关系，卸载时会产生提示信息，可使用–nodeps强行卸载</p>
-<p>（2）安装</p>
-<p>rom -ivh sudo-1.7.2pl-5.el5.i386.rpm</p>
-<p>挂载光盘：mkdir /mnt/cdrom; mount /dev/cdrom /mnt/cdrom</p>
-<p>查询：rpm -q sudo; rpm -qa | grep samba</p>
-<p>其他指令：</p>
-<p>–excludedocs，不安装软件包的文档文件</p>
-<p>–test，只对安装进行测试，并不实际安装</p>
-<p>A.如果已经被安装，如果覆盖安装，可以再命令行上使用–replacepkgs选项</p>
-<p>B.文件冲突，若想要RPM忽略该错误信息，请使用–replacefiles命令行选项</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/24/Linux引导流程解析03/" itemprop="url">
-                  Linux引导流程解析03
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-24T23:26:29+08:00" content="2012-09-24">
-              2012-09-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/24/Linux引导流程解析03/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/24/Linux引导流程解析03/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/24/Linux引导流程解析03/" class="leancloud_visitors" data-flag-title="Linux引导流程解析03">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.GRUB配置与应用</p>
-<p>GRUB的配置文件默认为 /boot/grub/grub.conf</p>
-<p>软链接：ls -l /etc/grub.conf</p>
-<p>GRUB配置：<strong><span style="color: #000000;">defaulf</span></strong>定义缺省启动系统</p>
-<p><strong><span style="color: #000000;">                         timeout</span></strong>定义缺省等待时间</p>
-<p><strong><span style="color: #000000;">                         splashimage</span></strong>定义GRUB界面图片，(hd0,0)，hd表示硬盘，0表示第一个，逗号后表示第几个分区</p>
-<p><strong><span style="color: #000000;">                         hiddenmenu</span></strong>隐藏菜单</p>
-<p><strong>                         title</strong>定义菜单项名称</p>
-<p><strong><span style="color: #000000;">                         root</span></strong>设置GRUB的根设备及内核所在的分区</p>
-<p><strong><span style="color: #000000;">                         kernel</span></strong>定义内核文件所在位置</p>
-<p><strong>                         initrd</strong>命令加载镜像文件</p>
-<p>功能键：</p>
-<p><strong><span style="color: #000000;">              e：</span></strong>编辑当前的启动菜单项</p>
-<p><strong><span style="color: #000000;">              c：</span></strong>进入GRUB的命令行方式</p>
-<p><strong><span style="color: #000000;">              b：</span></strong>其中当前的菜单项</p>
-<p><strong>              d：</strong>删除当前行</p>
-<p><strong><span style="color: #000000;">              Esc：</span></strong>返回GRUB启动菜单界面，取消对当前菜单项所做的任何修改</p>
-<p>案例：</p>
-<p>1）root密码忘记，计入单用户模式重新设置root密码，方法如下：开机进入GRUB界面，按e进入编辑行模式，选中kernel行，再次按e键，在新的界面的最后一行输入1或s，然后按b键即可进入单用户模式。</p>
-<p>2）设置GRUB密码，使用GRUB自带的grub-md5-crypt，编辑GRUB配置文件，加入下行：password –md5 <strong><strong><strong><strong><strong><strong><strong><strong><strong>*</strong></strong></strong></strong></strong></strong></strong></strong></strong></p>
-<p>3）GRUB修复，当开机后进入GRUB界面，但没有菜单，只剩下一个grub&gt;提示符，解决办法：不写了</p>
-<p>&nbsp;</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/19/Linux引导流程解析02/" itemprop="url">
-                  Linux引导流程解析02
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-19T23:35:19+08:00" content="2012-09-19">
-              2012-09-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2012/09/19/Linux引导流程解析02/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/09/19/Linux引导流程解析02/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/19/Linux引导流程解析02/" class="leancloud_visitors" data-flag-title="Linux引导流程解析02">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. 查看排除#的行，grep -v(排除匹配) “^#” /etc/inittab | more</p>
-<p>2.man inittab，inittab文件剖析，在inittab中，所有条目采取以下格式：</p>
-<p><span style="color: #000000;"> <strong>   id：runlevels：action：process</strong></span></p>
-<p><span style="color: #000000;">    <strong>id：</strong>标识符，一般为两位数字或字母</span></p>
-<p><span style="color: #000000;">    <strong>runlevels：</strong>指定运行级别，可以指定多个</span></p>
-<p><span style="color: #000000;">   <strong>action：</strong>指定运行状态</span></p>
-<p><span style="color: #000000;">   <strong>process：</strong>指定要运行的脚本/命令</span></p>
-<p>3. action常用常用取值：</p>
-<p><span style="color: #000000;"><strong>    initdefault：</strong>指定系统缺省启动的运行级别</span></p>
-<p><span style="color: #000000;"><strong>    sysinit：</strong>系统启动执行process中指定的命令</span></p>
-<p><span style="color: #000000;"><strong>    wait：</strong>执行process中指定的命令，并等其结束在运行其他命令</span></p>
-<p><span style="color: #000000;"><strong>    once：</strong>执行process中指定的命令，不等待其结束</span></p>
-<p><span style="color: #000000;"><strong>    ctrlaltdel：</strong>按下Ctrl+Alt+Del时执行process指定的命令</span></p>
-<p>4.设置自启动程序</p>
-<p><span style="color: #000000;"><strong>    ln -s </strong></span> 生成软链接</p>
-<p><strong><span style="color: #000000;">    chkconfig ：</span></strong>chkconfig –levels 2345 mysqld on；chkconfig –list mysqld</p>
-<p><strong><span style="color: #000000;">    ntsysv：</span></strong>ntsysv –level 3</p>
-<p>5. dmesg：dmesg | grep eth0</p>
-<p>6.日志存放路径：/var/log；常用的是messages</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1986,7 +2061,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">334</span>
+              <span class="site-state-item-count">337</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

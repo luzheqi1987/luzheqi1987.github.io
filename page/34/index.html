@@ -302,6 +302,408 @@
             
               
                 
+                <a class="post-title-link" href="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" itemprop="url">
+                  OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-07T22:46:41+08:00" content="2012-08-07">
+              2012-08-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/07/OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法/" class="leancloud_visitors" data-flag-title="OSGi下JPA报错找不到域已继承序列化或操作无法完成会回滚的解决办法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先我一直在考虑这个属于OSGi分类还是JPA分类，后来想到这个问题的出现完全在于OSGi本身的机制问题，所以分在了OSGi类。</p>
+<p>其次，这个问题的原因不在于域是否继承序列化或者操作有误，这些地方都是没有错的。但编译器之所以报错的原因是，在写JPA配置文件（同时也是写了相应的JPA DAO操作）的bundle中，找不到相关的类。<span style="text-decoration: underline; color: #ff0000;"><strong>解决的办法是在这个bundle的MANIFEST.MF文件中加入对相应包的引用。</strong></span></p>
+<p>同时今天看了《代码大全2》的调试一章，顿时也感觉调试的技术也是博大精深。书中有以下建议：<span style="text-decoration: underline; color: #ff0000;"><strong>不要迷信编译信息。编译器总是锲而不舍地想要告诉你到底是什么出了错，但它也会掩饰自己的无赖</strong></span>。你常常只能通过在字里行间寻找蛛丝马迹们才能知道这些信息的真正含义。就如这两天碰到的这些bugs一样，编译器报错的根本原因与编译器显示出来的信息其实关系不是很大，这种时候就需要通过一些方法步骤（可以参考《代码大全2》）和经验来确定具体的问题出在哪里。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/05/[转]wordpress基础主题文件的组成/" itemprop="url">
+                  [转]wordpress基础主题文件的组成
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-05T22:53:06+08:00" content="2012-08-05">
+              2012-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/05/[转]wordpress基础主题文件的组成/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/05/[转]wordpress基础主题文件的组成/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/05/[转]wordpress基础主题文件的组成/" class="leancloud_visitors" data-flag-title="[转]wordpress基础主题文件的组成">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先你需要给自己即将制作的主题起一个名字，比如我将要做的这个主题，它的名字叫newtheme，然后新建一个文件夹，文件夹的名字就是newtheme，这个文件夹的名字确定后尽量就不要修改了哦，否则会出错误的。下面给大家看看这个newtheme文件夹内都有什么文件。</p>
+<div>
+
+<p>[caption id=”attachment_45” align=”aligncenter” width=”600”]<a href="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/newtheme.jpg" target="_blank" rel="external"><img src="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/newtheme.jpg" alt="" title="newtheme"></a> WordPress主题文件的构成[/caption]</p>
+<p></p></div><br>解释一下每个文件都是干什么用的，header.php、index.php、sidebar.php、footer.php、style.css是主题的核心文件，css规定的是网页的外观，即网页用什么背景，字体多大号，哪里需要显示图片等等，后面会再讲解css的问题的；四个php文件呢，其实就是把一个完整的网页给用小刀切割成了四大块，每一块区域显示各自的内容，就像我们玩过的拼图游戏一样。下面也贴一张图片，相信大家看了会有更直观的感受的。<p></p>
+<p><a href="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/anatomy-wordpress.jpg" target="_blank" rel="external"><img src="http://halfangelhalfdevil.com/wordpress/wp-content/uploads/2012/08/anatomy-wordpress.jpg" alt="" title="anatomy-wordpress"></a></p>
+<p>那么其余那几个php文件是干什么的呢？single.php是用来显示一篇一篇的文章的，page.php是用来显示在wordpress后台添加的页面的，比如留言板页面，作者介绍页面等，archive.php是用来按类别显示文章的，比如显示2012年4月份的所有文章，比如发表在wordpress这个文章类别里的文章，而404.php则是用来显示错误页面的，比如有人访问了一个你的网站上不存在的页面，404.php就会显示在他的电脑屏幕上。</p>
+<p>其实，上面结构图中的四个php文件以及style.css文件才是一个主题最核心的，而single.php等文件即使没有也没关系，wordpress程序会自动的用核心文件替换single.php文件的，不过显示效果可能不是特别好；因此，我们这个主题还是把single.php等文件添加上了。</p>
+<p>可能你已经看过别人的主题，文件夹里的文件会特别多，但请注意，我们将要制作的是一个基础性主题，咱们暂时不需要那些很复杂很花哨的效果，所以文件数目会比较有限；总要明白，饭得一口一口吃，不能一口吃成个胖子的道理。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2012/08/03/WordPress页面调用分类并分页的技术/" itemprop="url">
+                  WordPress页面调用分类并分页的技术
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-08-03T22:35:55+08:00" content="2012-08-03">
+              2012-08-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/WordPress/" itemprop="url" rel="index">
+                    <span itemprop="name">WordPress</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2012/08/03/WordPress页面调用分类并分页的技术/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/08/03/WordPress页面调用分类并分页的技术/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/08/03/WordPress页面调用分类并分页的技术/" class="leancloud_visitors" data-flag-title="WordPress页面调用分类并分页的技术">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>注：之所以把注写在这里是因为以下均为网上查询结果的整合，不看也行，可以百度或者Google一下。<br><code>`1.注意加入的代码必须为**&lt;span style=&quot;text-decoration: underline; color: #33cccc;&quot;&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;英文&lt;/span&gt;&lt;/span&gt;**，否则会报错。</code>    <code>2**.**&lt;span style=&quot;text-decoration: underline;&quot;&gt;**&lt;span style=&quot;color: #33cccc; text-decoration: underline;&quot;&gt;不要用Word&lt;/span&gt;**&lt;/span&gt;进行中间的文字转化，否则会在HTML中增加多余的代码，删起来十分复杂。</code>    `3.这是第一篇正式文章，有很多不熟练的地方等待以后加强。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2012/08/03/WordPress页面调用分类并分页的技术/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2011/11/18/2011-11-18-人生就是不停的战斗九把刀北大演讲/" itemprop="url">
                   人生就是不停的战斗————九把刀北大演讲
                 </a>
@@ -950,7 +1352,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">334</span>
+              <span class="site-state-item-count">337</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -302,6 +302,403 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="url">
+                  [转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-25T02:52:51+08:00" content="2015-03-25">
+              2015-03-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/25/[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)/" class="leancloud_visitors" data-flag-title="[转]日期字符串解析--SimpleDateFormat严格限制日期转换setLenient(false)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://wjlvivid.iteye.com/blog/2017955" target="_blank" rel="external">原文地址</a></p>
+<p>输入“33/12/2011”，用SimpleDateFormat parse()方法,转化为Date(2012,01,02).这样处理相当“33/12/2011”是正常输入，如果需要”33/12/2011”报错，即把”33/12/2011”当作错误格式，刚开始自己写了段逻辑判断：</p>
+<p>把转成的日期再反转回来，再比较是否一致，即使用format方法再转换成字符串，和传入的那个串作比较，如果不相等，则证明传入的那个日期格式是错误的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">getDestDateStrFromSrcDateStr</span><span class="params">(String dateStr,</span></span></div><div class="line">        String srcDateFormat, String descDateFormat)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">try</span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">final</span> SimpleDateFormat src_sdf = <span class="keyword">new</span> SimpleDateFormat(srcDateFormat);</div><div class="line">        <span class="keyword">final</span> Date date = src_sdf.parse(dateStr);</div><div class="line"></div><div class="line">        <span class="comment">//把转成的日期再反转回来，再比较是否一致</span></div><div class="line">        <span class="keyword">if</span> (srcDateFormat.length() != dateStr.length()</div><div class="line">                || !dateStr.equals(src_sdf.format(date)))</div><div class="line">        &#123;</div><div class="line">            LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                    srcDateFormat,</div><div class="line">                    dateStr);</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                    ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//把转成的date类型转换为目标格式日期字符串（yyyyMMdd)</span></div><div class="line">        <span class="keyword">final</span> SimpleDateFormat dest_sdf = <span class="keyword">new</span> SimpleDateFormat(</div><div class="line">                descDateFormat);</div><div class="line">        LOGGER.info(&amp;quot;the converted dest date str:&#123;&#125;&amp;quot;</div><div class="line">                + dest_sdf.format(date));</div><div class="line">        <span class="keyword">return</span> dest_sdf.format(date);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (java.text.ParseException e)</div><div class="line">    &#123;</div><div class="line">        LOGGER.error(&amp;quot;the src date format is &#123;&#125; , but input the date string value is &#123;&#125;, input illegal&amp;quot;,</div><div class="line">                srcDateFormat,</div><div class="line">                dateStr);</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ParseMessageException(</div><div class="line">                ErrorKeys.PAYMENT_AG_CONFIG_SERVICE_PARAM_VALIDATE_FAILED);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>总觉得这种方法显得很笨拙，后来找找API，发现有一个方法：setLenient(false)可以直接使用。哎~何必费这么大劲呢<br>测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.text.DateFormat;</div><div class="line"><span class="keyword">import</span> java.text.ParseException;</div><div class="line"><span class="keyword">import</span> java.text.SimpleDateFormat;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ParseException </span>&#123;</div><div class="line">		DateFormat format = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;dd/MM/yyyy&amp;quot;);</div><div class="line">		format.setLenient(<span class="keyword">false</span>);</div><div class="line">		Date date = format.parse(&amp;quot;<span class="number">33</span>/<span class="number">12</span>/<span class="number">2011</span>&amp;quot;);</div><div class="line">		System.out.println(date);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/25/Linux下DateFormat的parse方法出现ParseException异常/" itemprop="url">
+                  Linux下DateFormat的parse方法出现ParseException异常
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-25T02:49:29+08:00" content="2015-03-25">
+              2015-03-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/25/Linux下DateFormat的parse方法出现ParseException异常/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/25/Linux下DateFormat的parse方法出现ParseException异常/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/25/Linux下DateFormat的parse方法出现ParseException异常/" class="leancloud_visitors" data-flag-title="Linux下DateFormat的parse方法出现ParseException异常">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DateFormat.getInstance().parse(&amp;quot;<span class="number">2014</span>-<span class="number">01</span>-<span class="number">01</span> <span class="number">01</span>:<span class="number">01</span>:<span class="number">01</span>&amp;quot;);</div></pre></td></tr></table></figure>
+<p>这句代码 放在windows下可以 在linux下就会有异常 </p>
+<p>解决方法是<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SimpleDateFormat.getInstance().parse(&amp;quot;<span class="number">2014</span>-<span class="number">1</span>-<span class="number">1</span> <span class="number">1</span>:<span class="number">1</span>:<span class="number">1</span>&amp;quot;);</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/22/计算两个日期相差的天数,Calendar用法/" itemprop="url">
+                  计算两个日期相差的天数,Calendar用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-22T11:28:46+08:00" content="2015-03-22">
+              2015-03-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/22/计算两个日期相差的天数,Calendar用法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/22/计算两个日期相差的天数,Calendar用法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/22/计算两个日期相差的天数,Calendar用法/" class="leancloud_visitors" data-flag-title="计算两个日期相差的天数,Calendar用法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**   </span></div><div class="line">     * 计算两个日期之间相差的天数   </div><div class="line">     * <span class="doctag">@param</span> date1   </div><div class="line">     * <span class="doctag">@param</span> date2   </div><div class="line">     * <span class="doctag">@return</span>   </div><div class="line">     */    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">daysBetween</span><span class="params">(Date date1,Date date2)</span>     </span></div><div class="line">    &#123;     </div><div class="line">        Calendar cal = Calendar.getInstance();     </div><div class="line">        cal.setTime(date1);     </div><div class="line">        <span class="keyword">long</span> time1 = cal.getTimeInMillis();                  </div><div class="line">        cal.setTime(date2);     </div><div class="line">        <span class="keyword">long</span> time2 = cal.getTimeInMillis();          </div><div class="line">        <span class="keyword">long</span> between_days=(time2-time1)/(<span class="number">1000</span>*<span class="number">3600</span>*<span class="number">24</span>);     </div><div class="line"></div><div class="line">       <span class="keyword">return</span> Integer.parseInt(String.valueOf(between_days));            </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>2.如何知道某个月有多少天？<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getDayByMonth</span><span class="params">(String datetime)</span></span>&#123;  </div><div class="line">    StringBuffer buffer = <span class="keyword">new</span> StringBuffer();  </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat( &amp;quot;yyyy-MM&amp;quot;);   </div><div class="line">    Calendar calendar = <span class="keyword">new</span> GregorianCalendar();   </div><div class="line">    <span class="keyword">try</span> &#123;  </div><div class="line">        Date date = sdf.parse(datetime);  </div><div class="line">        calendar.setTime(date);   </div><div class="line">        <span class="keyword">int</span> day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);  </div><div class="line">        <span class="keyword">if</span>(day &amp;lt; <span class="number">10</span>)&#123;  </div><div class="line">            buffer = buffer.append(&amp;quot;-&amp;quot;).append(&amp;quot;<span class="number">0</span>&amp;quot;).append(String.valueOf(day));  </div><div class="line">        &#125;<span class="keyword">else</span>&#123;  </div><div class="line">            buffer = buffer.append(&amp;quot;-&amp;quot;).append(String.valueOf(day));  </div><div class="line">        &#125;  </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123;  </div><div class="line">        e.printStackTrace();  </div><div class="line">    &#125;   </div><div class="line">    <span class="keyword">return</span> buffer.toString();  </div><div class="line">&#125;  </div><div class="line">``` </div><div class="line"></div><div class="line"><span class="number">3</span>\. Calendar 的add用法：  </div><div class="line">add() 的功能非常强大，add 可以对 Calendar 的字段进行计算。如果需要减去值，那么使用负数值就可以了，如 add(field, -value)。  </div><div class="line"></div><div class="line">add() 有两条规则：  </div><div class="line"></div><div class="line">当被修改的字段超出它可以的范围时，那么比它大的字段会自动修正。如：  </div><div class="line">```java</div><div class="line">Calendar cal1 = Calendar.getInstance();  </div><div class="line">cal1.set(<span class="number">2000</span>, <span class="number">7</span>, <span class="number">31</span>, <span class="number">0</span>, <span class="number">0</span> , <span class="number">0</span>); <span class="comment">//2000-8-31  </span></div><div class="line">cal1.add(Calendar.MONTH, <span class="number">1</span>); <span class="comment">//2000-9-31 =&amp;gt; 2000-10-1，对吗？  </span></div><div class="line">System.out.println(cal1.getTime()); <span class="comment">//结果是 2000-9-30  </span></div><div class="line">[/java]</div><div class="line">另一个规则是，如果比它小的字段是不可变的（由 Calendar 的实现类决定），那么该小字段会修正到变化最小的值。  </div><div class="line"></div><div class="line">以上面的例子，<span class="number">9</span>-<span class="number">31</span> 就会变成 <span class="number">9</span>-<span class="number">30</span>，因为变化最小。  </div><div class="line"></div><div class="line">```java</div><div class="line">Calendar calendar = Calendar.getInstance();  </div><div class="line"><span class="comment">// 从一个 Calendar 对象中获取 Date 对象  </span></div><div class="line">Date date = calendar.getTime();  </div><div class="line">calendar.add(Calendar.DAY_OF_YEAR,<span class="number">2</span>);  </div><div class="line">System.out.println(&amp;quot;date=&amp;quot;+date);  </div><div class="line">System.out.println(calendar.getTime());  </div><div class="line"></div><div class="line">结果：  </div><div class="line">date=Thu Aug <span class="number">26</span> <span class="number">18</span>:<span class="number">00</span>:<span class="number">42</span> CST <span class="number">2010</span>  </div><div class="line">Sat Aug <span class="number">28</span> <span class="number">18</span>:<span class="number">00</span>:<span class="number">42</span> CST <span class="number">2010</span></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/22/[转]Spring 实现数据库读写分离/" itemprop="url">
                   [转]Spring 实现数据库读写分离
                 </a>
@@ -1336,410 +1733,6 @@ public List&amp;lt;User&amp;gt; list();
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" itemprop="url">
-                  经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:27:31+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" class="leancloud_visitors" data-flag-title="经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>已有一个随机数发生器，生成0的概率为p,生成1的概率为1-p，求如何利用这个随机数发生器制作一个生成1~n的概率都是 1/n 的发生器</p>
-<p>制作 1 2 发生概率都是 1 / 2 的发生器，连续发生2次，则发生00,11的概率为p*p,(1-p)(1-p),发生10,01的概率都为p(1-p),在发生10时返回1，发生01时返回2，则发生1，2的概率相等</p>
-<p>制作 1 2 3 发生概率都是 1 / 3的发生器，连续发生3次，则发生001,010,100的概率都为p<em>p</em>(1-P),或者是110,101,011概率都为p<em>(1-p)</em>(1-p),则用001,010,100分别对应1,2,3返回，即可使得发生1,2,3的概率都为1/3</p>
-<p><span style="color: #111111; font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 21.0599994659424px; white-space: pre-wrap;"> </span></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法题（三）——Catalan数列/" itemprop="url">
-                  经典算法题（三）——Catalan数列
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:27:04+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法题（三）——Catalan数列/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（三）——Catalan数列/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法题（三）——Catalan数列/" class="leancloud_visitors" data-flag-title="经典算法题（三）——Catalan数列">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.四个人过河，用时间分别为1，2，5，10，最多只能两个人同时过河，且过河需要手电筒（只有一个），问怎样才能最快过河2.有一个函数intf(intn)，编写代码检测它是不是总是输出03.25匹马比赛，5匹马为一组，如何最快的比赛得到速度最快的前三名马，需要几次（无法计时，假设一马匹的速度保持不变）4，用两个栈模拟队列先进先出，模拟其add和romve功能，给出思路和代码<br>5.一景区需要门票5元，售票员没有零钱，假设这一天会来2N个人，其中N个人会给5元钱，N个人给10元，问所有人都不需要等待的概率是多少<br>属于卡特兰数列问题：<br>h(n)=C(2n,n)/(n+1)(n=0,1,2,…)（其前几项为:1,1,2,5,14,42,132,429,1430）<br>解：下列问题都是Catalan数列:<br>1.有2n个人排成一行进入剧场。入场费5元。其中只有n个人有一张5元钞票，另外n人只有10元钞票，剧院无其它钞票，问有多少中方法使得只要有10元的人买票，售票处就有5元的钞票找零？2.一位大城市的律师在她住所以北n个街区和以东n个街区处工作。每天她走2n个街区去上班。如果他从不穿越（但可以碰到）从家到办公室的对角线，那么有多少条可能的道路<br>3.在圆上选择2n个点,将这些点成对连接起来使得所得到的n条线段不相交的方法数?<br>4.n个结点可够造多少个不同的二叉树?<br>5.一个栈(无穷大)的进栈序列为1,2,3,..n,有多少个不同的出栈序列?</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/美团面试题/" itemprop="url">
-                  美团面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:26:29+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/美团面试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/美团面试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/美团面试题/" class="leancloud_visitors" data-flag-title="美团面试题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、Linux进程间的通信方式？两个进程是如何来共享内存的？两个进程如何通过信号量通信？<br>（1）Linux下进程间通信的方式有： 管道(有名/无名) 、消息、信号、信号量、共享内存、邮箱、socket。<br>（2）Linux下共享内存是进程间通信的方式之一，共享内存允许两个或多个进程访问同一块内存，比如像 malloc函数 向不同的进程返回执行同一块物理内存区域的指针。当一个进程改变了这块地址中的内容的时候，其他拥有这块物理内存指针的进程也会察觉到这个更改。在进程间的通信方式中，共享内存是通信效率最高的，访问共享内存区域和访问进程独有的内存区域一样快，并不需要通过系统调用或者其他通过内核的过程来完成，同时也避免了各种不必要的复制。对共享内存的操作涉及到多个进程间的同步问题，数据应该先写，在读，通常采用用信号量来协调这个过程。</p>
-<p>进程与线程的区别？回答方式：<br>线程是进程中的一个逻辑执行单元，也是进程中可调度的实体；一个进程中可以包含多个线程，但是一个线程只能隶属于一个进程<br>与进程的区别：<br>1、CPU调度方面：CPU调度是以线程为基本单位进行的；<br>2、拥有资源方面：进程是拥有资源的基本单位，线程不拥有系统的资源，但是可以使用隶属于进程的资源；<br>3、并发方面： 线程 和 进程都支持并发；<br>4、系统开销方面： 创建进程的时候需要为进程分配资源，销毁进程时需要回收资源，所以使用进程的开销要大于使用线程的开销。</p>
-<p>进程控制块?<br>操作系统通过进程控制块来对进程控制和管理的。PCB通常在系统内存中占用一块连续的分区，它存放着操作系统用于描述进程情况以及控制进程运行情况所需的全部信息，<br>为什么要CPU调度？<br>CPU调度的目标是在任何时候都有某些进程在运行，是CPU使用率最大化。 同一时刻 只有一个进程占有CPU资源，但一个进程在等待IO时等等一些阻塞进程的动作时，CPU就回空闲出来，这时候，我们应该让这个阻塞的进程让出CPU资源，让其他已经处于就绪状态的进程执行。这样就可以使CPU使用率最大化。<br>什么是死锁？<br>在多道程序环境下，多个进程可能竞争一定数量的资源，某个进程申请资源，如果这时这个资源不可用，那么这个进程就进入等待状态。如果所申请的资源被其他等待进程占有，那么该等待进程可能再也无法改变其状态，一直等待下去，这种情况称之为 死锁。</p>
-<p>cache的作用？<br>cache是处于 CPU寄存器 和 内存之间的一层缓存，用来加快CPU的取指速率， 使用时： CPU需要数据时，首先会查找cache中有没有需要的数据，如果有，则取走，如果没有，则查询内存，并将数据更新到缓存中，以供下次取指。</p>
-<p>2、DNS (Domain name system)域名系统，简单描述其工作原理。<br>DNS客户机需要在程序中使用名称时，它会查询DNS服务器来解析该名称。客户机发送的每条查询信息包括三条信息：包括：指定的DNS域名，指定的查询类型，DNS域名指定的类别。它是基于UDP的服务，端口是53，该应用一般不直接为用户使用，而是为其他应用服务 如 HTTP、SMTP等在其中需要完成主机名到IP地址转换。</p>
-<p>在浏览器地址栏内敲 <a href="http://www.baidu.com/" target="_blank" rel="external">www.baidu.com</a> 到这个页面显示在浏览器上，这个过程中都发生了什么？<br>（1） 当我们在浏览器上敲入一个url是， 浏览器会解析出该url的域名，接下来的动作，是将域名转化为 ID 地址，依次查询 浏览器DNS缓存、系统缓存、路由器缓存、如果没有找到 则一直查询到 根域名服务器缓存，找到域名所对应的的 IP地址。<br>（2）向IP所对应的的服务器发送请求数据，<br>（3）服务器响应请求，发回网页内容；<br>（4）客户端浏览器获取网页内容，解析，并显示在浏览器上。<br>这就是我们所看到的的 百度页面显现的过程。</p>
-<p>3、TCP/UDP的区别？<br>（1）TCP是面向连接的、可靠数据传输协议，UDP是不面向连接的，非可靠数据传输协议；（2） 从传输速度上考虑： TCP 由于要建立连接、保证数据传输的可靠性等造成数据传输速度比较慢，UDP不需要这些，数据传输速度相对比较快；（3）从安全方面考虑，TCP的安全性能更高，UDP的安全性能比较低 （4）从传输数据的格式来比较，TCP传输的单位称为报文段，UDP传输的数据单位被称为 数据报<br>4、ICMP协议<br>ICMP (Internet Control Message Protocol) ，因特网控制消息协议。它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传输控制消息。控制消息包括：网络不同、主机是否可达、路由器是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但对用户数据的传递起着很重要的作用。ICMP报文格式两种： 差错报告报文和询问报文。</p>
-<p>5、数据库<br>数据库 一个 逻辑执行单元 如何才能被称的上是一个事务？ 必须满足的性质？<br>数据库的事务是指 一个逻辑单元，这个逻辑单元可包含一系列的执行操作， 一个逻辑单元要想成为一个事务，必须满足所谓的 ACID （原子性、隔离性、一致性、持久性）；<br>原子性：指的是 一个事务执行，要么全部执行成功，要么执行失败回滚到执行之前的状态；<br>一致性：事务执行过后，数据库中数据的状态都必须是一致的，必须遵从数据库的完整性约束；<br>隔离性：对于多个事务并发的时候，<br>持久性： 事务的完成后对系统的影响是持久的，任何一个事务的操作不会对其他事务造成干扰；比如一个事务在读数据库，一个事务在写数据库，读数据库的这个事务读到的数据，要么是这个写数据库事务 写前的状态，要么为写后的状态，不存在 读到的数据是 另一个事务写的过程中的一个状态。<br>数据库索引？</p>
-<p>6、内存管理<br>内存的段页式管理的优缺点？<br>分段：<br>在段式存储管理中，将程序的地址空间（进程地址空间）划分为若干个段(segment)，这样每个进程都有一个二维的地址空间，相互独立，互不干扰。程序通过分段来划分为多个模块，如代码段、数据段、共享段等，这样做的优点是：可以分别编译源程序的一个文件，并且可以针对不同类型的段采取不同的保护，也可以按段为单位进行共享。段式存储管理的优点是：没有内碎片，外碎片可以通过内存紧缩来消除，便于实现内存共享。</p>
-<p>分页：将程序的逻辑地址空间划分为固定大小的页 (page)，而物理内存划分为同样大小的页框(pageframe)。程序加载时，可以将任意一页放入内存中的任意一个页框，这些页框不必连续，从而实现了离散分配。这种管理的优势是：没有外碎片，且一个程序不必连续存放，这样就便于更改程序占用的空间大小。<br>页式 和 段式系统有许多相似之处，比如，两者都采用离散的分配方式，都通过地址映射机构来实现地址变换。但概念上两者是有很多区别的，主要表现在：<br>[1]、页是信息的物理单位， 段是信息的逻辑单位，每个逻辑单元分为一个段。<br>[2]、页大小固定由系统决定，把逻辑地址划分为页号和页内地址两部分，段的长度不固定，且决定于用户编写的程序<br>[3]、页式系统地址空间是一维的，即为单一的线性地址空间，程序员只需利用一个标识符，即可表示一个地址。分段的作业地址空间是二维的，程序员在标识一个地址时，既需给出段名，又需给出段内地址。<br><a href="http://dongxicheng.org/os/linux-memory-management-basic/" target="_blank" rel="external">http://dongxicheng.org/os/linux-memory-management-basic/</a></p>
-<p>内存：<br>（1）虚拟内存： 计算机系统内存管理的一种技术。它使得应用程序认为它拥有连续可用的内存（一块连续完整的地址空间），而实际上，他/她通常被分割成多个物理内存碎片，还有部分占时存储在外部磁盘存储器上，在需要时进行交换数据。与没有虚拟内存技术的系统相比，使用这种技术的系统使得大型程序编写变得更容易，对真正的物理内存使用的更有效率。<br>（2）物理内存：实际的内存，物理地址被分成离散的单元，称为页，页面大小是跟操作系统的位数有关系，一般为4K</p>
-<p>7、程序内存分区<br>5个分区：<br>堆区：用户在这进行动态内存分配区，<br>栈区：系统自动分配，自动回收，速度快，效率高，但是栈区比较小，小心 栈溢出<br>全局区： 存储全局变量和静态变量，<br>文字常量区：常量字符串就存储在这，程序结束后，由系统同一释放。<br>程序代码区：存放程序的二进制代码。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1785,7 +1778,7 @@ public List&amp;lt;User&amp;gt; list();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">334</span>
+              <span class="site-state-item-count">337</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

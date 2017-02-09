@@ -302,6 +302,456 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/" itemprop="url">
+                  Spring 使用简单Demo进行源码调试（四）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-11T07:24:09+08:00" content="2015-05-11">
+              2015-05-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（四）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（四）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>接上篇日志<a href="http://blog.jerkybible.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/">Spring 使用简单Demo进行源码调试（三）</a>继续。</p>
+<p>第一步<br>展开loadBeanDefinitions(resources)。这个代码比较简单，是对每一个资源进行加载。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadBeanDefinitions</span><span class="params">(Resource... resources)</span> <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">	Assert.notNull(resources, &amp;quot;Resource array must not be <span class="keyword">null</span>&amp;quot;);</div><div class="line">	<span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (Resource resource : resources) &#123;</div><div class="line">		counter += loadBeanDefinitions(resource);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> counter;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>展开loadBeanDefinitions(resource)。这一步为从特定的XML文件中加载bean factory，使用EncodedResource包装传来的resource，然后进一步加载。EncodedResource结合特定编码的资源描述符或特定字符集用于阅读资源，这里的资源描述符和特定字符集都为。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * 从特定的XML文件中加载bean factory</div><div class="line">	public int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException &#123;</div><div class="line">		return loadBeanDefinitions(new EncodedResource(resource));</div><div class="line">	&#125;</span></div></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/11/Spring 使用简单Demo进行源码调试（四）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="url">
+                  Spring 使用简单Demo进行源码调试（三）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-11T02:45:38+08:00" content="2015-05-11">
+              2015-05-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（三）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>接上篇日志<a href="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">Spring 使用简单Demo进行源码调试（二）</a>继续。</p>
+<p>上篇提到了主要的初始化函数refresh，函数源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">            <span class="comment">// 为了刷新准备上下文</span></div><div class="line">            prepareRefresh();</div><div class="line"></div><div class="line">            <span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">            <span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">            prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">                postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">                invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">                registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中消息源</span></div><div class="line">                initMessageSource();</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">                initApplicationEventMulticaster();</div><div class="line"></div><div class="line">                <span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">                onRefresh();</div><div class="line"></div><div class="line">                <span class="comment">// 检查监听器bean并注册 </span></div><div class="line">                registerListeners();</div><div class="line"></div><div class="line">                <span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">                finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 发布相应的事件</span></div><div class="line">                finishRefresh();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">                logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">                <span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">                destroyBeans();</div><div class="line"></div><div class="line">                <span class="comment">// Reset 'active' flag.</span></div><div class="line">                cancelRefresh(ex);</div><div class="line"></div><div class="line">                <span class="comment">// Propagate exception to caller.</span></div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>先把prepareRefresh的代码贴出来。这段代码主要功能是初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * Prepare this context for refreshing, setting its startup date and</div><div class="line">	 * active flag as well as performing any initialization of property sources.</div><div class="line">	 */</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">prepareRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.startupDate = System.currentTimeMillis();</div><div class="line"></div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.activeMonitor) &#123;</div><div class="line">			<span class="keyword">this</span>.active = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">			logger.info(&amp;quot;Refreshing &amp;quot; + <span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Initialize any placeholder property sources in the context environment</span></div><div class="line">		initPropertySources();</div><div class="line"></div><div class="line">		<span class="comment">// Validate that all properties marked as required are resolvable</span></div><div class="line">		<span class="comment">// see ConfigurablePropertyResolver#setRequiredProperties</span></div><div class="line">		getEnvironment().validateRequiredProperties();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="url">
+                  Spring 使用简单Demo进行源码调试（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-05-09T10:22:48+08:00" content="2015-05-09">
+              2015-05-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（二）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>接上一篇文章 <a href="http://blog.jerkybible.com/2015/05/08/Spring 使用简单Demo进行源码调试（一）/">Spring 使用简单Demo进行源码调试（一）</a></p>
+<p>在运行到下面语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(&amp;quot;bean.xml&amp;quot;);<span class="comment">// 读取bean.xml中的内容</span></div></pre></td></tr></table></figure></p>
+<p>该构造函数首先进入下面ClassPathXmlApplicationContext类中这段代码。代码中configLocations为我们的配置文件，及[bean.xml]；refresh表示是否刷新，这里为true，表示刷新配置；parent表示上级上下文，这里为null表示没有上级上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * 使用上一级上下文创建新的ClassPathXmlApplicationContext,</div><div class="line">	 * 从XML中加载定义</div><div class="line">	 * <span class="doctag">@param</span> configLocations 资源地址列表</div><div class="line">	 * <span class="doctag">@param</span> refresh 是否刷新上下文,</div><div class="line">	 * <span class="doctag">@param</span> parent 上一级上下文</div><div class="line">	 */</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassPathXmlApplicationContext</span><span class="params">(String[] configLocations, <span class="keyword">boolean</span> refresh, ApplicationContext parent)</span></div><div class="line">			<span class="keyword">throws</span> BeansException </span>&#123;			</div><div class="line">		<span class="comment">//parent = null;</span></div><div class="line">		<span class="comment">//refresh= true;</span></div><div class="line">		<span class="comment">//configLocations=[bean.xml];</span></div><div class="line">		<span class="keyword">super</span>(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		<span class="keyword">if</span> (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/08/Spring 使用简单Demo进行源码调试（一）/" itemprop="url">
                   Spring 使用简单Demo进行源码调试（一）
                 </a>
@@ -1649,897 +2099,6 @@ INDEX DIRECTORY = &apos;/data7/idx&apos;
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/16/[转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现/" itemprop="url">
-                  [转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-16T07:31:15+08:00" content="2015-04-16">
-              2015-04-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/16/[转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/16/[转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/16/[转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现/" class="leancloud_visitors" data-flag-title="[转]SpringMVC源码剖析（四）- DispatcherServlet请求转发的实现">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://my.oschina.net/lichhao/blog/104943" target="_blank" rel="external">http://my.oschina.net/lichhao/blog/104943</a></p>
-<p>SpringMVC完成初始化流程之后，就进入Servlet标准生命周期的第二个阶段，即“service”阶段。在“service”阶段中，每一次Http请求到来，容器都会启动一个请求线程，通过service()方法，委派到doGet()或者doPost()这些方法，完成Http请求的处理。</p>
-<p>在初始化流程中，SpringMVC巧妙的运用依赖注入读取参数，并最终建立一个与容器上下文相关联的Spring子上下文。这个子上下文，就像Struts2中xwork容器一样，为接下来的Http处理流程中各种编程元素提供了容身之所。如果说将Spring上下文关联到Servlet容器中，是SpringMVC框架的第一个亮点，那么在请求转发流程中，SpringMVC对各种处理环节编程元素的抽象，就是另外一个独具匠心的亮点。</p>
-<p>Struts2采取的是一种完全和Web容器隔离和解耦的事件机制。诸如Action对象、Result对象、Interceptor对象，这些都是完全脱离Servlet容器的编程元素。Struts2将数据流和事件处理完全剥离开来，从Http请求中读取数据后，下面的事件处理流程就只依赖于这些数据，而完全不知道有Web环境的存在。</p>
-<p>反观SpringMVC，无论HandlerMapping对象、HandlerAdapter对象还是View对象，这些核心的接口所定义的方法中，HttpServletRequest和HttpServletResponse对象都是直接作为方法的参数出现的。这也就意味着，框架的设计者，直接将SpringMVC框架和容器绑定到了一起。或者说，整个SpringMVC框架，都是依托着Servlet容器元素来设计的。下面就来看一下，源码中是如何体现这一点的。</p>
-<p>1.请求转发的入口</p>
-<p>就像任何一个注册在容器中的Servlet一样，DispatcherServlet也是通过自己的service()方法来接收和转发Http请求到具体的doGet()或doPost()这些方法的。以一次典型的GET请求为例，经过HttpServlet基类中service()方法的委派，请求会被转发到doGet()方法中。doGet()方法，在DispatcherServlet的父类FrameworkServlet类中被覆写。<br>[java]<br>@Override<br>protected final void doGet(HttpServletRequest request, HttpServletResponse response)<br>        throws ServletException, IOException {</p>
-<pre><code>processRequest(request, response);
-</code></pre><p>}<br>[/java]<br>可以看到，这里只是简单的转发到processRequest()这个方法。</p>
-<p>[java]<br>protected final void processRequest(HttpServletRequest request, HttpServletResponse response)<br>        throws ServletException, IOException {</p>
-<pre><code>long startTime = System.currentTimeMillis();
-Throwable failureCause = null;
-
-// Expose current LocaleResolver and request as LocaleContext.
-LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
-LocaleContextHolder.setLocaleContext(buildLocaleContext(request), this.threadContextInheritable);
-
-// Expose current RequestAttributes to current thread.
-RequestAttributes previousRequestAttributes = RequestContextHolder.getRequestAttributes();
-ServletRequestAttributes requestAttributes = null;
-if (previousRequestAttributes == null || previousRequestAttributes.getClass().equals(ServletRequestAttributes.class)) {
-    requestAttributes = new ServletRequestAttributes(request);
-    RequestContextHolder.setRequestAttributes(requestAttributes, this.threadContextInheritable);
-}
-
-if (logger.isTraceEnabled()) {
-    logger.trace(&amp;quot;Bound request context to thread: &amp;quot; + request);
-}
-
-try {
-    doService(request, response);
-}
-catch (ServletException ex) {
-    failureCause = ex;
-    throw ex;
-}
-catch (IOException ex) {
-    failureCause = ex;
-    throw ex;
-}
-catch (Throwable ex) {
-    failureCause = ex;
-    throw new NestedServletException(&amp;quot;Request processing failed&amp;quot;, ex);
-}
-
-finally {
-    // Clear request attributes and reset thread-bound context.
-    LocaleContextHolder.setLocaleContext(previousLocaleContext, this.threadContextInheritable);
-    if (requestAttributes != null) {
-        RequestContextHolder.setRequestAttributes(previousRequestAttributes, this.threadContextInheritable);
-        requestAttributes.requestCompleted();
-    }
-    if (logger.isTraceEnabled()) {
-        logger.trace(&amp;quot;Cleared thread-bound request context: &amp;quot; + request);
-    }
-
-    if (logger.isDebugEnabled()) {
-        if (failureCause != null) {
-            this.logger.debug(&amp;quot;Could not complete request&amp;quot;, failureCause);
-        }
-        else {
-            this.logger.debug(&amp;quot;Successfully completed request&amp;quot;);
-        }
-    }
-    if (this.publishEvents) {
-        // Whether or not we succeeded, publish an event.
-        long processingTime = System.currentTimeMillis() - startTime;
-        this.webApplicationContext.publishEvent(
-                new ServletRequestHandledEvent(this,
-                        request.getRequestURI(), request.getRemoteAddr(),
-                        request.getMethod(), getServletConfig().getServletName(),
-                        WebUtils.getSessionId(request), getUsernameForRequest(request),
-                        processingTime, failureCause));
-    }
-}
-</code></pre><p>}[/java]<br>代码有点长，理解的要点是以doService()方法为区隔，前一部分是将当前请求的Locale对象和属性，分别设置到LocaleContextHolder和RequestContextHolder这两个抽象类中的ThreadLocal对象中，也就是分别将这两个东西和请求线程做了绑定。在doService()处理结束后，再恢复回请求前的LocaleContextHolder和RequestContextHolder，也即解除线程绑定。每次请求处理结束后，容器上下文都发布了一个ServletRequestHandledEvent事件，你可以注册监听器来监听该事件。</p>
-<p>可以看到，processRequest()方法只是做了一些线程安全的隔离，真正的请求处理，发生在doService()方法中。点开FrameworkServlet类中的doService()方法。<br>[java]<br>protected abstract void doService(HttpServletRequest request, HttpServletResponse response)<br>        throws Exception;<br>[/java]<br>又是一个抽象方法，这也是SpringMVC类设计中的惯用伎俩：父类抽象处理流程，子类给予具体的实现。真正的实现是在DispatcherServlet类中。</p>
-<p>让我们接着看DispatcherServlet类中实现的doService()方法。</p>
-<p>[java]<br>@Override<br>protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {<br>    if (logger.isDebugEnabled()) {<br>        String requestUri = urlPathHelper.getRequestUri(request);<br>        logger.debug(&quot;DispatcherServlet with name ‘&quot; + getServletName() + &quot;’ processing &quot; + request.getMethod() +<br>                &quot; request for [&quot; + requestUri + &quot;]&quot;);<br>    }</p>
-<pre><code>// Keep a snapshot of the request attributes in case of an include,
-// to be able to restore the original attributes after the include.
-Map&amp;lt;String, Object&amp;gt; attributesSnapshot = null;
-if (WebUtils.isIncludeRequest(request)) {
-    logger.debug(&amp;quot;Taking snapshot of request attributes before include&amp;quot;);
-    attributesSnapshot = new HashMap&amp;lt;String, Object&amp;gt;();
-    Enumeration&amp;lt;?&amp;gt; attrNames = request.getAttributeNames();
-    while (attrNames.hasMoreElements()) {
-        String attrName = (String) attrNames.nextElement();
-        if (this.cleanupAfterInclude || attrName.startsWith(&amp;quot;org.springframework.web.servlet&amp;quot;)) {
-            attributesSnapshot.put(attrName, request.getAttribute(attrName));
-        }
-    }
-}
-
-// Make framework objects available to handlers and view objects.
-request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
-request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
-request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
-request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
-
-FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);
-if (inputFlashMap != null) {
-    request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));
-}
-request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());
-request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);
-
-try {
-    doDispatch(request, response);
-}
-finally {
-    // Restore the original attribute snapshot, in case of an include.
-    if (attributesSnapshot != null) {
-        restoreAttributesAfterInclude(request, attributesSnapshot);
-    }
-}
-</code></pre><p>}[/java]<br>几个requet.setAttribute()方法的调用，将前面在初始化流程中实例化的对象设置到http请求的属性中，供下一步处理使用，其中有容器的上下文对象、本地化解析器等SpringMVC特有的编程元素。不同于Struts2中的ValueStack，SpringMVC的数据并没有从HttpServletRequest对象中抽离出来再存进另外一个编程元素，这也跟SpringMVC的设计思想有关。因为从一开始，SpringMVC的设计者就认为，不应该将请求处理过程和Web容器完全隔离。</p>
-<p>所以，你可以看到，真正发生请求转发的方法doDispatch()中，它的参数是HttpServletRequest和HttpServletResponse对象。这给我们传递的意思也很明确，从request中能获取到一切请求的数据，从response中，我们又可以往服务器端输出任何响应，Http请求的处理，就应该围绕这两个对象来设计。我们不妨可以将SpringMVC这种设计方案，是从Struts2的过度设计中吸取教训，而向Servlet编程的一种回归和简化。</p>
-<p>2.请求转发的抽象描述</p>
-<p>接下来让我们看看doDispatch()这个整个请求转发流程中最核心的方法。DispatcherServlet所接收的Http请求，经过层层转发，最终都是汇总到这个方法中来进行最后的请求分发和处理。doDispatch()这个方法的内容，就是SpringMVC整个框架的精华所在。它通过高度抽象的接口，描述出了一个MVC（Model-View-Controller）设计模式的实现方案。Model、View、Controller三种层次的编程元素，在SpringMVC中都有大量的实现类，各种处理细节也是千差万别。但是，它们最后都是由，也都能由doDispatch()方法来统一描述，这就是接口和抽象的威力，万变不离其宗。</p>
-<p>先来看一下doDispatch()方法的庐山真面目。<br>[java]<br>protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {<br>    HttpServletRequest processedRequest = request;<br>    HandlerExecutionChain mappedHandler = null;<br>    int interceptorIndex = -1;</p>
-<pre><code>try {
-    ModelAndView mv;
-    boolean errorView = false;
-
-    try {
-        processedRequest = checkMultipart(request);
-
-        // Determine handler for the current request.
-        mappedHandler = getHandler(processedRequest, false);
-        if (mappedHandler == null || mappedHandler.getHandler() == null) {
-            noHandlerFound(processedRequest, response);
-            return;
-        }
-
-        // Determine handler adapter for the current request.
-        HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
-
-        // Process last-modified header, if supported by the handler.
-        String method = request.getMethod();
-        boolean isGet = &amp;quot;GET&amp;quot;.equals(method);
-        if (isGet || &amp;quot;HEAD&amp;quot;.equals(method)) {
-            long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
-            if (logger.isDebugEnabled()) {
-                String requestUri = urlPathHelper.getRequestUri(request);
-                logger.debug(&amp;quot;Last-Modified value for [&amp;quot; + requestUri + &amp;quot;] is: &amp;quot; + lastModified);
-            }
-            if (new ServletWebRequest(request, response).checkNotModified(lastModified) &amp;amp;&amp;amp; isGet) {
-                return;
-            }
-        }
-
-        // Apply preHandle methods of registered interceptors.
-        HandlerInterceptor[] interceptors = mappedHandler.getInterceptors();
-        if (interceptors != null) {
-            for (int i = 0; i &amp;lt; interceptors.length; i++) {
-                HandlerInterceptor interceptor = interceptors[i];
-                if (!interceptor.preHandle(processedRequest, response, mappedHandler.getHandler())) {
-                    triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, null);
-                    return;
-                }
-                interceptorIndex = i;
-            }
-        }
-
-        // Actually invoke the handler.
-        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
-
-        // Do we need view name translation?
-        if (mv != null &amp;amp;&amp;amp; !mv.hasView()) {
-            mv.setViewName(getDefaultViewName(request));
-        }
-
-        // Apply postHandle methods of registered interceptors.
-        if (interceptors != null) {
-            for (int i = interceptors.length - 1; i &amp;gt;= 0; i--) {
-                HandlerInterceptor interceptor = interceptors[i];
-                interceptor.postHandle(processedRequest, response, mappedHandler.getHandler(), mv);
-            }
-        }
-    }
-    catch (ModelAndViewDefiningException ex) {
-        logger.debug(&amp;quot;ModelAndViewDefiningException encountered&amp;quot;, ex);
-        mv = ex.getModelAndView();
-    }
-    catch (Exception ex) {
-        Object handler = (mappedHandler != null ? mappedHandler.getHandler() : null);
-        mv = processHandlerException(processedRequest, response, handler, ex);
-        errorView = (mv != null);
-    }
-
-    // Did the handler return a view to render?
-    if (mv != null &amp;amp;&amp;amp; !mv.wasCleared()) {
-        render(mv, processedRequest, response);
-        if (errorView) {
-            WebUtils.clearErrorRequestAttributes(request);
-        }
-    }
-    else {
-        if (logger.isDebugEnabled()) {
-            logger.debug(&amp;quot;Null ModelAndView returned to DispatcherServlet with name &apos;&amp;quot; + getServletName() +
-                    &amp;quot;&apos;: assuming HandlerAdapter completed request handling&amp;quot;);
-        }
-    }
-
-    // Trigger after-completion for successful outcome.
-    triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, null);
-}
-
-catch (Exception ex) {
-    // Trigger after-completion for thrown exception.
-    triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);
-    throw ex;
-}
-catch (Error err) {
-    ServletException ex = new NestedServletException(&amp;quot;Handler processing failed&amp;quot;, err);
-    // Trigger after-completion for thrown exception.
-    triggerAfterCompletion(mappedHandler, interceptorIndex, processedRequest, response, ex);
-    throw ex;
-}
-
-finally {
-    // Clean up any resources used by a multipart request.
-    if (processedRequest != request) {
-        cleanupMultipart(processedRequest);
-    }
-}
-</code></pre><p>}[/java]<br>真是千呼万唤始出来，犹抱琵琶半遮面。我们在第一篇《SpringMVC源码剖析（一）- 从抽象和接口说起》中所描述的各种编程元素，依次出现在该方法中。HandlerMapping、HandlerAdapter、View这些接口的设计，我们在第一篇中已经讲过。现在我们来重点关注一下HandlerExecutionChain这个对象。</p>
-<p>从上面的代码中，很明显可以看出一条线索，整个方法是围绕着如何获取HandlerExecutionChain对象，执行HandlerExecutionChain对象得到相应的视图对象，再对视图进行渲染这条主线来展开的。HandlerExecutionChain对象显得异常重要。</p>
-<p>因为Http请求要进入SpringMVC的处理体系，必须由HandlerMapping接口的实现类映射Http请求，得到一个封装后的HandlerExecutionChain对象。再由HandlerAdapter接口的实现类来处理这个HandlerExecutionChain对象所包装的处理对象，来得到最后渲染的视图对象。</p>
-<p>视图对象是用ModelAndView对象来描述的，名字已经非常直白，就是数据和视图，其中的数据，由HttpServletRequest的属性得到，视图就是由HandlerExecutionChain封装的处理对象处理后得到。当然HandlerExecutionChain中的拦截器列表HandlerInterceptor，会在处理过程的前后依次被调用，为处理过程留下充足的扩展点。</p>
-<p>所有的SpringMVC框架元素，都是围绕着HandlerExecutionChain这个执行链来发挥效用。我们来看看，HandlerExecutionChain类的代码。</p>
-<p>[java]<br>package org.springframework.web.servlet;</p>
-<p>import java.util.ArrayList;<br>import java.util.Arrays;<br>import java.util.List;</p>
-<p>import org.springframework.util.CollectionUtils;</p>
-<p>public class HandlerExecutionChain {</p>
-<pre><code>private final Object handler;
-
-private HandlerInterceptor[] interceptors;
-
-private List&amp;lt;HandlerInterceptor&amp;gt; interceptorList;
-
-public HandlerExecutionChain(Object handler) {
-    this(handler, null);
-}
-
-public HandlerExecutionChain(Object handler, HandlerInterceptor[] interceptors) {
-    if (handler instanceof HandlerExecutionChain) {
-        HandlerExecutionChain originalChain = (HandlerExecutionChain) handler;
-        this.handler = originalChain.getHandler();
-        this.interceptorList = new ArrayList&amp;lt;HandlerInterceptor&amp;gt;();
-        CollectionUtils.mergeArrayIntoCollection(originalChain.getInterceptors(), this.interceptorList);
-        CollectionUtils.mergeArrayIntoCollection(interceptors, this.interceptorList);
-    }
-    else {
-        this.handler = handler;
-        this.interceptors = interceptors;
-    }
-}
-
-public Object getHandler() {
-    return this.handler;
-}
-
-public void addInterceptor(HandlerInterceptor interceptor) {
-    initInterceptorList();
-    this.interceptorList.add(interceptor);
-}
-
-public void addInterceptors(HandlerInterceptor[] interceptors) {
-    if (interceptors != null) {
-        initInterceptorList();
-        this.interceptorList.addAll(Arrays.asList(interceptors));
-    }
-}
-
-private void initInterceptorList() {
-    if (this.interceptorList == null) {
-        this.interceptorList = new ArrayList&amp;lt;HandlerInterceptor&amp;gt;();
-    }
-    if (this.interceptors != null) {
-        this.interceptorList.addAll(Arrays.asList(this.interceptors));
-        this.interceptors = null;
-    }
-}
-
-public HandlerInterceptor[] getInterceptors() {
-    if (this.interceptors == null &amp;amp;&amp;amp; this.interceptorList != null) {
-        this.interceptors = this.interceptorList.toArray(new HandlerInterceptor[this.interceptorList.size()]);
-    }
-    return this.interceptors;
-}
-
-@Override
-public String toString() {
-    if (this.handler == null) {
-        return &amp;quot;HandlerExecutionChain with no handler&amp;quot;;
-    }
-    StringBuilder sb = new StringBuilder();
-    sb.append(&amp;quot;HandlerExecutionChain with handler [&amp;quot;).append(this.handler).append(&amp;quot;]&amp;quot;);
-    if (!CollectionUtils.isEmpty(this.interceptorList)) {
-        sb.append(&amp;quot; and &amp;quot;).append(this.interceptorList.size()).append(&amp;quot; interceptor&amp;quot;);
-        if (this.interceptorList.size() &amp;gt; 1) {
-            sb.append(&amp;quot;s&amp;quot;);
-        }
-    }
-    return sb.toString();
-}
-</code></pre><p>}[/java]<br>一个拦截器列表，一个执行对象，这个类的内容十分的简单，它蕴含的设计思想，却十分的丰富。</p>
-<p>1.拦截器组成的列表，在执行对象被调用的前后，会依次执行。这里可以看成是一个的AOP环绕通知，拦截器可以对处理对象随心所欲的进行处理和增强。这里明显是吸收了Struts2中拦截器的设计思想。这种AOP环绕式的扩展点设计，也几乎成为所有框架必备的内容。</p>
-<p>2.实际的处理对象，即handler对象，是由Object对象来引用的。</p>
-<p>[java]<br>private final Object handler;[/java]<br>之所以要用一个java世界最基础的Object对象引用来引用这个handler对象，是因为连特定的接口也不希望绑定在这个handler对象上，从而使handler对象具有最大程度的选择性和灵活性。</p>
-<p>我们常说，一个框架最高层次的抽象是接口，但是这里SpringMVC更进了一步。在最后的处理对象上面，SpringMVC没有对它做任何的限制，只要是java世界中的对象，都可以用来作为最后的处理对象，来生成视图。极端一点来说，你甚至可以将另外一个MVC框架集成到SpringMVC中来，也就是为什么SpringMVC官方文档中，居然还有集成其他表现层框架的内容。这一点，在所有表现层框架中，是独领风骚，冠绝群雄的。<br><img src="http://static.oschina.net/uploads/space/2013/0125/203718_HPiY_118997.jpg" alt=""></p>
-<p>3.结语</p>
-<p>SpringMVC的成功，源于它对开闭原则的运用和遵守。也正因此，才使得整个框架具有如此强大的描述和扩展能力。这也许和SpringMVC出现和兴起的时间有关，正是经历了Struts1到Struts2这些Web开发领域MVC框架的更新换代，它的设计者才能站在前人的肩膀上。知道了如何将事情做的糟糕之后，你或许才知道如何将事情做得好。</p>
-<p>希望在这个系列里面分享的SpringMVC源码阅读经验，能帮助读者们从更高的层次来审视SpringMVC框架的设计，也希望这里所描述的一些基本设计思想，能在你更深入的了解SpringMVC的细节时，对你有帮助。哲学才是唯一的、最终的武器，在一个框架的设计上，尤其是如此。经常地体会一个框架设计者的设计思想，对你更好的使用它，是有莫大的益处的。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/15/[转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程/" itemprop="url">
-                  [转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-15T12:35:44+08:00" content="2015-04-15">
-              2015-04-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/15/[转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/15/[转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/15/[转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程/" class="leancloud_visitors" data-flag-title="[转]SpringMVC源码剖析（三）- DispatcherServlet的初始化流程">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://my.oschina.net/lichhao/blog/102315" target="_blank" rel="external">http://my.oschina.net/lichhao/blog/102315</a></p>
-<p>在我们第一次学Servlet编程，学java web的时候，还没有那么多框架。我们开发一个简单的功能要做的事情很简单，就是继承HttpServlet，根据需要重写一下doGet，doPost方法，跳转到我们定义好的jsp页面。Servlet类编写完之后在web.xml里注册这个Servlet类。</p>
-<p>除此之外，没有其他了。我们启动web服务器，在浏览器中输入地址，就可以看到浏览器上输出我们写好的页面。为了更好的理解上面这个过程，你需要学习关于Servlet生命周期的三个阶段，就是所谓的“init-service-destroy”。</p>
-<p>以上的知识，我觉得对于你理解SpringMVC的设计思想，已经足够了。SpringMVC当然可以称得上是一个复杂的框架，但是同时它又遵循Servlet世界里最简单的法则，那就是“init-service-destroy”。我们要分析SpringMVC的初始化流程，其实就是分析DispatcherServlet类的init()方法，让我们带着这种单纯的观点，打开DispatcherServlet的源码一窥究竟吧。</p>
-<p>1.<init-param>配置元素读取</init-param></p>
-<p>用Eclipse IDE打开DispatcherServlet类的源码，ctrl+T看一下。<br><img src="http://static.oschina.net/uploads/space/2013/0114/170921_edHO_118997.jpg" alt=""></p>
-<p>DispatcherServlet类的初始化入口方法init()定义在HttpServletBean这个父类中，HttpServletBean类作为一个直接继承于HttpServlet类的类，覆写了HttpServlet类的init()方法，实现了自己的初始化行为。<br>[java]<br>@Override<br>    public final void init() throws ServletException {<br>        if (logger.isDebugEnabled()) {<br>            logger.debug(&quot;Initializing servlet ‘&quot; + getServletName() + &quot;’&quot;);<br>        }</p>
-<pre><code>    // Set bean properties from init parameters.
-    try {
-        PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
-        BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);
-        ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());
-        bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, this.environment));
-        initBeanWrapper(bw);
-        bw.setPropertyValues(pvs, true);
-    }
-    catch (BeansException ex) {
-        logger.error(&amp;quot;Failed to set bean&amp;lt;span&amp;gt;&amp;lt;/span&amp;gt; properties on servlet &apos;&amp;quot; + getServletName() + &amp;quot;&apos;&amp;quot;, ex);
-        throw ex;
-    }
-
-    // Let subclasses do whatever initialization they like.
-    initServletBean();
-
-    if (logger.isDebugEnabled()) {
-        logger.debug(&amp;quot;Servlet &apos;&amp;quot; + getServletName() + &amp;quot;&apos; configured successfully&amp;quot;);
-    }
-}
-</code></pre><p>[/java]<br>这里的initServletBean()方法在HttpServletBean类中是一个没有任何实现的空方法，它的目的就是留待子类实现自己的初始化逻辑，也就是我们常说的模板方法设计模式。SpringMVC在此生动的运用了这个模式，init()方法就是模版方法模式中的模板方法，SpringMVC真正的初始化过程，由子类FrameworkServlet中覆写的initServletBean()方法触发。</p>
-<p>再看一下init()方法内被try,catch块包裹的代码，里面涉及到BeanWrapper，PropertyValues，ResourceEditor这些Spring内部非常底层的类。要深究具体代码实现上面的细节，需要对Spring框架源码具有相当深入的了解。我们这里先避繁就简，从代码效果和设计思想上面来分析这段try,catch块内的代码所做的事情：</p>
-<p>注册一个字符串到资源文件的编辑器，让Servlet下面的<init-param>配置元素可以使用形如“classpath:”这种方式指定SpringMVC框架bean配置文件的来源。<br>将web.xml中在DispatcherServlet这个Servlet下面的<init-param>配置元素利用JavaBean的方式（即通过setter方法）读取到DispatcherServlet中来。<br>这两点，我想通过下面一个例子来说明一下。</init-param></init-param></p>
-<p>我在web.xml中注册的DispatcherServlet配置如下：<br>[java]<br>&lt;!– springMVC配置开始 –&gt;<br>&lt;servlet&gt;<br>    &lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;<br>    &lt;init-param&gt;<br>        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;<br>        &lt;param-value&gt;classpath:spring/spring-servlet.xml&lt;/param-value&gt;<br>    &lt;/init-param&gt;<br>    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br>&lt;/servlet&gt;<br>&lt;servlet-mapping&gt;<br>    &lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;<br>    &lt;url-pattern&gt;/&lt;/url-pattern&gt;<br>&lt;/servlet-mapping&gt;<br>&lt;!– springMVC配置结束 –&gt;[/java]<br>可以看到，我注册了一个名为contextConfigLocation的<init-param>元素，其值为“classpath:spring/spring-servlet.xml”，这也是大家常常用来指定SpringMVC配置文件路径的方法。上面那段try,catch块包裹的代码发挥的作用，一个是将“classpath:spring/spring-servlet.xml”这段字符串转换成classpath路径下的一个资源文件，供框架初始化读取配置元素。在我的工程中是在spring文件夹下面的配置文件spring-servlet.xml。<br><img src="http://static.oschina.net/uploads/space/2013/0114/185832_7twm_118997.jpg" alt=""></init-param></p>
-<p>另外一个作用，就是将contextConfigLocation的值读取出来，然后通过setContextConfigLocation()方法设置到DispatcherServlet中，这个setContextConfigLocation()方法是在FrameworkServlet类中定义的，也就是上面继承类图中DispatcherServlet的直接父类。</p>
-<p>我们在setContextConfigLocation()方法上面打上一个断点，启动web工程，可以看到下面的调试结果。<br><img src="http://static.oschina.net/uploads/space/2013/0114/190308_tfyy_118997.jpg" alt=""></p>
-<p>HttpServletBean类的作者是大名鼎鼎的Spring之父Rod Johnson。作为POJO编程哲学的大师，他在HttpServletBean这个类的设计中，运用了依赖注入思想完成了<init-param>配置元素的读取。他抽离出HttpServletBean这个类的目的也在于此，就是“以依赖注入的方式来读取Servlet类的<init-param>配置信息”，而且这里很明显是一种setter注入。</init-param></init-param></p>
-<p>明白了HttpServletBean类的设计思想，我们也就知道可以如何从中获益。具体来说，我们继承HttpServletBean类（就像DispatcherServlet做的那样），在类中定义一个属性，为这个属性加上setter方法后，我们就可以在<init-param>元素中为其定义值。在类被初始化后，值就会被注入进来，我们可以直接使用它，避免了样板式的getInitParameter()方法的使用，而且还免费享有Spring中资源编辑器的功能，可以在web.xml中，通过“classpath:”直接指定类路径下的资源文件。</init-param></p>
-<p>注意，虽然SpringMVC本身为了后面初始化上下文的方便，使用了字符串来声明和设置contextConfigLocation参数，但是将其声明为Resource类型，同样能够成功获取。鼓励读者们自己继承HttpServletBean写一个测试用的Servlet类，并设置一个参数来调试一下，这样能够帮助你更好的理解获取配置参数的过程。</p>
-<p>2.容器上下文的建立</p>
-<p>上一篇文章中提到过，SpringMVC使用了Spring容器来容纳自己的配置元素，拥有自己的bean容器上下文。在SpringMVC初始化的过程中，非常关键的一步就是要建立起这个容器上下文，而这个建立上下文的过程，发生在FrameworkServlet类中，由上面init()方法中的initServletBean()方法触发。<br>[java]<br>@Override<br>protected final void initServletBean() throws ServletException {<br>    getServletContext().log(&quot;Initializing Spring FrameworkServlet ‘&quot; + getServletName() + &quot;’&quot;);<br>    if (this.logger.isInfoEnabled()) {<br>        this.logger.info(&quot;FrameworkServlet ‘&quot; + getServletName() + &quot;’: initialization started&quot;);<br>    }<br>    long startTime = System.currentTimeMillis();</p>
-<pre><code>try {
-    this.webApplicationContext = initWebApplicationContext();
-    initFrameworkServlet();
-}
-catch (ServletException ex) {
-    this.logger.error(&amp;quot;Context initialization failed&amp;quot;, ex);
-    throw ex;
-}
-catch (RuntimeException ex) {
-    this.logger.error(&amp;quot;Context initialization failed&amp;quot;, ex);
-    throw ex;
-}
-
-if (this.logger.isInfoEnabled()) {
-    long elapsedTime = System.currentTimeMillis() - startTime;
-    this.logger.info(&amp;quot;FrameworkServlet &apos;&amp;quot; + getServletName() + &amp;quot;&apos;: initialization completed in &amp;quot; +
-            elapsedTime + &amp;quot; ms&amp;quot;);
-}
-</code></pre><p>}[/java]<br>initFrameworkServlet()方法是一个没有任何实现的空方法，除去一些样板式的代码，那么这个initServletBean()方法所做的事情已经非常明白：</p>
-<p>[java]<br>this.webApplicationContext = initWebApplicationContext();[/java]<br>这一句简单直白的代码，道破了FrameworkServlet这个类，在SpringMVC类体系中的设计目的，它是 用来抽离出建立 WebApplicationContext 上下文这个过程的。<br>initWebApplicationContext()方法，封装了建立Spring容器上下文的整个过程，方法内的逻辑如下：</p>
-<p>获取由ContextLoaderListener初始化并注册在ServletContext中的根上下文，记为rootContext<br>如果webApplicationContext已经不为空，表示这个Servlet类是通过编程式注册到容器中的（Servlet 3.0+中的ServletContext.addServlet() ），上下文也由编程式传入。若这个传入的上下文还没被初始化，将rootContext上下文设置为它的父上下文，然后将其初始化，否则直接使用。<br>通过wac变量的引用是否为null，判断第2步中是否已经完成上下文的设置（即上下文是否已经用编程式方式传入），如果wac==null成立，说明该Servlet不是由编程式注册到容器中的。此时以contextAttribute属性的值为键，在ServletContext中查找上下文，查找得到，说明上下文已经以别的方式初始化并注册在contextAttribute下，直接使用。<br>检查wac变量的引用是否为null，如果wac==null成立，说明2、3两步中的上下文初始化策略都没成功，此时调用createWebApplicationContext(rootContext)，建立一个全新的以rootContext为父上下文的上下文，作为SpringMVC配置元素的容器上下文。大多数情况下我们所使用的上下文，就是这个新建的上下文。<br>以上三种初始化上下文的策略，都会回调onRefresh(ApplicationContext context)方法（回调的方式根据不同策略有不同），onRefresh方法在DispatcherServlet类中被覆写，以上面得到的上下文为依托，完成SpringMVC中默认实现类的初始化。<br>最后，将这个上下文发布到ServletContext中，也就是将上下文以一个和Servlet类在web.xml中注册名字有关的值为键，设置为ServletContext的一个属性。你可以通过改变publishContext的值来决定是否发布到ServletContext中，默认为true。<br>以上面6点跟踪FrameworkServlet类中的代码，可以比较清晰的了解到整个容器上下文的建立过程，也就能够领会到FrameworkServlet类的设计目的，它是用来建立一个和Servlet关联的Spring容器上下文，并将其注册到ServletContext中的。跳脱开SpringMVC体系，我们也能通过继承FrameworkServlet类，得到与Spring容器整合的好处，FrameworkServlet和HttpServletBean一样，是一个可以独立使用的类。整个SpringMVC设计中，处处体现开闭原则，这里显然也是其中一点。</p>
-<p>3.初始化SpringMVC默认实现类</p>
-<p>初始化流程在FrameworkServlet类中流转，建立了上下文后，通过onRefresh(ApplicationContext context)方法的回调，进入到DispatcherServlet类中。</p>
-<p>[java]<br>@Override<br>protected void onRefresh(ApplicationContext context) {<br>    initStrategies(context);<br>}[/java]<br>DispatcherServlet类覆写了父类FrameworkServlet中的onRefresh(ApplicationContext context)方法，提供了SpringMVC各种编程元素的初始化。当然这些编程元素，都是作为容器上下文中一个个bean而存在的。具体的初始化策略，在initStrategies()方法中封装。</p>
-<p>[java]<br>protected void initStrategies(ApplicationContext context) {<br>    initMultipartResolver(context);<br>    initLocaleResolver(context);<br>    initThemeResolver(context);<br>    initHandlerMappings(context);<br>    initHandlerAdapters(context);<br>    initHandlerExceptionResolvers(context);<br>    initRequestToViewNameTranslator(context);<br>    initViewResolvers(context);<br>    initFlashMapManager(context);<br>}[/java]<br>我们以其中initHandlerMappings(context)方法为例，分析一下这些SpringMVC编程元素的初始化策略，其他的方法，都是以类似的策略初始化的。<br>[java]<br>private void initHandlerMappings(ApplicationContext context) {<br>        this.handlerMappings = null;</p>
-<pre><code>    if (this.detectAllHandlerMappings) {
-        // Find all HandlerMappings in the ApplicationContext, including ancestor contexts.
-        Map&amp;lt;String, HandlerMapping&amp;gt; matchingBeans =
-                BeanFactoryUtils.beansOfTypeIncludingAncestors(context, HandlerMapping.class, true, false);
-        if (!matchingBeans.isEmpty()) {
-            this.handlerMappings = new ArrayList&amp;lt;HandlerMapping&amp;gt;(matchingBeans.values());
-            // We keep HandlerMappings in sorted order.
-            OrderComparator.sort(this.handlerMappings);
-        }
-    }
-    else {
-        try {
-            HandlerMapping hm = context.getBean(HANDLER_MAPPING_BEAN_NAME, HandlerMapping.class);
-            this.handlerMappings = Collections.singletonList(hm);
-        }
-        catch (NoSuchBeanDefinitionException ex) {
-            // Ignore, we&apos;ll add a default HandlerMapping later.
-        }
-    }
-
-    // Ensure we have at least one HandlerMapping, by registering
-    // a default HandlerMapping if no other mappings are found.
-    if (this.handlerMappings == null) {
-        this.handlerMappings = getDefaultStrategies(context, HandlerMapping.class);
-        if (logger.isDebugEnabled()) {
-            logger.debug(&amp;quot;No HandlerMappings found in servlet &apos;&amp;quot; + getServletName() + &amp;quot;&apos;: using default&amp;quot;);
-        }
-    }
-}[/java]
-</code></pre><p>detectAllHandlerMappings变量默认为true，所以在初始化HandlerMapping接口默认实现类的时候，会把上下文中所有HandlerMapping类型的Bean都注册在handlerMappings这个List变量中。如果你手工将其设置为false，那么将尝试获取名为handlerMapping的Bean，新建一个只有一个元素的List，将其赋给handlerMappings。如果经过上面的过程，handlerMappings变量仍为空，那么说明你没有在上下文中提供自己HandlerMapping类型的Bean定义。此时，SpringMVC将采用默认初始化策略来初始化handlerMappings。</p>
-<p>点进去getDefaultStrategies看一下。</p>
-<p>[java]<br>@SuppressWarnings(&quot;unchecked&quot;)<br>protected &lt;T&gt; List&lt;T&gt; getDefaultStrategies(ApplicationContext context, Class&lt;T&gt; strategyInterface) {<br>    String key = strategyInterface.getName();<br>    String value = defaultStrategies.getProperty(key);<br>    if (value != null) {<br>        String[] classNames = StringUtils.commaDelimitedListToStringArray(value);<br>        List&lt;T&gt; strategies = new ArrayList&lt;T&gt;(classNames.length);<br>        for (String className : classNames) {<br>            try {<br>                Class&lt;?&gt; clazz = ClassUtils.forName(className, DispatcherServlet.class.getClassLoader());<br>                Object strategy = createDefaultStrategy(context, clazz);<br>                strategies.add((T) strategy);<br>            }<br>            catch (ClassNotFoundException ex) {<br>                throw new BeanInitializationException(<br>                        &quot;Could not find DispatcherServlet’s default strategy class [&quot; + className +<br>                                &quot;] for interface [&quot; + key + &quot;]&quot;, ex);<br>            }<br>            catch (LinkageError err) {<br>                throw new BeanInitializationException(<br>                        &quot;Error loading DispatcherServlet’s default strategy class [&quot; + className +<br>                                &quot;] for interface [&quot; + key + &quot;]: problem with class file or dependent class&quot;, err);<br>            }<br>        }<br>        return strategies;<br>    }<br>    else {<br>        return new LinkedList&lt;T&gt;();<br>    }<br>}[/java]<br>它是一个范型的方法，承担所有SpringMVC编程元素的默认初始化策略。方法的内容比较直白，就是以传递类的名称为键，从defaultStrategies这个Properties变量中获取实现类，然后反射初始化。</p>
-<p>需要说明一下的是defaultStrategies变量的初始化，它是在DispatcherServlet的静态初始化代码块中加载的。<br>[java]<br>private static final Properties defaultStrategies;</p>
-<p>static {<br>    // Load default strategy implementations from properties file.<br>    // This is currently strictly internal and not meant to be customized<br>    // by application developers.<br>    try {<br>        ClassPathResource resource = new ClassPathResource(DEFAULT_STRATEGIES_PATH, DispatcherServlet.class);<br>        defaultStrategies = PropertiesLoaderUtils.loadProperties(resource);<br>    }<br>    catch (IOException ex) {<br>        throw new IllegalStateException(&quot;Could not load ‘DispatcherServlet.properties’: &quot; + ex.getMessage());<br>    }<br>}[/java]<br>[java]<br>private static final String DEFAULT_STRATEGIES_PATH = &quot;DispatcherServlet.properties&quot;;[/java]<br>这个DispatcherServlet.properties里面，以键值对的方式，记录了SpringMVC默认实现类，它在spring-webmvc-3.1.3.RELEASE.jar这个jar包内，在org.springframework.web.servlet包里面。<br>[java]</p>
-<h1 id="Default-implementation-classes-for-DispatcherServlet’s-strategy-interfaces"><a href="#Default-implementation-classes-for-DispatcherServlet’s-strategy-interfaces" class="headerlink" title="Default implementation classes for DispatcherServlet’s strategy interfaces."></a>Default implementation classes for DispatcherServlet’s strategy interfaces.</h1><h1 id="Used-as-fallback-when-no-matching-beans-are-found-in-the-DispatcherServlet-context"><a href="#Used-as-fallback-when-no-matching-beans-are-found-in-the-DispatcherServlet-context" class="headerlink" title="Used as fallback when no matching beans are found in the DispatcherServlet context."></a>Used as fallback when no matching beans are found in the DispatcherServlet context.</h1><h1 id="Not-meant-to-be-customized-by-application-developers"><a href="#Not-meant-to-be-customized-by-application-developers" class="headerlink" title="Not meant to be customized by application developers."></a>Not meant to be customized by application developers.</h1><p>org.springframework.web.servlet.LocaleResolver=org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver</p>
-<p>org.springframework.web.servlet.ThemeResolver=org.springframework.web.servlet.theme.FixedThemeResolver</p>
-<p>org.springframework.web.servlet.HandlerMapping=org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\<br>    org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</p>
-<p>org.springframework.web.servlet.HandlerAdapter=org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\<br>    org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\<br>    org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter</p>
-<p>org.springframework.web.servlet.HandlerExceptionResolver=org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\<br>    org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\<br>    org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver</p>
-<p>org.springframework.web.servlet.RequestToViewNameTranslator=org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator</p>
-<p>org.springframework.web.servlet.ViewResolver=org.springframework.web.servlet.view.InternalResourceViewResolver</p>
-<p>org.springframework.web.servlet.FlashMapManager=org.springframework.web.servlet.support.SessionFlashMapManager[/java]<br>至此，我们分析完了initHandlerMappings(context)方法的执行过程，其他的初始化过程与这个方法非常类似。所有初始化方法执行完后，SpringMVC正式完成初始化，静静等待Web请求的到来。</p>
-<p>4.总结</p>
-<p>回顾整个SpringMVC的初始化流程，我们看到，通过HttpServletBean、FrameworkServlet、DispatcherServlet三个不同的类层次，SpringMVC的设计者将三种不同的职责分别抽象，运用模版方法设计模式分别固定在三个类层次中。其中HttpServletBean完成的是<init-param>配置元素的依赖注入，FrameworkServlet完成的是容器上下文的建立，DispatcherServlet完成的是SpringMVC具体编程元素的初始化策略。</init-param></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/14/[转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生/" itemprop="url">
-                  [转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-14T12:19:45+08:00" content="2015-04-14">
-              2015-04-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/14/[转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/14/[转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/14/[转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生/" class="leancloud_visitors" data-flag-title="[转]SpringMVC源码剖析（二）- DispatcherServlet的前世今生">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://my.oschina.net/lichhao/blog/100138" target="_blank" rel="external">http://my.oschina.net/lichhao/blog/100138</a></p>
-<p>上一篇文章《SpringMVC源码剖析（一）- 从抽象和接口说起》中，我介绍了一次典型的SpringMVC请求处理过程中，相继粉墨登场的各种核心类和接口。我刻意忽略了源码中的处理细节，只列出最简单的类甚至是接口类，目的就是让大家先从最高层次的抽象意义上来审视SpringMVC这个框架；我也刻意将SpringMVC和Struts2做对比，目的是让大家看到，SpringMVC究竟吸取了Sturts2设计思想中的哪些精华，又弥补了它的哪些遗憾。</p>
-<p>DispatcherServlet作为SpringMVC的核心之中的核心类，再怎么强调它的重要性也不为过。SpringMVC所有的核心类和接口，都密集地出现在DispatcherServlet的源码中，SpringMVC源码剖析，很大程度上可以说也是在剖析DispatcherServlet这一个类。这一篇文章里，我先说几点关于DispatcherServlet的前世今生，希望能帮助你更好的理解它。</p>
-<p>1.对扩展开放，对修改封闭</p>
-<p>SpringMVC是一个基于著名的Open-Closed，即开闭原则进行设计的框架。在Spring官方文档里面关于SpringMVC的介绍开宗明义地进行了说明：</p>
-<p>[java]<br>A key design principle in Spring Web MVC and in Spring in general is the “Open for extension,closed for modification” principle.[/java]<br>开闭原则是一个很宽泛的原则，具体体现到DispatcherServlet的源码中，我们可以大致摸得到一些线索：</p>
-<p>类中所有的变量声明，几乎都以接口的形式给出，并没有绑定在具体的实现类上。<br>使用模版方法模式，在父类中对基础行为进行定义，让子类实现模版方法扩展行为。<br>其中第一点，在一个框架的设计中尤为重要，也是贯彻开闭原则最重要的一点。因为当你通过一些高层次的接口或者抽象类，将一个类完成的逻辑或流程编写完成后（具体点说，是通过一个接口的引用调用接口方法），整个逻辑或流程的功能就被确实的在源码中固定下来了。可是这时，这些接口或抽象类的具体实现者是谁，还没有固定！这就给了你的系统或框架近乎无限的扩展性，因为你可以任意安排和实现这些类。</p>
-<p>我认为，面向对象设计的精髓，是对现实世界中“行为和契约”的描述。这个“行为和契约”，体现在接口和抽象类的方法声明中。软件设计师要用面向对象的眼光去观察和抽象这个世界中的事物，这里的事物可以是一些商业逻辑、可以是一些处理流程，然后用高层次的接口去描述这些行为和契约。当你在越抽象的层次上将这些行为和契约描述清楚后，你所设计的系统就是越符合开闭原则的。</p>
-<p>SpringMVC框架在面向对象设计上，做出了绝佳的示范。它通过高度抽象的接口，描述出了一次请求处理的流程，从而让整个框架从一开始就是符合开闭原则的。同时它也提供了这些接口的一系列默认实现类，让你不需要很复杂的配置，就能很好的使用SpringMVC进行开发。抽象的确是个利器，但是框架绝不能运行在空中楼阁中，SpringMVC提供的的这一系列默认实现类必须要有容身之所。聪明的你可能早已想到：Spring IOC容器。这就引出了我要说的第二点。</p>
-<p>2.配置元素的对象化</p>
-<p>所有的框架，都需要有这样一个功能，叫做：配置元素的对象化。因为几乎所有的框架，都将配置元素集中到外部的xml配置文件中，然后在框架的初始化流程中，对这些配置文件进行解析，再变成java世界中的一个个对象供框架使用，这整个过程，可以被称为配置元素的对象化。为什么要有配置文件呢？这个问题的回答也是很简单，因为没有人会想要使用一个配置散布在框架中各个java类源码里面的框架。框架也不允许使用者这样子做，因为框架在发布的时候，提供的是一个个jar包文件，jar包内是已经编译好的class文件。配置文件由使用者外部提供，框架对它进行解析，使用者能得到集中配置的好处，框架也乐于这样子，可以说是合情合理。</p>
-<p>那么作为Spring产品族的新成员，SpringMVC在设计的时候，相信设计者们不做它想，这一个“配置元素的对象化”功能既然不可避免，那么使用Spring IOC容器，通过bean配置文件来配置SpringMVC，绝对是不二之选。不可能像Struts2一样，内部再搞一个别的容器，因为Spring容器本身已经是被高度设计，而且已经在java世界获得巨大成功。从推广的角度上来说，如果对spring容器的所有知识，都可以完整的应用到SpringMVC，那么对于开发者无疑是一个极大的吸引力。</p>
-<p>剩下的问题就只有：到底该如何将Spring容器和SpringMVC的初始化过程整合起来呢？</p>
-<p>答案就是WebApplicationContext接口，更具体点说，是XmlWebApplicationContext这个Spring上下文实现类。SpringMVC也使用了这一个为了将Spring容器和Web环境整合而特意设计的Spring上下文类。我们打开WebApplicationContext的源码：</p>
-<p>[java]<br>package org.springframework.web.context;</p>
-<p>import javax.servlet.ServletContext;</p>
-<p>import org.springframework.context.ApplicationContext;</p>
-<p>public interface WebApplicationContext extends ApplicationContext {</p>
-<pre><code>String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = WebApplicationContext.class.getName() + &amp;quot;.ROOT&amp;quot;;
-
-String SCOPE_REQUEST = &amp;quot;request&amp;quot;;
-
-String SCOPE_SESSION = &amp;quot;session&amp;quot;;
-
-String SCOPE_GLOBAL_SESSION = &amp;quot;globalSession&amp;quot;;
-
-String SCOPE_APPLICATION = &amp;quot;application&amp;quot;;
-
-String SERVLET_CONTEXT_BEAN_NAME = &amp;quot;servletContext&amp;quot;;
-
-String CONTEXT_PARAMETERS_BEAN_NAME = &amp;quot;contextParameters&amp;quot;;
-
-String CONTEXT_ATTRIBUTES_BEAN_NAME = &amp;quot;contextAttributes&amp;quot;;
-
-ServletContext getServletContext();
-</code></pre><p>}[/java]<br>发现它是继承于ApplicationContext这个普通Spring容器所使用的上下文接口类，除了一些常量的声明，只多了一个可以获取到ServletContext的getServletContext()方法。回到上面提到的“行为和契约的描述”上，我们可以大胆的断言，Spring容器和Web环境的整合，是在ServletContext上做文章。</p>
-<p>打开所有使用了Spring的Web项目的web.xml文件，必定有这样一段配置：<br>[java]<br>&lt;listener&gt;<br>    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;<br>&lt;/listener&gt;[/java]<br>ContextLoaderListener实现了ServletContextListener接口，在Servlet容器启动的时候，会初始化一个WebApplicationContext的实现类，并将其作为ServletContext的一个属性设置到Servlet环境中，摘抄源码如下： </p>
-<p>[java]<br>servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.context);<br>[/java]<br>WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE的值，在上面WebApplicationContext的源码中的第一个常量中就被声明，是WebApplicationContext.class.getName() + “.ROOT”，更直接一点，它是“org.springframework.web.context.WebApplicationContext.ROOT”。ContextLoaderListener所初始化的这个Spring容器上下文，被称为根上下文。</p>
-<p>SpringMVC在DispatcherServlet的初始化过程中，同样会初始化一个WebApplicationContext的实现类，作为自己独有的上下文，这个独有的上下文，会将上面的根上下文作为自己的父上下文，来存放SpringMVC的配置元素，然后同样作为ServletContext的一个属性，被设置到ServletContext中，只不过它的key就稍微有点不同，key和具体的DispatcherServlet注册在web.xml文件中的名字有关，从这一点也决定了，我们可以在web.xml文件中注册多个DispatcherServlet，因为Servlet容器中注册的Servlet名字肯定不一样，设置到Servlet环境中的key也肯定不同。</p>
-<p>由于在Spring容器中，子上下文可以访问到所有父上下文中的信息，而父上下文访问不到子上下文的信息，这个根上下文，就很适合作为多个子上下文配置的集中点。以官方文档中的图来说明：<br><img src="http://static.oschina.net/uploads/space/2013/0105/171256_QY0t_118997.jpg" alt=""><br>3.前端控制器</p>
-<p>前端控制器，即所谓的Front Controller，体现的是设计模式中的前端控制器模式。前端控制器处理所有从用户过来的请求。所有用户的请求都要通过前端控制器。SpringMVC框架和其他请求驱动的表示层框架一样，也是围绕一个将请求分发到相应控制器的核心Servlet来设计的。DispatcherServlet和其他框架中的Servlet不一样的地方在于，它和Spring容器无缝整合在了一起，因此你可以在SpringMVC中使用Spring容器所有的特性。</p>
-<p>DispatcherServlet这个前端控制器，在SpringMVC中的作用，以官方文档中的配图来说明：<br><img src="http://static.oschina.net/uploads/space/2013/0105/172154_xuHb_118997.jpg" alt=""></p>
-<p>整个流程可以被大致描述为：一个http请求到达服务器，被DispatcherServlet接收。DispatcherServlet将请求委派给合适的处理器Controller，此时处理控制权到达Controller对象。Controller内部完成请求的数据模型的创建和业务逻辑的处理，然后再将填充了数据后的模型即model和控制权一并交还给DispatcherServlet，委派DispatcherServlet来渲染响应。DispatcherServlet再将这些数据和适当的数据模版视图结合，向Response输出响应。</p>
-<p>可以看到Model-View-Controller这三样东西协同合作，共同体现出MVC的设计理念，三个层次可以分别独立演化，整个系统架构又清晰又简洁。这是SpringMVC为我们描述的美好愿景，后面我们也将看到，SpringMVC为了实现这一承诺，究竟做出了什么样的努力。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2585,7 +2144,7 @@ ServletContext getServletContext();
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">334</span>
+              <span class="site-state-item-count">337</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
