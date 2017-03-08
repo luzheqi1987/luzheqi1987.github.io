@@ -302,6 +302,612 @@
             
               
                 
+                <a class="post-title-link" href="/2015/02/27/Can't create handler inside thread that has not called Looper.prepare()解决办法/" itemprop="url">
+                  Can't create handler inside thread that has not called Looper.prepare()解决办法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-27T07:03:16+08:00" content="2015-02-27">
+              2015-02-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/02/27/Can't create handler inside thread that has not called Looper.prepare()解决办法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/27/Can't create handler inside thread that has not called Looper.prepare()解决办法/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/27/Can't create handler inside thread that has not called Looper.prepare()解决办法/" class="leancloud_visitors" data-flag-title="Can't create handler inside thread that has not called Looper.prepare()解决办法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先要确定的是Android中不能在子线程中来刷新UI线程。所以必须使用android的handler机制。即：<br>在主activity中定一个Handler的成员，然后实现handlemassage函数，创建线程后在runable的run函数里new一个message，然后指定message对象的what成员，这个是指定message的一个id，然后在run中调用Handler的成员，使用其成员方法中的sendmessage(好像是叫这个)，handlemassage函数中参数有个massage，根据该message参数中的what来对你发送message时指定的what来处理UI的功能。Handler的实现实例如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Handler handler = <span class="keyword">new</span> Handler()&#123;              </div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;  </div><div class="line">                <span class="keyword">switch</span> (msg.what) &#123;  </div><div class="line">                    <span class="keyword">case</span> CASE1:  </div><div class="line">                         <span class="comment">//获取传递的数据</span></div><div class="line">                         <span class="comment">//Bundle data = msg.getData();</span></div><div class="line">                         &amp;lt;strong&amp;gt;<span class="comment">//处理UI更新等操作</span></div><div class="line">                         <span class="comment">//......&amp;lt;/strong&amp;gt;</span></div><div class="line">                &#125;  </div><div class="line">            &#125;;  </div><div class="line">        &#125;;</div></pre></td></tr></table></figure></p>
+<p>然后可以在任何地方调用这个handler，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Message msg = <span class="keyword">new</span> Message();     </div><div class="line">msg.what = CASE1;</div><div class="line"><span class="comment">//这三句可以传递数据</span></div><div class="line"><span class="comment">//Bundle data = new Bundle();</span></div><div class="line"><span class="comment">//data.putInt(&amp;quot;COUNT&amp;quot;, 100);//COUNT是标签,handleMessage中使用</span></div><div class="line"><span class="comment">//msg.setData(data);</span></div><div class="line">handler.sendMessage(msg); <span class="comment">// 向Handler发送消息,更新UI</span></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/02/25/[转]Google开源C C++版MapReduce框架/" itemprop="url">
+                  [转]Google开源C/C++版MapReduce框架
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-25T14:26:52+08:00" content="2015-02-25">
+              2015-02-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/02/25/[转]Google开源C C++版MapReduce框架/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/25/[转]Google开源C C++版MapReduce框架/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/25/[转]Google开源C C++版MapReduce框架/" class="leancloud_visitors" data-flag-title="[转]Google开源C/C++版MapReduce框架">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.36kr.com/p/219960.html" target="_blank" rel="external">原文地址</a></p>
+<p>据 GigaOM<a href="https://gigaom.com/2015/02/18/google-open-sources-a-mapreduce-framework-for-c/?utm_medium=social&amp;utm_campaign=socialflow&amp;utm_source=twitter&amp;utm_content=google-open-sources-a-mapreduce-framework-for-c_915606" target="_blank" rel="external">消息</a>，Google 上周<a href="http://google-opensource.blogspot.com/2015/02/mapreduce-for-c-run-native-code-in.html" target="_blank" rel="external">宣布</a>，将自己用 C++ 开发的 MapReduce 框架<a href="https://github.com/google/mr4c" target="_blank" rel="external">MapReduce for C（MR4C）</a>开源，此举可给 Hadoop 社区带来福音，因为这样用户就可以在自己的 Hadoop 环境中运行原生的 C 及 C++ 代码了。</p>
+<p>Hadoop 是许多大数据应用的基础，它是由 Apache 基金会所开发的分布式系统基础架构，主要由分布式文件系统 HDFS 和计算框架 MapReduce 组成。由于原先的 MapReduce 是用 Java 编写的，与 C++ 相比，在性能上要略逊一筹，因此，许多处理大规模数据集的软件公司都开发了自己的专有系统来在 MapReduce 框架之内执行其原生代码。Facebook 的 HipHop（将 PHP 转换为 C++）以及 MemSQL 执行前将 SQL 转为 C++ 代码也都是出于同样的性能考虑。</p>
+<p><img src="http://a.36krcnd.com/photo/2015/a1606cc91578093cd2643eb78d28688c.png" alt=""><br>MR4C 原先由卫星影像公司 Skybox Imaging 开发，目的是为了优化其地理空间数据及计算机视觉代码库。MR4C 围绕着几个简单概念开发而成，其目标是将 MapReduce 的重要细节抽象化，允许用户专注于开发有价值的算法。去年 6 月，Google 收购了 Skybox。半年之后的现在，又将 MR4C 开源出来。这对于没有能力开发专有系统或者对 Java 不感冒的开发者来说无疑是一个福音。</p>
+<p>当然，MR4C 的受欢迎程度仍有待观察。因为在数据处理方面，Apache Spark 是一个速度比 Mapreduce 更快的框架，它支持 Scala、Python 和 Java（但不支持 C/C++），已经引起了开发社区极大的兴趣。</p>
+<p>[消息来源：<a href="https://gigaom.com/2015/02/18/google-open-sources-a-mapreduce-framework-for-c/?utm_medium=social&amp;utm_campaign=socialflow&amp;utm_source=twitter&amp;utm_content=google-open-sources-a-mapreduce-framework-for-c_915606" target="_blank" rel="external">gigaom.com</a>, <a href="http://google-opensource.blogspot.com/2015/02/mapreduce-for-c-run-native-code-in.html" target="_blank" rel="external">google-opensource.blogspot.com</a>]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/02/20/[转]Java开发者易犯错误Top10/" itemprop="url">
+                  [转]Java开发者易犯错误Top10
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-20T15:38:37+08:00" content="2015-02-20">
+              2015-02-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/02/20/[转]Java开发者易犯错误Top10/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/20/[转]Java开发者易犯错误Top10/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/20/[转]Java开发者易犯错误Top10/" class="leancloud_visitors" data-flag-title="[转]Java开发者易犯错误Top10">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.csdn.net/exceptional_derek/article/details/43888641" target="_blank" rel="external">原文地址</a></p>
+<p>Top1. 数组转换为数组列表</p>
+<p>将数组转换为数组列表，开发者经常会这样做：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&amp;lt;String&amp;gt; list = Arrays.asList(arr);</div></pre></td></tr></table></figure>
+<p>Arrays.asList()将返回一个数组内部是私有静态类的ArrayList，这不是java.util.ArrayList类，java.util.Arrays.ArrayList类有set()、 get()、 contains()方法，但是没有任何加元素的方法，因此它的大小是固定的。你应该这么做来创建一个真正的数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ArrayList&amp;lt;String&amp;gt; arrayList = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;(Arrays.asList(arr));</div></pre></td></tr></table></figure>
+<p>ArrayList的构造函数能够接受一个集合类型，这也是java.util.Arrays.ArrayList的超级类型。</p>
+<p>Top2. 检查一个数组包含一个值</p>
+<p>开发者经常这么做：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Set&amp;lt;String&amp;gt; set = <span class="keyword">new</span> HashSet&amp;lt;String&amp;gt;(Arrays.asList(arr));  </div><div class="line"><span class="keyword">return</span> set.contains(targetValue);</div></pre></td></tr></table></figure>
+<p>代码可以工作，但是没有必要首先转换列表到Set，转换一个列表到一个Set需要额外的时间。因此你可以把它简化为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.asList(arr).contains(targetValue);</div></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(String s: arr)&#123;  </div><div class="line">    <span class="keyword">if</span>(s.equals(targetValue))  </div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;  </div><div class="line">&#125;  </div><div class="line"><span class="keyword">return</span> <span class="keyword">false</span>; </div><div class="line">`</div></pre></td></tr></table></figure>
+<p>第一个比第二个更具可读性</p>
+<p>Top3. 在一个循环中从一个列表里删除一个元素</p>
+<p>考虑下面删除元素的代码在迭代中的结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ArrayList&amp;lt;String&amp;gt; list = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;(Arrays.asList(&amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;, &amp;quot;c&amp;quot;, &amp;quot;d&amp;quot;));  </div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; list.size(); i++) &#123;  </div><div class="line">    list.remove(i);  </div><div class="line">&#125;  </div><div class="line">System.out.println(list);</div></pre></td></tr></table></figure>
+<p>输出是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[b, d]</div></pre></td></tr></table></figure>
+<p>该方法有一个严重的问题，当一个元素被删除时，列表收缩的大小以及指针改变了。所以想要在循环内利用指针删除多个元素是无法正常进行的。</p>
+<p>这种情况下使用迭代器才是正确的方法，foreach循环在Java中的工作像是一个迭代器，但实际上并不是，考虑下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ArrayList&amp;lt;String&amp;gt; list = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;(Arrays.asList(&amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;, &amp;quot;c&amp;quot;, &amp;quot;d&amp;quot;));  </div><div class="line"></div><div class="line"><span class="keyword">for</span> (String s : list) &#123;  </div><div class="line">    <span class="keyword">if</span> (s.equals(&amp;quot;a&amp;quot;))  </div><div class="line">        list.remove(s);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它会报出<a href="http://www.programcreek.com/2014/01/java-util-concurrentmodificationexception/" target="_blank" rel="external">ConcurrentModificationException</a>异常。</p>
+<p>相反下面这个就可以正常工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ArrayList&amp;lt;String&amp;gt; list = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;(Arrays.asList(&amp;quot;a&amp;quot;, &amp;quot;b&amp;quot;, &amp;quot;c&amp;quot;, &amp;quot;d&amp;quot;));  </div><div class="line">Iterator&amp;lt;String&amp;gt; iter = list.iterator();  </div><div class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;  </div><div class="line">    String s = iter.next();  </div><div class="line"></div><div class="line">    <span class="keyword">if</span> (s.equals(&amp;quot;a&amp;quot;)) &#123;  </div><div class="line">        iter.remove();  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>.next()</code>必须在<code>.remove()</code>之前被调用。在<code>foreach</code>循环中，编译器将在删除元素操作之后调用<code>.next()</code>，这也是导致ConcurrentModificationException异常的原因，你可以<a href="http://www.programcreek.com/2014/01/deep-understanding-of-arraylist-iterator/" target="_blank" rel="external">点击此处</a>查看ArrayList.iterator()的源代码。</p>
+<p>Top4. Hashtable vs HashMap</p>
+<p>根据算法的常规，Hashtable是对数据结构的称呼。但是在Java中，数据结构的名称是HashMap。Hashtable和HashMap关键不同之一是Hashtable是同步的。</p>
+<p>关于这一点可查看以下两个链接：</p>
+<p><a href="http://www.programcreek.com/2013/03/hashmap-vs-treemap-vs-hashtable-vs-linkedhashmap/" target="_blank" rel="external">HashMap vs. TreeMap vs. Hashtable vs. LinkedHashMap</a></p>
+<p><a href="http://www.programcreek.com/2013/09/top-9-questions-for-java-map/" target="_blank" rel="external">Map问题Top10</a></p>
+<p>Top5. 使用集合的原始类型</p>
+<p>在Java中，原始类型和无限制的通配符类型很容易被混淆。以Set为例，Set是原始类型，而Set(?)则是无限制的通配符类型。</p>
+<p>考虑下面的代码，以一个原始类型List作为参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(List list, Object o)</span></span>&#123;  </div><div class="line">    list.add(o);  </div><div class="line">&#125;  </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;  </div><div class="line">    List&amp;lt;String&amp;gt; list = <span class="keyword">new</span> ArrayList&amp;lt;String&amp;gt;();  </div><div class="line">    add(list, <span class="number">10</span>);  </div><div class="line">    String s = list.get(<span class="number">0</span>);  </div><div class="line">&#125; </div><div class="line">`</div></pre></td></tr></table></figure>
+<p>该代码会抛出一个异常：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Exception in thread &amp;quot;main&amp;quot; java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String  </div><div class="line">    at ...</div></pre></td></tr></table></figure>
+<p>使用原始类型集合是危险的，因为原始类型集合跳过了泛型类型检查，也不安全。Set、Set&lt;?&gt;和Set<object>之间有很大的不同。详细可查看</object></p>
+<p><a href="http://www.programcreek.com/2013/12/raw-type-set-vs-unbounded-wildcard-set/" target="_blank" rel="external">Raw type vs. Unbounded wildcard</a>和<a href="http://www.programcreek.com/2011/12/java-type-erasure-mechanism-example/" target="_blank" rel="external">Type Erasure</a>。</p>
+<p>Top6. 访问级别</p>
+<p>开发者经常对类域使用public，这很容易通过直接引用获得域值，但这是一个非常糟糕的设计。根据经验来说是给予成员的访问级别越低越好。</p>
+<p>详细情况可点击查看Java中成员访问级别：<a href="http://www.programcreek.com/2011/11/java-access-level-public-protected-private/" target="_blank" rel="external">public、protected、private</a></p>
+<p>Top7.ArrayList VS LinkedList</p>
+<p>如果你不知道ArrayList和LinkedList之间的区别时，你可能会经常的选用ArrayList，因为它看起来看熟悉。然而它们之间有巨大的性能不同。简单的来说，如果有大量的添加/删除操作，并且没有很多的随机存取操作时，LinkedList应该是你的首选。如果您对此不是很了解的话，<a href="http://www.programcreek.com/2013/03/arraylist-vs-linkedlist-vs-vector/" target="_blank" rel="external">点此此处</a>查看更多关于它们性能的信息。</p>
+<p>Top8. Mutable VS Immutable</p>
+<p>Immutable对象有很多优势，比如简单、安全等等。但它要求每一个不同的值都需要有一个不同的对象，而太多的对象可能会导致垃圾收集的高成本。所以对Mutable和Immutable的选择应该有一个平衡点。</p>
+<p>一般来说，Mutable对象用于避免产生过多的中间对象，经典的例子是连接大量的字符串数。如果你使用Immutable字符串，那么会产生很多符合垃圾收集条件的对象。这对CPU是浪费时间和精力的，当其可以使用Mutable对象作为正确的解决方案。（如StringBuilder）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">String result=&amp;quot;&amp;quot;;  </div><div class="line"><span class="keyword">for</span>(String s: arr)&#123;  </div><div class="line">    result = result + s;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里还有一些其他Mutable对象可取的情况。例如mutable对象传递到方法中允许你在不跳过太多语法的情况下收集多个结果。另一个例子是排序和过滤，你可以构建一个带有原有集合的方法，并返回一个已排序的，不过这对大的集合来说会造成更大的浪费。</p>
+<p>推荐阅读：<a href="http://www.programcreek.com/2013/04/why-string-is-immutable-in-java/" target="_blank" rel="external">为什么字符串是Immutable？</a></p>
+<p>Top9. Super和Sub构造函数<br><img src="http://www.programcreek.com/wp-content/uploads/2013/04/Implicit-super-constructor-is-undefined-for-default-constructor.png" alt=""><br>这个编译错误是因为默认的Super构造函数是未定义的。在Java中，如果一个类没有定义一个构造函数，编译器会默认的为类插入一个无参数构造函数。如果一个构造函数是在Super类中定义的，这种情况下Super(String s)，编译器不会插入默认的无参数构造函数。</p>
+<p>另一方面，Sub类的构造函数，无论带不带有参数，都会调用无参数的Super构造函数。</p>
+<p>编译器在Sub类中试图将Super()插入到两个构造函数中，但是Super默认的构造函数是没有定义的，编译器才会报错。如何解决这一问题？你只需在Super类中添加一个Super()构造函数，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Super</span><span class="params">()</span></span>&#123;  </div><div class="line">    System.out.println(&amp;quot;Super&amp;quot;);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>或移除自定义的Super构造函数，又或者在Sub函数中添加super(value)。</p>
+<p>这方面想了解更多的可以<a href="http://www.programcreek.com/2013/04/what-are-the-frequently-asked-questions-about-constructors-in-java/" target="_blank" rel="external">点击此处</a>查看。</p>
+<p>Top10. “”或构造函数？</p>
+<p>字符串可以通过两种方式创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1\. use double quotes  </span></div><div class="line">String x = &amp;quot;abc&amp;quot;;  </div><div class="line"><span class="comment">//2\. use constructor  </span></div><div class="line">String y = <span class="keyword">new</span> String(&amp;quot;abc&amp;quot;);</div></pre></td></tr></table></figure>
+<p>它们之间有何不同？下面的例子可以给出答案：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">String a = &amp;quot;abcd&amp;quot;;  </div><div class="line">String b = &amp;quot;abcd&amp;quot;;  </div><div class="line">System.out.println(a == b);  <span class="comment">// True  </span></div><div class="line">System.out.println(a.equals(b)); <span class="comment">// True  </span></div><div class="line"></div><div class="line">String c = <span class="keyword">new</span> String(&amp;quot;abcd&amp;quot;);  </div><div class="line">String d = <span class="keyword">new</span> String(&amp;quot;abcd&amp;quot;);  </div><div class="line">System.out.println(c == d);  <span class="comment">// False  </span></div><div class="line">System.out.println(c.equals(d)); <span class="comment">// True</span></div></pre></td></tr></table></figure>
+<p>关于它们如何在内存中分布的更多细节可以查看<a href="http://www.programcreek.com/2014/03/create-java-string-by-double-quotes-vs-by-constructor/" target="_blank" rel="external">《使用””或构造函数创建Java字符串》</a>。</p>
+<p>推荐阅读：</p>
+<p><a href="http://www.programcreek.com/2013/04/what-are-the-frequently-asked-questions-about-constructors-in-java/" target="_blank" rel="external">Constructors of Sub and Super Classes in Java?</a></p>
+<p><a href="http://www.programcreek.com/2014/03/how-developers-sort-in-java/" target="_blank" rel="external">How Developers Sort in Java?</a></p>
+<p><a href="http://www.programcreek.com/2013/04/how-to-convert-array-to-arraylist-in-java/" target="_blank" rel="external">How to Convert Array to ArrayList in Java?</a></p>
+<p><a href="http://www.programcreek.com/2011/12/java-type-erasure-mechanism-example/" target="_blank" rel="external">Java Type Erasure Mechanism</a></p>
+<p>原文来自：<a href="http://www.programcreek.com/2014/05/top-10-mistakes-java-developers-make/" target="_blank" rel="external">programcreek</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/02/19/Mac OS下Android Studio的Java not found问题/" itemprop="url">
+                  Mac OS下Android Studio的Java not found问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-19T15:19:24+08:00" content="2015-02-19">
+              2015-02-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/02/19/Mac OS下Android Studio的Java not found问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/02/19/Mac OS下Android Studio的Java not found问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/19/Mac OS下Android Studio的Java not found问题/" class="leancloud_visitors" data-flag-title="Mac OS下Android Studio的Java not found问题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先要确定mac系统上有没有安装jdk，并查看自己的jdk版本，可以在终端上输入命令 java -version查看。如果没有安装jdk请先安装jdk，安装方法就不多说了，可以去Oracle官网上下载安装。<br>接下来确定自己的jdk版本，如果jdk的版本不是1.6版本就有可能出现以上问题，无法启动Android Studio。原因在于Android Studio的配置文件中默认要求的是1.6版本的JVM，所以可以简单的修改下Android Studio的配置文件。方法如下：<br>1.找到你的Android Studio.app文件位置，一般都是在Applications文件夹下面。<br>2.选择Android Studio.app文件，打开右键菜单，选择Show Package Contents打开Android Studio.app（其实Mac系统下的app文件就是一个特殊的文件夹）。<br>3.进入Contents文件夹，找到Info.plist配置文件。<br>4.可以打开Info.plist配置文件，找到其中的<key>JVMVersion<key>标签，可以看到这个标签下面为<string>1.6<string>，默认使用JVM1.6版本，现在最新的JDK已经是1.8了。把1.6改成你所安装的jdk版本号然后保存修改就可以解决这个问题，或者简单的改成1.6+就可以兼容1.6以上的jdk版本。</string></string></key></key></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/02/19/mysql插入数据报错Incorrect string value 124V' for column 'YYYY' at row 1解决方法/" itemprop="url">
                   mysql插入数据报错Incorrect string value: '«Íï4V' for column 'YYYY' at row 1解决方法
                 </a>
@@ -1227,582 +1833,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/25/综合 Github上最受关注的前端大牛，快来膜拜吧！/" itemprop="url">
-                  综合 Github上最受关注的前端大牛，快来膜拜吧！
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T09:19:42+08:00" content="2015-01-25">
-              2015-01-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Other/" itemprop="url" rel="index">
-                    <span itemprop="name">Other</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/25/综合 Github上最受关注的前端大牛，快来膜拜吧！/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/综合 Github上最受关注的前端大牛，快来膜拜吧！/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/25/综合 Github上最受关注的前端大牛，快来膜拜吧！/" class="leancloud_visitors" data-flag-title="综合 Github上最受关注的前端大牛，快来膜拜吧！">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文列出了Github上最受关注的10位前端大牛。看看他们负责的项目和提交的代码，你是不是能从中学到些什么？<br>1. Paul Irish<br><img src="http://cms.csdnimg.cn/article/201408/01/53db25ef8ef61.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/paulirish" target="_blank" rel="external">https://github.com/paulirish</a><br>个人主页： <a href="http://paulirish.com" target="_blank" rel="external">http://paulirish.com</a><br>维基百科： <a href="http://en.wikipedia.org/wiki/Paul_Irish" target="_blank" rel="external">http://en.wikipedia.org/wiki/Paul_Irish</a><br>Paul Irish是著名的前端开发工程师，同时他也是Chrome开发者关系团队成员，jQuery团队成员，Modernizr、 Yeoman、CSS3 Please和HTML5 Boilerplate的lead developer。 </p>
-<p>2.TJ Holowaychuk<br><img src="http://cms.csdnimg.cn/article/201408/01/53db274c7c32f.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/visionmedia" target="_blank" rel="external">https://github.com/visionmedia</a><br>个人主页： <a href="http://tjholowaychuk.com" target="_blank" rel="external">http://tjholowaychuk.com</a><br>TJ Holowaychuk ，程序员兼艺术家，Koa、Co、Express、jade、mocha、node-canvas、commander.js 等知名开源项目的创建和贡献者。<br>相关新闻： 知名nodeJS框架Express的作者TJ Holowaychuk宣布弃nodeJS投Go</p>
-<p>3. Addy Osmani<br><img src="http://cms.csdnimg.cn/article/201408/01/53db05d54957b_middle.jpg?_=49162" alt=""></p>
-<p>Github主页： <a href="https://github.com/addyosmani" target="_blank" rel="external">https://github.com/addyosmani</a><br>个人主页： <a href="http://addyosmani.com" target="_blank" rel="external">http://addyosmani.com</a><br>Addy Osmani ，谷歌前端开发工程师，创建了 TodoMVC、jQuery UI Bootstrap、jQuery Plugin Patterns 和 Backbone Paginator，出版了《Learning JavaScript Design Patterns》和《Developing Backbone.js Applications》两本技术书籍，而且还是著名的 jQuery、Modernizr 以及Backbone.js 框架的贡献者。</p>
-<p>推荐阅读： 前端大牛 Addy Osmani 的15个精彩PPT </p>
-<p>4.John Resig<br><img src="http://cms.csdnimg.cn/article/201408/01/53db2d6db73b3.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/jeresig" target="_blank" rel="external">https://github.com/jeresig</a><br>个人主页： <a href="http://ejohn.org/" target="_blank" rel="external">http://ejohn.org/</a><br>John Resig, jQuery的创始人和技术领袖，目前在Mozilla担任JavaScript工具开发工程师。著有《Pro JavaScript Techniques》（即《精通JavaScript》）等经典JavaScript书籍。</p>
-<p>相关新闻： 对话jQuery之父John Resig：JavaScript的开发之路</p>
-<p>5.Douglas Crockford<br><img src="http://cms.csdnimg.cn/article/201408/01/53db2ec32b30d.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/douglascrockford" target="_blank" rel="external">https://github.com/douglascrockford</a><br>个人主页： <a href="http://www.crockford.com/" target="_blank" rel="external">http://www.crockford.com/</a><br>Douglas Crockford是JavaScript开发社区最知名的权威，是JSON、JSLint、JSMin和ADSafe之父，是《JavaScript: The Good Parts》的作者。他同时也服务于ECMA的JavaScript2.0技术委员会（TC39）。<br>相关新闻： JavaScript: 世界上最被误解的语言</p>
-<p>6. Mike Bostock<br><img src="http://cms.csdnimg.cn/article/201408/01/53db31cdd691b.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/mbostock" target="_blank" rel="external">https://github.com/mbostock</a><br>个人主页： <a href="http://bost.ocks.org" target="_blank" rel="external">http://bost.ocks.org</a><br>Mike Bostock，纽约时报图形编辑，知名可视化库 D3.js的主要作者。 </p>
-<p>7.Mark Otto<br><img src="http://cms.csdnimg.cn/article/201408/01/53db42aa96f39.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/mdo" target="_blank" rel="external">https://github.com/mdo</a><br>个人主页： <a href="https://www.gittip.com/mdo/" target="_blank" rel="external">https://www.gittip.com/mdo/</a><br>Mark Otto，Twitter前设计师，与Jacob Thornton合作开发了大名鼎鼎的CSS/HTML框架Bootstrap。 </p>
-<p>8.James Halliday<br><img src="http://cms.csdnimg.cn/article/201408/04/53df4ef4d6289.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/substack" target="_blank" rel="external">https://github.com/substack</a><br>个人主页： <a href="http://substack.net/" target="_blank" rel="external">http://substack.net/</a><br>James Halliday(substack) ， node社区最活跃的贡献者，NPM排名仅次于TJ Holowaychuck，在写代码之外他还是个自成一派的 插画家。目前substack在NPM上发布了300+的模块。地址:  substack。</p>
-<p>9.Mr.doob<br><img src="http://cms.csdnimg.cn/article/201408/04/53df573452b68.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/mrdoob" target="_blank" rel="external">https://github.com/mrdoob</a><br>个人主页： <a href="http://mrdoob.com" target="_blank" rel="external">http://mrdoob.com</a><br>Mr.doob (Ricardo Cabello Migue) 是JS三维模型库three.js，  Code Editor（编码器） 的作者。 </p>
-<p>10.Jessica Lord<br><img src="http://cms.csdnimg.cn/article/201408/05/53e051ad64286.jpg" alt=""></p>
-<p>Github主页： <a href="https://github.com/jlord" target="_blank" rel="external">https://github.com/jlord</a><br>个人主页： <a href="https://jlord.github.io" target="_blank" rel="external">https://jlord.github.io</a><br>Jessica Lord， 2013年5月份加入Github设计团队。是开源项目sheetsee.js的作者。</p>
-<p>本文为网友分享，不保证正确！若侵权请联系我们删除！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/25/WordPress apache伪静态规则设置/" itemprop="url">
-                  WordPress apache伪静态规则设置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T08:54:08+08:00" content="2015-01-25">
-              2015-01-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/WordPress/" itemprop="url" rel="index">
-                    <span itemprop="name">WordPress</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/25/WordPress apache伪静态规则设置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/WordPress apache伪静态规则设置/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/25/WordPress apache伪静态规则设置/" class="leancloud_visitors" data-flag-title="WordPress apache伪静态规则设置">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>多少了解一点SEO知识的朋友都知道静态化的URL（什么是URL？自行百度）更利于搜索引擎收录，WordPress实现伪静态其实是很简单的，但有不少新人朋友还是始终无法成功设置WordPress伪静态。</p>
-<p>1、首先确定Apache是否加载了Mod_rewrite 模块<br>方法: 检查 /etc/httpd/conf/httpd.conf 中是否存在以下两段代码 (具体路径可能会有所不同，但形式基本是一样的):<br>(一)LoadModule rewrite_module libexec/mod_rewrite.so<br>(二)AddModule mod_rewrite.c<br>2、检查Apache是否开启.htaccess支持<br>vi  /etc/httpd/conf/httpd.conf<br>AllowOverride All   #如果后面参数为None需要修改为All（大概在338行）</p>
-<p>WordPress伪静态设置方法分Windows主机与和Linux主机，下面分开来介绍。</p>
-<p><strong>Linux主机WordPress伪静态设置方法</strong></p>
-<p>登录你的WordPress，点击左侧菜单设置选项下固定链接，如下图所示：</p>
-<p>WordPress已经给出了几种URL伪静态形式，但都不很理想，我们希望的URL形式为：</p>
-<p>域名/分类别名/文章ID.html</p>
-<p>那么，如上图所示，选择自定义结构选项，填写：</p>
-<p>/%category%/%post_id%.html</p>
-<p>如果你对这种形式不满意，可以自定义任意形式，只要合理搭配参数即可，可以使用的参数如下：</p>
-<p>%year%：文章发表的年份，四位数字，如2012</p>
-<p>%monthnum%：文章发表的月份，如08</p>
-<p>%day%：文章发表的日期，如28</p>
-<p>%hour%：文章发表的时间（小时），如15</p>
-<p>%minute%：文章发表的时间（分钟），如18</p>
-<p>%second%：文章发表的时间（秒），如28</p>
-<p>%postname%：文章别名，在发表文章时可以设置。</p>
-<p>%post_id%：文章的ID，如68</p>
-<p>%category%：分类别名，在添加分类时可以设置。</p>
-<p>%tag%：标签的别名，在添加标签时可以设置。</p>
-<p>设置好后，有的Linux主机允许程序自动创建.htaccess文件，但有的Linux主机不支持，此时，就需要我们手工上传.htaccess文件。将以下代码复制到记事本，保存为.htaccess。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"># BEGIN WordPress</div><div class="line"></div><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line"></div><div class="line">RewriteEngine On</div><div class="line"></div><div class="line">RewriteBase /</div><div class="line"></div><div class="line">RewriteRule ^index.php$ - [L]</div><div class="line"></div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-f</div><div class="line"></div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !-d</div><div class="line"></div><div class="line">RewriteRule . /index.php [L]</div><div class="line"></div><div class="line">&lt;/IfModule&gt;</div><div class="line"></div><div class="line"># END WordPress</div><div class="line"></div><div class="line">可能你会发现，电脑不允许保存文件时文件名为空，那么随便起一个名称，用FTP工具上传到你的网站根目录后重命名，将名称去掉即可。</div><div class="line"></div><div class="line">此时，细心的你可能会发现分类页的URL里有一个category，你可以使用WP No Category Base插件来解决。</div><div class="line"></div><div class="line">**Windows主机WordPress伪静态设置方法**</div><div class="line"></div><div class="line">复制以下代码到记事本：</div><div class="line"></div><div class="line">[ISAPI_Rewrite]</div><div class="line"></div><div class="line"># 3600 = 1 hour</div><div class="line"></div><div class="line">CacheClockRate 3600</div><div class="line"></div><div class="line">RepeatLimit 32</div><div class="line"></div><div class="line"># Protect httpd.ini and httpd.parse.errors files</div><div class="line"></div><div class="line"># from accessing through HTTP</div><div class="line"></div><div class="line"># Rules to ensure that normal content gets through</div><div class="line"></div><div class="line">RewriteRule /sitemap.xml /sitemap.xml [L]</div><div class="line"></div><div class="line">RewriteRule /favicon.ico /favicon.ico [L]</div><div class="line"></div><div class="line"># For file-based wordpress content (i.e. theme), admin, etc.</div><div class="line"></div><div class="line">RewriteRule /wp-(.*) /wp-$1 [L]</div><div class="line"></div><div class="line"># For normal wordpress content, via index.php</div><div class="line"></div><div class="line">RewriteRule ^/$ /index.php [L]</div><div class="line"></div><div class="line">RewriteRule /(.*) /index.php/$1 [L]</div></pre></td></tr></table></figure></p>
-<p>保存为httpd.ini，将这个文件上传到你的WordPress安装目录，然后设置固定链接，方法同Linux主机WordPress伪静态设置方法中的固定链接设置方法。</p>
-<p>在Windows主机下设置WordPress伪静态有时会遇到这样那样的问题，所以，使用WordPress搭建网站最好选用Linux主机。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/25/java集合类ArrayList操作之删除remove某些元素的案例分析/" itemprop="url">
-                  java集合类ArrayList操作之删除remove某些元素的案例分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T08:25:51+08:00" content="2015-01-25">
-              2015-01-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/25/java集合类ArrayList操作之删除remove某些元素的案例分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/java集合类ArrayList操作之删除remove某些元素的案例分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/25/java集合类ArrayList操作之删除remove某些元素的案例分析/" class="leancloud_visitors" data-flag-title="java集合类ArrayList操作之删除remove某些元素的案例分析">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>原文：<a href="http://www.zuidaima.com/share/1996702634298368.htm" title="点击">点击</a></p>
-<p>在java开发中，会经常出现需要删除java ArrayList的某些元素的场景，比如从在线用户列表的ArrayList中删除离线用户的ArrayList，但有的人会出现循环在线用户ArrayList列表然后删除离线用户ArrayList的情况，看着代码确实没什么问题，但其实犯了初学者最容易犯的一个错误，同时循环ArrayList和删除ArrayList的元素。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/25/java集合类ArrayList操作之删除remove某些元素的案例分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/25/关于Java普通代码块的疑问/" itemprop="url">
-                  关于Java普通代码块的疑问
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-25T07:56:11+08:00" content="2015-01-25">
-              2015-01-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/01/25/关于Java普通代码块的疑问/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/01/25/关于Java普通代码块的疑问/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/25/关于Java普通代码块的疑问/" class="leancloud_visitors" data-flag-title="关于Java普通代码块的疑问">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>两段Java代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> x = <span class="number">19</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> x = <span class="number">9</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		<span class="keyword">int</span> x = <span class="number">19</span>;</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">int</span> x = <span class="number">9</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>问题：第一条程序没有报错，第二条程序报错了，这是为什么呢？<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/25/关于Java普通代码块的疑问/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1843,7 +1878,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">337</span>
+              <span class="site-state-item-count">341</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

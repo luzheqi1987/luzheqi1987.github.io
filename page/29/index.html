@@ -302,6 +302,729 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/" itemprop="url">
+                  CODE 35. Validate Binary Search Tree
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-20T21:39:00+08:00" content="2013-09-20">
+              2013-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/" class="leancloud_visitors" data-flag-title="CODE 35. Validate Binary Search Tree">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 35 Validate Binary Search Tree/'>CODE 35. Validate Binary Search Tree</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a binary tree, determine if it is a valid binary search tree (BST).<br>Assume a BST is defined as follows:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys less than the node’s key.</li>
+<li>The right subtree of a node contains only nodes with keys greater than the node’s key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p>confused what <code>&quot;{1,#,2,3}&quot;</code> means? <a href="http://oj.leetcode.com/problems/validate-binary-search-tree/#" target="_blank" rel="external">&gt;<br> read more on how binary tree is serialized on OJ.</a></p>
+<p>OJ’s Binary Tree Serialization:The serialization of a binary tree follows a level order traversal, where ‘#’ signifies a path terminator where no node exists below.<br>Here’s an example:</p>
+<pre><code>  1
+ / \
+2   3
+   /
+  4
+   \
+    5
+</code></pre><p>The above binary tree is serialized as <code>&quot;{1,2,3,#,#,4,#,#,5}&quot;</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">	TreeNode pre = <span class="keyword">new</span> TreeNode(Integer.MIN_VALUE);</div><div class="line">	TreeNode now = root;</div><div class="line">	<span class="keyword">while</span> (!stack.isEmpty() || <span class="keyword">null</span> != now) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == now) &#123;</div><div class="line">			now = stack.pop();</div><div class="line">			<span class="keyword">if</span> (pre.val &gt;= now.val) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">			pre = now;</div><div class="line">			now = now.right;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			stack.push(now);</div><div class="line">			now = now.left;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/" itemprop="url">
+                  CODE 26. Binary Tree Level Order Traversal II
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-20T19:38:00+08:00" content="2013-09-20">
+              2013-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/" class="leancloud_visitors" data-flag-title="CODE 26. Binary Tree Level Order Traversal II">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 26 Binary Tree Level Order Traversal II/'>CODE 26. Binary Tree Level Order Traversal II</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a binary tree, return the bottom-up level order traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).<br>For example:<br>Given binary tree <code>{3,9,20,#,#,15,7}</code>,</p>
+<pre><code>  3
+ / \
+9  20
+  /  \
+ 15   7
+</code></pre><p>return its bottom-up level order traversal as:</p>
+<pre><code>[
+  [15,7]
+  [9,20],
+  [3],
+]
+</code></pre><p>confused what <code>&quot;{1,#,2,3}&quot;</code> means? <a href="http://oj.leetcode.com/problems/binary-tree-level-order-traversal-ii/#" target="_blank" rel="external">&gt;<br> read more on how binary tree is serialized on OJ.</a></p>
+<p>OJ’s Binary Tree Serialization:The serialization of a binary tree follows a level order traversal, where ‘#’ signifies a path terminator where no node exists below.<br>Here’s an example:</p>
+<pre><code>  1
+ / \
+2   3
+   /
+  4
+   \
+    5
+</code></pre><p>The above binary tree is serialized as <code>&quot;{1,2,3,#,#,4,#,#,5}&quot;</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrderBottom(TreeNode root) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">	ArrayList&lt;Integer&gt; layerVals = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	queue.offer(root);</div><div class="line">	<span class="keyword">int</span> layerNumber = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		TreeNode node = queue.poll();</div><div class="line">		layerVals.add(node.val);</div><div class="line">		layerNumber--;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.left) &#123;</div><div class="line">			queue.offer(node.left);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.right) &#123;</div><div class="line">			queue.offer(node.right);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (layerNumber == <span class="number">0</span>) &#123;</div><div class="line">			layerNumber = queue.size();</div><div class="line">			ArrayList&lt;Integer&gt; layerValsCpy = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			layerValsCpy.addAll(layerVals);</div><div class="line">			results.add(<span class="number">0</span>, layerValsCpy);</div><div class="line">			layerVals.clear();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/" itemprop="url">
+                  CODE 34. Recover Binary Search Tree
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-20T19:33:00+08:00" content="2013-09-20">
+              2013-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/" class="leancloud_visitors" data-flag-title="CODE 34. Recover Binary Search Tree">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 34 Recover Binary Search Tree/'>CODE 34. Recover Binary Search Tree</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Two elements of a binary search tree (BST) are swapped by mistake.<br>Recover the tree without changing its structure.<br>Note:<br>A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?<br>confused what <code>&quot;{1,#,2,3}&quot;</code> means? <a href="http://oj.leetcode.com/problems/recover-binary-search-tree/#" target="_blank" rel="external">&gt;<br> read more on how binary tree is serialized on OJ.</a></p>
+<p>OJ’s Binary Tree Serialization:The serialization of a binary tree follows a level order traversal, where ‘#’ signifies a path terminator where no node exists below.<br>Here’s an example:</p>
+<pre><code>  1
+ / \
+2   3
+   /
+  4
+   \
+    5
+</code></pre><p>The above binary tree is serialized as <code>&quot;{1,2,3,#,#,4,#,#,5}&quot;</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">recoverTree</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ArrayList&lt;TreeNode&gt; list = inorder(root);</div><div class="line">	TreeNode err1 = <span class="keyword">null</span>;</div><div class="line">	TreeNode err2 = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size() - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (list.get(i).val &gt; list.get(i + <span class="number">1</span>).val) &#123;</div><div class="line">			<span class="keyword">if</span> (<span class="keyword">null</span> == err1) &#123;</div><div class="line">				err1 = list.get(i);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				err2 = list.get(i + <span class="number">1</span>);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != err1 &amp;&amp; <span class="keyword">null</span> != err2) &#123;</div><div class="line">		<span class="keyword">int</span> tmp = err1.val;</div><div class="line">		err1.val = err2.val;</div><div class="line">		err2.val = tmp;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">null</span> != err1) &#123;</div><div class="line">		<span class="keyword">int</span> index = list.indexOf(err1);</div><div class="line">		<span class="keyword">int</span> tmp = list.get(index + <span class="number">1</span>).val;</div><div class="line">		list.get(index + <span class="number">1</span>).val = err1.val;</div><div class="line">		err1.val = tmp;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">ArrayList&lt;TreeNode&gt; <span class="title">inorder</span><span class="params">(TreeNode node)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == node.left &amp;&amp; <span class="keyword">null</span> == node.right) &#123;</div><div class="line">		ArrayList&lt;TreeNode&gt; list = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</div><div class="line">		list.add(node);</div><div class="line">		<span class="keyword">return</span> list;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;TreeNode&gt; list = <span class="keyword">null</span>;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != node.left) &#123;</div><div class="line">		list = inorder(node.left);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == list) &#123;</div><div class="line">		list = <span class="keyword">new</span> ArrayList&lt;TreeNode&gt;();</div><div class="line">	&#125;</div><div class="line">	list.add(node);</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != node.right) &#123;</div><div class="line">		ArrayList&lt;TreeNode&gt; listRight = inorder(node.right);</div><div class="line">		list.addAll(listRight);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> list;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 33 Same Tree/" itemprop="url">
+                  CODE 33. Same Tree
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-20T18:35:00+08:00" content="2013-09-20">
+              2013-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/09/20/2013-09-20-CODE 33 Same Tree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 33 Same Tree/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/20/2013-09-20-CODE 33 Same Tree/" class="leancloud_visitors" data-flag-title="CODE 33. Same Tree">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 33 Same Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 33 Same Tree/'>CODE 33. Same Tree</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given two binary trees, write a function to check if they are equal or not.<br>Two binary trees are considered equal if they are structurally identical and the nodes have the same value.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSameTree</span><span class="params">(TreeNode p, TreeNode q)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">return</span> dfs(p, q);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(TreeNode left, TreeNode right)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> ((<span class="keyword">null</span> != left &amp;&amp; <span class="keyword">null</span> == right) || (<span class="keyword">null</span> == left)</div><div class="line">			&amp;&amp; (<span class="keyword">null</span> != right)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (left == <span class="keyword">null</span> &amp;&amp; right == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (left.val != right.val) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">boolean</span> leftResult = dfs(left.left, right.left);</div><div class="line">	<span class="keyword">boolean</span> rightResult = dfs(left.right, right.right);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> (leftResult &amp;&amp; rightResult) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 32 Symmetric Tree/" itemprop="url">
                   CODE 32. Symmetric Tree
                 </a>
@@ -1358,691 +2081,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/" itemprop="url">
-                  CODE 24. Convert Sorted List to Binary Search Tree
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-20T09:58:00+08:00" content="2013-09-20">
-              2013-09-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/" class="leancloud_visitors" data-flag-title="CODE 24. Convert Sorted List to Binary Search Tree">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 24 Convert Sorted List to Binary Search Tree/'>CODE 24. Convert Sorted List to Binary Search Tree</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedListToBST</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">return</span> dfs(head);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">TreeNode <span class="title">dfs</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">	TreeNode node = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (head != <span class="keyword">null</span>) &#123;</div><div class="line">		ListNode perMidNode = <span class="keyword">null</span>;</div><div class="line">		ListNode midNode = head;</div><div class="line">		ListNode lastNode = head;</div><div class="line">		<span class="keyword">while</span> (<span class="keyword">null</span> != lastNode.next &amp;&amp; <span class="keyword">null</span> != lastNode.next.next) &#123;</div><div class="line">			perMidNode = midNode;</div><div class="line">			midNode = midNode.next;</div><div class="line">			lastNode = lastNode.next.next;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != perMidNode) &#123;</div><div class="line">			perMidNode.next = <span class="keyword">null</span>;</div><div class="line">		&#125;</div><div class="line">		node = <span class="keyword">new</span> TreeNode(midNode.val);</div><div class="line">		TreeNode left = dfs(perMidNode == <span class="keyword">null</span> ? <span class="keyword">null</span> : head);</div><div class="line">		TreeNode right = dfs(midNode.next);</div><div class="line">		node.left = left;</div><div class="line">		node.right = right;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/" itemprop="url">
-                  CODE 25. Convert Sorted Array to Binary Search Tree
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-20T09:18:00+08:00" content="2013-09-20">
-              2013-09-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/" class="leancloud_visitors" data-flag-title="CODE 25. Convert Sorted Array to Binary Search Tree">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 25 Convert Sorted Array to Binary Search Tree/'>CODE 25. Convert Sorted Array to Binary Search Tree</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedArrayToBST</span><span class="params">(<span class="keyword">int</span>[] num)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (num == <span class="keyword">null</span> || num.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dfs(num, <span class="number">0</span>, num.length - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">TreeNode <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[] num, <span class="keyword">int</span> min, <span class="keyword">int</span> max)</span> </span>&#123;</div><div class="line">	TreeNode node = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (min &lt;= max) &#123;</div><div class="line">		<span class="keyword">int</span> mid = (max + min) / <span class="number">2</span>;</div><div class="line">		node = <span class="keyword">new</span> TreeNode(num[mid]);</div><div class="line">		TreeNode left = dfs(num, min, mid - <span class="number">1</span>);</div><div class="line">		TreeNode right = dfs(num, mid + <span class="number">1</span>, max);</div><div class="line">		node.left = left;</div><div class="line">		node.right = right;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> node;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/" itemprop="url">
-                  CODE 23. Balanced Binary Tree
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-19T21:07:00+08:00" content="2013-09-19">
-              2013-09-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/" class="leancloud_visitors" data-flag-title="CODE 23. Balanced Binary Tree">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 23 Balanced Binary Tree/'>CODE 23. Balanced Binary Tree</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a binary tree, determine if it is height-balanced.<br>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of<em>every</em> node<br> never differ by more than 1.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> checkBalanced(root) != -<span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">checkBalanced</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> left = checkBalanced(root.left);</div><div class="line">	<span class="keyword">int</span> right = checkBalanced(root.right);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (left == -<span class="number">1</span> || right == -<span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (Math.abs(left - right) &gt; <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="keyword">return</span> Math.max(left, right) + <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/" itemprop="url">
-                  CODE 22. Minimum Depth of Binary Tree
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-19T20:16:00+08:00" content="2013-09-19">
-              2013-09-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/" class="leancloud_visitors" data-flag-title="CODE 22. Minimum Depth of Binary Tree">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/19/2013-09-19-CODE 22 Minimum Depth of Binary Tree/'>CODE 22. Minimum Depth of Binary Tree</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a binary tree, find its minimum depth.<br>The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">	queue.offer(root);</div><div class="line">	<span class="keyword">int</span> layer = <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> layerNumbers = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		TreeNode node = queue.poll();</div><div class="line">		layerNumbers--;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == node.left &amp;&amp; <span class="keyword">null</span> == node.right) &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.left) &#123;</div><div class="line">			queue.offer(node.left);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.right) &#123;</div><div class="line">			queue.offer(node.right);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (layerNumbers == <span class="number">0</span> &amp;&amp; !queue.isEmpty()) &#123;</div><div class="line">			layerNumbers = queue.size();</div><div class="line">			layer++;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> layer;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2083,7 +2126,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">337</span>
+              <span class="site-state-item-count">341</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

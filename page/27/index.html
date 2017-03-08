@@ -302,6 +302,694 @@
             
               
                 
+                <a class="post-title-link" href="/2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/" itemprop="url">
+                  CODE 59. Search a 2D Matrix
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-04T22:22:00+08:00" content="2013-10-04">
+              2013-10-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/" class="leancloud_visitors" data-flag-title="CODE 59. Search a 2D Matrix">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 59 Search a 2D Matrix/'>CODE 59. Search a 2D Matrix</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Write an efficient algorithm that searches for a value in an<em>m</em>x<em>n</em>matrix. This matrix has the following properties:</p>
+<ul>
+<li>Integers in each row are sorted from left to right.</li>
+<li>The first integer of each row is greater than the last integer of the previous row.</li>
+</ul>
+<p>For example,<br>Consider the following matrix:<br>    [<br>      [1,   3,  5,  7],<br>      [10, 11, 16, 20],<br>      [23, 30, 34, 50]<br>    ]</p>
+<p>Given<strong>target</strong>=<code>3</code>, return<code>true</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == matrix || matrix.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> rows = matrix.length;</div><div class="line">	<span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">	<span class="keyword">int</span> all = rows * cols;</div><div class="line">	<span class="keyword">boolean</span> finded = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">int</span> i;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; all - <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (matrix[i / cols][i % cols] &gt; matrix[(i + <span class="number">1</span>) / cols][(i + <span class="number">1</span>)</div><div class="line">				% cols]) &#123;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (matrix[i / cols][i % cols] == target) &#123;</div><div class="line">			finded = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (i &lt; all - <span class="number">1</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> (matrix[rows - <span class="number">1</span>][cols - <span class="number">1</span>] == target) &#123;</div><div class="line">		finded = <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> finded;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/04/2013-10-04-CODE 58 Sort Colors/" itemprop="url">
+                  CODE 58. Sort Colors
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-04T20:52:00+08:00" content="2013-10-04">
+              2013-10-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/04/2013-10-04-CODE 58 Sort Colors/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/04/2013-10-04-CODE 58 Sort Colors/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/04/2013-10-04-CODE 58 Sort Colors/" class="leancloud_visitors" data-flag-title="CODE 58. Sort Colors">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 58 Sort Colors/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 58 Sort Colors/'>CODE 58. Sort Colors</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given an array with <em>n</em> objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.<br><strong>Note:</strong><br>You are not suppose to use the library’s sort function for this problem.<br><a href="http://oj.leetcode.com/problems/sort-colors/#" target="_blank" rel="external">click to show follow up.</a><br><strong>Follow up:</strong><br>A rather straight forward solution is a two-pass algorithm using counting sort.<br>First, iterate the array counting number of 0’s, 1’s, and 2’s, then overwrite array with total number of 0’s, then 1’s and followed by 2’s.<br>Could you come up with an one-pass algorithm using only constant space?</p>
+<p><strong>WORST CODE:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortColors</span><span class="params">(<span class="keyword">int</span>[] A)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="comment">// 012012012012</span></div><div class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> end = A.length - <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (start &lt; A.length &amp;&amp; A[start] == <span class="number">0</span>) &#123;</div><div class="line">		start++;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">while</span> (end &gt; <span class="number">0</span> &amp;&amp; A[end] == <span class="number">2</span>) &#123;</div><div class="line">		end--;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> mid = start; mid &lt;= end; mid++) &#123;</div><div class="line">		<span class="keyword">if</span> (A[mid] == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">int</span> tmp = A[mid];</div><div class="line">			A[mid] = A[start];</div><div class="line">			A[start] = tmp;</div><div class="line">			start++;</div><div class="line">			<span class="keyword">while</span> (start &lt; A.length &amp;&amp; A[start] == <span class="number">0</span>) &#123;</div><div class="line">				start++;</div><div class="line">			&#125;</div><div class="line">			mid = start - <span class="number">1</span>;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mid != end &amp;&amp; A[mid] == <span class="number">2</span>) &#123;</div><div class="line">			<span class="keyword">int</span> tmp = A[mid];</div><div class="line">			A[mid] = A[end];</div><div class="line">			A[end] = tmp;</div><div class="line">			end--;</div><div class="line">			mid--;</div><div class="line">			<span class="keyword">while</span> (end &gt; <span class="number">0</span> &amp;&amp; A[end] == <span class="number">2</span>) &#123;</div><div class="line">				end--;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/" itemprop="url">
+                  CODE 57. Minimum Window Substring
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-04T11:01:00+08:00" content="2013-10-04">
+              2013-10-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/" class="leancloud_visitors" data-flag-title="CODE 57. Minimum Window Substring">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/04/2013-10-04-CODE 57 Minimum Window Substring/'>CODE 57. Minimum Window Substring</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).For example,<br><strong>S</strong>=<code>&quot;ADOBECODEBANC&quot;</code><br><strong>T</strong>=<code>&quot;ABC&quot;</code></p>
+<p>Minimum window is<code>&quot;BANC&quot;</code>.<br><strong>Note:</strong><br>If there is no such window in S that covers all characters in T, return the emtpy string<code>&quot;&quot;</code>.<br>If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.<br><strong>WORST CODE:</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">minWindow</span><span class="params">(String S, String T)</span> </span>&#123;</div><div class="line">	<span class="comment">// Note: The Solution object is instantiated only once and is reused by</span></div><div class="line">	<span class="comment">// each test case.</span></div><div class="line">	<span class="keyword">if</span> (T.length() &gt; S.length()) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125;</div><div class="line">	Map&lt;Character, Integer&gt; table = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</div><div class="line">	<span class="keyword">char</span>[] ss = S.toCharArray();</div><div class="line">	<span class="keyword">char</span>[] tt = T.toCharArray();</div><div class="line">	Map&lt;Character, Integer&gt; ttable = <span class="keyword">new</span> HashMap&lt;Character, Integer&gt;();</div><div class="line">	ArrayList&lt;Character&gt; cs = <span class="keyword">new</span> ArrayList&lt;Character&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">char</span> c : tt) &#123;</div><div class="line">		<span class="keyword">if</span> (ttable.containsKey(c)) &#123;</div><div class="line">			<span class="keyword">int</span> num = ttable.get(c);</div><div class="line">			ttable.put(c, num + <span class="number">1</span>);</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			ttable.put(c, <span class="number">1</span>);</div><div class="line">		&#125;</div><div class="line">		cs.add(c);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> start = -<span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> end = -<span class="number">1</span>;</div><div class="line">	String substring = <span class="string">""</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ss.length; i++) &#123;</div><div class="line">		<span class="keyword">if</span> (ttable.keySet().contains(ss[i])) &#123;</div><div class="line">			<span class="keyword">if</span> (-<span class="number">1</span> == start) &#123;</div><div class="line">				start = i;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">int</span> num = ttable.get(ss[i]);</div><div class="line">			<span class="keyword">if</span> (num &gt; <span class="number">1</span>) &#123;</div><div class="line">				ttable.put(ss[i], num - <span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				ttable.remove(ss[i]);</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">if</span> (ttable.isEmpty()) &#123;</div><div class="line">				end = i;</div><div class="line">				substring = S.substring(start, end + <span class="number">1</span>);</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			&#125;</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (cs.contains(ss[i])) &#123;</div><div class="line">			<span class="keyword">if</span> (table.containsKey(ss[i])) &#123;</div><div class="line">				<span class="keyword">int</span> num = table.get(ss[i]);</div><div class="line">				table.put(ss[i], num + <span class="number">1</span>);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				table.put(ss[i], <span class="number">1</span>);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (-<span class="number">1</span> == start || -<span class="number">1</span> == end) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (start = start + <span class="number">1</span>; start &lt;= ss.length - tt.length</div><div class="line">			&amp;&amp; end &lt; ss.length; start++) &#123;</div><div class="line">		<span class="keyword">if</span> (!cs.contains(ss[start - <span class="number">1</span>])) &#123;</div><div class="line">			String tmp = S.substring(start, end + <span class="number">1</span>);</div><div class="line">			<span class="keyword">if</span> (tmp.length() &lt; substring.length()) &#123;</div><div class="line">				substring = tmp;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">if</span> (table.containsKey(ss[start - <span class="number">1</span>])) &#123;</div><div class="line">				<span class="keyword">int</span> num = table.get(ss[start - <span class="number">1</span>]);</div><div class="line">				<span class="keyword">if</span> (num &gt; <span class="number">1</span>) &#123;</div><div class="line">					table.put(ss[start - <span class="number">1</span>], num - <span class="number">1</span>);</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					table.remove(ss[start - <span class="number">1</span>]);</div><div class="line">				&#125;</div><div class="line">				String tmp = S.substring(start, end + <span class="number">1</span>);</div><div class="line">				<span class="keyword">if</span> (tmp.length() &lt; substring.length()) &#123;</div><div class="line">					substring = tmp;</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">for</span> (end = end + <span class="number">1</span>; end &lt; ss.length; end++) &#123;</div><div class="line">					<span class="keyword">if</span> (ss[start - <span class="number">1</span>] == ss[end]) &#123;</div><div class="line">						<span class="keyword">break</span>;</div><div class="line">					&#125;</div><div class="line">					<span class="keyword">if</span> (cs.contains(ss[end])) &#123;</div><div class="line">						<span class="keyword">if</span> (table.containsKey(ss[end])) &#123;</div><div class="line">							<span class="keyword">int</span> num = table.get(ss[end]);</div><div class="line">							table.put(ss[end], num + <span class="number">1</span>);</div><div class="line">						&#125; <span class="keyword">else</span> &#123;</div><div class="line">							table.put(ss[end], <span class="number">1</span>);</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">if</span> (end &lt; ss.length) &#123;</div><div class="line">					String tmp = S.substring(start, end + <span class="number">1</span>);</div><div class="line">					<span class="keyword">if</span> (tmp.length() &lt; substring.length()) &#123;</div><div class="line">						substring = tmp;</div><div class="line">					&#125;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> substring;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2013/10/03/2013-10-03-CODE 56 Combinations/" itemprop="url">
+                  CODE 56. Combinations
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-03T21:07:00+08:00" content="2013-10-03">
+              2013-10-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/10/03/2013-10-03-CODE 56 Combinations/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/10/03/2013-10-03-CODE 56 Combinations/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/03/2013-10-03-CODE 56 Combinations/" class="leancloud_visitors" data-flag-title="CODE 56. Combinations">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/03/2013-10-03-CODE 56 Combinations/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/03/2013-10-03-CODE 56 Combinations/'>CODE 56. Combinations</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given two integers <em>n</em> and <em>k</em>, return all possible combinations of<em>k</em> numbers out of 1 … <em>n</em>.For example,<br>If<em>n</em>= 4 and<em>k</em>= 2, a solution is:<br>    [<br>      [2,4],<br>      [3,4],<br>      [2,3],<br>      [1,2],<br>      [1,3],<br>      [1,4],<br>    ]</p>
+<pre><code><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combine(<span class="keyword">int</span> n, <span class="keyword">int</span> k) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (n &lt; k) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	ArrayList&lt;Integer&gt; sList = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">		sList.add(i);</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</div><div class="line">		ArrayList&lt;Integer&gt; element = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		element.add(i);</div><div class="line">		result.add(element);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> end = result.size();</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> num = <span class="number">2</span>; num &lt;= k; num++) &#123;</div><div class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; tmp = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt; end; i++) &#123;</div><div class="line">			ArrayList&lt;Integer&gt; oldElement = result.get(i);</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = sList</div><div class="line">					.indexOf(oldElement.get(oldElement.size() - <span class="number">1</span>)) + <span class="number">2</span>; j &lt;= n; j++) &#123;</div><div class="line">				ArrayList&lt;Integer&gt; element = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">				element.addAll(oldElement);</div><div class="line">				element.add(j);</div><div class="line">				tmp.add(element);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		result.clear();</div><div class="line">		result.addAll(tmp);</div><div class="line">		start = <span class="number">0</span>;</div><div class="line">		end = result.size();</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/10/01/2013-10-01-CODE 55 Subsets/" itemprop="url">
                   CODE 55. Subsets
                 </a>
@@ -1311,693 +1999,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/25/2013-09-25-CODE 47 Partition List/" itemprop="url">
-                  CODE 47. Partition List
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-25T22:30:00+08:00" content="2013-09-25">
-              2013-09-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/25/2013-09-25-CODE 47 Partition List/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/25/2013-09-25-CODE 47 Partition List/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/25/2013-09-25-CODE 47 Partition List/" class="leancloud_visitors" data-flag-title="CODE 47. Partition List">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/25/2013-09-25-CODE 47 Partition List/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/25/2013-09-25-CODE 47 Partition List/'>CODE 47. Partition List</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.<br>You should preserve the original relative order of the nodes in each of the two partitions.<br>For example,<br>Given <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;2</code> and x = 3,<br>return <code>1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">partition</span><span class="params">(ListNode head, <span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	ListNode p1 = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode q1 = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">	ListNode p2 = p1;</div><div class="line">	ListNode q2 = q1;</div><div class="line"></div><div class="line">	<span class="keyword">while</span> (head != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (x &gt; head.val) &#123;</div><div class="line">			p2.next = <span class="keyword">new</span> ListNode(head.val);</div><div class="line">			p2 = p2.next;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			q2.next = <span class="keyword">new</span> ListNode(head.val);</div><div class="line">			q2 = q2.next;</div><div class="line">		&#125;</div><div class="line">		head = head.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> != q1.next) &#123;</div><div class="line">		p2.next = q1.next;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> p1.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/" itemprop="url">
-                  CODE 45. Merge Sorted Array
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-23T22:43:00+08:00" content="2013-09-23">
-              2013-09-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/" class="leancloud_visitors" data-flag-title="CODE 45. Merge Sorted Array">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/23/2013-09-23-CODE 45 Merge Sorted Array/'>CODE 45. Merge Sorted Array</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given two sorted integer arrays A and B, merge B into A as one sorted array.<br>Note:<br>You may assume that A has enough space to hold additional elements from B. The number of elements initialized in A and B are m and n respectively.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> A[], <span class="keyword">int</span> m, <span class="keyword">int</span> B[], <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == B) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span>[] insert = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</div><div class="line">	insert[<span class="number">0</span>] = -<span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> insertIndex = <span class="number">1</span>;</div><div class="line">	<span class="keyword">int</span> lastJ = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; j &lt; m &amp;&amp; i &lt; n;) &#123;</div><div class="line">		<span class="keyword">if</span> (A[j] &lt; B[i]) &#123;</div><div class="line">			j++;</div><div class="line">			<span class="keyword">continue</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			insert[insertIndex] = insert[insertIndex - <span class="number">1</span>] + j - lastJ + <span class="number">1</span>;</div><div class="line">			insertIndex++;</div><div class="line">			<span class="keyword">int</span> k;</div><div class="line">			<span class="keyword">for</span> (k = i + <span class="number">1</span>; k &lt; n; k++) &#123;</div><div class="line">				<span class="keyword">if</span> (B[k] &lt;= A[j]) &#123;</div><div class="line">					insert[insertIndex] = insert[insertIndex - <span class="number">1</span>] + <span class="number">1</span>;</div><div class="line">					insertIndex++;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">break</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			i += k - i;</div><div class="line">			lastJ = j;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> moveStep = insertIndex - <span class="number">1</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = m - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">		<span class="keyword">if</span> (insert[moveStep] != i + moveStep || moveStep == <span class="number">0</span>) &#123;</div><div class="line">			A[i + moveStep] = A[i];</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			A[i + moveStep] = B[moveStep - <span class="number">1</span>];</div><div class="line">			i++;</div><div class="line">			moveStep--;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (moveStep != <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; moveStep; i++) &#123;</div><div class="line">			A[i] = B[i];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (insertIndex - <span class="number">1</span> &lt; n) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = m - <span class="number">1</span> + insertIndex; i &lt; m + n; i++) &#123;</div><div class="line">			A[i] = B[i - m];</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/22/2013-09-22-CODE 44 Gray Code/" itemprop="url">
-                  CODE 44. Gray Code
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-22T22:52:00+08:00" content="2013-09-22">
-              2013-09-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/22/2013-09-22-CODE 44 Gray Code/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/22/2013-09-22-CODE 44 Gray Code/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/22/2013-09-22-CODE 44 Gray Code/" class="leancloud_visitors" data-flag-title="CODE 44. Gray Code">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/22/2013-09-22-CODE 44 Gray Code/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/22/2013-09-22-CODE 44 Gray Code/'>CODE 44. Gray Code</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>The gray code is a binary numeral system where two successive values differ in only one bit.<br>Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.<br>For example, given n = 2, return <code>[0,1,3,2]</code>. Its<br> gray code sequence is:<br>    00 - 0<br>    01 - 1<br>    11 - 3<br>    10 - 2</p>
-<p>Note:<br>For a given n, a gray code sequence is not uniquely defined.<br>For example, <code>[0,2,3,1]</code> is also a valid gray code sequence according<br> to the above definition.<br>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</div><div class="line">		ArrayList&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">		nums.add(<span class="number">0</span>);</div><div class="line">		<span class="keyword">return</span> nums;</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	<span class="keyword">char</span>[] cs = <span class="keyword">new</span> <span class="keyword">char</span>[n];</div><div class="line">	<span class="keyword">int</span> max = (<span class="keyword">int</span>) (Math.pow(<span class="number">2</span>, n) - <span class="number">1</span>);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= max; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</div><div class="line">			<span class="keyword">int</span> yushu = (<span class="keyword">int</span>) (i % Math.pow(<span class="number">2</span>, <span class="number">2</span> + j));</div><div class="line">			<span class="keyword">if</span> (yushu &lt; Math.pow(<span class="number">2</span>, <span class="number">1</span> + j)) &#123;</div><div class="line">				<span class="keyword">if</span> (yushu &lt; Math.pow(<span class="number">2</span>, j)) &#123;</div><div class="line">					cs[n - j - <span class="number">1</span>] = <span class="string">'0'</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					cs[n - j - <span class="number">1</span>] = <span class="string">'1'</span>;</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				<span class="keyword">if</span> ((yushu - Math.pow(<span class="number">2</span>, <span class="number">1</span> + j)) &lt; Math.pow(<span class="number">2</span>, j)) &#123;</div><div class="line">					cs[n - j - <span class="number">1</span>] = <span class="string">'1'</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					cs[n - j - <span class="number">1</span>] = <span class="string">'0'</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span> num = Integer.valueOf(String.valueOf(cs), <span class="number">2</span>);</div><div class="line">		nums.add(num);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> nums;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/22/2013-09-22-CODE 43 Decode Ways/" itemprop="url">
-                  CODE 43. Decode Ways
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-22T21:55:00+08:00" content="2013-09-22">
-              2013-09-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/09/22/2013-09-22-CODE 43 Decode Ways/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/09/22/2013-09-22-CODE 43 Decode Ways/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/22/2013-09-22-CODE 43 Decode Ways/" class="leancloud_visitors" data-flag-title="CODE 43. Decode Ways">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/22/2013-09-22-CODE 43 Decode Ways/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/22/2013-09-22-CODE 43 Decode Ways/'>CODE 43. Decode Ways</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>A message containing letters from <code>A-Z</code> is being encoded to numbers using<br> the following mapping:<br>    ‘A’ -&gt; 1<br>    ‘B’ -&gt; 2<br>    …<br>    ‘Z’ -&gt; 26</p>
-<p>Given an encoded message containing digits, determine the total number of ways to decode it.<br>For example,<br>Given encoded message <code>&quot;12&quot;</code>, it could be decoded as <code>&quot;AB&quot;</code> (1<br> 2) or <code>&quot;L&quot;</code> (12).<br>The number of ways decoding <code>&quot;12&quot;</code> is 2.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numDecodings</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == s || <span class="string">""</span>.equals(s)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span>[] num = <span class="keyword">new</span> <span class="keyword">int</span>[s.length() + <span class="number">1</span>];</div><div class="line">	<span class="keyword">char</span>[] cs = s.toCharArray();</div><div class="line">	num[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (cs[<span class="number">0</span>] &gt; <span class="string">'0'</span>) &#123;</div><div class="line">		num[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		num[<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; s.length() + <span class="number">1</span>; i++) &#123;</div><div class="line">		<span class="keyword">int</span> num1 = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> num2 = <span class="number">0</span>;</div><div class="line">		<span class="keyword">if</span> (cs[i - <span class="number">1</span>] != <span class="string">'0'</span>) &#123;</div><div class="line">			num1 = num[i - <span class="number">1</span>];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (cs[i - <span class="number">2</span>] == <span class="string">'1'</span>) &#123;</div><div class="line">			num2 = num[i - <span class="number">2</span>];</div><div class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (cs[i - <span class="number">2</span>] == <span class="string">'2'</span></div><div class="line">				&amp;&amp; (cs[i - <span class="number">1</span>] &gt;= <span class="string">'0'</span> &amp;&amp; cs[i - <span class="number">1</span>] &lt;= <span class="string">'6'</span>)) &#123;</div><div class="line">			num2 = num[i - <span class="number">2</span>];</div><div class="line">		&#125;</div><div class="line">		num[i] = num1 + num2;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> num[s.length()];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2038,7 +2044,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">337</span>
+              <span class="site-state-item-count">341</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

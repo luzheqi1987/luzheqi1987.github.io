@@ -302,6 +302,537 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="url">
+                  Java中Date,Calendar,Timestamp的区别以及相互转换与使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:14:17+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" class="leancloud_visitors" data-flag-title="Java中Date,Calendar,Timestamp的区别以及相互转换与使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1 Java.util.Date<br>包含年、月、日、时、分、秒信息。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String转换为Date</span></div><div class="line">String dateStr=&amp;quot;<span class="number">2013</span>-<span class="number">8</span>-<span class="number">13</span> <span class="number">23</span>:<span class="number">23</span>:<span class="number">23</span>&amp;quot;;</div><div class="line">String pattern=&amp;quot;yyyy-MM-dd HH:mm:ss&amp;quot;;</div><div class="line">DateFormate dateFormat=<span class="keyword">new</span> SimpleDateFormat(pattern);</div><div class="line">Date date=dateFormat.parse(dateStr);</div><div class="line">date=dateFormat.format(date);</div></pre></td></tr></table></figure></p>
+<p>2 Java.sql.Date<br>包含年、月、日信息。<br>继承自java.util.Date。在数据库相关操作中使用，如rs.getDate，ps.setDate等。rs是指ResultSet，ps是指PreparedStatement。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Date转换为java.sql.Date</span></div><div class="line"><span class="keyword">new</span> java.sql.Date(utilDate.getTime());<span class="comment">// 其中utilDate为java.util.Date类型的对象</span></div></pre></td></tr></table></figure></p>
+<p>3 Java.util.Calendar<br>包含年、月、日、时、分、秒、毫秒信息。<br>JDK1.1引入，用以代替java.util.Date。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Date转为Calendar</span></div><div class="line">Date date=<span class="keyword">new</span> Date();</div><div class="line">Calendar calendar=Calendar.getInstance();</div><div class="line">calendar.setTime(date);</div><div class="line"><span class="comment">// Calendar转为Date</span></div><div class="line">Calendar ca=Calendar.getInstance();  </div><div class="line">Date d =(Date) ca.getTime();</div></pre></td></tr></table></figure></p>
+<p>4 Java.sql.Timestamp<br>包含年、月、日、时、分、秒、纳秒（nano）信息。<br>继承自java.util.Date。比java.sql.Date包含更多信息。在数据库相关操作中使用，如rs.getTimestamp，ps.setTimeStamp等。例如：若数据库中某字段hireDate为Oracle的Date类型，则使用getTimestamp时能够将年、月、日、时、分、秒信息取出；但使用getDate时则只能取出年、月、日信息。因此，一般推荐使用getTimestamp。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.Calendar转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(Calendar.getInstance().getTimeInMillis());</div><div class="line"><span class="comment">// java.util.Date转换为java.sql.Timestamp</span></div><div class="line"><span class="keyword">new</span> Timestamp(date.getTime());</div><div class="line"><span class="comment">// String转换为java.sql.Timestamp，String格式：yyyy-mm-dd hh:mm:ss[.f...] ，方括号表示可选</span></div><div class="line">Timestamp.valueOf(&amp;quot;<span class="number">2013</span>-<span class="number">07</span>-<span class="number">06</span> <span class="number">01</span>:<span class="number">49</span>:<span class="number">30</span>&amp;quot;);</div></pre></td></tr></table></figure></p>
+<p>5 Oracle数据库提供的日期和时间类型<br>Oracle数据库提供了DATE，TIMESTAMP，TIMESTAMP WITH TIME ZONE和TIMESTAMP WITH LOCAL TIME ZONE四种类型。<br>DATE包含世纪、年、月、日、时、分、秒信息。<br>TIMESTAMP是DATE的扩展，包含年、月、日、时、分、秒和fractional seconds信息。定义TIMESTAMP的格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">TIMESTAMP [(fractional_seconds_precision)]</div><div class="line"><span class="comment">// 格式</span></div><div class="line">TIMESTAMP <span class="string">'YYYY-MM-DD HH24:MI:SS.FF'</span></div><div class="line"><span class="comment">// 一个例子</span></div><div class="line">TIMESTAMP <span class="string">'1997-01-31 09:26:50.12'</span></div></pre></td></tr></table></figure></p>
+<p>其中fractional_seconds_precision是可选的，用于指定秒使用含几位小数的浮点数表示，它的取值范围是0到9，默认是6。上述例子中表示采用两位小数，它的秒值是50.12。注意：12不是毫秒值，也不是微秒值。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/05/Java日期前推一个月/" itemprop="url">
+                  Java日期前推一个月
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:11:02+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/Java日期前推一个月/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/Java日期前推一个月/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/Java日期前推一个月/" class="leancloud_visitors" data-flag-title="Java日期前推一个月">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">计算离当前日期之前或之后任意天的日期 </div><div class="line"><span class="comment">/** </span></div><div class="line">* 日期计算 </div><div class="line">* </div><div class="line">* <span class="doctag">@author</span> zhangmingxue </div><div class="line">* </div><div class="line">*/ </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputeDateUtils</span> </span>&#123; </div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离当前日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(<span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(); </div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date beginDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      beginDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> beginDate; </div><div class="line">  &#125; </div><div class="line"></div><div class="line">  <span class="comment">/** </span></div><div class="line">   * 计算出离beginDate日期datas天的日期,若datas小于0表示当前日期之前datas天，若datas大于0表当前日期之后datas天 </div><div class="line">   * </div><div class="line">   * <span class="doctag">@param</span> 要计算的天数 </div><div class="line">   * <span class="doctag">@return</span> 得到日期 </div><div class="line">   */ </div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Date <span class="title">getDate</span><span class="params">(Date beginDate, <span class="keyword">int</span> datas)</span> </span>&#123; </div><div class="line">    Calendar beginCal=Calendar.getInstance(); </div><div class="line">    beginCal.setTime(beginDate); </div><div class="line">    GregorianCalendar calendar = <span class="keyword">new</span> GregorianCalendar(beginCal.get(Calendar.YEAR),beginCal.get(Calendar.MONTH),beginCal.get(Calendar.DATE));</div><div class="line">    calendar.add(GregorianCalendar.DATE, datas); </div><div class="line">    String begin = <span class="keyword">new</span> java.sql.Date(calendar.getTime().getTime()).toString(); </div><div class="line">    SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(&amp;quot;yyyy-MM-dd&amp;quot;); </div><div class="line">    Date endDate = <span class="keyword">null</span>; </div><div class="line">    <span class="keyword">try</span> &#123; </div><div class="line">      endDate = sdf.parse(begin); </div><div class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123; </div><div class="line">      e.printStackTrace(); </div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> endDate; </div><div class="line">  &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/04/经典算法题（五）——时针 分针重合/" itemprop="url">
+                  经典算法题（五）——时针 分针重合
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-04T12:29:02+08:00" content="2015-03-04">
+              2015-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/04/经典算法题（五）——时针 分针重合/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（五）——时针 分针重合/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/04/经典算法题（五）——时针 分针重合/" class="leancloud_visitors" data-flag-title="经典算法题（五）——时针 分针重合">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1、<br>时针旋转1周，即12小时内，时针和分针重合了11次，且连续两次重合相隔的时间相同；<br>所以可计算：60*12/11 = 720/11（分钟）<br>即：下次重合的时间是 1 点 60/11 分 ；<br>最少经过 720/11 分钟，时针和分针就能重合一次。</p>
+<p>2、<br>还能解决的问题，如：<br>最少经过多长时间，时针和分针就能在同一直线上一次。<br>连续两次重合过程中，时针和分针在同一直线上的情况出现两次，夹角分别是0°和180°；<br>所以可求得：最少经过 360/11 分钟，时针和分针就能在同一直线上一次。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/04/百度笔试题/" itemprop="url">
+                  百度笔试题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-04T12:28:08+08:00" content="2015-03-04">
+              2015-03-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/04/百度笔试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/百度笔试题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/04/百度笔试题/" class="leancloud_visitors" data-flag-title="百度笔试题">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1，当前计算机系统一般会采用层次结构存储数据，请介绍下典型计算机存储系统一般分为哪几个层次，为什么采用分层存储数据能有效提高程序的执行效率？（10分）</p>
+<p>所谓存储系统的层次结构，就是把各种不同存储容量、存取速度和价格的存储器按层次结构组成多层存储器，并通过管理软件和辅助硬件有机组合成统一的整体，使所存放的程序和数据按层次分布在各种存储器中。目前，在计算机系统中通常采用三级层次结构来构成存储系统，主要由高速缓冲存储器Cache、主存储器和辅助存储器组成。<br>存储系统多级层次结构中，由上向下分三级，其容量逐渐增大，速度逐级降低，成本则逐次减少。整个结构又可以看成两个层次：它们分别是主存一辅存层次和cache一主存层次。这个层次系统中的每一种存储器都不再是孤立的存储器，而是一个有机的整体。它们在辅助硬件和计算机操作系统的管理下，可把主存一辅存层次作为一个存储整体，形成的可寻址存储空间比主存储器空间大得多。由于辅存容量大，价格低，使得存储系统的整体平均价格降低。由于Cache的存取速度可以和CPU的工作速度相媲美，故cache一主存层次可以缩小主存和cPu之间的速度差距，从整体上提高存储器系统的存取速度。尽管Cache成本高，但由于容量较小，故不会使存储系统的整体价格增加很多。<br>综上所述，一个较大的存储系统是由各种不同类型的存储设备构成，是一个具有多级层次结构的存储系统。该系统既有与CPU相近的速度，又有极大的容量，而成本又是较低的。其中高速缓存解决了存储系统的速度问题，辅助存储器则解决了存储系统的容量问题。采用多级层次结构的存储器系统可以有效的解决存储器的速度、容量和价格之间的矛盾。<br>2，Unix/Linux系统中僵尸进程是如何产生的？有什么危害？如何避免？(10分)</p>
+<p>一个进程在调用exit命令结束自己的生命的时候，其实它并没有真正的被销毁，而是留下一个称为僵尸进程（Zombie）的数据结构（系统调用exit，它的作用是使进程退出，但也仅仅限于将一个正常的进程变成一个僵尸进程，并不能将其完全销毁）。<br>在Linux进程的状态中，僵尸进程是非常特殊的一种，它已经放弃了几乎所有内存空间，没有任何可执行代码，也不能被调度，仅仅在进程列表中保留一个位置，记载该进程的退出状态等信息供其他进程收集，除此之外，僵尸进程不再占有任何内存空间。它需要它的父进程来为它收尸，如果他的父进程没安装SIGCHLD信号处理函数调用wait或waitpid()等待子进程结束，又没有显式忽略该信号，那么它就一直保持僵尸状态，如果这时父进程结束了，那么init进程自动会接手这个子进程，为它收尸，它还是能被清除的。但是如果如果父进程是一个循环，不会结束，那么子进程就会一直保持僵尸状态，这就是为什么系统中有时会有很多的僵尸进程。</p>
+<p>避免zombie的方法：<br>1)在SVR4中，如果调用signal或sigset将SIGCHLD的配置设置为忽略,则不会产生僵死子进程。另外,使用SVR4版的sigaction,则可设置SA_NOCLDWAIT标志以避免子进程 僵死。<br>Linux中也可使用这个，在一个程序的开始调用这个函数 signal(SIGCHLD,SIG_IGN);<br>2)调用fork两次。<br>3)用waitpid等待子进程返回.</p>
+<p>3，简述Unix/Linux系统中使用socket库编写服务器端程序的流程，请分别用对应的socket通信函数表示(10分)</p>
+<p>TCP socket通信<br>服务器端流程如下：<br>1.创建serverSocket<br>2.初始化 serverAddr（服务器地址）<br>3.将socket和serverAddr 绑定 bind<br>4.开始监听 listen<br>5.进入while循环，不断的accept接入的客户端socket，进行读写操作write和read<br>6.关闭serverSocket<br>客户端流程：<br>1.创建clientSocket<br>2.初始化 serverAddr<br>3.链接到服务器 connect<br>4.利用write和read 进行读写操作<br>5.关闭clientSocket</p>
+<p>这个列表是一个Berkeley套接字API库提供的函数或者方法的概要：<br>socket() 创建一个新的确定类型的套接字，类型用一个整型数值标识，并为它分配系统资源。<br>bind() 一般用于服务器端，将一个套接字与一个套接字地址结构相关联，比如，一个指定的本地端口和IP地址。<br>listen() 用于服务器端，使一个绑定的TCP套接字进入监听状态。<br>connect() 用于客户端，为一个套接字分配一个自由的本地端口号。 如果是TCP套接字的话，它会试图获得一个新的TCP连接。<br>accept() 用于服务器端。 它接受一个从远端客户端发出的创建一个新的TCP连接的接入请求，创建一个新的套接字，与该连接相应的套接字地址相关联。<br>send()和recv(),或者write()和read(),或者recvfrom()和sendto(), 用于往/从远程套接字发送和接受数据。<br>close() 用于系统释放分配给一个套接字的资源。 如果是TCP，连接会被中断。<br>gethostbyname()和gethostbyaddr() 用于解析主机名和地址。<br>select() 用于修整有如下情况的套接字列表： 准备读，准备写或者是有错误。<br>poll() 用于检查套接字的状态。 套接字可以被测试，看是否可以写入、读取或是有错误。<br>getsockopt() 用于查询指定的套接字一个特定的套接字选项的当前值。<br>setsockopt() 用于为指定的套接字设定一个特定的套接字选项。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/04/经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器/" itemprop="url">
                   经典算法题（四）——利用 p, 1-p 随机数发生器知道等概率发生器
                 </a>
@@ -1161,572 +1692,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/操作系统笔试题/" itemprop="url">
-                  操作系统笔试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:24:06+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/操作系统笔试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/操作系统笔试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/操作系统笔试题/" class="leancloud_visitors" data-flag-title="操作系统笔试题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.基本知识点：<br>1) 操作系统是控制和管理计算机软硬件资源，以尽量合理有效的方法组织多个用户共享多种资源的程序集合。<br>2) 操作系统的基本功能：(1)处理机管理。主要功能包括进程控制、进程调度、进程同步和进程通信。(2)存储器管理。主要功能包括内存分配、地址映射、内存保护和内存扩充。(3)设备管，也叫I/O管理。主要功能包括缓冲区管理、设备分配、设备驱动和设备的无关性处理。(4)文件管理。主要功能包括文件存储空间的管理、文件操作的一般管理、目录管理、文件的读写管理和存取控制。(5)用户界面管理。操作系统的用户界面就是操作系统与用户的接口，包括控制接口和程序接口。<br>3) 现代操作系统的基本特征：并发性、共享性、虚拟性、异步性和不确定性。<br>4) 所谓中断是指系统发生某一事件后，CPU暂停正在执行的程序去执行处理该事件的程序过程，处理中断事件的程序称为中断处理程序，产生中断信号的那个部件称为中断源。中断处理具体过程：保存现场；分析原因，转中断处理程序；恢复现场。<br>5) 进程是一个具有独立功能的程序关于数据集合的一次可以并发执行的运行活动，其基本特征：动态特征、并发特征、独立性、相互制约性。进程的构成：程序、数据和进程控制块。进程有三种基本的调度状态：执行状态、就绪状态和等待状态。<br>6) 进程的引入大大地提高了资源的利用率和系统的吞吐量，而引入线程的目的是为了减少程序并发所付出的系统开销。进程是资源分配的单位，而线程是系统调度的单位。<br>7) 所谓死锁是多个进程间的一种僵持状态。进程死锁的原因:资源竞争及进程推进顺序非法。死锁的4个必要条件：互斥、占有等待、不可剥夺、环路。死锁的处理：鸵鸟策略、预防策略、避免策略、检测与解除死锁。<br>8) 临界资源是一次只允许一个进程使用的资源。临界区是在进程中操作临界资源的程序段。<br>2．进程和线程的区别？<br>答：线程是指进程内的一个执行单元,也是进程内的可调度实体.与进程的区别:(1)调度：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。(2)并发性：不仅进程之间可以并发执行，同一个进程的多个线程之间也可并发执行。(3)拥有资源：进程是拥有资源的一个独立单位，线程不拥有系统资源，但可以访问隶属于进程的资源. (4)系统开销：在创建或撤消进程时，由于系统都要为之分配和回收资源，导致系统的开销明显大于创建或撤消线程时的开销。<br>3.网络编程中设计并发服务器，使用多进程 与 多线程 ，请问有什么区别？<br>解析：(1)进程：子进程是父进程的复制品。子进程获得父进程数据空间、堆和栈的复制品<br>(2)线程：相对与进程而言，线程是一个更加接近与执行体的概念，它可以与同进程的其他线程共享数据，但拥有自己的栈空间，拥有独立的执行序列。<br>两者都可以提高程序的并发度，提高程序运行效率和响应时间。线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源管理和保护；而进程正相反。同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。<br>答:用多进程时每个进程有自己的地址空间，线程则共享地址空间。所有其他区别都是由此而来的：(1)速度：线程产生的速度快，线程间的通信快，切换快等，因为它们在同一个地址空间内。(2)资源利用率：线程的资源利用率比较好也是因为它们在同一个地址空间内。(3)同步问题：线程使用公共变量/内存时需要使用同步机制，还是因为它们在同一个地址空间内。<br>4. 操作系统中常见的进程调度策略有哪几种？<br>答：FCFS(先来先服务)，优先级，时间片轮转，多队列、多级反馈队列。<br>5.进程间的通信如何实现？<br>答：现在最常见的进程间通信的方式有：信号，信号量，消息队列，共享内存，管道。信号是使用信号处理器来进行的，信号量是使用P、V操作来实现的。消息队列是比较高级的一种进程间通信方法，因为它真的可以在进程间传送消息。<br>6.在Windows编程中互斥器(mutex)的作用和临界区(critical section)类似，请说一下二者间的主要区别。<br>答：两者的区别是mutex开业用于进程之间互斥，critical section是线程之间的互斥。<br>7.进程进入等待状态有哪几种方式？<br>答：CPU调度给优先级更高的Thread(线程)，原先Thread 进入Waiting(等待)状态。阻塞的Thread获得资源或者信号，进入Waiting状态。在时间片轮转的情况下，如果时间片到了，也将进入等待状态。<br>8.试说明进程在三个基本状态之间转换的典型原因。<br>答：a.处于就绪状态的进程，当进程调度程序为之分配了处理机后，该进程便由就绪状态变为执行状态。b.当前进程因发生某事件而无法执行，如访问已被占有的临界资源，就会使进程由执行状态变为阻塞状态。c.当前进程因事件片用完而被暂停执行，该进程便由执行状态变为就绪状态。<br>9.同步机构应遵循哪些基本准则？<br>答：a.空闲让进；b.忙则等待；c.有限等待；d.让权等待。<br>10.在单处理机环境下，进程间有哪几种通信方式？<br>答：a.共享存储器系统通信方式；b.消息传递系统通信方式；c.管道通信方式。<br>11.试比较消息队列与管道通信机制。<br>答：a.所谓管道，是指用于连接一个读进程和一个写进程，以实现它们之间通信的共享文件，又称pipe文件，管道通信是属于共享存储系统的。b.消息队列通信机制属于消息传递系统通信机制，存在通信链路，有消息的格式，有若干缓冲队列，采用独特的发送原语和接受原语。<br>12.在请求分页系统中，常采用哪几种页面置换算法？<br>答：a.最佳置换算法；b.先进先出算法；c.最近最久未使用LRU置换算法；d.Clock置换算法；e.此外，还有最少使用置换算法和页面缓冲算法。<br>13.内部碎片和外部碎片<br>为了有效的利用内存，使内存产生更少的碎片，要对内存分页，内存以页为单位来使用，最后一页往往装不满，于是形成了内部碎片。为了共享要分段，在段的换入换出时形成外部碎片，比如5K的段换出后，有一个4k的段进来放到原来5k的地方，于是形成1k的外部碎片。<br>1 虚地址的构成</p>
-<p>一个进程中所包含的具有独立逻辑功能的程序或数据仍被划分为段，并有各自的段号s, 对于段s 中的程序或数据，则按照一定的大小将其划分为不同的页。段页式管理时的进程的虚拟地址空间中的虚拟地址由三部分组成：即段号s ，页号P 和页内相对地址d 。虚拟空间的最小单位是页而不是段，从而内存可用区也就被划分成为着干个大小相等的页面，且每段所拥有的程序和数据在内存中可以分开存放。分段的大小也不再受内存可用区的限制。</p>
-<p>2 段表和页表</p>
-<p>为了实现段页式管理，系统必须为每个作业或进程建立一张段表以管理内存分配与释放、缺段处理、存储保护相地址变换等。另外，由于一个段又被划分成了若干页，每个段又必须建立一张页表以把段中的虚页变换成内存中的实际页面。显然，与页式管理时相同，页表中也要有相应的实现缺页中断处理和页面保护等功能的表项。另外，由于在段页式管理中，页表不再是属于进程而是属于某个段，因此，段表中应有专项指出该段所对应页表的页表始址和页表长度。</p>
-<p>3 动态地址变换过程</p>
-<p>在一般使用段页式存储管理方式的计算机系统中，都在内存中辟出一块固定的区域存放进程的段表和页表。因此，在段页式管理系统中，要对内存中指令或数据进行一次存取的话，至少需要访问三次以上的内存：</p>
-<p>第一次是由段表地址寄存器得段表始址后访问段表，由此取出对应段的页表在内存中的地址。第二次则是访问页表得到所要访问的物理地址。第三次才能访问真正需要访问的物理单元。</p>
-<p>显然，这将使CPU 的执行指令速度大大降低。为了提高地址转换速度，设置快速联想寄存器就显得比段式管理或页式管理时更加需要。在快速联想寄存器中，存放当前最常用的段号s 、页号p 和对应的内存页面与其它控制用栏目。当要访问内存空间某一单元时，可在通过段表、页表进行内存地址查找的同时，根据快速联想寄存器查找其段号和页号。如果所要访问的段或页在快速联想寄存器中，则系统不再访问内存中的段表、页表而直接把快速联想寄存器中的值与页内相对地址d 拼接起来 得到内存地址。总之，因为段页式管理是段式管理的页式管理方案结合而成的，所以具有它们二者的优点。但反过来说，由于管理软件的增加，复杂性和开销也就随之增加了。另外，需要的硬件以及占用的内存也有所增加。更重要的是，如果不采用联想寄存器的方式提高CPU 的访问速度，将会使得执行速度大大下降。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/操作系统面试（二）/" itemprop="url">
-                  操作系统面试（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:22:52+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/操作系统面试（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/操作系统面试（二）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/操作系统面试（二）/" class="leancloud_visitors" data-flag-title="操作系统面试（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1．什么是进程（Process）和线程（Thread）？有何区别？<br>（1） 线程是进程的一部分，所以线程有的时候被称为是轻权进程或者轻量级进程。<br>（2） 一个没有线程的进程是可以被看作单线程的，如果一个进程内拥有多个进程，进程的执行过程不是一条线（线程）的，而是多条线（线程）共同完成的。<br>（3） 系统在运行的时候会为每个进程分配不同的内存区域，但是不会为线程分配内存（线程所使用的资源是它所属的进程的资源），线程组只能共享资源。那就是说，出了CPU之外（线程在运行的时候要占用CPU资源），计算机内部的软硬件资源的分配与线程无关，线程只能共享它所属进程的资源。<br>（4） 与进程的控制表PCB相似，线程也有自己的控制表TCB，但是TCB中所保存的线程状态比PCB表中少多了。<br>（5） 进程是系统所有资源分配时候的一个基本单位，拥有一个完整的虚拟空间地址，并不依赖线程而独立存在。</p>
-<p>2．Windows下的内存是如何管理的？<br>WIndows为每个进程分配了4GB的虚拟地址空间，让每个进程都认为自己拥有4GB的内存空间，4GB怎么来的？ 32位 CPU可以取地址的空间为2的32次方，就是4GB（正如16位CPU有20根寻址线所有拥有2的20次方的寻址空间一样）<br>当我们在Windows中双击一个应用程序图标后，系统为该应用程序创建一个进程，Windows使得每个进程都拥有2GB的地址空间，这2GB地址空间用于程序存放代码，数据，堆栈，自由存储区（堆），另外2GB用于共享系统使用<br>前面的这些地址并不是物理内存中的地址，而是该进程空间中的虚拟地址<br>虚拟空间只是Windows为该进程分配的一个虚拟的地址空间，只有当其和物理内存相关联后才有意义<br>进程被创建时会建立一个 虚拟内从到物理内存的映射表——–页表，根据页表可以将虚拟内存和物理内存关联起来<br>虚拟内存是什么？就是把磁盘拿来当内存用，虚拟内存是一些系统页文件，存放在磁盘上，每个系统页文件大小也为4K，物理内存也被分页，每个页大小也为4K，这样虚拟页文件和物理内存页就可以对应，实际上虚拟内存就是用于物理内存的临时存放的磁盘空间。<br>虚拟内存和物理内存的管理(Windows内存管理的核心)<br>Windows是多任务的系统，在每个进程创建时，系统为每个进程也创建了一个页表，用于虚拟地址到物理地址的转换。比如现在程序在执行进程A，用户切换到了另外一个进程B，则系统会将进程A在内存中的数据存放到页文件中，并更新进程A的页表（使虚拟地址和页文件形成映射）。然后读取进程B的页表，根据页表判断进程B的数据是在内存中还是在页文件中（通过页文件的类型来判断），如果在内存中就直接读取，如果在页面文件中，就将页面文件内容读入物理内存，然后更新页表（使虚拟地址和物理内存形成映射）。这样一看，虚拟内存实际上就是冒牌的物理内存了吧。<br>程序的执行<br>一个PE文件有数据区，代码区，堆栈区（由系统分配，用于管理局部变量），使用OD载入一个程序就可以知道这些都是以二进制的形式保存在文件中。<br>程序刚运行的时候，系统不直接将整个程序载入到物理内存中，也不将其载入到页文件中，而是以程序文件本身作为页文件形成映射（虚拟地址到页文件的映射），建立页表，然后随着程序的执行通过页表来将其虚拟地址转换成物理地址（将页文件读入内存），然后在读取内存中的指令或数据。当进程被切换时，将内存内容保存到页文件，更新页表，如此往复，实现多任务操作。<br>可以知道，程序的代码段，数据段，堆栈区（系统分配）这些虚拟地址区域已经是映射状态，即有相应的物理内存与之对应。系统为每个进程提供了2G的自己的虚拟地址空间，剩下的虚拟地址空间干什么用？<br>剩下的虚拟地址空间就是给程序运行时动态分配内存使用。C++中 new的功能就是动态分配地址空间：</p>
-<p>3．存储过程是什么？有什么用？有什么优点？<br>存储过程（Stored Procedure）是在大型数据库系统中，一组为了完成特定功能的SQL 语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。存储过程在运算时生成执行方式，所以，以后对其再运行时其执行速度很快。</p>
-<p>4.你知道操作系统的内容分为几块吗？什么叫做虚拟内存？他和主存的关系如何？内存管理属于操作系统的内容吗？<br>虚拟内存是计算机系统内存管理的一种技术。它使得应用程序认为它拥有连续的可用的内存（一个连续完整的地址空间），而实际上，它通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上，在需要时进行数据交换。</p>
-<p>5.进程是一个比较重要的概念，那么进程有哪几种状态吗？<br>进程在其生存期内可能处于如下三种基本状态之一:<br>(1) 运行态(Run): 进程占有处理机资源，正在运行。 显然，在单处理机系统中任一时刻只能有一个进程处于此种状态;<br>(2) 就绪态(Ready): 进程本身具备运行条件，但由于处理机的个数少于可运行进程的个数，暂未投入运行。 即相当于等待处理机资源<br>(3) 等待态(Wait): 也称挂起态(Suspended)、封锁态(Blocked)、睡眠态(Sleep)。 进程本身不具备运行条件，即使分给它处理机也不能运行。 进程正等待某一个事件的发生，如等待某一资源被释放，等待与该进程相关的I/O传输的完成信号等。<br>进程的三个基本状态之间是可以相互转换的。具体地说，当一个就绪进程获得处理机时，其状态由就绪变为运行；当一个运行进程被剥夺处理机时，如用完系统分给它的时间片、出现更高优先级别的其它进程，其状态由运行变为就绪；当一个运行进程因某事件受阻时，如所申请资源被占用、启动I/O传输未完成，其状态由运行变为等待；当所等待事件发生时，如得到申请资源、I/O传输完成，其状态由等待变为就绪。</p>
-<p>6. 说出你所知道的保持进程同步的方法?</p>
-<p>为了能够有效的控制多个进程之间的沟通过程，保证沟通过程的有序和和谐，OS必须提供一定的同步机制保证进程之间不会自说自话而是有效的协同工作。比如在共享内存的通信方式中，两个或者多个进程都要对共享的内存进行数据写入，那么怎么才能保证一个进程在写入的过程中不被其它的进程打断，保证数据的完整性呢？又怎么保证读取进程在读取数据的过程中数据不会变动，保证读取出的数据是完整有效的呢？<br>常用的同步方式有： 互斥锁、条件变量、读写锁、记录锁(文件锁)和信号灯.<br>互斥锁<br>顾名思义，锁是用来锁住某种东西的，锁住之后只有有钥匙的人才能对锁住的东西拥有控制权(把锁砸了，把东西偷走的小偷不在我们的讨论范围了)。所谓互斥，从字面上理解就是互相排斥。因此互斥锁从字面上理解就是一点进程拥有了这个锁，它将排斥其它所有的进程访问被锁住的东西，其它的进程如果需要锁就只能等待，等待拥有锁的进程把锁打开后才能继续运行。<br>在实现中，锁并不是与某个具体的变量进行关联，它本身是一个独立的对象。进(线)程在有需要的时候获得此对象，用完不需要时就释放掉。<br>互斥锁的主要特点是互斥锁的释放必须由上锁的进(线)程释放，如果拥有锁的进(线)程不释放，那么其它的进(线)程永远也没有机会获得所需要的互斥锁。互斥锁主要用于线程之间的同步。<br>条件变量<br>上文中提到，对于互斥锁而言，如果拥有锁的进(线)程不释放锁，其它进(线)程永远没机会获得锁，也就永远没有机会继续执行后续的逻辑。在实际环境下，一个线程A需要改变一个共享变量X的值，为了保证在修改的过程中X不会被其它的线程修改，线程A必须首先获得对X的锁。现在假如A已经获得锁了，由于业务逻辑的需要，只有当X的值小于0时，线程A才能执行后续的逻辑，于是线程A必须把互斥锁释放掉，然后继续“忙等”。如下面的伪代码所示：</p>
-<p>// get x lock<br>while(x &lt;= 0){<br>// unlock x ;<br>// wait some time<br>// get x lock<br>}<br>// unlock x<br>这种方式是比较消耗系统的资源的，因为进程必须不停的主动获得锁、检查X条件、释放锁、再获得锁、再检查、再释放，一直到满足运行的条件的时候才可以。因此我们需要另外一种不同的同步方式，当线程X发现被锁定的变量不满足条件时会自动的释放锁并把自身置于等待状态，让出CPU的控制权给其它线程。其它线程此时就有机会去修改X的值，当修改完成后再通知那些由于条件不满足而陷入等待状态的线程。这是一种通知模型的同步方式，大大的节省了CPU的计算资源，减少了线程之间的竞争，而且提高了线程之间的系统工作的效率。这种同步方式就是条件变量。<br>坦率的说，从字面意思上来将，“条件变量”这四个字是不太容易理解的。我们可以把“条件变量”看做是一个对象，一个铃铛，一个会响的铃铛。当一个线程在获得互斥锁之后，由于被锁定的变量不满足继续运行的条件时，该线程就释放互斥锁并把自己挂到这个“铃铛”上。其它的线程在修改完变量后，它就摇摇“铃铛”，告诉那些挂着的线程：“你们等待的东西已经变化了，都醒醒看看现在的它是否满足你们的要求。”于是那些挂着的线程就知道自己醒来看自己是否能继续跑下去了。<br>读写锁<br>互斥锁是排他性锁，条件变量出现后和互斥锁配合工作能够有效的节省系统资源并提高线程之间的协同工作效率。互斥锁的目的是为了独占，条件变量的目的是为了等待和通知。但是现实世界是很复杂di，我们要解决的问题也是多种多样di.从功能上来说，互斥锁和条件变量能够解决基本上所有的问题，但是性能上就不一定完全满足了。人的无休止的欲望促使人发明出针对性更强、性能更好的同步机制来。读写锁就是这么一个玩意儿。<br>考虑一个文件有多个进程要读取其中的内容，但只有1个进程有写的需求。我们知道读文件的内容不会改变文件的内容，这样即使多个进程同时读相同的文件也没什么问题，大家都能和谐共存。当写进程需要写数据时，为了保证数据的一致性，所有读的进程就都不能读数据了，否则很可能出现读出去的数据一半是旧的，一半是新的状况，逻辑就乱掉了。<br>为了防止读数据的时候被写入新的数据，读进程必须对文件加上锁。现在假如我们有2个进程都同时读，如果我们使用上面的互斥锁和条件变量，当其中一个进程在读取数据的时候，另一个进程只能等待，因为它得不到锁。从性能上考虑，等待进程所花费的时间是完全的浪费，因为这个进程完全可以读文件内容而不会影响第一个，但是这个进程没有锁，所以它什么也做不了，只能等，等到花儿都谢了。<br>所以呢，我们需要一种其它类型的同步方式来满足上面的需求，这就是读写锁。<br>读写锁的出现能够有效的解决多进程并行读的问题。每一个需要读取的进程都申请读锁，这样大家互不干扰。当有进程需要写如数据时，首先申请写锁。如果在申请时发现有读(或者写)锁存在，则该写进程必须等待，一直等到所有的读(写)锁完全释放为止。读进程在读取之前首先申请读锁，如果所读数据被写锁锁定，则该读进程也必须等待读锁被释放位置。<br>很自然的，多个读锁是可以共存的，但写锁是完全互相排斥的。<br>记录锁(文件锁)<br>为了增加并行性，我们可以在读写锁的基础上进一步细分被锁对象的粒度。比如一个文件中，读进程可能需要读取该文件的前1k个字节，写进程需要写该文件的最后1k个字节。我们可以对前1k个字节上读锁，对最后1k个自己上写锁，这样两个进程就可并发工作了。记录锁中的所谓“记录”其实是“内容”的概念。使用读写锁可以锁定一部分，而不是整个文件。<br>文件锁可以认为是记录锁的一个特例，当使用记录锁锁定文件的所有内容时，此时的记录锁就可以称为文件锁了。<br>信号灯<br>信号灯可以说是条件变量的升级版。条件变量相当于铃铛，铃铛响后每个挂起的进程还需要自己获得互斥锁并判断所需条件是否满足，信号灯把这两步操作糅合到一起。<br>在Posix.1基本原理一文声称，有了互斥锁和条件变量还提供信号灯的原因是：“本标准提供信号灯的而主要目的是提供一种进程间同步的方式；这些进程可能共享也可能不共享内存区。互斥锁和条件变量是作为线程间的同步机制说明的；这些线程总是共享(某个)内存区。这两者都是已广泛使用了多年的同步方式。每组原语都特别适合于特定的问题”。尽管信号灯的意图在于进程间同步，互斥锁和条件变量的意图在于线程间同步，但是信号灯也可用于线程间，互斥锁和条件变量也可用于进程见。应当根据实际的情况进行决定。<br>信号灯最有用的场景是用以指明可用资源的数量。比如含有10个元素的数组，我们可以创建一个信号灯，初始值为0.每当有进程需要读数组中元素时(假设每次仅能读取1个元素)，就申请使用该信号灯(信号灯的值减1)，当有进程需要写元素时，就申请挂出该信号等(信号灯值加1)。这样信号灯起到了可用资源数量的作用。如果我们限定信号灯的值只能取0和1，就和互斥锁的含义很相同了。<br>7. OS中如何实现物理地址到逻辑地址的转换?<br>在分页系统中页面大小由硬件决定。页表的作用是实现从页号到物理块号的地址映射。逻辑地址转换成物理地址的过程是：用页号p去检索页表，从页表中得到该页的物理块号，把它装人物理地址寄存器中。同时，将页内地址d直接送人物理地址寄存器的块内地址字段中。这样，物理地址寄存器中的内容就是由二者拼接成的实际访问内存的地址，从而完成了从逻辑地址到物理地址的转换。<br>8. 解释一下分页式管理。<br>页是信息的物理单位，分页是为实现离散分配方式，以消减内存的外零头，提高内存的利用率；或者说，分页仅仅是由于系统管理的需要，而不是用户的需要。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/操作系统面试题（1）/" itemprop="url">
-                  操作系统面试题（1）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:22:12+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/操作系统面试题（1）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/操作系统面试题（1）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/操作系统面试题（1）/" class="leancloud_visitors" data-flag-title="操作系统面试题（1）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、什么是中断？中断时CPU做什么工作？</p>
-<p>中断是指在计算机执行期间，系统内发生任何非寻常的或非预期的急需处理事件，使得CPU暂时中断当前正在执行的程序而转去执行相应的事件处理程序。待处理完毕后又返回原来被中断处继续执行或调度新的进程执行的过程。<br>2、进程通信有哪些方式？<br>管道通信、消息通信、内存共享<br>3、 说说分段和分页。<br>页是信息的物理单位，分页是为实现离散分配方式，以消减内存的外零头，提高内存的利用率；或者说，分页仅仅是由于系统管理的需要，而不是用户的需要。<br>段是信息的逻辑单位，它含有一组其意义相对完整的信息。分段的目的是为了能更好的满足用户的需要。页的大小固定且由系统确定，把逻辑地址划分为页号和页内地址两部分，是由机器硬件实现的，因而一个系统只能有一种大小的页面。 段的长度却不固定，决定于用户所编写的程序，通常由编辑程序在对源程序进行编辑时，根据信息的性质来划分。<br>分页的作业地址空间是维一的，即单一的线性空间，程序员只须利用一个记忆符，即可表示一地址。分段的作业地址空间是二维的，程序员在标识一个地址时，既需给出段名，又需给出段内地址<br>4、什么是进程和线程？有何区别？<br>线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.<br>线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈),但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.一个线程可以创建和撤销另一个线程;同一个进程中的多个线程之间可以并发执行.</p>
-<p>5、Windows下的内存是如何管理的？<br>Window操纵内存可以分两个层面：物理内存和虚拟内存。<br>其中物理内存由系统管理，不允许应用程序直接访问，应用程序可见的只有一 个2G地址空间，而内存分配是通过堆进行的，对于每个进程都有自己的默认堆，当一个堆创建后，就通过虚拟内存操作保留了相应大小的地址块（不占有实际的内存，系统消耗很小），当在堆上分配一块内存时，系统在堆的地址表里找到一个空闲块（如果找不到，且堆创建属性是可扩充的，则扩充堆大小）为这个空闲块所包含的所有内存页提交物理对象（物理内存上或硬盘上的交换文件上）。这时可以就访问这部分地址了。提交时，系统将对所有进程的内存统一调配，如果物理内存不够，系统试图把一部分进程暂时不访问的页放入交换文件，以腾出部分物理内存。释放内存时，只在堆中将所在的页解除提交（相应的物理对象被解除），继续保留地址空间。<br>如果要知道某个地址是否被占用/可不可以访问，只要查询此地址的虚拟内存状VirtualQuery），如果是提交，则可以访问。如果仅仅保留，或没保留，则产生一 个 软件异常。此外有些内存页可以设置各种属性。如果是只读，向内写也会产生软件异常<br>6、操作系统的内容分为几块？什么叫做虚拟内存？优点管理属于操作系统的内容吗？<br>7、进程是一个比较重要的概念，那么进程有哪几种状态？<br>基本状态有3种,即ready(就绪),running(运行),wait(等待).<br>8、说出你所知道的保持进程同步的方法？<br>进程间同步的主要方法有内存屏障，互斥锁，信号量和锁，管程，消息，管道<br>7、OS中如何实现物理地址到逻辑志址的转换？<br>8、解释一下分页式管理。<br>用户程序的地址空间被划分成若干固定大小的区域，称为“页”，相应地，内存空间分成若干个物理块，页和块的大小相等。可将用户程序的任一页放在内存的任一块中，实现了离散分配.<br>9、什么是死锁，其条件是什么？怎么避免死锁？<br>死锁是指,在两个或多个并发进程中,如果每个进程持有某种资源而又都等待别的进程释放它们现在保持着的资源,否则就不能向前推进.此时,每个进程都占用了一定的资源但是又不能向前推进,称这一组进程产生了死锁. 通俗的讲,就是两个或多个进程无止境的等候着永远不会成立的条件的一种系统状态. 其条件是为<br>1.互斥：存在这样一种资源，它在某个时刻只能被分配给一个执行绪使用；<br>2.持有：当请求的资源已被占用从而导致执行绪阻塞时，资源占用者不但无需释放该资源，而且还可以继续请求更多资源；<br>3.不可剥夺：执行绪获得到的互斥资源不可被强行剥夺，换句话说，只有资源占用者自己才能释放资源；<br>4.环形等待：若干执行绪以不同的次序获取互斥资源，从而在由多个执行绪组成的环形链中，每个执行绪都在等待下一个执行绪释放它持有的资源。<br>避免死锁：按顺序访问，事务最小化</p>
-<p>10、什么是缓冲区溢出？有什么危害？其原因是什么？<br>缓冲区溢出是指当计算机向缓冲区内填充数据位数时超过了缓冲区本身的容量溢出的数据覆盖在合法数据上,<br>危害：在当前网络与分布式系统安全中，被广泛利用的50%以上都是缓冲区溢出，其中最著名的例子是1988年利用fingerd漏洞的蠕虫。而缓冲区溢出中，最为危险的是堆栈溢出，因为入侵者可以利用堆栈溢出，在函数返回时改变返回程序的地址，让其跳转到任意地址，带来的危害一种是程序崩溃导致拒绝服务，另外一种就是跳转并且执行一段恶意代码，比如得到shell，然后为所欲为。<br>通过往程序的缓冲区写超出其长度的内容，造成缓冲区的溢出，从而破坏程序的堆栈，使程序转而执行其它指令，以达到攻击的目的。造成缓冲区溢出的原因是程序中没有仔细检查用户输入的参数<br>11、什么是临界区？如何解决冲突？<br>每个进程中访问临界资源的那段程序称为临界区，每次只准许一个进程进入临界区，进入后不允许其他进程进入。<br>① 如果有若干进程要求进入空闲的临界区，一次仅允许一个进程进入。<br>② 任何时候，处于临界区内的进程不可多于一个。如已有进程进入自己的临界区，则其它所有试图进入临界区的进程必须等待。<br>③ 进入临界区的进程要在有限时间内退出，以便其它进程能及时进入自己的临界区。<br>④ 如果进程不能进入自己的临界区，则应让出CPU，避免进程出现“忙等”现象。<br>12、解释一下P操作与V操作。<br>P就是请求资源，V就是释放资源<br>13、中断和轮询的特点。<br>轮询：polling， 效率低，等待时间很长，CPU利用率不高。<br>中断：interrupts，容易遗漏一些问题，分屏蔽中断和非屏蔽中断。<br>轮询(Polling)I／O方式或程序控制I／O方式，是让CPU以一定的周期按次序查询每一个外设，看它是否有数据输入或输出的要求，若有，则进行相应的输入／输出服务；若无，或I／O处理完毕柏，CPU就接着查询下一个外设。<br>所需硬件：外设接口提供状态端口、数据端口<br>软件机制：应用程序必须定时查询各个接口的状态端口，判断是否需要输入、输出数据，如果需要，则通过数据端口进行数据操作。<br>特点：CPU通过执行指令主动对外部设备进行查询，外部设备处于被动地位。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/百度面试题/" itemprop="url">
-                  百度面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:20:32+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/百度面试题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/百度面试题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/百度面试题/" class="leancloud_visitors" data-flag-title="百度面试题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.Linux中优先级和优先数有什么关系，如何判断一个进程的优先级和优先数；<br>2.什么是僵尸进程和孤儿进程，它们是否消耗系统资源；<br>僵尸进程：一个子进程在其父进程还没有调用wait()或waitpid()的情况下退出。这个子进程就是僵尸进程。<br>孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。<br>注：<br>僵尸进程将会导致资源浪费，而孤儿则不会。<br>3.一个实时的、批处理的操作系统应该如何进行作业调度；<br>4.数据库表中索引的作用是什么，谈谈你对索引的认识。<br>可以利用索引快速访问数据库表中的特定信息。索引是对数据库表中一个或多个列（例如，employee 表的姓氏 (lname) 列）的值进行排序的结构。如果想按特定职员的姓来查找他或她，则与在表中搜索所有的行相比，索引有助于更快地获取信息。<br>索引提供指针以指向存储在表中指定列的数据值，然后根据指定的排序次序排列这些指针。数据库使用索引的方式与使用书的目录很相似：通过搜索索引找到特定的值，然后跟随指针到达包含该值的行。<br>在数据库关系图中，可以为选定的表创建、编辑或删除索引/键属性页中的每个索引类型。当保存附加在此索引上的表或包含此表的数据库关系图时，索引同时被保存。有关详细信息，请参见创建索引。<br>通常情况下，只有当经常查询索引列中的数据时，才需要在表上创建索引。索引将占用磁盘空间，并且降低添加、删除和更新行的速度。不过在多数情况下，索引所带来的数据检索速度的优势大大超过它的不足之处。然而，如果应用程序非常频繁地更新数据，或磁盘空间有限，那么最好限制索引的数量。<br>在创建索引前，必须确定要使用的列和要创建的索引类型。<br>3.简述LRU算法。<br>LRU是Least Recently Used 近期最少使用算法。<br>内存管理的一种页面置换算法，对于在内存中但又不用的数据块（内存块）叫做LRU，Oracle会根据哪些数据属于LRU而将其移出内存而腾出空间来加载另外的数据。<br>4.操作系统中同一父进程中的子进程之间如何交互，不同父进程中的子进程之间如何交互，父进程与子进程之间如何交互。<br>5.选择一个你熟悉的磁盘调度算法进行简单描述。<br>1.先来先服务算法（First Come First Served，FCFS）</p>
-<p>先来先服务（FCFS）调度:按先来后到次序服务，未作优化。</p>
-<p>最简单的移臂调度算法是“先来先服务”调度算法，这个算法实际上不考虑访问者要求访问的物理位置，而只是考虑访问者提出访问请求的先后次序。例如，如果现在读写磁头正在50号柱面上执行输出操作，而等待访问者依次要访问的柱面为130、199、32、159、15、148、61、99，那么，当50号柱面上的操作结束后，移动臂将按请求的先后次序先移到130号柱面，最后到达99号柱面。</p>
-<p>采用先来先服务算法决定等待访问者执行输入输出操作的次序时，移动臂来回地移动。先来先服务算法花费的寻找时间较长，所以执行输入输出操作的总时间也很长。</p>
-<p>2.最短寻道时间优先算法（Shortest Seek Time First，SSTF）</p>
-<p>最短寻找时间优先调度算法总是从等待访问者中挑选寻找时间最短的那个请求先执行的，而不管访问者到来的先后次序。现在仍利用同一个例子来讨论，现在当50 号柱面的操作结束后，应该先处理61号柱面的请求，然后到达32号柱面执行操作，随后处理15号柱面请求，后继操作的次序应该是99、130、148、 159、199。</p>
-<p>采用最短寻找时间优先算法决定等待访问者执行操作的次序时，读写磁头总共移动了200多个柱面的距离，与先来先服务、算法比较，大幅度地减少了寻找时间，因而缩短了为各访问者请求服务的平均时间，也就提高了系统效率。</p>
-<p>但最短查找时间优先（SSTF）调度，FCFS会引起读写头在盘面上的大范围移动，SSTF查找距离磁头最短（也就是查找时间最短）的请求作为下一次服务的对象。SSTF查找模式有高度局部化的倾向，会推迟一些请求的服务，甚至引起无限拖延（又称饥饿）。</p>
-<p>3.扫描算法（SCAN）</p>
-<p>SCAN 算法又称电梯调度算法。SCAN算法是磁头前进方向上的最短查找时间优先算法，它排除了磁头在盘面局部位置上的往复移动，SCAN算法在很大程度上消除了SSTF算法的不公平性，但仍有利于对中间磁道的请求。</p>
-<p>“电梯调度”算法是从移动臂当前位置开始沿着臂的移动方向去选择离当前移动臂最近的那个柱访问者，如果沿臂的移动方向无请求访问时，就改变臂的移动方向再选择。这好比乘电梯，如果电梯已向上运动到4层时，依次有3位乘客陈生、伍生、张生在等候乘电梯。他们的要求是：陈生在2层等待去10层；伍生在5层等待去底层；张生在8层等待15层。由于电梯目前运动方向是向上，所以电梯的形成是先把乘客张生从8层带到15层，然后电梯换成下行方向，把乘客伍生从5层带到底层，电梯最后再调换方向，把乘客陈生从2层送到10层。</p>
-<p>我们仍用前述的同一例子来讨论采用“电梯调度”算法的情况。由于磁盘移动臂的初始方向有两个，而该算法是与移动臂方向有关，所以分成两种情况来讨论。</p>
-<p>〈1〉.移动臂由里向外移动</p>
-<p>开始时在50号柱面执行操作的读写磁头的移动臂方向是由里向外，趋向32号柱面的位置，因此，当访问50号柱面的操作结束后，沿臂移动方向最近的柱面是 32号柱面。所以应先为32号柱面的访问者服务，然后是为15号柱面的访问者服务。之后，由于在向外移方向已无访问等待者，故改变移动臂的方向，由外向里依次为各访问者服务。在这种情况下为等待访问者服务的次序是61、99、130、148、159、199。</p>
-<p>〈2〉.移动臂由外向里移动</p>
-<p>开始时，正在50号柱面执行操作的读写磁头的移动臂是由外向里（即向柱面号增大的内圈方向）趋向61号柱面的位置，因此，当访问50号柱面的操作结束后，沿臂移动方向最近的柱面是61号柱面。所以，应先为61号柱面服务，然后按移动臂由外向里移动的方向，依次为99、130、148、159、199柱面的访问者服务。当201号柱面的操作结束后，向里移动的方向已经无访问等待者，所以改变移动臂的前进方向，由里向外依次为32、15柱面的访问者服务。</p>
-<p>“电梯调度”与“最短寻找时间优先”都是要尽量减少移动臂时所花的时间。所不同的是：“最短寻找时间优先”不考虑臂的移动方向，总是选择离当前读写磁头最近的那个柱面，这种选择可能导致移动臂来回改变移动方向；“电梯调度”是沿着臂的移动方向去选择离当前读写词头最近的哪个柱面的访问者，仅当沿移动臂的前进移动方向无访问等待者时，才改变移动臂的前进方向。由于移动臂改变方向是机械动作，速度相对较慢，所以，电梯调度算法是一种简单、使用且高效的调度算法。</p>
-<p>但是，“电梯调度”算法在实现时，不仅要记住读写磁头的当前位置，还必须记住移动臂的当前前进方向。</p>
-<p>4.循环扫描算法（CSCAN）</p>
-<p>单项扫描调度算法的基本思想是，不考虑访问者等待的先后次序，总是从0号柱面开始向里道扫描，按照各自所要访问的柱面位置的次序去选择访问者。在移动臂到达最后一个柱面后，立即快速返回到0号柱面，返回时不为任何的访问者等待服务。在返回到0号柱面后，再次进行扫描。</p>
-<p>由于该例中已假定读写的当前位置在50号柱面，所以，指示了从50号柱面继续向里扫描，依次为61、99、130、148、159、199各柱面的访问者服务，此时移动臂已经是最内的柱面，于是立即返回到0号柱面，重新扫描，依次为15、32号柱面的访问者服务。</p>
-<p>除了“先来先服务”调度算法外，其余三种调度算法都是根据欲访问的柱面位置来继续调度的。在调度过程中可能有新的请求访问者加入。在这些新的请求访问者加入时，如果读写已经超过了它们所要访问的柱面位置，则只能在以后的调度中被选择执行。</p>
-<p>在多道程序设计系统中，在等待访问磁盘的若干访问者请求中，可能要求访问的柱面号相同，但在同一柱面上的不同磁道，或访问同一柱面中同一磁道上的不同扇区。所以，在进行移动调度时，在按照某种短法把移动臂定位到某个柱面后，应该在等待访问这个柱面的各个访问者的输入输出操作都完成之后，再改变移动臂的位置。<br>6.路由器工作于网络的哪一层，简述它的工作原理，它维护路由表的协议是什么。<br>传统地，路由器工作于OSI七层协议中的第三层，其主要任务是接收来自一个网络接口的数据包，根据其中所含的目的地址，决定转发到下一个目的地址。因此，路由器首先得在转发路由表中查找它的目的地址，若找到了目的地址，就在数据包的帧格前添加下一个MAC地址，同时IP数据包头的TTL（Time To Live）域也开始减数，并重新计算校验和。当数据包被送到输出端口时，它需要按顺序等待，以便被传送到输出链路上。 路由器在工作时能够按照某种路由通信协议查找设备中的路由表。如果到某一特定节点有一条以上的路径，则基本预先确定的路由准则是选择最优（或最经济）的传输路径。由于各种网络段和其相互连接情况可能会因环境变化而变化，因此路由情况的信息一般也按所使用的路由信息协议的规定而定时更新。 网络中，每个路由器的基本功能都是按照一定的规则来动态地更新它所保持的路由表，以便保持路由信息的有效性。为了便于在网络间传送报文，路由器总是先按照预定的规则把较大的数据分解成适当大小的数据包，再将这些数据包分别通过相同或不同路径发送出去。当这些数据包按先后秩序到达目的地后，再把分解的数据包按照一定顺序包装成原有的报文形式。路由器的分层寻址功能是路由器的重要功能之一，该功能可以帮助具有很多节点站的网络来存储寻址信息，同时还能在网络间截获发送到远地网段的报文，起转发作用；选择最合理的路由，引导通信也是路由器基本功能；多协议路由器还可以连接使用不同通信协议的网络段，成为不同通信协议网络段之间的通信平台。<br>7.路由器与交换机的区别是什么。<br>（1）工作层次不同<br>最初的的交换机是工作在OSI/RM开放体系结构的数据链路层，也就是第二层，而路由器一开始就设计工作在OSI模型的网络层。由于交换机工作在OSI的第二层（数据链路层），所以它的工作原理比较简单，而路由器工作在OSI的第三层（网络层），可以得到更多的协议信息，路由器可以做出更加智能的转发决策。<br>（2）数据转发所依据的对象不同<br>交换机是利用物理地址或者说MAC地址来确定转发数据的目的地址。而路由器则是利用不同网络的ID号（即IP地址）来确定数据转发的地址。IP地址是在软件中实现的，描述的是设备所在的网络，有时这些第三层的地址也称为协议地址或者网络地址。MAC地址通常是硬件自带的，由网卡生产商来分配的，而且已经固化到了网卡中去，一般来说是不可更改的。而IP地址则通常由网络管理员或系统自动分配。<br>（3）传统的交换机只能分割冲突域，不能分割广播域；而路由器可以分割广播域<br>由交换机连接的网段仍属于同一个广播域，广播数据包会在交换机连接的所有网段上传播，在某些情况下会导致通信拥挤和安全漏洞。连接到路由器上的网段会被分配成不同的广播域，广播数据不会穿过路由器。虽然第三层以上交换机具有VLAN功能，也可以分割广播域，但是各子广播域之间是不能通信交流的，它们之间的交流仍然需要路由器。<br>（4）路由器提供了防火墙的服务<br>路由器仅仅转发特定地址的数据包，不传送不支持路由协议的数据包传送和未知目标网络数据包的传送，从而可以防止广播风暴。<br>交换机一般用于LAN-WAN的连接，交换机归于网桥，是数据链路层的设备，有些交换机也可实现第三层的交换。路由器用于WAN-WAN之间的连接，可以解决异性网络之间转发分组，作用于网络层。他们只是从一条线路上接受输入分组，然后向另一条线路转发。这两条线路可能分属于不同的网络，并采用不同协议。相比较而言，路由器的功能较交换机要强大，但速度相对也慢，价格昂贵，第三层交换机既有交换机线速转发报文能力，又有路由器良好的控制功能，因此得以广泛应用。<br>（5）总之，可以这么认为，交换机在具体的城域网中往往扮演着VLAN透传的角色，就是桥。而路由器默认的是不支持二层的，路由器的每一个端口都是一个独立的广播域和冲突域，而交换机是只有一个广播域和端口数量的冲突域，在二层交换机上存在MAC表，三层交换机上存在路由表.MAC.ARP表，在路由器上存在路由表和arp表。比如当一个路由器上有一个2层的vlan100和另外一个路由器上的3层vlan100对接的时候，是不通的，这时候我们需要借助L2VPN技术来进行互通，比较流行的就是VPLS技术。<br>8.路由器所在层的上一层是哪一层，都有哪些协议。<br>TCP/UDP<br>9.TCP与UDP的区别是什么。<br><a href="http://baike.baidu.com/link?url=F50rSmByNUgpJ_yQDwkrr0Y9fmld1ZHUZNBZLAI_xCYWRkpFVFt3se5bFceB6tDuXa-FNtUV_Ricrgp6mcAlUXvHi4GqWNT4yUA4bYbJqpO" target="_blank" rel="external">http://baike.baidu.com/link?url=F50rSmByNUgpJ_yQDwkrr0Y9fmld1ZHUZNBZLAI_xCYWRkpFVFt3se5bFceB6tDuXa-FNtUV_Ricrgp6mcAlUXvHi4GqWNT4yUA4bYbJqpO</a><br>10.画出TCP三次握手的过程，并说出TCP滑动窗口协议应用于三次握手的哪一步。<br>滑动窗口协议，是TCP使用的一种流量控制方法。该协议允许发送方在停止并等待确认前可以连续发送多个分组。由于发送方不必每发一个分组就停下来等待确认，因此该协议可以加速数据的传输。<br>11.画图详细逐步分析一下两个问题：滑动窗口过大和滑动窗口过小。<br>滑动窗口：是两台主机间传送数据时的缓冲区。每台TCP/IP主机支持两个滑动窗口：一个用于接收数据，另一个用于发送数据。窗口尺寸表示计算机可能缓冲的数据量大小。<br>滑动窗口的大小对网络性能有很大的影响。如果滑动窗口过小，则需要在网络上频繁的传输确认信息，占用了大量的网络带宽；如果滑动窗口过大，对于利用率较高，容易产生丢包现象的网络，则需要多次发送重复的数据，也同样耗费了网络带</p>
-<p>为什么要有滑动窗口<br>1）H1第一次只发送出一个数据包。<br>2）为什么不一次发送完所有数据包？<br>在英特网中，可能同时存在着数百万条TCP连接。如果这些连接同时无节制的发送数据包，那么整个网络都会被堵死，没有数据包能到达目的地。<br>因此TCP需要根据网络状况，每次发送若干数据包。</p>
-<p>窗口的移动<br>1）每收到一个（不重复的）确认，窗口的左边界就会向右移动一格<br>2）每收到一个新的确认，LAR(last ack received)就会增加1。而滑动窗口左边的数据包，序号就是LAR。<br><a href="http://histrory.visualland.net/tcp_swnd_tutorial.html" target="_blank" rel="external">http://histrory.visualland.net/tcp_swnd_tutorial.html</a><br>12.如果上网速度过慢，可能是哪里产生的问题。（我这道题回答的是：客户端、路由器或者服务器端出问题。于是他问了第13题）<br>13.用什么方法能够检测出是客户端，还是路由器，还是服务器端出了问题。<br>14.fork与clone有什么区别。<br><a href="http://blog.csdn.net/soundtravel/article/details/6835620" target="_blank" rel="external">http://blog.csdn.net/soundtravel/article/details/6835620</a><br>15.Oracle中冷启动与热启动有什么区别。<br>16.存储过程的概念以及优缺点是什么，写出一个存储过程的大概代码，你是如何在项目中应用的，又产生了什么问题，你是如何解决的。<br>35.truncate与delete的区别是什么。<br>从功能上区别，turncate,delete都是只删除表中的数据，而表结构，索引，约束等都保持不变；而 drop语句将删除表的结构以及被依赖的约束(constrain),触发器(trigger),索引(index); 依赖于该表的存储过程/函数将保留,但是变为invalid状态。<br>再分析turncate与delete异同：<br>相同点： turncate talbe 在功能上与不带 WHERE 子句的 DELETE 语句相同：二者均删除表中的全部行。<br>不同点：<br>1 事务管理：delete语句是dml,这个操作会放到rollback segement中,事务提交之后才生效;如果有相应的trigger,执行的时候将被触发.delele可以回滚。 truncate是ddl, 操作立即生效,原数据不放到rollback segment中,不能回滚. 操作不触发trigger.<br>2 速度：turncate table比delete速度快，且使用的系统和事务日志资源少。<br>原因是delete语句每次删除一行，并在事务日志中为删除的每一行记录一项；而turncate table通过释放存储表数据的数据页来删除数据，并且只在事务日志中记录页的释放。<br>3 对于由FOREIGN KEY 约束引用的表，不能使用 TRUNCATE TABLE，而应使用不带 WHERE 子句的 DELETE 语句。由于 TRUNCATE TABLE 不记录在日志中，所以它不能激活触发器。<br>应用中，如果不再需要该表时，用drop<br>如果想要保留表结构，但要删除所有记录，用turncate<br>如果只删除部分记录，用带where条件的delete</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1767,7 +1737,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">337</span>
+              <span class="site-state-item-count">341</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
