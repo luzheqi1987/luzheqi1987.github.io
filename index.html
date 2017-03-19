@@ -302,6 +302,490 @@
             
               
                 
+                <a class="post-title-link" href="/2017/03/18/LeetCode-514-Freedom-Trail/" itemprop="url">
+                  LeetCode 514. Freedom Trail
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-18T22:57:30+08:00" content="2017-03-18">
+              2017-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/18/LeetCode-514-Freedom-Trail/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/LeetCode-514-Freedom-Trail/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/18/LeetCode-514-Freedom-Trail/" class="leancloud_visitors" data-flag-title="LeetCode 514. Freedom Trail">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>In the video game Fallout 4, the quest “Road to Freedom” requires players to reach a metal dial called the “Freedom Trail Ring”, and use the dial to spell a specific keyword in order to open the door.</p>
+<p>Given a string <strong>ring</strong>, which represents the code engraved on the outer ring and another string <strong>key</strong>, which represents the keyword needs to be spelled. You need to find the <strong>minimum</strong> number of steps in order to spell all the characters in the keyword.</p>
+<p>Initially, the first character of the <strong>ring</strong> is aligned at 12:00 direction. You need to spell all the characters in the string <strong>key</strong> one by one by rotating the ring clockwise or anticlockwise to make each character of the string <strong>key</strong> aligned at 12:00 direction and then by pressing the center button.<br>At the stage of rotating the ring to spell the key character <strong>key[i]</strong>:<br>You can rotate the ring clockwise or anticlockwise <strong>one place</strong>, which counts as 1 step. The final purpose of the rotation is to align one of the string <strong>ring’s</strong> characters at the 12:00 direction, where this character must equal to the character <strong>key[i]</strong>.<br>If the character <strong>key[i]</strong> has been aligned at the 12:00 direction, you need to press the center button to spell, which also counts as 1 step. After the pressing, you could begin to spell the next character in the key (next stage), otherwise, you’ve finished all the spelling.</p>
+<p><strong>Example:</strong><br><img src="http://image.qn.jerkybible.com/blog/freedom_trail_ring.jpg?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<blockquote>
+<p>Input: ring = “godding”, key = “gd”<br>Output: 4<br>Explanation:<br>For the first key character ‘g’, since it is already in place, we just need 1 step to spell this character.<br>For the second key character ‘d’, we need to rotate the ring “godding” anticlockwise by two steps to make it become &gt;”ddinggo”.<br>Also, we need 1 more step for spelling.<br>So the final output is 4.</p>
+</blockquote>
+<p><strong>Note:</strong></p>
+<ol>
+<li>Length of both ring and key will be in range 1 to 100.</li>
+<li>There are only lowercase letters in both strings and might be some duplcate characters in both strings.</li>
+<li>It’s guaranteed that string key could always be spelled by rotating the string ring.</li>
+</ol>
+<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>题目来自于辐射4这个游戏。有一个圆盘，圆盘上有几个英文字母，圆盘12点方向代表当前选中的字母，通过这个圆盘拼出一个和题目一样的字符串，求出最小的步数。</p>
+<p>圆盘可以顺时针或者逆时针旋转，每旋转一个字母代表1步，当12点方向是需要的英文字母时，按确定按钮，这个按也算一步。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/18/LeetCode-514-Freedom-Trail/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/18/LeetCode-524-Longest-Word-in-Dictionary-through-Deleting/" itemprop="url">
+                  LeetCode 524. Longest Word in Dictionary through Deleting
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-18T22:40:48+08:00" content="2017-03-18">
+              2017-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/18/LeetCode-524-Longest-Word-in-Dictionary-through-Deleting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/LeetCode-524-Longest-Word-in-Dictionary-through-Deleting/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/18/LeetCode-524-Longest-Word-in-Dictionary-through-Deleting/" class="leancloud_visitors" data-flag-title="LeetCode 524. Longest Word in Dictionary through Deleting">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Given a string and a string dictionary, find the longest string in the dictionary that can be formed by deleting some characters of the given string. If there are more than one possible results, return the longest word with the smallest lexicographical order. If there is no possible result, return the empty string.</p>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p>Input:<br>s = “abpcplea”, d = [“ale”,”apple”,”monkey”,”plea”]</p>
+<p>Output:<br>“apple”</p>
+</blockquote>
+<p><strong>Example 2:</strong></p>
+<blockquote>
+<p>Input:<br>s = “abpcplea”, d = [“a”,”b”,”c”]</p>
+<p>Output:<br>“a”</p>
+</blockquote>
+<p><strong>Note:</strong></p>
+<ol>
+<li>All the strings in the input will only contain lower-case letters.</li>
+<li>The size of the dictionary won’t exceed 1,000.</li>
+<li>The length of all the strings in the input won’t exceed 1,000.</li>
+</ol>
+<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>给出一个<code>String A</code>和一个<code>String</code>数组，在<code>String</code>数组中找到最长的<code>String B</code>，这个String可以满足从A中删除一些字母得到。如果满足的字符串有多个，则选择字母序最小的字符串。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/18/LeetCode-524-Longest-Word-in-Dictionary-through-Deleting/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/18/LeetCode-539-Minimum-Time-Difference/" itemprop="url">
+                  LeetCode 539. Minimum Time Difference
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-18T22:15:13+08:00" content="2017-03-18">
+              2017-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/18/LeetCode-539-Minimum-Time-Difference/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/18/LeetCode-539-Minimum-Time-Difference/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/18/LeetCode-539-Minimum-Time-Difference/" class="leancloud_visitors" data-flag-title="LeetCode 539. Minimum Time Difference">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Given a list of 24-hour clock time points in “Hour:Minutes” format, find the minimum <strong>minutes</strong> difference between any two time points in the list.</p>
+<p><strong>Example 1:</strong></p>
+<blockquote>
+<p>Input: [“23:59”,”00:00”]<br>Output: 1<br><strong>Note:</strong></p>
+<ol>
+<li>The number of time points in the given list is at least 2 and won’t exceed 20000.</li>
+<li>The input time is legal and ranges from 00:00 to 23:59.</li>
+</ol>
+</blockquote>
+<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>计算最短的时间间隔，注意24小时制值得变化。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/03/18/LeetCode-539-Minimum-Time-Difference/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/08/LeetCode-535-Encode-and-Decode-TinyURL/" itemprop="url">
                   LeetCode 535. Encode and Decode TinyURL
                 </a>
@@ -1415,487 +1899,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/24/LeetCode-472-Concatenated-Words/" itemprop="url">
-                  LeetCode 472. Concatenated Words
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-24T22:47:14+08:00" content="2017-01-24">
-              2017-01-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/24/LeetCode-472-Concatenated-Words/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/24/LeetCode-472-Concatenated-Words/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/24/LeetCode-472-Concatenated-Words/" class="leancloud_visitors" data-flag-title="LeetCode 472. Concatenated Words">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Given a list of words (<strong>without duplicates</strong>), please write a program that returns all concatenated words in the given list of words.</p>
-<p>A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.</p>
-<p><strong>Example:</strong></p>
-<blockquote>
-<p>Input: [“cat”,”cats”,”catsdogcats”,”dog”,”dogcatsdog”,”hippopotamuses”,”rat”,”ratcatdogcat”]</p>
-<p>Output: [“catsdogcats”,”dogcatsdog”,”ratcatdogcat”]</p>
-<p>Explanation: “catsdogcats” can be concatenated by “cats”, “dog” and “cats”;<br>“dogcatsdog” can be concatenated by “dog”, “cats” and “dog”;<br>“ratcatdogcat” can be concatenated by “rat”, “cat”, “dog” and “cat”.<br><strong>Note:</strong></p>
-<ol>
-<li>The number of elements of the given array will not exceed 10,000</li>
-<li>The length sum of elements in the given array will not exceed 600,000.</li>
-<li>All the input string will only include lower case letters.</li>
-<li>The returned elements order does not matter.</li>
-</ol>
-</blockquote>
-<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>找到一个数组中所有的连接词。连接词的定义是，这个词<strong>完全</strong>由数组中已经存在的单词组成。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/24/LeetCode-472-Concatenated-Words/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/18/LeetCode-480-Sliding-Window-Median/" itemprop="url">
-                  LeetCode 480. Sliding Window Median
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-18T23:19:45+08:00" content="2017-01-18">
-              2017-01-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/18/LeetCode-480-Sliding-Window-Median/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/18/LeetCode-480-Sliding-Window-Median/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/18/LeetCode-480-Sliding-Window-Median/" class="leancloud_visitors" data-flag-title="LeetCode 480. Sliding Window Median">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.</p>
-<p>Examples:<br><code>[2,3,4]</code> , the median is <code>3</code></p>
-<p><code>[2,3]</code>, the median is <code>(2 + 3) / 2 = 2.5</code></p>
-<p>Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Your job is to output the median array for each window in the original array.</p>
-<p>For example,<br>Given nums = <code>[1,3,-1,-3,5,3,6,7]</code>, and k = <code>3</code>.</p>
-<blockquote>
-<p>Window position                Median</p>
-<hr>
-<p>[1  3  -1] -3  5  3  6  7       1<br>1 [3  -1  -3] 5  3  6  7       -1<br>1  3 [-1  -3  5] 3  6  7       -1<br>1  3  -1 [-3  5  3] 6  7       3<br>1  3  -1  -3 [5  3  6] 7       5<br>1  3  -1  -3  5 [3  6  7]      6<br>Therefore, return the median sliding window as [1,-1,-1,3,5,6].</p>
-</blockquote>
-<p><strong>Note: </strong><br>You may assume k is always valid, ie: 1 ≤ k ≤ input array’s size for non-empty array.</p>
-<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>假设现在存在一个数列，然后有一个滑动窗口，这个滑动窗口从这个数列的最左端开始向右滑动，求出所有在滑动窗口中的中位数。这里要注意的是，数列长度为偶数是，中位数是中间两个数和的一半。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/18/LeetCode-480-Sliding-Window-Median/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/18/LeetCode-454-4Sum-II/" itemprop="url">
-                  LeetCode 454. 4Sum II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-18T22:27:27+08:00" content="2017-01-18">
-              2017-01-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/18/LeetCode-454-4Sum-II/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/18/LeetCode-454-4Sum-II/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/18/LeetCode-454-4Sum-II/" class="leancloud_visitors" data-flag-title="LeetCode 454. 4Sum II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Given four lists A, B, C, D of integer values, compute how many tuples <code>(i, j, k, l)</code> there are such that <code>A[i] + B[j] + C[k] + D[l]</code> is zero.</p>
-<p>To make problem a bit easier, all A, B, C, D have same length of N where 0 ≤ N ≤ 500. All integers are in the range of -228 to 228 - 1 and the result is guaranteed to be at most 231 - 1.</p>
-<p><strong>Example:</strong><br>&gt;</p>
-<blockquote>
-<p><strong>Input:</strong><br>A = [ 1, 2]<br>B = [-2,-1]<br>C = [-1, 2]<br>D = [ 0, 2]</p>
-<p><strong>Output:</strong><br>2</p>
-<p><strong>Explanation:</strong><br>The two tuples are:</p>
-<ol>
-<li>(0, 0, 0, 1) -&gt; A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0</li>
-<li>(1, 1, 0, 0) -&gt; A[1] + B[1] + C[0] + D[0] = 2 + (-1) + (-1) + 0 = 0</li>
-</ol>
-</blockquote>
-<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>存在四个数列，从各个数列中取1个数出来，当这些数的和为0是算一组，求一共有多少组这样的数。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/18/LeetCode-454-4Sum-II/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1941,7 +1944,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">341</span>
+              <span class="site-state-item-count">344</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

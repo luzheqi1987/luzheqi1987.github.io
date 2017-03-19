@@ -302,6 +302,530 @@
             
               
                 
+                <a class="post-title-link" href="/2015/03/22/[转]Spring 实现数据库读写分离/" itemprop="url">
+                  [转]Spring 实现数据库读写分离
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-22T00:31:12+08:00" content="2015-03-22">
+              2015-03-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/22/[转]Spring 实现数据库读写分离/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/22/[转]Spring 实现数据库读写分离/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/22/[转]Spring 实现数据库读写分离/" class="leancloud_visitors" data-flag-title="[转]Spring 实现数据库读写分离">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://www.cnblogs.com/surge/p/3582248.html" target="_blank" rel="external">原文地址</a><br>现在大型的电子商务系统，在数据库层面大都采用读写分离技术，就是一个Master数据库，多个Slave数据库。Master库负责数据更新和实时数据查询，Slave库当然负责非实时数据查询。因为在实际的应用中，数据库都是读多写少（读取数据的频率高，更新数据的频率相对较少），而读取数据通常耗时比较长，占用数据库服务器的CPU较多，从而影响用户体验。我们通常的做法就是把查询从主库中抽取出来，采用多个从库，使用负载均衡，减轻每个从库的查询压力。</p>
+<p>　　采用读写分离技术的目标：有效减轻Master库的压力，又可以把用户查询数据的请求分发到不同的Slave库，从而保证系统的健壮性。我们看下采用读写分离的背景。</p>
+<p>　　随着网站的业务不断扩展，数据不断增加，用户越来越多，数据库的压力也就越来越大，采用传统的方式，比如：数据库或者SQL的优化基本已达不到要求，这个时候可以采用读写分离的策 略来改变现状。</p>
+<p>　　具体到开发中，如何方便的实现读写分离呢?目前常用的有两种方式：</p>
+<p>　　1 第一种方式是我们最常用的方式，就是定义2个数据库连接，一个是MasterDataSource,另一个是SlaveDataSource。更新数据时我们读取MasterDataSource，查询数据时我们读取SlaveDataSource。这种方式很简单，我就不赘述了。</p>
+<p>　　2 第二种方式动态数据源切换，就是在程序运行时，把数据源动态织入到程序中，从而选择读取主库还是从库。主要使用的技术是：annotation，Spring AOP ，反射。下面会详细的介绍实现方式。</p>
+<p>　　　在介绍实现方式之前，我们先准备一些必要的知识，spring 的AbstractRoutingDataSource 类</p>
+<p>　　   AbstractRoutingDataSource这个类 是spring2.0以后增加的，我们先来看下AbstractRoutingDataSource的定义：</p>
+<p>　　　　public abstract class AbstractRoutingDataSource extends AbstractDataSource implements InitializingBean  {}</p>
+<p>　　  AbstractRoutingDataSource继承了AbstractDataSource ，而AbstractDataSource 又是DataSource 的子类。DataSource   是javax.sql 的数据源接口，定义如下：</p>
+<p>[java]<br>public interface DataSource  extends CommonDataSource,Wrapper {</p>
+<p>  /**</p>
+<ul>
+<li>&lt;p&gt;Attempts to establish a connection with the data source that</li>
+<li>this &lt;code&gt;DataSource&lt;/code&gt; object represents.<br>*</li>
+<li>@return  a connection to the data source</li>
+<li><p>@exception SQLException if a database access error occurs<br>*/<br>Connection getConnection() throws SQLException;</p>
+<p>/**</p>
+</li>
+<li>&lt;p&gt;Attempts to establish a connection with the data source that</li>
+<li>this &lt;code&gt;DataSource&lt;/code&gt; object represents.<br>*</li>
+<li>@param username the database user on whose behalf the connection is</li>
+<li>being made</li>
+<li>@param password the user’s password</li>
+<li>@return  a connection to the data source</li>
+<li>@exception SQLException if a database access error occurs</li>
+<li>@since 1.4<br>*/<br>Connection getConnection(String username, String password)<br>throws SQLException;</li>
+</ul>
+<p>}<br>[/java]<br>　DataSource 接口定义了2个方法，都是获取数据库连接。我们在看下AbstractRoutingDataSource 如何实现了DataSource接口：<br>[java]<br>public Connection getConnection() throws SQLException {<br>        return determineTargetDataSource().getConnection();<br>    }</p>
+<pre><code>public Connection getConnection(String username, String password) throws SQLException {
+    return determineTargetDataSource().getConnection(username, password);
+}
+</code></pre><p>[/java]</p>
+<p>很显然就是调用自己的determineTargetDataSource()  方法获取到connection。determineTargetDataSource方法定义如下：<br>[java]<br>protected DataSource determineTargetDataSource() {<br>        Assert.notNull(this.resolvedDataSources, &quot;DataSource router not initialized&quot;);<br>        Object lookupKey = determineCurrentLookupKey();<br>        DataSource dataSource = this.resolvedDataSources.get(lookupKey);<br>        if (dataSource == null &amp;&amp; (this.lenientFallback || lookupKey == null)) {<br>            dataSource = this.resolvedDefaultDataSource;<br>        }<br>        if (dataSource == null) {<br>            throw new IllegalStateException(&quot;Cannot determine target DataSource for lookup key [&quot; + lookupKey + &quot;]&quot;);<br>        }<br>        return dataSource;<br>    }<br>[/java]</p>
+<p>　我们最关心的还是下面2句话：</p>
+<p>　　  Object lookupKey = determineCurrentLookupKey();<br>        DataSource dataSource = this.resolvedDataSources.get(lookupKey);</p>
+<pre><code>determineCurrentLookupKey方法返回lookupKey,resolvedDataSources方法就是根据lookupKey从Map中获得数据源。resolvedDataSources 和determineCurrentLookupKey定义如下：
+</code></pre><p>　　private Map<object, datasource=""> resolvedDataSources;</object,></p>
+<p>　　protected abstract Object determineCurrentLookupKey()</p>
+<p>　　看到以上定义，我们是不是有点思路了，resolvedDataSources是Map类型，我们可以把MasterDataSource和SlaveDataSource存到Map中，如下：</p>
+<p>　　　　key　　　　　　　　value</p>
+<p>　　　　master　　           MasterDataSource</p>
+<p>　　　　slave                  SlaveDataSource</p>
+<p>　　我们在写一个类DynamicDataSource  继承AbstractRoutingDataSource，实现其determineCurrentLookupKey() 方法，该方法返回Map的key，master或slave。</p>
+<p>　　好了，说了这么多，有点烦了，下面我们看下怎么实现。</p>
+<p> 　　上面已经提到了我们要使用的技术，我们先看下annotation的定义：<br>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target(ElementType.METHOD)<br>public @interface DataSource {<br>    String value();<br>}<br>[/java]</p>
+<p>我们还需要实现spring的抽象类AbstractRoutingDataSource，就是实现determineCurrentLookupKey方法：<br>[java]<br>public class DynamicDataSource extends AbstractRoutingDataSource {</p>
+<pre><code>@Override
+protected Object determineCurrentLookupKey() {
+    // TODO Auto-generated method stub
+    return DynamicDataSourceHolder.getDataSouce();
+}
+</code></pre><p>}</p>
+<p>public class DynamicDataSourceHolder {<br>    public static final ThreadLocal&lt;String&gt; holder = new ThreadLocal&lt;String&gt;();</p>
+<pre><code>public static void putDataSource(String name) {
+    holder.set(name);
+}
+
+public static String getDataSouce() {
+    return holder.get();
+}
+</code></pre><p>}<br>[/java]</p>
+<p> 从DynamicDataSource 的定义看出，他返回的是DynamicDataSourceHolder.getDataSouce()值，我们需要在程序运行时调用DynamicDataSourceHolder.putDataSource()方法，对其赋值。下面是我们实现的核心部分，也就是AOP部分，DataSourceAspect定义如下:<br>[java]<br>public class DataSourceAspect {</p>
+<pre><code>public void before(JoinPoint point)
+{
+    Object target = point.getTarget();
+    String method = point.getSignature().getName();
+
+    Class&amp;lt;?&amp;gt;[] classz = target.getClass().getInterfaces();
+
+    Class&amp;lt;?&amp;gt;[] parameterTypes = ((MethodSignature) point.getSignature())
+            .getMethod().getParameterTypes();
+    try {
+        Method m = classz[0].getMethod(method, parameterTypes);
+        if (m != null &amp;amp;&amp;amp; m.isAnnotationPresent(DataSource.class)) {
+            DataSource data = m
+                    .getAnnotation(DataSource.class);
+            DynamicDataSourceHolder.putDataSource(data.value());
+            System.out.println(data.value());
+        }
+
+    } catch (Exception e) {
+        // TODO: handle exception
+    }
+}
+</code></pre><p>}<br>[/java]</p>
+<p>   为了方便测试，我定义了2个数据库，shop模拟Master库，test模拟Slave库，shop和test的表结构一致，但数据不同，数据库配置如下：<br>[java]<br>&lt;bean id=&quot;masterdataSource&quot;<br>        class=&quot;org.springframework.jdbc.datasource.DriverManagerDataSource&quot;&gt;<br>        &lt;property name=&quot;driverClassName&quot; value=&quot;com.mysql.jdbc.Driver&quot; /&gt;<br>        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://127.0.0.1:3306/shop&quot; /&gt;<br>        &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;<br>        &lt;property name=&quot;password&quot; value=&quot;yangyanping0615&quot; /&gt;<br>    &lt;/bean&gt;</p>
+<pre><code>&amp;lt;bean id=&amp;quot;slavedataSource&amp;quot;
+    class=&amp;quot;org.springframework.jdbc.datasource.DriverManagerDataSource&amp;quot;&amp;gt;
+    &amp;lt;property name=&amp;quot;driverClassName&amp;quot; value=&amp;quot;com.mysql.jdbc.Driver&amp;quot; /&amp;gt;
+    &amp;lt;property name=&amp;quot;url&amp;quot; value=&amp;quot;jdbc:mysql://127.0.0.1:3306/test&amp;quot; /&amp;gt;
+    &amp;lt;property name=&amp;quot;username&amp;quot; value=&amp;quot;root&amp;quot; /&amp;gt;
+    &amp;lt;property name=&amp;quot;password&amp;quot; value=&amp;quot;yangyanping0615&amp;quot; /&amp;gt;
+&amp;lt;/bean&amp;gt;
+
+    &amp;lt;beans:bean id=&amp;quot;dataSource&amp;quot; class=&amp;quot;com.air.shop.common.db.DynamicDataSource&amp;quot;&amp;gt;
+    &amp;lt;property name=&amp;quot;targetDataSources&amp;quot;&amp;gt;  
+          &amp;lt;map key-type=&amp;quot;java.lang.String&amp;quot;&amp;gt;  
+              &amp;lt;!-- write --&amp;gt;
+             &amp;lt;entry key=&amp;quot;master&amp;quot; value-ref=&amp;quot;masterdataSource&amp;quot;/&amp;gt;  
+             &amp;lt;!-- read --&amp;gt;
+             &amp;lt;entry key=&amp;quot;slave&amp;quot; value-ref=&amp;quot;slavedataSource&amp;quot;/&amp;gt;  
+          &amp;lt;/map&amp;gt;  
+
+    &amp;lt;/property&amp;gt;  
+    &amp;lt;property name=&amp;quot;defaultTargetDataSource&amp;quot; ref=&amp;quot;masterdataSource&amp;quot;/&amp;gt;  
+&amp;lt;/beans:bean&amp;gt;
+
+&amp;lt;bean id=&amp;quot;transactionManager&amp;quot;
+    class=&amp;quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&amp;quot;&amp;gt;
+    &amp;lt;property name=&amp;quot;dataSource&amp;quot; ref=&amp;quot;dataSource&amp;quot; /&amp;gt;
+&amp;lt;/bean&amp;gt;
+
+&amp;lt;!-- 配置SqlSessionFactoryBean --&amp;gt;
+&amp;lt;bean id=&amp;quot;sqlSessionFactory&amp;quot; class=&amp;quot;org.mybatis.spring.SqlSessionFactoryBean&amp;quot;&amp;gt;
+    &amp;lt;property name=&amp;quot;dataSource&amp;quot; ref=&amp;quot;dataSource&amp;quot; /&amp;gt;
+    &amp;lt;property name=&amp;quot;configLocation&amp;quot; value=&amp;quot;classpath:config/mybatis-config.xml&amp;quot; /&amp;gt;
+&amp;lt;/bean&amp;gt;
+</code></pre><p>[/java]</p>
+<p>在spring的配置中增加aop配置<br>[java]<br>&lt;!– 配置数据库注解aop –&gt;<br>    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;<br>    &lt;beans:bean id=&quot;manyDataSourceAspect&quot; class=&quot;com.air.shop.proxy.DataSourceAspect&quot; /&gt;<br>    &lt;aop:config&gt;<br>        &lt;aop:aspect id=&quot;c&quot; ref=&quot;manyDataSourceAspect&quot;&gt;<br>            &lt;aop:pointcut id=&quot;tx&quot; expression=&quot;execution(<em> com.air.shop.mapper.</em>.*(..))&quot;/&gt;<br>            &lt;aop:before pointcut-ref=&quot;tx&quot; method=&quot;before&quot;/&gt;<br>        &lt;/aop:aspect&gt;<br>    &lt;/aop:config&gt;<br>    &lt;!– 配置数据库注解aop –&gt;<br>[/java]</p>
+<p>下面是MyBatis的UserMapper的定义，为了方便测试，登录读取的是Master库，用户列表读取Slave库<br>[java]<br>public interface UserMapper {<br>    @DataSource(&quot;master&quot;)<br>    public void add(User user);</p>
+<pre><code>@DataSource(&amp;quot;master&amp;quot;)
+public void update(User user);
+
+@DataSource(&amp;quot;master&amp;quot;)
+public void delete(int id);
+
+@DataSource(&amp;quot;slave&amp;quot;)
+public User loadbyid(int id);
+
+@DataSource(&amp;quot;master&amp;quot;)
+public User loadbyname(String name);
+
+@DataSource(&amp;quot;slave&amp;quot;)
+public List&amp;lt;User&amp;gt; list();
+</code></pre><p>}<br>[/java]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="url">
+                  Hibernate中使用count(*)取得表中记录总数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-11T05:40:45+08:00" content="2015-03-11">
+              2015-03-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/11/Hibernate中使用count取得表中记录总数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/11/Hibernate中使用count取得表中记录总数/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/11/Hibernate中使用count取得表中记录总数/" class="leancloud_visitors" data-flag-title="Hibernate中使用count(*)取得表中记录总数">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//第一种方法：</span></div><div class="line">  String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  Integer count = (Integer)getHibernateTemplate().find(hql).listIterator().next();</div><div class="line">  <span class="keyword">return</span> count.intValue();</div><div class="line"></div><div class="line"><span class="comment">//第二种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line">  <span class="keyword">return</span> ((Integer)getHibernateTemplate().iterate(hql).next()).intValue();</div><div class="line"></div><div class="line"><span class="comment">//第三种方法：</span></div><div class="line"> String hql = &amp;quot;<span class="function">select <span class="title">count</span><span class="params">(*)</span> from User as user&amp;quot</span>;;</div><div class="line"> Query query =  getHibernateTemplate().createQuery( getSession(),hql);</div><div class="line"> <span class="keyword">return</span> ((Integer)query.uniqueResult()).intValue();</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="url">
+                  [转]获得每日，每周，每月的0点和24点的时间戳
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-03-05T02:16:07+08:00" content="2015-03-05">
+              2015-03-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/03/05/[转]获得每日，每周，每月的0点和24点的时间戳/" class="leancloud_visitors" data-flag-title="[转]获得每日，每周，每月的0点和24点的时间戳">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://chenp1111.iteye.com/blog/744259" target="_blank" rel="external">原文地址</a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获得当天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得当天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line">cal.set(Calendar.SECOND, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MINUTE, <span class="number">0</span>); </div><div class="line">cal.set(Calendar.MILLISECOND, <span class="number">0</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周一0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeekmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本周日24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesWeeknight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) ((cal.getTime().getTime()+ (<span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>))/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月第一天0点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthmorning</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH)); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125; </div><div class="line"><span class="comment">//获得本月最后一天24点时间 </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getTimesMonthnight</span><span class="params">()</span></span>&#123; </div><div class="line">Calendar cal = Calendar.getInstance(); </div><div class="line">cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), <span class="number">0</span>, <span class="number">0</span>,<span class="number">0</span>); </div><div class="line">cal.set(Calendar.DAY_OF_MONTH,cal.getActualMaximum(Calendar.DAY_OF_MONTH)); </div><div class="line">cal.set(Calendar.HOUR_OF_DAY, <span class="number">24</span>); </div><div class="line"><span class="keyword">return</span> (<span class="keyword">int</span>) (cal.getTimeInMillis()/<span class="number">1000</span>); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/03/05/Java中Date,Calendar,Timestamp的区别以及相互转换与使用/" itemprop="url">
                   Java中Date,Calendar,Timestamp的区别以及相互转换与使用
                 </a>
@@ -1216,482 +1740,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法题（二）——中序表达式转化成为逆波兰表达式/" itemprop="url">
-                  经典算法题（二）——中序表达式转化成为逆波兰表达式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:26:01+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法题（二）——中序表达式转化成为逆波兰表达式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法题（二）——中序表达式转化成为逆波兰表达式/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法题（二）——中序表达式转化成为逆波兰表达式/" class="leancloud_visitors" data-flag-title="经典算法题（二）——中序表达式转化成为逆波兰表达式">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一个中序表达式转化成为逆波兰表达式的方法其实很简单，也是一个成型的算法。通过逆波兰表达式求一个计算式子的值，也是很简单的，只要遇到过会用就行了。</p>
-<p>1、将一个中序表达式转化成为逆波兰表达式。</p>
-<p>首先维护的是两个栈，我们这里暂且称为S1和S2，S1中的结果最后存的就是逆波兰表达式，S2中将用于暂时存放运算符并且在最终形成逆波兰表达式的时候，该栈是会清空的。下面我们看看怎样具体的形成逆波兰表达式。</p>
-<p>在此首先定义一下运算符的优先级关系，从小到达排序，相同优先级没有用逗号隔开：（，+-，*\，负号，）。</p>
-<p>从左至右遍历一个给定的中序表达式，也就是我们常规的数学计算的表达式。</p>
-<p>（1）如果遇到的是数字，我们直接加入到栈S1中；</p>
-<p>（2）如果遇到的是左括号，则直接将该左括号加入到栈S2中；</p>
-<p>（3）如果遇到的是右括号，那么将栈S2中的运算符一次出栈加入到栈S1中，直到遇到左括号，但是该左括号出栈S2并不加入到栈S1中；</p>
-<p>（4）如果遇到的是运算符，包括单目运算符和双目运算符，我们按照下面的规则进行操作：</p>
-<p>（1）如果此时栈S2为空，则直接将运算符加入到栈S2中；</p>
-<p>（2）如果此时栈S2不为空，当前遍历的运算符的优先级大于等于栈顶运算符的优先级，那么直接入栈S2；</p>
-<p>（3）如果此时栈S2不为空，当前遍历的运算符的优先级小于栈顶运算符的优先级，则将栈顶运算符一直出栈加入到栈S1中，直到栈为空或者遇到一个运算符的优先级小于等于当前遍历的运算符的优先级，此时将该运算符加入到栈S2中；</p>
-<p>（5）直到遍历完整个中序表达式之后，栈S2中仍然存在运算符，那么将这些运算符依次出栈加入到栈S1中，直到栈为空。</p>
-<p>按照上面的五条操作反复进行完成，那么栈S1中存放的就是逆波兰表达式。</p>
-<p>2、利用逆波兰表达式求值</p>
-<p>利用逆波兰表达式求计算式的值其实很简单，正式因为这一点，所以逆波兰表达式才在编译原理中被用于计算一个表达式的值。</p>
-<p>下面来具体看看如何求一个逆波兰表达式的值：</p>
-<p>我们此时维护一个数据结果栈S3，我们将会看到该栈中最后存放的是最终的表达式的值。我们从左至右的遍历栈S1，然后按照下面的规则进行操作栈S3.</p>
-<p>（1）如果遇到的是数字，那么直接将数字压入到S3中；</p>
-<p>（2）如果遇到的是单目运算符，那么取S3栈顶的一个元素进行单目运算之后，将结果再次压入到栈S3中；</p>
-<p>（3）如果遇到的是双目运算符，那么取S3栈顶的两个元素进行，首先出栈的在左，后出栈的在右进行双目运算符的计算，将结果再次压入到S3中。</p>
-<p>按照上面的三个规则，遍历完整个栈S1，那么最后S3中的值就是逆波兰表达式的值了，所以我们可以看出来使用逆波兰表达式进行求值是很简单的，只有两种操作要么是直接压栈，要么是运算之后将结果压栈。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/微策略智力题/" itemprop="url">
-                  微策略智力题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:25:20+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/微策略智力题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/微策略智力题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/微策略智力题/" class="leancloud_visitors" data-flag-title="微策略智力题">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、如果有三个房间，分别有三个人，编号为1、2、3，需要你选出个子最高的人（目测就能看出来），但是有个条件，当你看完1号房间的人后，你要决定是否看2号房间的人，一旦看了，就只能选2号房以后的人，既2号或3号，同理，看完2号房，如果想看3号房，就只能选3了，问题是，使用怎样的策略可以是你选到身高最高的人的概率最大，这个概率是多少。<br>答：分三种情况，全部看，看两个，看一个。一，三情况都是1/3，二是1/2. 即先看两个，然后挑高的和第三个之中选一个，成功概率是1/2，概率最大。</p>
-<p>2、有两个沙漏，当把开关打开，沙漏里的沙子会从一头留到另一头里，转过来又会留回来，第一个沙漏从打开到把里面的沙子全部流入到下面花7分钟，第二个花4分钟，问如何准确度量出9分钟（注意，和两个水桶准确量出N桶水的题目不一样）</p>
-<p>答：21（7<em>3）-12（4</em>3）=9</p>
-<p>3、3：15时，时针分针成几度，引申题目，H：M时，成几度</p>
-<p>答：四种情况，锐角，钝角，0度和180度分别考虑。</p>
-<p>4、四个人过河，分别过用1，2，5，10分钟，每次只能过两个人，同时要有人把手电筒送回来，问最短多长时间能过去，引申题目，四个人分别用时间ta，tb，tc，td，并且满足Ta&lt;Tb&lt;Tc&lt;Td，怎么过河</p>
-<p>答：（Tb+Ta）+（Tc+Ta）+Td</p>
-<p>5、ABC-CBA=CAB，问A，B，C分别代表哪个数字，具体式子可能记错了，但是大概题目就是这样。</p>
-<p>6、第一题：有三种颜色的球，红色13个，绿色16个，黄色 17个，有一个方法可以使球变色，拿出两个不同颜色的球，就能变成第三种颜色，如拿出一个红色，一个黄色，就会变成两个绿色的球。问有没有可能把这些球变成同一种颜色，如果可能，怎么做，如果不可能，为什么。引申，x个红球，y个绿球，z个黄球，当x，y，z满足什么关系时，一定有解决方案，否则无解。</p>
-<p>答：取一黄一绿，变红，则红球数=绿球数，最后全部变成黄球。。只有当其中两项之差必须为三的倍数，且第三项数不小于倍数的大小，否则无解。</p>
-<p>7、两个骰子，扔10次，至少有一次点数为12的概率是多少，引申，M个骰子，扔N次，至少有一次点数为6*M的概率是多少。</p>
-<p>答：1-(35/36)^10, 1-(1-(1/6)^M)^N</p>
-<p>8、三个baskets, 一个里面装满oranges,一个里面装满apples,一个里面装的是oranges+apples。三个baskets外面都贴有label，但是label都是错的。让你只从一个篮子里面拿一个水果，怎么判断三个baskets里面装的是什么</p>
-<p>答：取出来两种情况：AOO或AOA进行分析</p>
-<p>9、一个5 gallons buckets 一个3gallons buckets，如何如何取得4gallons water.8 y7 D, w3 `- [( P&amp; w&amp; I( m</p>
-<p>答：2<em>（5-3）=4<br>10、有四张牌,牌的一面分别的E G 4 5，如果说牌的一面是元音字母,那个另一面是偶数,要验证这条原则是不是正确. o8 E7 v0 E% c# j</em> ^应该翻开哪张牌? 提示元音是EOAIU.</p>
-<p>答：</p>
-<p>11、一个立方体 六面涂了颜色,将它分成1000个小立方体,问至少有两面涂有颜色的小立方体有多少个。</p>
-<p>答：1000-8×8×14=104</p>
-<p>12、小船过河 有两组人三个M 三个C (单词不认识hoho) 小船最多可以载两个人,原则是河一边的M的人数不能多于另一边C人数</p>
-<p>答：1、MM，2、C，3、CC，4、M</p>
-<p>13、题目比较长,主要是说有个检验三个数是不是可以构成三角形的函数,每个选项中分别有四组数,问哪个选项中的几组数可以最好的检验这个函数</p>
-<p>14、a b c 9 1 3</p>
-<p>d 8</p>
-<p>e f g 4 7 2</p>
-<p>h 5</p>
-<p>i 6</p>
-<p>这9个字母分别唯一的表示1到9中的数字,且每行和每列的三个数之和为132 N4 h( Z! Z: i4 G F9 S’ M! e问c+e+g=? 14</p>
-<p>14、有50个球，你和你的对手轮流取，你先开始，每次最多取6个，最少取1个，问你怎么可以保证自己一定可以得到最后一个球。</p>
-<p>答：1+7×7，先拿一个，之后每次取对手个数x的7-x个。</p>
-<p>13、有那么一堆牌：</p>
-<p>方块 A Q 5</p>
-<p>草花 2 4 7 8 J Q K</p>
-<p>黑桃 4 5 9</p>
-<p>红星 A 4</p>
-<p>Jack从中抽了一张牌，把花色告诉了Tom，把字母告诉了Tracy</p>
-<p>然后Tracy说：”I don’t know what the card is ！”</p>
-<p>Tom说：”I knew it before you told me！”</p>
-<p>接着Tracy又说：”Now I know！”</p>
-<p>Tom又说：”I know it too！”</p>
-<p>问这张牌是什么？</p>
-<p>答：第一句：说明数字是重复的，第二句说明在只有重复数字的花色里，不再两个</p>
-<p>14、5个囚犯，分别按1-5号在装有100颗绿豆的麻袋抓绿豆，规定每人至少抓一颗，而抓得最多和最少的人将被处死，而且，他们之间不能交流，但在抓的时候，可以摸出剩下的豆子数。问他们中谁的存活机率最大？</p>
-<p>提示：1，他们都是很聪明的人<br>2，他们的原则是先求保命，再去多杀人<br>3，100颗不必都分完<br>4，若有重复的情况，则也算最大或最小，一并处死</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/04/经典算法（一）——如何判断图有环/" itemprop="url">
-                  经典算法（一）——如何判断图有环
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-04T12:24:56+08:00" content="2015-03-04">
-              2015-03-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/04/经典算法（一）——如何判断图有环/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/04/经典算法（一）——如何判断图有环/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/04/经典算法（一）——如何判断图有环/" class="leancloud_visitors" data-flag-title="经典算法（一）——如何判断图有环">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1. 无向图</p>
-<p>如果存在回路，则必存在一个子图，是一个环路。环路中所有顶点的度&gt;=2。<br>n算法：<br>第一步：删除所有度&lt;=1的顶点及相关的边，并将另外与这些边相关的其它顶点的度减一。</p>
-<p>第二步：将度数变为1的顶点排入队列，并从该队列中取出一个顶点重复步骤一。</p>
-<p>如果最后还有未删除顶点，则存在环，否则没有环。</p>
-<p>n算法分析：<br>由于有m条边，n个顶点。</p>
-<p>i)如果m&gt;=n，则根据图论知识可直接判断存在环路。（证明：如果没有环路，则该图必然是k棵树 k&gt;=1。根据树的性质，边的数目m = n-k。k&gt;=1，所以：m&lt;n）</p>
-<p>ii)如果m&lt;n 则按照上面的算法每删除一个度为0的顶点操作一次（最多n次），或每删除一个度为1的顶点（同时删一条边）操作一次（最多m次）。这两种操作的总数不会超过m+n。由于m&lt;n，所以算法复杂度为O(n)。</p>
-<p>注：<br>该方法，算法复杂度不止O(V)，首先初始时刻统计所有顶点的度的时候，复杂度为(V + E)，即使在后来的循环中E&gt;=V，这样算法的复杂度也只能为O(V + E)。其次，在每次循环时，删除度为1的顶点，那么就必须将与这个顶点相连的点的度减一，并且执行delete node from list[list[node］，这里查找的复杂度为list[list[node］的长度，只有这样才能保证当degree[i]=1时，list[i]里面只有一个点。这样最差的复杂度就为O(EV)了。</p>
-<p>方法2：<br>DFS搜索图，图中的边只可能是树边或反向边，一旦发现反向边，则表明存在环。该算法的复杂度为O(V)。</p>
-<p>接下来介绍有向图是否有环的判定算法，主要有深度优先和拓扑排序2中方法。</p>
-<p>1、拓扑排序，如果能够用拓扑排序完成对图中所有节点的排序的话，就说明这个图中没有环，而如果不能完成，则说明有环。</p>
-<p>2、可以用Strongly Connected Components来做，我们可以回忆一下强连通子图的概念，就是说对于一个图的某个子图，该子图中的任意u-&gt;v,必有v-&gt;u，则这是一个强连通子图。这个限定正好是环的概念。所以我想，通过寻找图的强连通子图的方法应该可以找出一个图中到底有没有环、有几个环。</p>
-<p>3、就是用一个改进的DFS</p>
-<p>刚看到这个问题的时候，我想单纯用DFS就可以解决问题了。但细想一下，是不能够的。如果题目给出的是一个无向图，那么OK，DFS是可以解决的。但无向图得不出正确结果的。比如：A-&gt;B,A-&gt;C-&gt;B,我们用DFS来处理这个图，我们会得出它有环，但其实没有。</p>
-<p>我们可以对DFS稍加变化，来解决这个问题。解决的方法如下：</p>
-<p>图中的一个节点，根据其C[N]的值，有三种状态：</p>
-<p>0，此节点没有被访问过</p>
-<p>-1，被访问过至少1次，其后代节点正在被访问中</p>
-<p>1，其后代节点都被访问过。</p>
-<p>按照这样的假设，当按照DFS进行搜索时，碰到一个节点时有三种可能：</p>
-<p>1、如果C[V]=0，这是一个新的节点，不做处理</p>
-<p>2、如果C[V]=-1，说明是在访问该节点的后代的过程中访问到该节点本身，则图中有环。</p>
-<p>3、如果C[V]=1，类似于2的推导，没有环。 在程序中加上一些特殊的处理，即可以找出图中有几个环，并记录每个环的路径</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1737,7 +1785,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">341</span>
+              <span class="site-state-item-count">344</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

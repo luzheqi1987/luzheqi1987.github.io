@@ -302,6 +302,611 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/14/[转]SpringMVC源码剖析（一）- 从抽象和接口说起/" itemprop="url">
+                  [转]SpringMVC源码剖析（一）- 从抽象和接口说起
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-14T10:38:08+08:00" content="2015-04-14">
+              2015-04-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/14/[转]SpringMVC源码剖析（一）- 从抽象和接口说起/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/14/[转]SpringMVC源码剖析（一）- 从抽象和接口说起/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/14/[转]SpringMVC源码剖析（一）- 从抽象和接口说起/" class="leancloud_visitors" data-flag-title="[转]SpringMVC源码剖析（一）- 从抽象和接口说起">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址  <a href="http://my.oschina.net/lichhao/blog/99039" target="_blank" rel="external">http://my.oschina.net/lichhao/blog/99039</a><br>SpringMVC作为Struts2之后异军突起的一个表现层框架，正越来越流行，相信javaee的开发者们就算没使用过SpringMVC，也应该对其略有耳闻。我试图通过对SpringMVC的设计思想和源码实现的剖析，从抽象意义上的设计层面和实现意义上的代码层面两个方面，逐一揭开SpringMVC神秘的面纱，本文的代码，都是基于Spring的 3.1.3RELEASE版本。</p>
+<p>任何一个框架，都有自己特定的适用领域，框架的设计和实现，必定是为了应付该领域内许多通用的，烦琐的、基础的工作而生。SpringMVC作为一个表现层框架，也必须直面Web开发领域中表现层中的几大课题，并给出自己的回答：</p>
+<p>URL到框架的映射。<br>http请求参数绑定<br>http响应的生成和输出<br>这三大课题，组成一个完整的web请求流程，每一个部分都具有非常广阔的外延。SpringMVC框架对这些课题的回答又是什么呢？</p>
+<p>学习一个框架，首要的是要先领会它的设计思想。从抽象、从全局上来审视这个框架。其中最具有参考价值的，就是这个框架所定义的核心接口。核心接口定义了框架的骨架，也在最抽象的意义上表达了框架的设计思想。</p>
+<p>下面我以一个web请求流程为载体，依次介绍SpringMVC的核心接口和类。</p>
+<p>用户在浏览器中，输入了<a href="http://www.xxxx.com/aaa/bbb.ccc的地址，回车后，浏览器发起一个http请求。请求到达你的服务器后，首先会被SpringMVC注册在web.xml中的前端转发器DispatcherServlet接收，DispatcherServlet是一个标准的Servlet，它的作用是接受和转发web请求到内部框架处理单元。" target="_blank" rel="external">http://www.xxxx.com/aaa/bbb.ccc的地址，回车后，浏览器发起一个http请求。请求到达你的服务器后，首先会被SpringMVC注册在web.xml中的前端转发器DispatcherServlet接收，DispatcherServlet是一个标准的Servlet，它的作用是接受和转发web请求到内部框架处理单元。</a></p>
+<p>下面看一下第一个出现在你面前的核心接口，它是在org.springframework.web.servlet包中定义的HandlerMapping接口：<br>[java]<br>package org.springframework.web.servlet;</p>
+<p>import javax.servlet.http.HttpServletRequest;</p>
+<p>public interface HandlerMapping {</p>
+<pre><code>String PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE = HandlerMapping.class.getName() + &amp;quot;.pathWithinHandlerMapping&amp;quot;;
+
+String BEST_MATCHING_PATTERN_ATTRIBUTE = HandlerMapping.class.getName() + &amp;quot;.bestMatchingPattern&amp;quot;;
+
+String INTROSPECT_TYPE_LEVEL_MAPPING = HandlerMapping.class.getName() + &amp;quot;.introspectTypeLevelMapping&amp;quot;;
+
+String URI_TEMPLATE_VARIABLES_ATTRIBUTE = HandlerMapping.class.getName() + &amp;quot;.uriTemplateVariables&amp;quot;;
+
+String PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE = HandlerMapping.class.getName() + &amp;quot;.producibleMediaTypes&amp;quot;;
+
+HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception;
+</code></pre><p>}[/java]<br>为了阅读方便，我去掉了源码中的注释，但是我强烈建议你一定要记得去阅读它，这样你才能从框架的设计者口中得到最准确的关于这个类或者接口的设计说明。类中定义的几个常量，我们先不去管它。关键在于这个接口中唯一的方法：</p>
+<p>[java]<br>HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception;<br>这个方法就算对于一个java初学者来说，也很容易理解：它只有一个类型为HttpServletRequest的参数，throws Exception的声明表示它不处理任何类型的异常，HandlerExecutionChain是它的返回类型。<br>[/java]</p>
+<p>回到DispatcherServlet的处理流程，当DispatcherServlet接收到web请求后，由标准Servlet类处理方法doGet或者doPost，经过几次转发后，最终注册在DispatcherServlet类中的HandlerMapping实现类组成的一个List（有点拗口）会在一个循环中被遍历。以该web请求的HttpServletRequest对象为参数，依次调用其getHandler方法，第一个不为null的调用结果，将被返回。DispatcherServlet类中的这个遍历方法不长，贴一下，让大家有更直观的了解。<br>[java]<br>/**</p>
+<pre><code> * Return the HandlerExecutionChain for this request.
+ * &amp;lt;p&amp;gt;Tries all handler mappings in order.
+ * @param request current HTTP request
+ * @return the HandlerExecutionChain, or &amp;lt;code&amp;gt;null&amp;lt;/code&amp;gt; if no handler could be found
+ */
+protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+    for (HandlerMapping hm : this.handlerMappings) {
+        if (logger.isTraceEnabled()) {
+            logger.trace(
+                    &amp;quot;Testing handler map [&amp;quot; + hm + &amp;quot;] in DispatcherServlet with name &apos;&amp;quot; + getServletName() + &amp;quot;&apos;&amp;quot;);
+        }
+        HandlerExecutionChain handler = hm.getHandler(request);
+        if (handler != null) {
+            return handler;
+        }
+    }
+    return null;
+}
+</code></pre><p>[/java]<br>是的，第一步处理就这么简单的完成了。一个web请求经过处理后，会得到一个HandlerExecutionChain对象，这就是SpringMVC对URl映射给出的回答。需要留意的是，HandlerMapping接口的getHandler方法参数是HttpServletRequest，这意味着，HandlerMapping的实现类可以利用HttpServletRequest中的 所有信息来做出这个HandlerExecutionChain对象的生成”决策“。这包括，请求头、url路径、cookie、session、参数等等一切你从一个web请求中可以得到的任何东西（最常用的是url路径）。</p>
+<p>SpirngMVC的第一个扩展点，就出现在这里。我们可以编写任意的HandlerMapping实现类，依据任何策略来决定一个web请求到HandlerExecutionChain对象的生成。可以说，从第一个核心接口的声明开始，SpringMVC就把自己的灵活性和野心暴露无疑：哥玩的就是”Open-Closed“。</p>
+<p>HandlerExecutionChain这个类，就是我们下一个要了解的核心类。从名字可以直观的看得出，这个对象是一个执行链的封装。熟悉Struts2的都知道，Action对象也是被层层拦截器包装，这里可以做个类比，说明SpringMVC确实是吸收了Struts2的部分设计思想。</p>
+<p>HandlerExecutionChain类的代码不长，它定义在org.springframework.web.servlet包中，为了更直观的理解，先上代码。<br>[java]<br>package org.springframework.web.servlet;</p>
+<p>import java.util.ArrayList;<br>import java.util.Arrays;<br>import java.util.List;</p>
+<p>import org.springframework.util.CollectionUtils;</p>
+<p>public class HandlerExecutionChain {</p>
+<pre><code>private final Object handler;
+
+private HandlerInterceptor[] interceptors;
+
+private List&amp;lt;HandlerInterceptor&amp;gt; interceptorList;
+
+public HandlerExecutionChain(Object handler) {
+    this(handler, null);
+}
+
+public HandlerExecutionChain(Object handler, HandlerInterceptor[] interceptors) {
+    if (handler instanceof HandlerExecutionChain) {
+        HandlerExecutionChain originalChain = (HandlerExecutionChain) handler;
+        this.handler = originalChain.getHandler();
+        this.interceptorList = new ArrayList&amp;lt;HandlerInterceptor&amp;gt;();
+        CollectionUtils.mergeArrayIntoCollection(originalChain.getInterceptors(), this.interceptorList);
+        CollectionUtils.mergeArrayIntoCollection(interceptors, this.interceptorList);
+    }
+    else {
+        this.handler = handler;
+        this.interceptors = interceptors;
+    }
+}
+
+public Object getHandler() {
+    return this.handler;
+}
+
+public void addInterceptor(HandlerInterceptor interceptor) {
+    initInterceptorList();
+    this.interceptorList.add(interceptor);
+}
+
+public void addInterceptors(HandlerInterceptor[] interceptors) {
+    if (interceptors != null) {
+        initInterceptorList();
+        this.interceptorList.addAll(Arrays.asList(interceptors));
+    }
+}
+
+private void initInterceptorList() {
+    if (this.interceptorList == null) {
+        this.interceptorList = new ArrayList&amp;lt;HandlerInterceptor&amp;gt;();
+    }
+    if (this.interceptors != null) {
+        this.interceptorList.addAll(Arrays.asList(this.interceptors));
+        this.interceptors = null;
+    }
+}
+
+public HandlerInterceptor[] getInterceptors() {
+    if (this.interceptors == null &amp;amp;&amp;amp; this.interceptorList != null) {
+        this.interceptors = this.interceptorList.toArray(new HandlerInterceptor[this.interceptorList.size()]);
+    }
+    return this.interceptors;
+}
+
+@Override
+public String toString() {
+    if (this.handler == null) {
+        return &amp;quot;HandlerExecutionChain with no handler&amp;quot;;
+    }
+    StringBuilder sb = new StringBuilder();
+    sb.append(&amp;quot;HandlerExecutionChain with handler [&amp;quot;).append(this.handler).append(&amp;quot;]&amp;quot;);
+    if (!CollectionUtils.isEmpty(this.interceptorList)) {
+        sb.append(&amp;quot; and &amp;quot;).append(this.interceptorList.size()).append(&amp;quot; interceptor&amp;quot;);
+        if (this.interceptorList.size() &amp;gt; 1) {
+            sb.append(&amp;quot;s&amp;quot;);
+        }
+    }
+    return sb.toString();
+}
+</code></pre><p>}<br>[/java]<br>乱七八糟一大堆，相信你也没全看完，也没必要全看。其实只需要看两行足矣。<br>[java]<br>private final Object handler;</p>
+<p>private HandlerInterceptor[] interceptors;<br>[/java]<br>不出我们所料，一个实质执行对象，还有一堆拦截器。这不就是Struts2中的实现么，SpringMVC没有避嫌，还是采用了这种封装。得到HandlerExecutionChain这个执行链（execution chain）之后，下一步的处理将围绕其展开。</p>
+<p>HandlerInterceptor也是SpringMVC的核心接口，定义如下：<br>[java]<br>package org.springframework.web.servlet;</p>
+<p>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;</p>
+<p>public interface HandlerInterceptor {</p>
+<pre><code>boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+    throws Exception;
+
+void postHandle(
+        HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
+        throws Exception;
+
+void afterCompletion(
+        HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+        throws Exception;
+</code></pre><p>}[/java]<br>至此，HandlerExecutionChain整个执行脉络也就清楚了：在真正调用其handler对象前，HandlerInterceptor接口实现类组成的数组将会被遍历，其preHandle方法会被依次调用，然后真正的handler对象将被调用。</p>
+<p>handler对象被调用后，就生成了需要的响应数据，在将处理结果写到HttpServletResponse对象之前（SpringMVC称为渲染视图），其postHandle方法会被依次调用。视图渲染完成后，最后afterCompletion方法会被依次调用，整个web请求的处理过程就结束了。</p>
+<p>在一个处理对象执行之前，之后利用拦截器做文章，这已经成为一种经典的框架设计套路。Struts2中的拦截器会做诸如参数绑定这类复杂的工作，那么SpringMVC的拦截器具体做些什么呢？我们暂且不关心，虽然这是很重要的细节，但细节毕竟是细节，我们先来理解更重要的东西。</p>
+<p>HandlerInterceptor，是SpringMVC的第二个扩展点的暴露，通过自定义拦截器，我们可以在一个请求被真正处理之前、请求被处理但还没输出到响应中、请求已经被输出到响应中之后这三个时间点去做任何我们想要做的事情。Struts2框架的成功，就是源于这种拦截器的设计，SpringMVC吸收了这种设计思想，并推陈出新，更合理的划分了三个不同的时间点，从而给web请求处理这个流程，提供了更大的扩展性。</p>
+<p>这个HandlerExecutionChain类中以Object引用所声明的handler对象，到底是个什么东东？它是怎么被调用的？</p>
+<p>回答这些问题之前，先看SpringMVC中的又一个核心接口，HandlerAdapter：</p>
+<p>[java]<br>package org.springframework.web.servlet;</p>
+<p>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;</p>
+<p>public interface HandlerAdapter {</p>
+<pre><code>boolean supports(Object handler); 
+
+ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;
+
+long getLastModified(HttpServletRequest request, Object handler);
+</code></pre><p>}[/java]<br>在DispatcherServlet中，除了HandlerMapping实现类的列表，同样也注册了一个HandlerAdapter实现类组成的列表，有代码为证。<br>[java]<br>/<em>* List of HandlerMappings used by this servlet </em>/<br>private List&lt;HandlerMapping&gt; handlerMappings;</p>
+<p>/<strong> List of HandlerAdapters used by this servlet */<br>private List&lt;HandlerAdapter&gt; handlerAdapters;[/java]<br>接下来，我们再以DispatcherServlet类中另外一段代码来回答上述的问题：<br>[java]<br>/</strong></p>
+<ul>
+<li>Return the HandlerAdapter for this handler object.</li>
+<li>@param handler the handler object to find an adapter for</li>
+<li>@throws ServletException if no HandlerAdapter can be found for the handler. This is a fatal error.<br>*/<br>protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {<br> for (HandlerAdapter ha : this.handlerAdapters) {<pre><code>if (logger.isTraceEnabled()) {
+    logger.trace(&amp;quot;Testing handler adapter [&amp;quot; + ha + &amp;quot;]&amp;quot;);
+}
+if (ha.supports(handler)) {
+    return ha;
+}
+</code></pre> }<br> throw new ServletException(&quot;No adapter for handler [&quot; + handler +<pre><code>&amp;quot;]: Does your handler implement a supported interface like Controller?&amp;quot;);
+</code></pre>}[/java]<br>这段代码已经很明显了，HandlerExecutionChain中的handler对象会被作为参数传递进去，在DispatcherServlet类中注册的HandlerAdapter实现类列表会被遍历，然后返回第一个supports方法返回true的HandlerAdapter对象，用这个HandlerAdapter实现类中的handle方法处理handler对象，并返回ModelAndView这个包含了视图和数据的对象。HandlerAdapter就是SpringMVC提供的第三个扩展点，你可以提供自己的实现类来处理handler对象。</li>
+</ul>
+<p>ModelAndView对象的代码就不贴了，它是SpringMVC中对视图和数据的一个聚合类。其中的视图，就是由SpringMVC的最后一个核心接口View所抽象：<br>[java]<br>package org.springframework.web.servlet;</p>
+<p>import java.util.Map;</p>
+<p>import javax.servlet.http.HttpServletRequest;<br>import javax.servlet.http.HttpServletResponse;</p>
+<p>public interface View {</p>
+<pre><code>String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() + &amp;quot;.responseStatus&amp;quot;;
+
+String PATH_VARIABLES = View.class.getName() + &amp;quot;.pathVariables&amp;quot;;
+
+String getContentType();
+
+void render(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, HttpServletResponse response) throws Exception;
+</code></pre><p>}<br>[/java]<br>所有的数据，最后会作为一个Map对象传递到View实现类中的render方法，调用这个render方法，就完成了视图到响应的渲染。这个View实现类，就是来自HandlerAdapter中的handle方法的返回结果。当然从ModelAndView到真正的View实现类有一个解析的过程，ModelAndView中可以有真正的视图对象，也可以只是有一个视图的名字，SpringMVC会负责将视图名称解析为真正的视图对象。</p>
+<p>至此，我们了解了一个典型的完整的web请求在SpringMVC中的处理过程和其中涉及到的核心类和接口。</p>
+<p>在一个典型的SpringMVC调用中，HandlerExecutionChain中封装handler对象就是用@Controller注解标识的类的一个实例，根据类级别和方法级别的@RequestMapping注解，由默认注册的DefaultAnnotationHandlerMapping（3.1.3中更新为RequestMappingHandlerMapping类，但是为了向后兼容，DefaultAnnotationHandlerMapping也可以使用）生成HandlerExecutionChain对象，再由AnnotationMethodHandlerAdapter（3.1.3中更新为RequestMappingHandlerAdapter类，但是为了向后兼容，AnnotationMethodHandlerAdapter也可以使用）来执行这个HandlerExecutionChain对象，生成最终的ModelAndView对象后，再由具体的View对象的render方法渲染视图。</p>
+<p>可以看到，作为一个表现层框架，SpringMVC没有像Struts2那样激进，并没有采用和Web容器完全解耦的设计思想，而是以原生的Servlet框架对象为依托，通过合理的抽象，制定了严谨的的处理流程。这样做的结果是，执行效率比Struts2要高，灵活性也上升了一个层次。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/13/进程 线程操作/" itemprop="url">
+                  进程/线程操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-13T10:59:50+08:00" content="2015-04-13">
+              2015-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Interview/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/13/进程 线程操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/进程 线程操作/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/13/进程 线程操作/" class="leancloud_visitors" data-flag-title="进程/线程操作">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.为什么要进行线程/进程间的同步？<br>因为存在多个线程或者进程需要访问相同的资源。如果不进行同步，可能导致错误发生。比如因读写的不同步造成的数据错误，或者死锁的出现等，让系统和数据进入到一种错误或者不稳定的状态。</p>
+<p>2.使用了多线程就必须要进行同步么？<br>大部分情况下是这样，但也不能绝对。 因为需要进行同步的情况需要满足两个条件：</p>
+<p>a.存在多个线程/进程</p>
+<p>b.多个线程/进程之间会相互的竞争资源</p>
+<p>如果只是存在多个线程/进程，但只见并没有竟让共有资源，那也没必要进行同步。 如线程内的局部变量等数据</p>
+<p>3.进行同步的机制都有什么？<br>比如加互斥锁，临界区，信号量等。</p>
+<p>互斥锁： 一次只允许一个线程进入共享区域，在离开共享区域时释放锁。</p>
+<p>临界区： 类似互斥锁</p>
+<p>信号量： 维护一个数，允许特定数量的线程进入</p>
+<p>4.什么是原子操作。</p>
+<p>原子操作就是一组不可分离的操作。应该把它视为一个整体，要么全部成功，要么全部失败，不会出现部分成功，部分失败的现象。而且原子操作执行中间不会被打断。</p>
+<p>5.原子操作的不会被打断是什么意思，是说线程不会被切换么？<br>不是的。</p>
+<p>有的原子操作是由处理器本身所支持的。 如一条指令本身肯定是一个原子操作。</p>
+<p>但有的原子操作是一个执行块，这时在这个执行块中间，是非常有可能发生线程间的切换的。</p>
+<p>有时候，一条高级语言的语句可能会被编译成好几条对应的汇编语句（机器语句） 如 c = a+b； 很有可能还没有算出c的结果线程就被切换了。<br>但发生线程间的切换并不意味着数据就可以被其他的线程访问。因为我们可以通过加锁的办法，让其他线程不能进入到执行块内部。这样其他线程虽然获得了CPU时间，但如果要访问执行块，只有等待，别的什么也做不了。数据还是安全的。</p>
+<p>6.锁和原子操作是一个概念么。<br>原子操作是一个不可被分割的单个或者多个操作。<br>锁是一种机制，让我们来协调各个线程，来实现原子操作。<br>原子操作 分为物理的  和 软件实现的两种<br>物理的比如一条单独的汇编语句。<br>软件实现的往往依赖于锁</p>
+<p>7. 什么是死锁。<br>如在一个单轨的铁路上，两条火车向不同的方向开。 谁也动不了了</p>
+<p>8.为什么会发生死锁<br>死锁一般都是由于对共享资源的竞争引起的。 但对共享资源的竞争又不一定就会发生死锁。 死锁的发生必须同时满足四个条件：互斥，持有/等待，非抢占， 形成等待环</p>
+<p>9.什么是活锁<br>活锁和死锁很像似。 只是活锁的状态可以发生改变。不过虽然状态可以改变，却没有实质的进展。<br>活锁一般是由于对死锁的不正确处理引起的。由于处于死锁中的多个线程同时采取了行动。 而避免的方法也是只让一个线程释放资源。<br>比如两个人在一个很宅的胡同里。 一次只能并排过两个人。 两人比较礼貌，都要给对方让路。 结果一起要么让到左边，要么让到右边，结果仍然是谁也过不去。 类似于原地踏步或者震荡状态。</p>
+<p>10. 什么是饿死<br>饿死（starvation） 是一个线程长时间得不到需要的资源而不能执行的现象。 有人饿死并不代表着出现了死锁。很有可能系统还能很好的进行。<br>所以，没有出现死锁并不能就认为系统是完好的。还要保证没有出现饿死的现象。<br>避免饿死就应该是采用队列的方式，保证每个人都有机会获得请求的资源。 当然实现方式可以很多个变化，比如优先级，时间片，等，都是“队列”的特殊形式</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="url">
+                  RAID0、RAID1、RAID0+1、RAID5原理介绍
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-13T10:57:21+08:00" content="2015-04-13">
+              2015-04-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Storage/" itemprop="url" rel="index">
+                    <span itemprop="name">Storage</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/13/RAID0、RAID1、RAID0+1、RAID5原理介绍/" class="leancloud_visitors" data-flag-title="RAID0、RAID1、RAID0+1、RAID5原理介绍">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>RAID 0又称为Stripe或Striping，它代表了所有RAID级别中最高的存储性能。RAID 0提高存储性能的原理是把连续的数据分散到多个磁盘上存取，这样，系统有数据请求就可以被多个磁盘并行的执行，每个磁盘执行属于它自己的那部分数据请求。这种数据上的并行操作可以充分利用总线的带宽，显著提高磁盘整体存取性能<br>RAID 1又称为Mirror或Mirroring，它的宗旨是最大限度的保证用户数据的可用性和可修复性。 RAID 1的操作方式是把用户写入硬盘的数据百分之百地自动复制到另外一个硬盘上。由于对存储的数据进行百分之百的备份，在所有RAID级别中，RAID 1提供最高的数据安全保障。同样，由于数据的百分之百备份，备份数据占了总存储空间的一半，因而，Mirror的磁盘空间利用率低，存储成本高。<br>RAID 5 是一种存储性能、数据安全和存储成本兼顾的存储解决方案。RAID 5不对存储的数据进行备份，而是把数据和相对应的奇偶校验信息存储到组成RAID5的各个磁盘上，并且奇偶校验信息和相对应的数据分别存储于不同的磁盘上。当RAID5的一个磁盘数据发生损坏后，利用剩下的数据和相应的奇偶校验信息去恢复被损坏的数据。<br>RAID 5可以理解为是RAID 0和RAID 1的折衷方案。RAID 5可以为系统提供数据安全保障，但保障程度要比Mirror低而磁盘空间利用率要比Mirror高。RAID 5具有和RAID 0相近似的数据读取速度，只是多了一个奇偶校验信息，写入数据的速度比对单个磁盘进行写入操作稍慢。同时由于多个数据对应一个奇偶校验信息，RAID 5的磁盘空间利用率要比RAID 1高，存储成本相对较低。<br>在RAID 5中有“写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
+<p>RAID是通过磁盘阵列与数据条块化方法相结合, 以提高数据可用率的一种结构。IBM早于1970年就开始研究此项技术 。RAID 可分为RAID级别1到RAID级别6, 通常称为： RAID 0, RAID 1, RAID 2, RAID 3,RAID 4,RAID 5,RAID6。每一个RAID级别都有自己的强项和弱项. “奇偶校验”定义为用户数据的冗余信息, 当硬盘失效时, 可以重新产生数据。</p>
+<p>RAID 0： RAID 0 并不是真正的RAID结构, 没有数据冗余。 RAID 0 连续地分割数据并并行地读/写于多个磁盘上。 因此具有很高的数据传输率。 但RAID 0在提高性能的同时,并没有提供数据可靠性,如果一个磁盘失效, 将影响整个数据.因此RAID 0 不可应用于需要数据高可用性的关键应用。</p>
+<p>RAID 1： RAID 1通过数据镜像实现数据冗余, 在两对分离的磁盘上产生互为备份的数据。 RAID 1可以提高读的性能,当原始数据繁忙时, 可直接从镜像拷贝中读取数据.RAID 1是磁盘阵列中费用最高的, 但提供了最高的数据可用率。当一个磁盘失效, 系统可以自动地交换到镜像磁盘上, 而不需要重组失效的数据。RAID 2：从概念上讲, RAID 2 同RAID 3类似, 两者都是将数据条块化分布于不同的硬盘上, 条块单位为位或字节。然而RAID 2 使用称为”加重平均纠错码”的编码技术来提供错误检查及恢复。 这种编码技术需要多个磁盘存放检查及恢复信息, 使得RAID 2技术实施更复杂。 因此,在商业环境中很少使用。</p>
+<p>RAID 3：不同于RAID 2, RAID 3使用单块磁盘存放奇偶校验信息。 如果一块磁盘失效, 奇偶盘及其他数据盘可以重新产生数据。 如果奇偶盘失效,则不影响数据使用.RAID 3对于大量的连续数据可提供很好的传输率, 但对于随机数据, 奇偶盘会成为写操作的瓶颈。</p>
+<p>RAID 4：同RAID 2, RAID 3一样, RAID 4, RAID 5也同样将数据条块化并分布于不同的磁盘上, 但条块单位为块或记录. RAID 4使用一块磁盘作为奇偶校验盘, 每次写操作都需要访问奇偶盘, 成为写操作的瓶颈。 在商业应用中很少使用。</p>
+<p>RAID 5：RAID 5没有单独指定的奇偶盘, 而是交叉地存取数据及奇偶校验信息于所有磁盘上。 在RAID5 上, 读/写指针可同时对阵列设备进行操作, 提供了更高的数据流量。 RAID 5更适合于小数据块,随机读写的数据。RAID 3与RAID 5相比, 重要的区别在于RAID 3每进行一次数据传输,需涉及到所有的阵列盘。而对于RAID 5来说, 大部分数据传输只对一块磁盘操作, 可进行并行操作。在RAID 5中有”写损失”, 即每一次写操作,将产生四个实际的读/写操作, 其中两次读旧的数据及奇偶信息, 两次写新的数据及奇偶信息。</p>
+<p>RAID 6：RAID 6 与RAID 5相比,增加了第二个独立的奇偶校验信息块。两个独立的奇偶系统使用不同的算法, 数据的可靠性非常高。 即使两块磁盘同时失效,也不会影响数据的使用。 但需要分配给奇偶校验信息更大的磁盘空间,相对于RAID 5有更大的“写损失”。 RAID 6 的写性能非常差, 较差的性能和复杂的实施使得RAID 6很少使用。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/13/关于java字节码框架ASM的学习'/" itemprop="url">
                   关于java字节码框架ASM的学习
                 </a>
@@ -1972,503 +2577,6 @@ message(String, &amp;quot;hello&amp;quot;) {}
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="url">
-                  [转]Spring4新特性——Web开发的增强
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-06T04:00:32+08:00" content="2015-04-06">
-              2015-04-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/06/[转]Spring4新特性——Web开发的增强/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——Web开发的增强">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
-<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
-<p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
-<p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
-<pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
-public String view2() {  
-    return &amp;quot;{\&amp;quot;id\&amp;quot; : 1}&amp;quot;;  
-}  
-</code></pre><p>}<br>[/java]<br> 其实现就是在@@RestController中加入@ResponseBody：<br>[java]<br>@org.springframework.stereotype.Controller<br>@org.springframework.web.bind.annotation.ResponseBody<br>public @interface RestController {<br>}<br>[/java]<br>这样当你开发Rest服务器端的时候，spring-mvc配置文件需要的代码极少，可能就仅需如下一行：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>2、mvc:annotation-driven配置变化<br>统一风格；将 enableMatrixVariables改为enable-matrix-variables属性；将ignoreDefaultModelOnRedirect改为ignore-default-model-on-redirect。</p>
-<p>3、提供AsyncRestTemplate用于客户端非阻塞异步支持。<br>3.1、服务器端<br>对于服务器端的springmvc开发可以参考<a href="https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc</a><br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/api&quot;)<br>      public Callable&lt;User&gt; api() {<br>        System.out.println(&quot;=====hello&quot;);<br>        return new Callable&lt;User&gt;() {<br>            @Override<br>            public User call() throws Exception {<br>                Thread.sleep(10L * 1000); //暂停两秒<br>                User user = new User();<br>                user.setId(1L);<br>                user.setName(&quot;haha&quot;);<br>                return user;<br>            }<br>        };<br>    }<br>}<br>[/java]<br>非常简单，服务器端暂停10秒再返回结果（但是服务器也是非阻塞的）。具体参考我github上的代码。</p>
-<p>3.2、客户端<br>[java]<br>public static void main(String[] args) {<br>    AsyncRestTemplate template = new AsyncRestTemplate();<br>    //调用完后立即返回（没有阻塞）<br>    ListenableFuture&lt;ResponseEntity&lt;User&gt;&gt; future = template.getForEntity(&quot;<a href="http://localhost:9080/spring4/api&amp;quot" target="_blank" rel="external">http://localhost:9080/spring4/api&amp;quot</a>;, User.class);<br>    //设置异步回调<br>    future.addCallback(new ListenableFutureCallback&lt;ResponseEntity&lt;User&gt;&gt;() {<br>        @Override<br>        public void onSuccess(ResponseEntity&lt;User&gt; result) {<br>            System.out.println(&quot;======client get result : &quot; + result.getBody());<br>        }  </p>
-<pre><code>    @Override  
-    public void onFailure(Throwable t) {  
-        System.out.println(&amp;quot;======client failure : &amp;quot; + t);  
-    }  
-});  
-System.out.println(&amp;quot;==no wait&amp;quot;);  
-</code></pre><p>}<br>[/java]<br> 此处使用Future来完成非阻塞，这样的话我们也需要给它一个回调接口来拿结果； Future和Callable是一对，一个消费结果，一个产生结果。调用完模板后会立即返回，不会阻塞；有结果时会调用其回调。</p>
-<p>AsyncRestTemplate默认使用SimpleClientHttpRequestFactory，即通过java.net.HttpURLConnection实现；另外我们也可以使用apache的http components；使用template.setAsyncRequestFactory(new HttpComponentsAsyncClientHttpRequestFactory());设置即可。</p>
-<p>另外在开发时尽量不要自己注册如：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;<br>[/java]<br>尽量使用<br>[java]<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>它设计的已经足够好，使用子元素可以配置我们需要的配置。</p>
-<p>且不要使用老版本的：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>[/java]<br>否则可能得到如下异常：<br>写道<br>[text]<br>Circular view path [login]: would dispatch back to the current handler URL [/spring4/login] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)<br>[/text]</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="url">
-                  [转]Spring4新特性——核心容器的其他改进
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-06T03:57:38+08:00" content="2015-04-06">
-              2015-04-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——核心容器的其他改进">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989379" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989379</a></p>
-<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
-<p>1、Map依赖注入：<br>[java]<br>@Autowired<br>private Map&lt;String, BaseService&gt; map;<br>[/java]<br>这样会注入：key是bean名字；value就是所有实现了BaseService的Bean，假设使用上一篇的例子，则会得到：<br>[java]<br>{organizationService=com.sishuok.spring4.service.OrganizationService@617029, userService=com.sishuok.spring4.service.UserService@10ac73b}<br>[/java]</p>
-<p>2、List/数组注入：<br>[java]<br>@Autowired<br>private List&lt;BaseService&gt; list;<br>[/java]<br> 这样会注入所有实现了BaseService的Bean；但是顺序是不确定的，如果我们想要按照某个顺序获取；在Spring4中可以使用@Order或实现Ordered接口来实现，如：<br>[java]<br>@Order(value = 1)<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>这种方式在一些需要多态的场景下是非常有用的。</p>
-<p>3、@Lazy可以延迟依赖注入：<br>[java]<br>@Lazy<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>[java]<br>@Lazy<br>@Autowired<br>private UserService userService;<br>[/java]<br> 我们可以把@Lazy放在@Autowired之上，即依赖注入也是延迟的；当我们调用userService时才会注入。即延迟依赖注入到使用时。同样适用于@Bean。</p>
-<p>4、@Conditional<br>@Conditional类似于@Profile（一般用于如我们有开发环境、测试环境、正式机环境，为了方便切换不同的环境可以使用@Profile指定各个环境的配置，然后通过某个配置来开启某一个环境，方便切换），但是@Conditional的优点是允许自己定义规则。可以指定在如@Component、@Bean、@Configuration等注解的类上，以绝对Bean是否创建等。首先来看看使用@Profile的用例，假设我们有个用户模块：<br>1、在测试/开发期间调用本机的模拟接口方便开发；<br>2、在部署到正式机时换成调用远程接口；<br>[java]<br>public abstract class UserService extends BaseService&lt;User&gt; {<br>}  </p>
-<p>@Profile(&quot;local&quot;)<br>@Service<br>public class LocalUserService extends UserService {<br>}  </p>
-<p>@Profile(&quot;remote&quot;)<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>我们在写测试用例时，可以指定我们使用哪个Profile：<br>[java]<br>@ActiveProfiles(&quot;remote&quot;)<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations =  &quot;classpath:spring-config.xml&quot;)<br>public class ServiceTest {  </p>
-<pre><code>@Autowired  
-private UserService userService;  
-</code></pre><p>}<br>[/java]<br>  这种方式非常简单。如果想自定义如@Profile之类的注解等，那么@Conditional就派上用场了；假设我们系统中有好多本地/远程接口，那么我们定义两个注解@Local和@Remote注解要比使用@Profile方便的多；如：</p>
-<p>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Local {<br>}  </p>
-<p>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Remote {<br>}<br>[/java]<br>[java]<br>public class CustomCondition implements Condition {  </p>
-<pre><code>@Override  
-public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {  
-    boolean isLocalBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Local&amp;quot;);  
-    boolean isRemoteBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Remote&amp;quot;);  
-    //如果bean没有注解@Local或@Remote，返回true，表示创建Bean  
-    if(!isLocalBean &amp;amp;&amp;amp; !isRemoteBean) {  
-        return true;  
-    }  
-
-    boolean isLocalProfile = context.getEnvironment().acceptsProfiles(&amp;quot;local&amp;quot;);  
-
-    //如果profile=local 且 bean注解了@Local，则返回true 表示创建bean；  
-    if(isLocalProfile) {  
-        return isLocalBean;  
-    }  
-
-    //否则默认返回注解了@Remote或没有注解@Remote的Bean  
-    return isRemoteBean;  
-}  
-</code></pre><p>}<br>[/java]<br> 然后我们使用这两个注解分别注解我们的Service：<br>[java]<br>@Local<br>@Service<br>public class LocalUserService extends UserService {<br>}<br>[/java]<br>[java]<br>@Remote<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>首先在@Local和@Remote注解上使用@Conditional(CustomCondition.class)指定条件，然后使用@Local和@Remote注解我们的Service，这样当加载Service时，会先执行条件然后判断是否加载为Bean。@Profile就是这样实现的，其Condition是：org.springframework.context.annotation.ProfileCondition。可以去看下源码，很简单。</p>
-<p>5、基于CGLIB的类代理不再要求类必须有空参构造器了：<br>这是一个很好的特性，使用构造器注入有很多好处，比如可以只在创建Bean时注入依赖，然后就不变了，如果使用setter注入，是允许别人改的。当然我们可以使用spring的字段级别注入。如果大家使用过如Shiro，我们可能要对Controller加代理。如果是类级别代理，此时要求Controller必须有空参构造器，有时候挺烦人的。spring如何实现的呢？其内联了objenesis类库，通过它来实现，可以去其官网看看介绍。这样就支持如下方式的构造器注入了：</p>
-<p>[java]<br>@Controller<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>}<br>[/java]<br>org.springframework.cglib.proxy.Enhancer在其github和maven仓库中的source中竟然木有，其github：<a href="https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？" target="_blank" rel="external">https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="url">
-                  [转]Spring4新特性——泛型限定式依赖注入
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-06T03:53:17+08:00" content="2015-04-06">
-              2015-04-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——泛型限定式依赖注入">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
-<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
-<p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
-<p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
-<p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
-<p>@Repository<br>public class UserRepository extends BaseRepository&lt;User&gt; {<br>}  </p>
-<p>@Repository<br>public class OrganizationRepository extends BaseRepository&lt;Organization&gt; {<br>}<br>[/java]<br> 对于Repository，我们一般是这样实现的：首先写一个模板父类，把通用的crud等代码放在BaseRepository；然后子类继承后，只需要添加额外的实现。</p>
-<p>1.3、Service<br>1.3.1、以前Service写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    private BaseRepository&lt;M&gt; repository;<br>    public void setRepository(BaseRepository&lt;M&gt; repository) {<br>        this.repository = repository;<br>    }<br>    public void save(M m) {<br>        repository.save(m);<br>    }<br>}<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>    @Autowired<br>    public void setUserRepository(UserRepository userRepository) {<br>        setRepository(userRepository);<br>    }<br>}  </p>
-<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>    @Autowired<br>    public void setOrganizationRepository(OrganizationRepository organizationRepository) {<br>        setRepository(organizationRepository);<br>    }<br>}<br>[/java]<br>可以看到，以前必须再写一个setter方法，然后指定注入的具体类型，然后进行注入；</p>
-<p>1.3.2、泛型Service的写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    @Autowired<br>    protected BaseRepository&lt;M&gt; repository;  </p>
-<pre><code>public void save(M m) {  
-    repository.save(m);  
-}  
-</code></pre><p>}  </p>
-<p>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}  </p>
-<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>}<br>[/java]<br> 大家可以看到，现在的写法非常简洁。支持泛型式依赖注入。</p>
-<p>这个也是我之前非常想要的一个功能，这样对于那些基本的CRUD式代码，可以简化更多的代码。</p>
-<p>如果大家用过Spring data jpa的话，以后注入的话也可以使用泛型限定式依赖注入 ：<br>[java]<br>@Autowired<br>private Repository&lt;User&gt; userRepository;<br>[/java]<br> 对于泛型依赖注入，最好使用setter注入，这样万一子类想变，比较容易切换。比如<a href="https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。" target="_blank" rel="external">https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2514,7 +2622,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">341</span>
+              <span class="site-state-item-count">344</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

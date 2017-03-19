@@ -302,6 +302,503 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="url">
+                  [转]Spring4新特性——Web开发的增强
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:00:32+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——Web开发的增强/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——Web开发的增强">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989381" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989381</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>从Spring4开始，Spring以Servlet3为进行开发，如果用Spring MVC 测试框架的话需要指定Servlet3兼容的jar包（因为其Mock的对象都是基于Servlet3的）。另外为了方便Rest开发，通过新的@RestController指定在控制器上，这样就不需要在每个@RequestMapping方法上加 @ResponseBody了。而且添加了一个AsyncRestTemplate ，支持REST客户端的异步无阻塞支持。</p>
+<p>1、@RestController<br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/test&quot;)<br>      public User view() {<br>        User user = new User();<br>        user.setId(1L);<br>        user.setName(&quot;haha&quot;);<br>        return user;<br>    }  </p>
+<pre><code>@RequestMapping(&amp;quot;/test2&amp;quot;)  
+public String view2() {  
+    return &amp;quot;{\&amp;quot;id\&amp;quot; : 1}&amp;quot;;  
+}  
+</code></pre><p>}<br>[/java]<br> 其实现就是在@@RestController中加入@ResponseBody：<br>[java]<br>@org.springframework.stereotype.Controller<br>@org.springframework.web.bind.annotation.ResponseBody<br>public @interface RestController {<br>}<br>[/java]<br>这样当你开发Rest服务器端的时候，spring-mvc配置文件需要的代码极少，可能就仅需如下一行：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>2、mvc:annotation-driven配置变化<br>统一风格；将 enableMatrixVariables改为enable-matrix-variables属性；将ignoreDefaultModelOnRedirect改为ignore-default-model-on-redirect。</p>
+<p>3、提供AsyncRestTemplate用于客户端非阻塞异步支持。<br>3.1、服务器端<br>对于服务器端的springmvc开发可以参考<a href="https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase中的chapter3-springmvc</a><br>[java]<br>@RestController<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>    @RequestMapping(&quot;/api&quot;)<br>      public Callable&lt;User&gt; api() {<br>        System.out.println(&quot;=====hello&quot;);<br>        return new Callable&lt;User&gt;() {<br>            @Override<br>            public User call() throws Exception {<br>                Thread.sleep(10L * 1000); //暂停两秒<br>                User user = new User();<br>                user.setId(1L);<br>                user.setName(&quot;haha&quot;);<br>                return user;<br>            }<br>        };<br>    }<br>}<br>[/java]<br>非常简单，服务器端暂停10秒再返回结果（但是服务器也是非阻塞的）。具体参考我github上的代码。</p>
+<p>3.2、客户端<br>[java]<br>public static void main(String[] args) {<br>    AsyncRestTemplate template = new AsyncRestTemplate();<br>    //调用完后立即返回（没有阻塞）<br>    ListenableFuture&lt;ResponseEntity&lt;User&gt;&gt; future = template.getForEntity(&quot;<a href="http://localhost:9080/spring4/api&amp;quot" target="_blank" rel="external">http://localhost:9080/spring4/api&amp;quot</a>;, User.class);<br>    //设置异步回调<br>    future.addCallback(new ListenableFutureCallback&lt;ResponseEntity&lt;User&gt;&gt;() {<br>        @Override<br>        public void onSuccess(ResponseEntity&lt;User&gt; result) {<br>            System.out.println(&quot;======client get result : &quot; + result.getBody());<br>        }  </p>
+<pre><code>    @Override  
+    public void onFailure(Throwable t) {  
+        System.out.println(&amp;quot;======client failure : &amp;quot; + t);  
+    }  
+});  
+System.out.println(&amp;quot;==no wait&amp;quot;);  
+</code></pre><p>}<br>[/java]<br> 此处使用Future来完成非阻塞，这样的话我们也需要给它一个回调接口来拿结果； Future和Callable是一对，一个消费结果，一个产生结果。调用完模板后会立即返回，不会阻塞；有结果时会调用其回调。</p>
+<p>AsyncRestTemplate默认使用SimpleClientHttpRequestFactory，即通过java.net.HttpURLConnection实现；另外我们也可以使用apache的http components；使用template.setAsyncRequestFactory(new HttpComponentsAsyncClientHttpRequestFactory());设置即可。</p>
+<p>另外在开发时尽量不要自己注册如：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;<br>[/java]<br>尽量使用<br>[java]<br>&lt;mvc:annotation-driven/&gt;<br>[/java]<br>它设计的已经足够好，使用子元素可以配置我们需要的配置。</p>
+<p>且不要使用老版本的：<br>[java]<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter&quot;&gt;<br>[/java]<br>否则可能得到如下异常：<br>写道<br>[text]<br>Circular view path [login]: would dispatch back to the current handler URL [/spring4/login] again. Check your ViewResolver setup! (Hint: This may be the result of an unspecified view, due to default view name generation.)<br>[/text]</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="url">
+                  [转]Spring4新特性——核心容器的其他改进
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:57:38+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——核心容器的其他改进/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——核心容器的其他改进">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989379" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989379</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>1、Map依赖注入：<br>[java]<br>@Autowired<br>private Map&lt;String, BaseService&gt; map;<br>[/java]<br>这样会注入：key是bean名字；value就是所有实现了BaseService的Bean，假设使用上一篇的例子，则会得到：<br>[java]<br>{organizationService=com.sishuok.spring4.service.OrganizationService@617029, userService=com.sishuok.spring4.service.UserService@10ac73b}<br>[/java]</p>
+<p>2、List/数组注入：<br>[java]<br>@Autowired<br>private List&lt;BaseService&gt; list;<br>[/java]<br> 这样会注入所有实现了BaseService的Bean；但是顺序是不确定的，如果我们想要按照某个顺序获取；在Spring4中可以使用@Order或实现Ordered接口来实现，如：<br>[java]<br>@Order(value = 1)<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>这种方式在一些需要多态的场景下是非常有用的。</p>
+<p>3、@Lazy可以延迟依赖注入：<br>[java]<br>@Lazy<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}<br>[/java]<br>[java]<br>@Lazy<br>@Autowired<br>private UserService userService;<br>[/java]<br> 我们可以把@Lazy放在@Autowired之上，即依赖注入也是延迟的；当我们调用userService时才会注入。即延迟依赖注入到使用时。同样适用于@Bean。</p>
+<p>4、@Conditional<br>@Conditional类似于@Profile（一般用于如我们有开发环境、测试环境、正式机环境，为了方便切换不同的环境可以使用@Profile指定各个环境的配置，然后通过某个配置来开启某一个环境，方便切换），但是@Conditional的优点是允许自己定义规则。可以指定在如@Component、@Bean、@Configuration等注解的类上，以绝对Bean是否创建等。首先来看看使用@Profile的用例，假设我们有个用户模块：<br>1、在测试/开发期间调用本机的模拟接口方便开发；<br>2、在部署到正式机时换成调用远程接口；<br>[java]<br>public abstract class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Profile(&quot;local&quot;)<br>@Service<br>public class LocalUserService extends UserService {<br>}  </p>
+<p>@Profile(&quot;remote&quot;)<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>我们在写测试用例时，可以指定我们使用哪个Profile：<br>[java]<br>@ActiveProfiles(&quot;remote&quot;)<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations =  &quot;classpath:spring-config.xml&quot;)<br>public class ServiceTest {  </p>
+<pre><code>@Autowired  
+private UserService userService;  
+</code></pre><p>}<br>[/java]<br>  这种方式非常简单。如果想自定义如@Profile之类的注解等，那么@Conditional就派上用场了；假设我们系统中有好多本地/远程接口，那么我们定义两个注解@Local和@Remote注解要比使用@Profile方便的多；如：</p>
+<p>[java]<br>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Local {<br>}  </p>
+<p>@Retention(RetentionPolicy.RUNTIME)<br>@Target({ElementType.TYPE, ElementType.METHOD})<br>@Conditional(CustomCondition.class)<br>public @interface Remote {<br>}<br>[/java]<br>[java]<br>public class CustomCondition implements Condition {  </p>
+<pre><code>@Override  
+public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {  
+    boolean isLocalBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Local&amp;quot;);  
+    boolean isRemoteBean = metadata.isAnnotated(&amp;quot;com.sishuok.spring4.annotation.Remote&amp;quot;);  
+    //如果bean没有注解@Local或@Remote，返回true，表示创建Bean  
+    if(!isLocalBean &amp;amp;&amp;amp; !isRemoteBean) {  
+        return true;  
+    }  
+
+    boolean isLocalProfile = context.getEnvironment().acceptsProfiles(&amp;quot;local&amp;quot;);  
+
+    //如果profile=local 且 bean注解了@Local，则返回true 表示创建bean；  
+    if(isLocalProfile) {  
+        return isLocalBean;  
+    }  
+
+    //否则默认返回注解了@Remote或没有注解@Remote的Bean  
+    return isRemoteBean;  
+}  
+</code></pre><p>}<br>[/java]<br> 然后我们使用这两个注解分别注解我们的Service：<br>[java]<br>@Local<br>@Service<br>public class LocalUserService extends UserService {<br>}<br>[/java]<br>[java]<br>@Remote<br>@Service<br>public class RemoteUserService extends UserService {<br>}<br>[/java]<br>首先在@Local和@Remote注解上使用@Conditional(CustomCondition.class)指定条件，然后使用@Local和@Remote注解我们的Service，这样当加载Service时，会先执行条件然后判断是否加载为Bean。@Profile就是这样实现的，其Condition是：org.springframework.context.annotation.ProfileCondition。可以去看下源码，很简单。</p>
+<p>5、基于CGLIB的类代理不再要求类必须有空参构造器了：<br>这是一个很好的特性，使用构造器注入有很多好处，比如可以只在创建Bean时注入依赖，然后就不变了，如果使用setter注入，是允许别人改的。当然我们可以使用spring的字段级别注入。如果大家使用过如Shiro，我们可能要对Controller加代理。如果是类级别代理，此时要求Controller必须有空参构造器，有时候挺烦人的。spring如何实现的呢？其内联了objenesis类库，通过它来实现，可以去其官网看看介绍。这样就支持如下方式的构造器注入了：</p>
+<p>[java]<br>@Controller<br>public class UserController {<br>    private UserService userService;<br>    @Autowired<br>    public UserController(UserService userService) {<br>        this.userService = userService;<br>    }<br>}<br>[/java]<br>org.springframework.cglib.proxy.Enhancer在其github和maven仓库中的source中竟然木有，其github：<a href="https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？" target="_blank" rel="external">https://github.com/spring-projects/spring-framework/tree/master/spring-core/src/main/java/org/springframework/cglib；难道忘了吗？</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="url">
+                  [转]Spring4新特性——泛型限定式依赖注入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T03:53:17+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——泛型限定式依赖注入">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1989330" title="http://jinnianshilongnian.iteye.com/blog/1989330" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1989330</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>Spring 4.0已经发布RELEASE版本，不仅支持Java8，而且向下兼容到JavaSE6/JavaEE6，并移出了相关废弃类，新添加如Java8的支持、Groovy式Bean定义DSL、对核心容器进行增强、对Web框架的增强、Websocket模块的实现、测试的增强等。其中两个我一直想要的增强就是：支持泛型依赖注入、对cglib类代理不再要求必须有空参构造器了。具体更新请参考：<br><a href="http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0" target="_blank" rel="external">http://docs.spring.io/spring/docs/4.0.0.RELEASE/spring-framework-reference/htmlsingle/#new-in-4.0</a></p>
+<p>1、相关代码：<br>1.1、实体<br>[java]<br>public class User implements Serializable {<br>    private Long id;<br>    private String name;<br>}  </p>
+<p>public class Organization implements Serializable {<br>    private Long id;<br>    private String name;<br>}<br>[/java]<br> 1.2、Repository<br>[java]<br>public abstract class BaseRepository&lt;M extends Serializable&gt; {<br>    public void save(M m) {<br>        System.out.println(&quot;=====repository save:&quot; + m);<br>    }<br>}  </p>
+<p>@Repository<br>public class UserRepository extends BaseRepository&lt;User&gt; {<br>}  </p>
+<p>@Repository<br>public class OrganizationRepository extends BaseRepository&lt;Organization&gt; {<br>}<br>[/java]<br> 对于Repository，我们一般是这样实现的：首先写一个模板父类，把通用的crud等代码放在BaseRepository；然后子类继承后，只需要添加额外的实现。</p>
+<p>1.3、Service<br>1.3.1、以前Service写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    private BaseRepository&lt;M&gt; repository;<br>    public void setRepository(BaseRepository&lt;M&gt; repository) {<br>        this.repository = repository;<br>    }<br>    public void save(M m) {<br>        repository.save(m);<br>    }<br>}<br>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>    @Autowired<br>    public void setUserRepository(UserRepository userRepository) {<br>        setRepository(userRepository);<br>    }<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>    @Autowired<br>    public void setOrganizationRepository(OrganizationRepository organizationRepository) {<br>        setRepository(organizationRepository);<br>    }<br>}<br>[/java]<br>可以看到，以前必须再写一个setter方法，然后指定注入的具体类型，然后进行注入；</p>
+<p>1.3.2、泛型Service的写法<br>[java]<br>public abstract class BaseService&lt;M extends Serializable&gt; {<br>    @Autowired<br>    protected BaseRepository&lt;M&gt; repository;  </p>
+<pre><code>public void save(M m) {  
+    repository.save(m);  
+}  
+</code></pre><p>}  </p>
+<p>@Service<br>public class UserService extends BaseService&lt;User&gt; {<br>}  </p>
+<p>@Service<br>public class OrganizationService extends BaseService&lt;Organization&gt; {<br>}<br>[/java]<br> 大家可以看到，现在的写法非常简洁。支持泛型式依赖注入。</p>
+<p>这个也是我之前非常想要的一个功能，这样对于那些基本的CRUD式代码，可以简化更多的代码。</p>
+<p>如果大家用过Spring data jpa的话，以后注入的话也可以使用泛型限定式依赖注入 ：<br>[java]<br>@Autowired<br>private Repository&lt;User&gt; userRepository;<br>[/java]<br> 对于泛型依赖注入，最好使用setter注入，这样万一子类想变，比较容易切换。比如<a href="https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。" target="_blank" rel="external">https://github.com/zhangkaitao/es，如果有多个实现时，子类可以使用@Qualifier指定使用哪一个。</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/05/SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意/" itemprop="url">
                   SpringMVC使用@ResponseBody时返回json的日期格式、@DatetimeFormat使用注意
                 </a>
@@ -1442,430 +1939,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/各种树的平均查找效率/" itemprop="url">
-                  各种树的平均查找效率
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:40:24+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">Algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/各种树的平均查找效率/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/各种树的平均查找效率/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/各种树的平均查找效率/" class="leancloud_visitors" data-flag-title="各种树的平均查找效率">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>BST：二叉搜索树<br>查找最好时间复杂度为O(lgn),最坏为O(n);<br>删除和插入的时间复杂度与查找差不多</p>
-<p>AVL：二叉平衡树<br>查找时间复杂度为O(lgn)<br>插入的时候做多需要一次旋转，时间复杂度为O(lgn)<br>删除的时候需要的时间复杂度为O(2lgn)</p>
-<p>红黑树：<br>查找时间复杂度为2O(lg(n+1))<br>删除和插入的时间复杂度为O(lgn)</p>
-<p>B树：<br>从叶节点插入心的节点，<br>从磁盘读写效率上讲，查找、删除和插入的时间复杂度要小于任何二叉树</p>
-<p>B+树<br>非叶节点只是为了索引第一个节点<br>之后叶节点之间可以相互索引，大型数据库采用的结构</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="url">
-                  同一进程中的线程究竟共享哪些资源
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-02T12:39:39+08:00" content="2015-04-02">
-              2015-04-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/02/同一进程中的线程究竟共享哪些资源/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/02/同一进程中的线程究竟共享哪些资源/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/02/同一进程中的线程究竟共享哪些资源/" class="leancloud_visitors" data-flag-title="同一进程中的线程究竟共享哪些资源">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>线程共享的环境包括：进程代码段、进程的公有数据(利用这些共享的数据，线程很容易的实现相互之间的通讯)、进程打开的文件描述符、信号的处理器、进程的当前目录和进程用户ID与进程组ID。<br>进程拥有这许多共性的同时，还拥有自己的个性。有了这些个性，线程才能实现并发性。这些个性包括：</p>
-<p>1.线程ID<br>每个线程都有自己的线程ID，这个ID在本进程中是唯一的。进程用此来标<br>识线程。<br>2.寄存器组的值<br>由于线程间是并发运行的，每个线程有自己不同的运行线索，当从一个线<br>程切换到另一个线程上时，必须将原有的线程的寄存器集合的状态保存，以便<br>将来该线程在被重新切换到时能得以恢复。<br>3.线程的堆栈<br>堆栈是保证线程独立运行所必须的。<br>线程函数可以调用函数，而被调用函数中又是可以层层嵌套的，所以线程<br>必须拥有自己的函数堆栈，使得函数调用可以正常执行，不受其他线程的影<br>响。</p>
-<p>4.错误返回码<br>由于同一个进程中有很多个线程在同时运行，可能某个线程进行系统调用<br>后设置了errno值，而在该线程还没有处理这个错误，另外一个线程就在此时<br>被调度器投入运行，这样错误值就有可能被修改。<br>所以，不同的线程应该拥有自己的错误返回码变量。</p>
-<p>5.线程的信号屏蔽码<br>由于每个线程所感兴趣的信号不同，所以线程的信号屏蔽码应该由线程自<br>己管理。但所有的线程都共享同样的信号处理器。</p>
-<p>6.线程的优先级<br>由于线程需要像进程那样能够被调度，那么就必须要有可供调度使用的参<br>数，这个参数就是线程的优先级。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/03/30/c-public-protected-private/" itemprop="url">
-                  C++ public , protected, private
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-03-30T13:20:55+08:00" content="2015-03-30">
-              2015-03-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Interview/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/03/30/c-public-protected-private/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/30/c-public-protected-private/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/03/30/c-public-protected-private/" class="leancloud_visitors" data-flag-title="C++ public , protected, private">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>当private,public,protected单纯的作为一个类中的成员权限设置时：<br>private: 只能由该类中的函数、其友元函数访问,不能被任何其他访问，该类的对象也不能访问.</p>
-<p>protected: 可以被该类中的函数、子类的函数、以及其友元函数访问,但不能被该类的对象访问</p>
-<p>public: 可以被该类中的函数、子类的函数、其友元函数访问,也可以由该类的对象访问<br>注：友元函数包括两种：设为友元的全局函数，设为友元类中的成员函数</p>
-<p>当private,public,protected作为继承方式时：</p>
-<p>对于公有继承方式：<br>(1)父类的public成员成为子类的public成员，允许类以外的代码访问这些成员；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他不可见。这里保护成员同于私有成员。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员可见，而私有成员不可见。这里保护成员同于公有成员。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>所以，在公有继承时，派生类的对象可以访问基类中的公有成员；派生类的成员函数可以访问基类中的公有成员和保护成员。这里，一定要区分清楚派生类的对象和派生类中的成员函数对基类的访问是不同的。</p>
-<p>对于私有继承方式：</p>
-<p>(1)父类的public成员成为子类的private成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的protected成员成为子类的private成员，只允许子类成员访问；</p>
-<p>(1) 基类成员对其对象的可见性：</p>
-<p>公有成员可见，其他成员不可见。</p>
-<p>(2) 基类成员对派生类的可见性：</p>
-<p>公有成员和保护成员是可见的，而私有成员是不可见的。</p>
-<p>(3) 基类成员对派生类对象的可见性：</p>
-<p>所有成员都是不可见的。</p>
-<p>所以，在私有继承时，基类的成员只能由直接派生类访问，而无法再往下继承。</p>
-<p>对于保护继承方式：</p>
-<p>(1)父类的public成员成为子类的protected成员，只允许子类成员访问；<br>(2)父类的private成员仍旧是父类的private成员，子类成员不可以访问这些成员；<br>(3)父类的public成员成为子类的protected成员，只允许子类成员访问；</p>
-<p>这种继承方式与私有继承方式的情况相同。两者的区别仅在于对派生类的成员而言，对基类成员有不同的可见性。</p>
-<p>上述所说的可见性也就是可访问性。关于可访问性还有另的一种说法。这种规则中，称派生类的对象对基类访问为水平访问，称派生类的派生类对基类的访问为垂直访问。</p>
-<p>一般规则如下：</p>
-<p>公有继承时，水平访问和垂直访问对基类中的公有成员不受限制；<br>私有继承时，水平访问和垂直访问对基类中的公有成员也不能访问；<br>保护继承时，对于垂直访问同于公有继承，对于水平访问同于私有继承。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1911,7 +1984,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">341</span>
+              <span class="site-state-item-count">344</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
