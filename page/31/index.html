@@ -302,6 +302,179 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/" itemprop="url">
+                  CODE 19. Flatten Binary Tree to Linked List
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-17T22:31:00+08:00" content="2013-09-17">
+              2013-09-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/" class="cy_cmt_count" data-xid="2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/" class="leancloud_visitors" data-flag-title="CODE 19. Flatten Binary Tree to Linked List">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/17/2013-09-17-CODE 19 Flatten Binary Tree to Linked List/'>CODE 19. Flatten Binary Tree to Linked List</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a binary tree, flatten it to a linked list in-place.<br>For example,<br>Given<br>             1<br>            / \<br>           2   5<br>          / \   \<br>         3   4   6</p>
+<p>The flattened tree should look like:<br>       1<br>        \<br>         2<br>          \<br>           3<br>            \<br>             4<br>              \<br>               5<br>                \<br>                 6</p>
+<p><a href="http://oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/#" target="_blank" rel="external">click to show hints.</a><br>Hints:If you notice carefully in the flattened tree, each node’s right child points to the next node of a pre-order traversal.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span>;</div><div class="line">	&#125;</div><div class="line">	TreeNode newRoot = <span class="keyword">new</span> TreeNode(<span class="number">0</span>);</div><div class="line">	TreeNode cpyRoot = newRoot;</div><div class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">	stack.push(root);</div><div class="line">	<span class="keyword">while</span> (!stack.isEmpty()) &#123;</div><div class="line">		cpyRoot.right = stack.pop();</div><div class="line">		cpyRoot.left = <span class="keyword">null</span>;</div><div class="line">		cpyRoot = cpyRoot.right;</div><div class="line">		<span class="keyword">while</span> (cpyRoot.left != <span class="keyword">null</span>) &#123;</div><div class="line">			<span class="keyword">if</span> (cpyRoot.right != <span class="keyword">null</span>) &#123;</div><div class="line">				stack.push(cpyRoot.right);</div><div class="line">			&#125;</div><div class="line">			cpyRoot.right = cpyRoot.left;</div><div class="line">			cpyRoot.left = <span class="keyword">null</span>;</div><div class="line">			cpyRoot = cpyRoot.right;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (cpyRoot.right != <span class="keyword">null</span>) &#123;</div><div class="line">			stack.push(cpyRoot.right);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	root = newRoot.right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/17/2013-09-17-CODE 18 Distinct Subsequences/" itemprop="url">
                   CODE 18. Distinct Subsequences
                 </a>
@@ -1860,177 +2033,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" itemprop="url">
-                  CODE 11. Best Time to Buy and Sell Stock II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-15T16:56:00+08:00" content="2013-09-15">
-              2013-09-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" class="cy_cmt_count" data-xid="2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/" class="leancloud_visitors" data-flag-title="CODE 11. Best Time to Buy and Sell Stock II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/15/2013-09-15-CODE 11 Best Time to Buy and Sell Stock II/'>CODE 11. Best Time to Buy and Sell Stock II</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Say you have an array for which the ith element<br> is the price of a given stock on day i.<br>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell<br> the stock before you buy again).</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span>[] prices)</span> </span>&#123;</div><div class="line">		<span class="comment">// Start typing your Java solution below</span></div><div class="line">		<span class="comment">// DO NOT write main() function</span></div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == prices || prices.length &lt;= <span class="number">1</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">int</span>[] diff = <span class="keyword">new</span> <span class="keyword">int</span>[prices.length];</div><div class="line">		<span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; prices.length; i++) &#123;</div><div class="line">			diff[i] = prices[i] - prices[i - <span class="number">1</span>];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; diff.length; i++) &#123;</div><div class="line">			<span class="keyword">if</span> (diff[i] &gt; <span class="number">0</span>) &#123;</div><div class="line">				max += diff[i];</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> max;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2076,7 +2078,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2084,7 +2086,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -2093,7 +2095,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -302,6 +302,261 @@
             
               
                 
+                <a class="post-title-link" href="/2014/11/18/2014-11-18-openstack  中的WSGI/" itemprop="url">
+                  openstack  中的WSGI
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-18T20:00:00+08:00" content="2014-11-18">
+              2014-11-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenStack</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2014/11/18/2014-11-18-openstack  中的WSGI/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2014/11/18/2014-11-18-openstack  中的WSGI/" class="cy_cmt_count" data-xid="2014/11/18/2014-11-18-openstack  中的WSGI/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/11/18/2014-11-18-openstack  中的WSGI/" class="leancloud_visitors" data-flag-title="openstack  中的WSGI">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>#1 <a href="http://blog.csdn.net/spch2008/article/details/8997579" target="_blank" rel="external">WSGI 程序起步</a><br>本文中程序的放置路径及运行方式在<a href="http://blog.csdn.net/spch2008/article/details/8995529" target="_blank" rel="external"> Window + Apache + WSGI 配置</a>指明。</p>
+<p>第一WSGI程序<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">spch_wsgi</span><span class="params">(environ, start_response)</span>:</span>  </div><div class="line">    </div><div class="line">    status = <span class="string">'200 OK'</span>  </div><div class="line">    response_headers = [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)]  </div><div class="line">    start_response(status, response_headers)  </div><div class="line">  </div><div class="line">    <span class="keyword">return</span> [<span class="string">'Hello World!'</span>]  </div><div class="line">  </div><div class="line">application = spch_wsgi</div></pre></td></tr></table></figure></p>
+<p>WSGI server检索application函数， 并传递两个参数environ， start_response。<br>environ 为一个字典，包含环境变量。<br>start_response 为一个函数， 用于返回状态信息。</p>
+<p>一个WSGI程序要完成两件事：<br>     其一：返回HTTP header。本例中， 状态‘200 OK‘， 表明一切正常。<br>     其二：返回一个iterable containing， 本例中是一个list。</p>
+<p>输出environ信息<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(environ, start_response)</span>:</span>  </div><div class="line">  </div><div class="line">    response_body = <span class="string">""</span>  </div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> environ:  </div><div class="line">        tmp = <span class="string">"%s = %s \n"</span> % (k, environ[k])  </div><div class="line">        response_body += tmp  </div><div class="line">      </div><div class="line">    status = <span class="string">'200 OK'</span>  </div><div class="line">    response_headers = [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)]  </div><div class="line">    start_response(status, response_headers)  </div><div class="line">      </div><div class="line">    <span class="keyword">return</span> [response_body]</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">wsgi.multiprocess = False   </div><div class="line">SERVER_PROTOCOL = HTTP/1.1   </div><div class="line">SERVER_SOFTWARE = Apache/2.2.22 (Win32) mod_wsgi/3.3 Python/2.7.4   </div><div class="line">SCRIPT_NAME = /wsgi   </div><div class="line">mod_wsgi.handler_script =    </div><div class="line">SERVER_SIGNATURE =    </div><div class="line">REQUEST_METHOD = GET   </div><div class="line">PATH_INFO =    </div><div class="line">PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC   </div><div class="line">QUERY_STRING =    </div><div class="line">HTTP_USER_AGENT = Mozilla/5.0 (Windows NT 6.2; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0   </div><div class="line">HTTP_CONNECTION = keep-alive   </div><div class="line">SERVER_NAME = localhost   </div><div class="line">REMOTE_ADDR = 127.0.0.1   </div><div class="line">mod_wsgi.request_handler = wsgi-script   </div><div class="line">wsgi.url_scheme = http   </div><div class="line">mod_wsgi.callable_object = application   </div><div class="line">SERVER_PORT = 80   </div><div class="line">mod_wsgi.version = (3, 3)   </div><div class="line">mod_wsgi.input_chunked = 0   </div><div class="line">SERVER_ADDR = 127.0.0.1   </div><div class="line">DOCUMENT_ROOT = D:/Program Files (x86)/Apache Software Foundation/Apache2.2/htdocs   </div><div class="line">mod_wsgi.process_group =    </div><div class="line">COMSPEC = C:\Windows\system32\cmd.exe   </div><div class="line">SCRIPT_FILENAME = C:/wsgi_app/wsgi_handler.py   </div><div class="line">SERVER_ADMIN = admin@localhost.com   </div><div class="line">wsgi.input = &lt;mod_wsgi.Input object at 0x01379DE0&gt;   </div><div class="line">HTTP_HOST = localhost   </div><div class="line">wsgi.multithread = True   </div><div class="line">SystemRoot = C:\Windows   </div><div class="line">REQUEST_URI = /wsgi   </div><div class="line">HTTP_ACCEPT = text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8   </div><div class="line">WINDIR = C:\Windows   </div><div class="line">wsgi.version = (1, 1)   </div><div class="line">GATEWAY_INTERFACE = CGI/1.1   </div><div class="line">wsgi.run_once = False   </div><div class="line">wsgi.errors = &lt;mod_wsgi.Log object at 0x01379D40&gt;   </div><div class="line">REMOTE_PORT = 64214   </div><div class="line">HTTP_ACCEPT_LANGUAGE = zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3   </div><div class="line">mod_wsgi.application_group = 192.168.209.1|/wsgi   </div><div class="line">mod_wsgi.script_reloading = 1   </div><div class="line">wsgi.file_wrapper = &lt;built-in method file_wrapper of mod_wsgi.Adapter object at 0x012E1770&gt;   </div><div class="line">HTTP_ACCEPT_ENCODING = gzip, deflate</div></pre></td></tr></table></figure>
+<p>上述代码也可以通过类来实现，类中要重载<strong>call</strong>，这样的好处是可以从其它类继承，复用代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span>  </div><div class="line">        response_body = [<span class="string">'Hello World!'</span>]  </div><div class="line">   </div><div class="line">        status = <span class="string">'200 OK'</span>  </div><div class="line">        response_headers = [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)]  </div><div class="line">        start_response(status, response_headers)  </div><div class="line">  </div><div class="line">        <span class="keyword">return</span> response_body  </div><div class="line">          </div><div class="line">application = MyApp()</div></pre></td></tr></table></figure>
+<p>#2 <a href="http://blog.csdn.net/spch2008/article/details/9000806" target="_blank" rel="external">WSGI– Middleware</a><br>#<br>假定存在一个superSession模块，用于追踪用户访问行为。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> superSession</div><div class="line">session = superSession.session()</div><div class="line"><span class="keyword">print</span> <span class="string">"Content-type: text/plain\n\n"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> session.has_key(<span class="string">'visited'</span>):</div><div class="line">    <span class="keyword">print</span> <span class="string">"You have already visited!"</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">    session[<span class="string">'visited'</span>] = <span class="number">1</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"This is your first visit."</span></div></pre></td></tr></table></figure></p>
+<p>上述代码创建了一个Session对象，追踪用户访问行为。将上述思想用于WSGI程序中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(environ, start_response)</span>:</span>  </div><div class="line">    <span class="keyword">import</span> superSession  </div><div class="line">    session = superSession.session()  </div><div class="line">    <span class="keyword">if</span> session.has_key(<span class="string">'visited'</span>):  </div><div class="line">        text = <span class="string">"You have already visited!"</span>  </div><div class="line">    <span class="keyword">else</span>:  </div><div class="line">        session[<span class="string">'visited'</span>] = <span class="number">1</span>  </div><div class="line">        text = <span class="string">"This is your first visit."</span>  </div><div class="line">    start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-type'</span>,<span class="string">'text/plain'</span>)])  </div><div class="line">    <span class="keyword">return</span> [text]</div></pre></td></tr></table></figure></p>
+<p>可以将上述代码进行重构。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">exampleApplication</span><span class="params">(environ, start_response)</span>:</span></div><div class="line">    <span class="keyword">if</span> environ[<span class="string">'superSession'</span>].has_key(<span class="string">'visited'</span>):</div><div class="line">        text = <span class="string">"You have already visited!"</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        environ[<span class="string">'superSession'</span>][<span class="string">'visited'</span>] = <span class="number">1</span></div><div class="line">        text = <span class="string">"This is your first visit."</span></div><div class="line">    start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-type'</span>,<span class="string">'text/plain'</span>)])</div><div class="line">    <span class="keyword">return</span> [text]</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">session</span><span class="params">(application)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">app</span><span class="params">(environ, start_response)</span>:</span></div><div class="line">        <span class="keyword">if</span> <span class="string">"superSession"</span> <span class="keyword">not</span> <span class="keyword">in</span> environ:</div><div class="line">            <span class="keyword">import</span> superSession</div><div class="line">            environ[<span class="string">"superSession"</span>] = superSession.session()</div><div class="line">        <span class="keyword">return</span> application(environ, start_response)</div><div class="line">    <span class="keyword">return</span> app</div><div class="line">    </div><div class="line">application = session(exampleApplication)</div></pre></td></tr></table></figure></p>
+<p>将session代码抽离放于session函数中，该函数专门用于判断用户访问行为。session函数将判断结果至于环境变量environ字典中。<br>exampleApplication通过environ字典获得用户访问行为。</p>
+<p>我们称session函数为middleware，它处于server与application之间，对server传来的请求做相应的处理；它对于Server和application是透明的。<br>middleware的好处在于，通过middleware（本例中session函数）可以很简单的给WSGI程序添加新功能。</p>
+<p>我们也可见将middleware包装成类，这样，我们可以通过继承，复用现有的中间件。类中要重载<strong>call</strong>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Session</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, application)</span>:</span>  </div><div class="line">        self.application = application  </div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span>  </div><div class="line">        <span class="keyword">if</span> <span class="string">"superSession"</span> <span class="keyword">not</span> <span class="keyword">in</span> environ:  </div><div class="line">            <span class="keyword">import</span> superSession  </div><div class="line">            environ[<span class="string">"superSession"</span>] = superSession.session() <span class="comment"># Options would obviously need specifying  </span></div><div class="line">        <span class="keyword">return</span> self.application(environ,start_response)  </div><div class="line">          </div><div class="line">application = Session(exampleApplication)</div></pre></td></tr></table></figure></p>
+<p>附录: 代码语法解释<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">session</span><span class="params">(application)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">app</span><span class="params">(environ, start_response)</span>:</span>  </div><div class="line">        <span class="keyword">if</span> <span class="string">"superSession"</span> <span class="keyword">not</span> <span class="keyword">in</span> environ:  </div><div class="line">            <span class="keyword">import</span> superSession  </div><div class="line">            environ[<span class="string">"superSession"</span>] = superSession.session()  </div><div class="line">        <span class="keyword">return</span> application(environ, start_response)  </div><div class="line">    <span class="keyword">return</span> app  </div><div class="line">      </div><div class="line">application = session(exampleApplication)</div></pre></td></tr></table></figure></p>
+<p>将exampleApplication传入session函数，session函数中定义了一个新的函数app，session将app返回赋给application。<br>实际上相当于application = app。app函数中进行相应处理（superSession），将处理好的environ在传递给exampleApplication。</p>
+<p>#3 webob request response</p>
+<p>###Request</p>
+<p>Webob的Request对象，提供对WSGI environ环境变量的包装，通过webob可以很容易的读写environ字典。<br>environ字典内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div></pre></td><td class="code"><pre><div class="line">TMP = C:\Users\spch2008\AppData\Local\Temp </div><div class="line">PYTHONIOENCODING = GBK </div><div class="line">COMPUTERNAME = SPCH2008 </div><div class="line">wsgi.multiprocess = <span class="keyword">False</span> </div><div class="line">PROCESSOR_LEVEL = <span class="number">16</span> </div><div class="line">USERDOMAIN = SPCH2008 </div><div class="line">VS100COMNTOOLS = D:\Program Files (x86)\Microsoft Visual Studio <span class="number">10.0</span>\Common7\Tools\ </div><div class="line">HTTP_ACCEPT_LANGUAGE = zh-cn,zh;q=<span class="number">0.8</span>,en-us;q=<span class="number">0.5</span>,en;q=<span class="number">0.3</span> </div><div class="line">SERVER_PROTOCOL = HTTP/<span class="number">1.1</span> </div><div class="line">SERVER_SOFTWARE = WSGIServer/<span class="number">0.1</span> Python/<span class="number">2.7</span><span class="number">.4</span> </div><div class="line">PSMODULEPATH = C:\Windows\system32\WindowsPowerShell\v1<span class="number">.0</span>\Modules\ </div><div class="line">SCRIPT_NAME =  </div><div class="line">COMMONPROGRAMFILES = C:\Program Files (x86)\Common Files </div><div class="line">PROCESSOR_IDENTIFIER = AMD64 Family <span class="number">16</span> Model <span class="number">5</span> Stepping <span class="number">3</span>, AuthenticAMD </div><div class="line">REQUEST_METHOD = GET </div><div class="line">PROGRAMFILES = C:\Program Files (x86) </div><div class="line">PROCESSOR_REVISION = <span class="number">0503</span> </div><div class="line">PATH = D:/Program Files (x86)/java/jre7/bin/client;D:/Program Files (x86)/java/jre7/bin;D:/Program Files (x86)/java/jre7/lib/i386;C:\python32\;C:\python32\Lib\site-packages\;C:\python32\Scripts\;C:\Program Files (x86)\Common Files\NetSarang;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1<span class="number">.0</span>\;D:\Program Files (x86)\java\jre7\bin;D:\Program Files (x86)\Rational\common;D:\Program Files (x86)\eclipse; </div><div class="line">QUERY_STRING =  </div><div class="line">SYSTEMROOT = C:\Windows </div><div class="line">PROGRAMFILES(X86) = C:\Program Files (x86) </div><div class="line">PT5HOME = d:\Program Files (x86)\Cisco Packet Tracer <span class="number">5.3</span><span class="number">.3</span> </div><div class="line">CONTENT_LENGTH =  </div><div class="line">HTTP_USER_AGENT = Mozilla/<span class="number">5.0</span> (Windows NT <span class="number">6.2</span>; WOW64; rv:<span class="number">21.0</span>) Gecko/<span class="number">20100101</span> Firefox/<span class="number">21.0</span> </div><div class="line">HTTP_CONNECTION = keep-alive </div><div class="line">TEMP = C:\Users\spch2008\AppData\Local\Temp </div><div class="line">REMOTE_ADDR = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> </div><div class="line">COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files </div><div class="line">PROCESSOR_ARCHITECTURE = x86 </div><div class="line">wsgi.url_scheme = http </div><div class="line">ALLUSERSPROFILE = C:\ProgramData </div><div class="line">PYDEV_CONSOLE_ENCODING = GBK </div><div class="line">SERVER_PORT = <span class="number">8080</span> </div><div class="line">LOCALAPPDATA = C:\Users\spch2008\AppData\Local </div><div class="line">HOMEPATH = \Users\spch2008 </div><div class="line">USERDOMAIN_ROAMINGPROFILE = SPCH2008 </div><div class="line">PROGRAMW6432 = C:\Program Files </div><div class="line">USERNAME = spch2008 </div><div class="line">HTTP_ACCEPT = text/html,application/xhtml+xml,application/xml;q=<span class="number">0.9</span>,*/*;q=<span class="number">0.8</span> </div><div class="line">LOGONSERVER = \\MicrosoftAccount </div><div class="line">PROMPT = $P$G </div><div class="line">COMSPEC = C:\Windows\system32\cmd.exe </div><div class="line">PROGRAMDATA = C:\ProgramData </div><div class="line">PYTHONPATH = D:\Program Files (x86)\eclipse\plugins\org.python.pydev_2<span class="number">.7</span><span class="number">.3</span><span class="number">.2013031601</span>\pysrc\pydev_sitecustomize;E:\GitHub\OpenStack\WSGI;C:\python32\DLLs;C:\python32\lib;C:\python32\lib\plat-win;C:\python32\lib\lib-tk;C:\python32;C:\python32\lib\site-packages </div><div class="line">PATH_INFO = / </div><div class="line">wsgi.multithread = <span class="keyword">True</span> </div><div class="line">wsgi.input = &lt;socket._fileobject object at <span class="number">0x0285C030</span>&gt; </div><div class="line">wsgi.errors = &lt;open file <span class="string">'&lt;stderr&gt;'</span>, mode <span class="string">'w'</span> at <span class="number">0x01DA60D0</span>&gt; </div><div class="line">HTTP_HOST = localhost:<span class="number">8080</span> </div><div class="line">SESSIONNAME = Console </div><div class="line">PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC </div><div class="line">ASL.LOG = Destination=file </div><div class="line">FP_NO_HOST_CHECK = NO </div><div class="line">WINDIR = C:\Windows </div><div class="line">wsgi.file_wrapper = wsgiref.util.FileWrapper </div><div class="line">HTTP_ACCEPT_ENCODING = gzip, deflate </div><div class="line">wsgi.version = (<span class="number">1</span>, <span class="number">0</span>) </div><div class="line">APPDATA = C:\Users\spch2008\AppData\Roaming </div><div class="line">HOMEDRIVE = C: </div><div class="line">SERVER_NAME = spch2008 </div><div class="line">wsgi.run_once = <span class="keyword">False</span> </div><div class="line">REMOTE_HOST = spch2008 </div><div class="line">SYSTEMDRIVE = C: </div><div class="line">GATEWAY_INTERFACE = CGI/<span class="number">1.1</span> </div><div class="line">PYDEV_COMPLETER_PYTHONPATH = D:\Program Files (x86)\eclipse\plugins\org.python.pydev_2<span class="number">.7</span><span class="number">.3</span><span class="number">.2013031601</span>\pysrc </div><div class="line">NUMBER_OF_PROCESSORS = <span class="number">4</span> </div><div class="line">DJANGO_SETTINGS_MODULE = WSGI.settings </div><div class="line">CONTENT_TYPE = text/plain </div><div class="line">PROCESSOR_ARCHITEW6432 = AMD64 </div><div class="line">COMMONPROGRAMW6432 = C:\Program Files\Common Files </div><div class="line">OS = Windows_NT </div><div class="line">PUBLIC = C:\Users\Public </div><div class="line">USERPROFILE = C:\Users\spch2008</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">req = Request(environ)</div></pre></td></tr></table></figure>
+<p>通过Request操作上述环境变量，所得结果如下：</p>
+<p>req.method             ‘Get’<br>req.path_info            ‘/‘<br>req.content_type     ‘text/plain’<br>req.remote_user     ‘None’<br>req.host                    ‘localhost:8080’<br>即通过req，可以很方便的读取environ环境变量，更多操作请看：<a href="http://docs.webob.org/en/latest/modules/webob.html" target="_blank" rel="external">http://docs.webob.org/en/latest/modules/webob.html</a></p>
+<p>##<a href=""></a>Response</p>
+<p>Response包含了所有响应WSGI Server需要的变量。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">res = Response()</div><div class="line">res.status = <span class="number">200</span></div><div class="line">res.headerlist = [(<span class="string">'Content-type'</span>, <span class="string">'text/html'</span>)]</div><div class="line">res.body = <span class="string">'Hello World!'</span></div></pre></td></tr></table></figure></p>
+<p>使用webob改写之前的Hello World程序。j将上述代码粘贴到eclipse中，运行。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server  </div><div class="line"><span class="keyword">from</span> webob <span class="keyword">import</span> Request, Response  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span>  </div><div class="line">          </div><div class="line">        req = Request(environ)  </div><div class="line">        res = Response()  </div><div class="line">         </div><div class="line">        res.status = <span class="number">200</span>  </div><div class="line">        res.headerlist = [(<span class="string">'Content-Type'</span>, <span class="string">'text/plain'</span>)]  </div><div class="line">        res.body = <span class="string">"Hello World!"</span>  </div><div class="line">          </div><div class="line">        <span class="keyword">return</span> res(environ, start_response)  </div><div class="line">          </div><div class="line">application = MyApp()  </div><div class="line">  </div><div class="line">httpd = make_server(<span class="string">'localhost'</span>, <span class="number">8080</span>, application)    </div><div class="line">httpd.serve_forever()</div></pre></td></tr></table></figure></p>
+<p>4 <a href="http://blog.csdn.net/spch2008/article/details/9003410" target="_blank" rel="external">Webob WSGI 装饰器</a>wsgify装饰器将一个普通函数转变成WSGI应用程序。<br>class webob.dec.wsgify(func=None, RequestClass=None, args=(), kwargs=None, middleware_wraps=None)</p>
+<p>小示例<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"><span class="keyword">from</span> webob <span class="keyword">import</span> Request, Response</div><div class="line"><span class="keyword">from</span> webob.dec <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="meta">@wsgify</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(req)</span>:</span></div><div class="line">    res = Response()</div><div class="line">    res.status = <span class="number">200</span></div><div class="line">    res.body   = <span class="string">"spch"</span></div><div class="line">    <span class="keyword">return</span> res</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></div><div class="line">        </div><div class="line">        req = Request(environ)</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> test(environ, start_response)</div><div class="line">        </div><div class="line">application = MyApp()</div><div class="line"></div><div class="line">httpd = make_server(<span class="string">'localhost'</span>, <span class="number">8081</span>, application)  </div><div class="line">httpd.serve_forever()</div></pre></td></tr></table></figure></p>
+<p>其中，参数req为一个Request实例，可以通过req读取相应环境变量。</p>
+<p>而且，我们可以定制装饰器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server</div><div class="line"><span class="keyword">from</span> webob <span class="keyword">import</span> Request, Response</div><div class="line"><span class="keyword">from</span> webob.dec <span class="keyword">import</span> *</div><div class="line"><span class="keyword">from</span> webob.exc <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRequest</span><span class="params">(Request)</span>:</span></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_local</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.remote_addr == <span class="string">'127.0.0.1'</span></div><div class="line">    </div><div class="line"><span class="meta">@wsgify(RequestClass=MyRequest)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">myfunc</span><span class="params">(req)</span>:</span></div><div class="line">    <span class="keyword">if</span> req.is_local:</div><div class="line">        <span class="keyword">return</span> Response(<span class="string">'hi!'</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">raise</span> HTTPForbidden</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></div><div class="line">        </div><div class="line">        req = Request(environ)</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> myfunc(environ, start_response)</div><div class="line">        </div><div class="line">application = MyApp()</div><div class="line"></div><div class="line">httpd = make_server(<span class="string">'localhost'</span>, <span class="number">8081</span>, application)  </div><div class="line">httpd.serve_forever()</div></pre></td></tr></table></figure></p>
+<p>如何是本机访问，则输出’hi‘，否则不允许<br>5 <a href="http://blog.csdn.net/spch2008/article/details/9005109" target="_blank" rel="external">Routes 起步</a><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> routes <span class="keyword">import</span> Mapper</div><div class="line">map = Mapper()</div><div class="line">map.connect(<span class="string">'spch'</span>, <span class="string">'/blog'</span>, controller=<span class="string">'main'</span>, action=<span class="string">'index'</span>)</div><div class="line"></div><div class="line">result = map.match(<span class="string">'/blog'</span>)</div><div class="line"><span class="keyword">print</span> result</div><div class="line">&#123;<span class="string">'action'</span>: <span class="string">u'index'</span>, <span class="string">'controller'</span>: <span class="string">u'main'</span>&#125;</div></pre></td></tr></table></figure></p>
+<p>1.2 行创建一个mapper</p>
+<ol>
+<li><p>行注册一条路由， 路由名称为’spch’, 路径为’/blog’, controller为main，<br> action为index<br> 可以这样认为，匹配到此条路由的请求交由controller处理，请求预调用的<br> 函数为index</p>
+</li>
+<li><p>创建好路由条目后，即可以进行匹配，调用match方法，匹配路径’blog’</p>
+</li>
+<li>输出匹配结果<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">map.connect(<span class="keyword">None</span>, <span class="string">"/error/&#123;action&#125;/&#123;id&#125;"</span>, controller=<span class="string">"error"</span>)</div><div class="line">result = map.match(<span class="string">'/error/index/2'</span>)</div><div class="line"><span class="keyword">print</span> result</div><div class="line">&#123;<span class="string">'action'</span>: <span class="string">u'index'</span>, <span class="string">'controller'</span>: <span class="string">u'error'</span>, <span class="string">'id'</span>: <span class="string">u'2'</span>&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>1.注册了一条无名路由，并且action从匹配路由中获得<br>  同样，我们可以省掉None<br>  map.connect(“/error/{action}/{id}”, controller=”error”)<br>  上述语句同样注册了一条无名路由。</p>
+<p>Conditions<br>Conditions用于限制进行路由匹配，比如method</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">m.connect(<span class="string">"/user/list"</span>, controller=<span class="string">"user"</span>, action=<span class="string">"list"</span>, conditions=dict(method=[<span class="string">"GET"</span>, <span class="string">"HEAD"</span>]))</div><div class="line">``` </div><div class="line"></div><div class="line">只匹配GET，HEAD请求。</div><div class="line"></div><div class="line">Requirements</div><div class="line">有时只想匹配数字，或者匹配可选的几个条目</div><div class="line">```python</div><div class="line">map.connect(R<span class="string">"/blog/&#123;id:\d+&#125;"</span>)</div><div class="line">map.connect(R<span class="string">"/download/&#123;platform:windows|mac&#125;/&#123;filename&#125;"</span>)</div></pre></td></tr></table></figure>
+<p>\d表示匹配1位数字，\d+表示匹配多位<br>windows|mac 表示只匹配windows或者mac<br>可以将上述写成<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">map.connect(<span class="string">"/blog/&#123;id&#125;"</span>, requirements=&#123;<span class="string">"id"</span>: R<span class="string">"\d+"</span>&#125;</div><div class="line">map.connect(<span class="string">"/download/&#123;platform&#125;/&#123;filename&#125;"</span>,</div><div class="line">    requirements=&#123;<span class="string">"platform"</span>: R<span class="string">"windows|mac"</span>&#125;)</div></pre></td></tr></table></figure></p>
+<p>Format extensions<br>通过{.format}来指定匹配格式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">map.connect(<span class="string">'/entries/&#123;id&#125;&#123;.format&#125;'</span>)</div><div class="line"><span class="keyword">print</span> map.match(<span class="string">'/entries/2'</span>)</div><div class="line">&#123;<span class="string">'id'</span>: <span class="string">u'2'</span>, <span class="string">'format'</span>: <span class="keyword">None</span>&#125;</div><div class="line"><span class="keyword">print</span> map.match(<span class="string">'/entries/2.mp3'</span>)</div><div class="line">&#123;<span class="string">'id'</span>: <span class="string">u'2'</span>, <span class="string">'format'</span>: <span class="string">u'mp3'</span>&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">map.connect(<span class="string">'/entries/&#123;id:\d+&#125;&#123;.format:mp3&#125;'</span>)</div><div class="line"><span class="keyword">print</span> map.match(<span class="string">'/entries/2.mp3'</span>)</div><div class="line">&#123;<span class="string">'id'</span>: <span class="string">u'2'</span>, <span class="string">'format'</span>: <span class="string">u'mp3'</span>&#125;</div><div class="line"><span class="keyword">print</span> map.match(<span class="string">'/entries/2'</span>)</div><div class="line">&#123;<span class="string">'id'</span>: <span class="string">u'2'</span>, <span class="string">'format'</span>: <span class="keyword">None</span>&#125;</div><div class="line"><span class="keyword">print</span> map.match(<span class="string">'/entries/2.mp4'</span>)</div><div class="line"><span class="keyword">None</span></div></pre></td></tr></table></figure>
+<p>注意：{id:\d+}, 如果没有\d+, print map.match(‘/entries/2.mp4’)将输出 {‘id’: u’2.mp4’, ‘format’: None}是可以成功的。<br>有了\d+后，由于没有匹配format，同时\d+要求只匹配数字，所有2.mp4匹配失败</p>
+<p>6 <a href="http://blog.csdn.net/spch2008/article/details/9005140" target="_blank" rel="external">Routes Resource</a>当路由条目过多时，需要一条一条注册，过于麻烦，此时可以通过resource route简化<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">map.connect(<span class="string">"messages"</span>, <span class="string">"/messages"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"create"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"POST"</span>]))</div><div class="line">map.connect(<span class="string">"messages"</span>, <span class="string">"/messages"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"index"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"formatted_messages"</span>, <span class="string">"/messages.&#123;format&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"index"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"new_message"</span>, <span class="string">"/messages/new"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"new"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"formatted_new_message"</span>, <span class="string">"/messages/new.&#123;format&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"new"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"/messages/&#123;id&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"update"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"PUT"</span>]))</div><div class="line">map.connect(<span class="string">"/messages/&#123;id&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"delete"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"DELETE"</span>]))</div><div class="line">map.connect(<span class="string">"edit_message"</span>, <span class="string">"/messages/&#123;id&#125;/edit"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"edit"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"formatted_edit_message"</span>, <span class="string">"/messages/&#123;id&#125;.&#123;format&#125;/edit"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"edit"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"message"</span>, <span class="string">"/messages/&#123;id&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"show"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div><div class="line">map.connect(<span class="string">"formatted_message"</span>, <span class="string">"/messages/&#123;id&#125;.&#123;format&#125;"</span>,</div><div class="line">    controller=<span class="string">"messages"</span>, action=<span class="string">"show"</span>,</div><div class="line">    conditions=dict(method=[<span class="string">"GET"</span>]))</div></pre></td></tr></table></figure></p>
+<p>上述路由条目可以使用这一条语句代替。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">map.resource(<span class="string">"message"</span>, <span class="string">"messages"</span>)</div></pre></td></tr></table></figure></p>
+<p>两个参数，一个指定单数，为member路由名字；一个指定复数，为collection路由名字。<br>函数原型：resource(member_name, collection_name, **kwargs)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET    /messages        =&gt; messages.index()    =&gt; url(<span class="string">"messages"</span>)</div><div class="line">POST   /messages        =&gt; messages.create()   =&gt; url(<span class="string">"messages"</span>)</div><div class="line">GET    /messages/new    =&gt; messages.new()      =&gt; url(<span class="string">"new_message"</span>)</div><div class="line">PUT    /messages/<span class="number">1</span>      =&gt; messages.update(id) =&gt; url(<span class="string">"message"</span>, id=<span class="number">1</span>)</div><div class="line">DELETE /messages/<span class="number">1</span>      =&gt; messages.delete(id) =&gt; url(<span class="string">"message"</span>, id=<span class="number">1</span>)</div><div class="line">GET    /messages/<span class="number">1</span>      =&gt; messages.show(id)   =&gt; url(<span class="string">"message"</span>, id=<span class="number">1</span>)</div><div class="line">GET    /messages/<span class="number">1</span>/edit =&gt; messages.edit(id)   =&gt; url(<span class="string">"edit_message"</span>, id=<span class="number">1</span>)</div></pre></td></tr></table></figure></p>
+<p>这里有必要说一下member 路由与 collection路由。<br>上述的路由模型<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">GET    /messages        =&gt; messages.index()   </div><div class="line">POST   /messages        =&gt; messages.create()  </div><div class="line">GET    /messages/new    =&gt; messages.new()     </div><div class="line">PUT    /messages/<span class="number">1</span>      =&gt; messages.update(id)</div><div class="line">DELETE /messages/<span class="number">1</span>      =&gt; messages.delete(id)</div><div class="line">GET    /messages/<span class="number">1</span>      =&gt; messages.show(id)  </div><div class="line">GET    /messages/<span class="number">1</span>/edit =&gt; messages.edit(id)</div></pre></td></tr></table></figure></p>
+<ol>
+<li>有的路由有id， 指向一个具体的对象</li>
+<li>有的路由没有id， 指向全体对象</li>
+<li>有的路由(index/create， show/update/delete)有相同的URL，但是HTTP method不同</li>
+<li>有的路由(show/edit)HTTP method和前缀相同，仅后缀不同</li>
+</ol>
+<p>一个member路由指定具体实例，也就是说它们有id。而一个collection路由，<br>没有指定的实例，即没有给定id<br>综上：member路由操作一个单独的实例，而collection操作全体实例。</p>
+<p>另一个函数collection也可以完成上述功能。<br>函数原型：collection(collection_name, resource_name, path_prefix=None, member_prefix=’/{id}’, controller=None, collection_actions=[‘index’, ‘create’, ‘new’],member_actions=[‘show’, ‘update’,<br> ‘delete’, ‘edit’], member_options=None, **kwargs)</p>
+<p>用法：<br>    map.collection(‘entries’, ‘entry’)</p>
+<p>7 <a href="http://blog.csdn.net/spch2008/article/details/9005260" target="_blank" rel="external">Routes RoutesMiddleware</a>RoutesMiddleware将请求应声到相应WSGI程序，它将路由匹配结果存到environ环境变量中去。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> routes.middleware <span class="keyword">import</span> RoutesMiddleware</div><div class="line">app = RoutesMiddleware(wsgi_app, map)     <span class="comment"># ``map`` is a routes.Mapper.</span></div></pre></td></tr></table></figure></p>
+<p>map调用match匹配URL，并设置WSGI环境变量<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">environ[<span class="string">'wsgiorg.routing_args'</span>] = ((url, match))</div><div class="line">environ[<span class="string">'routes.route'</span>] = route</div><div class="line">environ[<span class="string">'routes.url'</span>] = url</div></pre></td></tr></table></figure></p>
+<p>route为匹配到的路由，url为一个URLGenerator对象，match为匹配所得条目。</p>
+<p>app为一个RoutesMiddleware对象，内部重载<strong>call</strong>（def <strong>call</strong>(self, environ, start_response)）仍为一个wsgi应用。<br>wsgi_app为一个wsgi程序，RoutesMiddleware将环境变量(environ)设置好后，调用wsgi_app进行后续处理。</p>
+<p>下面是一个实际的输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wsgiorg.routing_args = (&lt;routes.util.URLGenerator object at 0x0287AFB0&gt;, </div><div class="line">                        &#123;&apos;action&apos;: u&apos;index&apos;, &apos;controller&apos;: &lt;__main__.Resourse instance at 0x02876E40&gt;&#125;)</div><div class="line">routes.route = &lt;routes.route.Route object at 0x02871F10&gt;</div><div class="line">routes.url = &lt;routes.util.URLGenerator object at 0x0287AFB0&gt;</div></pre></td></tr></table></figure></p>
+<p>8 <a href="http://blog.csdn.net/spch2008/article/details/9004926" target="_blank" rel="external">WSGI Webob Routes 实例</a>1.下载库文件<br>   webob库：<a href="http://download.csdn.net/detail/spch2008/5497755" target="_blank" rel="external">http://download.csdn.net/detail/spch2008/5497755</a><br>   routes库：<a href="http://download.csdn.net/detail/spch2008/5497757" target="_blank" rel="external">http://download.csdn.net/detail/spch2008/5497757</a><br>   repoze库：<a href="http://download.csdn.net/detail/spch2008/5499231" target="_blank" rel="external">http://download.csdn.net/detail/spch2008/5499231</a></p>
+<ol>
+<li>组织代码<br> <img src="http://img.blog.csdn.net/20130602180110171" alt=""></li>
+<li>代码</li>
+</ol>
+<pre><code class="python"><span class="string">'''
+Created on 2013-6-1
+
+@author: spch2008
+'''</span>
+
+<span class="keyword">from</span> wsgiref.simple_server <span class="keyword">import</span> make_server
+
+<span class="keyword">import</span> routes.middleware
+<span class="keyword">import</span> webob.dec
+<span class="keyword">import</span> webob.exc
+
+<span class="class"><span class="keyword">class</span> <span class="title">Controller</span>:</span>
+<span class="meta">    @webob.dec.wsgify</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, req)</span>:</span>
+        <span class="keyword">return</span> webob.Response(<span class="string">"Hello World!"</span>)
+
+
+
+<span class="class"><span class="keyword">class</span> <span class="title">Router</span><span class="params">(object)</span>:</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span>
+        self._mapper = routes.Mapper()
+        self._mapper.connect(<span class="string">'/spch'</span>,  
+                        controller=Controller(),  
+                        action=<span class="string">'index'</span>,  
+                        conditions={<span class="string">'method'</span>: [<span class="string">'GET'</span>]})  
+
+        self._router = routes.middleware.RoutesMiddleware(self._dispatch, self._mapper)
+
+<span class="meta">    @webob.dec.wsgify</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, req)</span>:</span>
+
+        <span class="keyword">return</span> self._router
+
+<span class="meta">    @staticmethod</span>
+<span class="meta">    @webob.dec.wsgify</span>
+    <span class="function"><span class="keyword">def</span> <span class="title">_dispatch</span><span class="params">(req)</span>:</span>
+        match = req.environ[<span class="string">'wsgiorg.routing_args'</span>][<span class="number">1</span>]
+
+        <span class="keyword">if</span> <span class="keyword">not</span> match:
+            <span class="keyword">return</span> webob.exc.HTTPNotFound()
+
+        app = match[<span class="string">'controller'</span>]  
+        <span class="keyword">return</span> app
+
+
+
+app = Router()
+httpd = make_server(<span class="string">'localhost'</span>, <span class="number">8282</span>, app)  
+httpd.serve_forever()
+</code></pre>
+<p>  22行：创建一个mapper<br>  23行：#注册一个路由<br>  28行：创建一个RoutesMiddleware对象，匹配路由，修改环境变量后，调用self._dispatch</p>
+<ol>
+<li>运行结果<br> <img src="http://img.blog.csdn.net/20130601214138928" alt=""></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/11/13/2014-11-13-Openstack中的tox/" itemprop="url">
                   Openstack中的tox
                 </a>
@@ -1589,153 +1844,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="url">
-                  练习1.23-练习1.30
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-20T20:10:00+08:00" content="2014-01-20">
-              2014-01-20
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2014/01/20/2014-01-20-练习1.23-练习1.30/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/" class="cy_cmt_count" data-xid="2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/20/2014-01-20-练习1.23-练习1.30/" class="leancloud_visitors" data-flag-title="练习1.23-练习1.30">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习1.23-练习1.30/'>练习1.23-练习1.30</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>1.练习1.23<br>改后的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">(define (find-divisor-better n a)</div><div class="line">  (cond ((&gt; (square a) n) n)</div><div class="line">	((divides?-better n a) a)</div><div class="line">	(else (find-divisor-better n (next-2 a)))))</div><div class="line"></div><div class="line">(define (next-2 n)</div><div class="line">  (if (= 2 n)</div><div class="line">      (+ 1 n)</div><div class="line">      (+ 2 n)))</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (find-min-prime-since-better n start-time number)</div><div class="line">  (cond ((= number 0) (display-info start-time (real-time-clock)))</div><div class="line">	((prime? n) (begin</div><div class="line">		      (format #t &quot;~S~%&quot; n)</div><div class="line">		      (find-min-prime-since-better (+ n (next-plus n)) start-time (- number 1))))</div><div class="line">	(else (find-min-prime-since-better (+ n (next-plus n)) start-time number)))</div><div class="line">  #f)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (next-plus n)</div><div class="line">  (if (even? n)</div><div class="line">      1</div><div class="line">      2))</div></pre></td></tr></table></figure>
-<p>电脑跑这些代码的时候，没有固定的运行时间，一直在变。不过结果是改后的基本是没改前的0.5，也可能0.6左右。<br>2.练习1.24<br>代码就不贴出来了，只是将上一题中的判断是否为素数的方法改为费马方法。<br>在检测接近1000000的素数和接近1000的素数时，接近1000000的素数在时间上应该为(log1000000)=6应该大于接近1000的3的素数检查，比值为2:1，实验中计算从1000和1000000开始的1000个素数，1000开始的时间为695，而从1000000开始的时间为1470，比值接近于1:2， 与假设基本相同。<br>但是在<a href="http://www.codesky.net/article/200501/54364.html" target="_blank" rel="external">帖子</a>，那我猜，可能是64位和32位的不同了。<br>3.练习1.25<br>先求次方的结果会导致一个很大的数求余数，这样的时间消耗会很大。<br>4.练习1.26<br>不使用square的结果是每次减半的expmod操作没有了简版的效果，所以时间复杂度会变回O(n) 。<br>5.练习1.27</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (try-it a n)</div><div class="line">    (= (expmod a n n) a))</div><div class="line"></div><div class="line">(define (carmichael-test n number)</div><div class="line">  (cond ((= number 0) true)</div><div class="line">	((try-it number n) (carmichael-test n (- number 1)))</div><div class="line">	(else false)))</div><div class="line"></div><div class="line">(define (car-prime? n)</div><div class="line">  (carmichael-text n (- n 1)))</div></pre></td></tr></table></figure>
-<p>6.练习1.28</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">(define (new-expmod base exp m)</div><div class="line">  (define tmpbase 100)</div><div class="line">  (cond ((= exp 0) 1)</div><div class="line">	((even? exp) (begin</div><div class="line">		      (set! tmpbase (new-expmod base (/ exp 2) m))</div><div class="line">		      (if (and (not (= tmpbase (- m 1)))</div><div class="line">			       (not (= tmpbase 1))</div><div class="line">			       (= (remainder (square tmpbase)</div><div class="line">					       m) 1))</div><div class="line">			   0</div><div class="line">			   (remainder (square tmpbase)</div><div class="line">					 m))))</div><div class="line">	(else (remainder (* base (new-expmod base (- exp 1) m))</div><div class="line">			 m))))</div><div class="line">(define (new-try-it n a)</div><div class="line">  (new-expmod a (- n 1) n))</div><div class="line"></div><div class="line"></div><div class="line">(define (new-fermat-test n start)</div><div class="line">  (cond ((= start 1) true)</div><div class="line">	((= (new-try-it n start) 0) false)</div><div class="line">	(else (new-fermat-test n (- start 1)))))</div><div class="line"></div><div class="line">(define (really-prime? n)</div><div class="line"> (new-fermat-test n (if (even? n)</div><div class="line">			(/ n 2)</div><div class="line">			(/ (- n 1) 2))))</div></pre></td></tr></table></figure>
-<p>没有进行优化，但本身也有可能会有更好的方法吧</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1781,7 +1889,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1789,7 +1897,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1798,7 +1906,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

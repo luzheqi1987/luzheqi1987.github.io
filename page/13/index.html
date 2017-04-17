@@ -302,6 +302,145 @@
             
               
                 
+                <a class="post-title-link" href="/2015/02/15/[转]Eclipse中SVN的安装步骤（两种）和使用方法/" itemprop="url">
+                  [转]Eclipse中SVN的安装步骤（两种）和使用方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-02-15T14:02:31+08:00" content="2015-02-15">
+              2015-02-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/eclipse/" itemprop="url" rel="index">
+                    <span itemprop="name">eclipse</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2015/02/15/[转]Eclipse中SVN的安装步骤（两种）和使用方法/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2015/02/15/[转]Eclipse中SVN的安装步骤（两种）和使用方法/" class="cy_cmt_count" data-xid="2015/02/15/[转]Eclipse中SVN的安装步骤（两种）和使用方法/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/02/15/[转]Eclipse中SVN的安装步骤（两种）和使用方法/" class="leancloud_visitors" data-flag-title="[转]Eclipse中SVN的安装步骤（两种）和使用方法">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://blog.csdn.net/vebasan/article/details/6186344" title="原网址" target="_blank" rel="external">原网址</a></p>
+<p>一、给Eclipse安装SVN，最常见的有两种方式：手动方式和使用安装向导方式。具体步骤如下：</p>
+<p>方式一：手动安装</p>
+<p>1、从官网下载site-1.6.9.zip文件,网址是:subclipse.tigris.org<br>2、从中解压出features与plugins文件夹，复制到E:/MyEclipse/myPlugin/svn里面，其它的*.xml文件不要。<br>3、在E:/MyEclipse/MyEclipse X.X/dropins下新建文件svn.link,内容是:path=E://MyEclipse//myPlugin//svn 保存。<br>4、删除E:/MyEclipse/MyEclipse X.X/configuration/org.eclipse.update文件夹<br>5、重启myeclipse就一切正常了。</p>
+<p>方式二：使用Eclipse安装向导</p>
+<p>打开Eclipse<br>help-&gt;Software Updates-&gt;find and install(如果没有这个就用help-&gt;Software Updates-&gt;Add/Remove Software即可)<br>选择search for new features to install, Next<br>点击new remote site<br>输入name：subclipse 1.6.x，url：<a href="http://subclipse.tigris.org/update_1.6.x，点OK" target="_blank" rel="external">http://subclipse.tigris.org/update_1.6.x，点OK</a><br>或者：<br>Name: Subclipse 1.6.x (Eclipse 3.2+)    URL:  <a href="http://subclipse.tigris.org/update_1.6.x" target="_blank" rel="external">http://subclipse.tigris.org/update_1.6.x</a><br>    Name: Subclipse 1.4.x (Eclipse 3.2+)    URL:  <a href="http://subclipse.tigris.org/update_1.4.x" target="_blank" rel="external">http://subclipse.tigris.org/update_1.4.x</a><br>    Name: Subclipse 1.2.x (Eclipse 3.2+)    URL:  <a href="http://subclipse.tigris.org/update_1.2.x" target="_blank" rel="external">http://subclipse.tigris.org/update_1.2.x</a><br>    Name: Subclipse 1.0.x (Eclipse 3.0/3.1)    URL:  <a href="http://subclipse.tigris.org/update_1.0.x" target="_blank" rel="external">http://subclipse.tigris.org/update_1.0.x</a></p>
+<p>选中subclipse，点击finish<br>一直NEXT，这里注意下，有些时候会出现 Subclipse Integration for Mylyn 3.x (Optional) (3.0.0) requires plug-in “org.eclipse.mylyn.tasks.core (3.0.0)”, or compatible.错误，这个不要紧，在弹出框中选择subclipse,把Subclipse Integration for Mylyn 3.x选项去掉即可<br>Next一路安装完成！</p>
+<p>二、Eclipse中使用SVN（以MyEclipse8.0为例）</p>
+<p>1、共享项目（把本地的项目共享到subversion服务器上）<br>打开MyEclipse8.0，假设要共享projTest是项目名称<br>右键项目projTest-&gt;Team-&gt;Share Project-&gt;Svn,<br>单库模式下url填写svn://svn server address/，多库模式下url填写svn://svn server address/Repository1，其中Repository1是库的名称<br>next直到finish，proj1就被共享到svn服务器上了，但是代码并没上传，还需要commit一次<br>右键项目projTest，team-&gt;commit，项目内容就被上传到svn服务器了<br>2、签出项目（把svn服务器上的项目下载的到本地）<br>打开MyEclipse8.0<br>window-&gt;open perspective-&gt;svn repository explorer（如果没有在other里选择）<br>在左边空白处右键-&gt;new-&gt;repository location<br>单库模式下url填写svn://svnserveraddress/，多库模式下url填写svn://svnserveraddress/Repository1(同步骤二)<br>右键projTest-&gt;check out<br>next直到finish，该项目就被签出到本地，切换到java视图就能看到该项目了</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/02/13/解决Android SDK无法连接dl-ssl.google.com/" itemprop="url">
                   解决Android SDK无法连接dl-ssl.google.com
                 </a>
@@ -1559,140 +1698,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/" itemprop="url">
-                  [转]OpenStack的数据库开发基础 — SQLAlchemy
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-01-10T14:46:17+08:00" content="2015-01-10">
-              2015-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/OpenStack/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenStack</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/" class="cy_cmt_count" data-xid="2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/" class="leancloud_visitors" data-flag-title="[转]OpenStack的数据库开发基础 — SQLAlchemy">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>原文地址：<a href="https://www.ustack.com/blog/sqlalchemy/">点击</a></p>
-<p><img src="https://www.ustack.com/wp-content/uploads/2014/12/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7-2014-12-23-%E4%B8%8A%E5%8D%8811.21.51.png" alt=""></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/01/10/[转]OpenStack的数据库开发基础 — SQLAlchemy/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1738,7 +1743,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1746,7 +1751,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1755,7 +1760,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

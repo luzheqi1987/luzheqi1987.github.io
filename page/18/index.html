@@ -302,6 +302,177 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="url">
+                  CODE 146. Max Points on a Line
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-28T22:16:00+08:00" content="2013-11-28">
+              2013-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" class="cy_cmt_count" data-xid="2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/" class="leancloud_visitors" data-flag-title="CODE 146. Max Points on a Line">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/28/2013-11-28-CODE 146 Max Points on a Line/'>CODE 146. Max Points on a Line</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given n points<br> on a 2D plane, find the maximum number of points that lie on the same straight line.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPoints</span><span class="params">(Point[] points)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line"></div><div class="line">	Map&lt;Float, Integer&gt; kmap = <span class="keyword">new</span> HashMap&lt;Float, Integer&gt;();</div><div class="line">	<span class="keyword">int</span> size = points.length;</div><div class="line">	<span class="keyword">int</span> total = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> sum_cloumn = <span class="number">0</span>;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (size &lt;= <span class="number">2</span>) &#123;</div><div class="line">		<span class="keyword">return</span> size;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</div><div class="line">		sum_cloumn = <span class="number">0</span>;</div><div class="line">		<span class="keyword">int</span> add = <span class="number">1</span>;</div><div class="line">		kmap.clear();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; size; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (j == i) &#123;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x == points[j].x &amp;&amp; points[i].y == points[j].y) &#123;</div><div class="line">				add++;</div><div class="line">				<span class="keyword">continue</span>;</div><div class="line">			&#125;</div><div class="line"></div><div class="line">			<span class="keyword">float</span> k = <span class="number">0</span>;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (points[i].x != points[j].x) &#123;</div><div class="line">				k = (<span class="keyword">float</span>) (points[j].y - points[i].y)</div><div class="line">						/ (points[j].x - points[i].x);</div><div class="line">				<span class="keyword">if</span> (kmap.containsKey(k)) &#123;</div><div class="line">					kmap.put(k, kmap.get(k) + <span class="number">1</span>);</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					kmap.put(k, <span class="number">1</span>);</div><div class="line">				&#125;</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				sum_cloumn++;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (Float f : kmap.keySet()) &#123;</div><div class="line">			<span class="keyword">if</span> (kmap.get(f) &gt; sum_cloumn) &#123;</div><div class="line">				sum_cloumn = kmap.get(f);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		sum_cloumn += add;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (sum_cloumn &gt; total) &#123;</div><div class="line">			total = sum_cloumn;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> total;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/27/2013-11-27-CODE 144 Insertion Sort List/" itemprop="url">
                   CODE 144. Insertion Sort List
                 </a>
@@ -1801,177 +1972,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="url">
-                  CODE 137. Word Break II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-24T15:50:00+08:00" content="2013-11-24">
-              2013-11-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2013/11/24/2013-11-24-CODE 137 Word Break II/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/" class="cy_cmt_count" data-xid="2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/24/2013-11-24-CODE 137 Word Break II/" class="leancloud_visitors" data-flag-title="CODE 137. Word Break II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 137 Word Break II/'>CODE 137. Word Break II</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.<br>Return all such possible sentences.<br>For example, given<br>s = <code>&quot;catsanddog&quot;</code>,<br>dict = <code>[&quot;cat&quot;, &quot;cats&quot;, &quot;and&quot;, &quot;sand&quot;, &quot;dog&quot;]</code>.<br>A solution is <code>[&quot;cats and dog&quot;, &quot;cat sand dog&quot;]</code>.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, Set&lt;String&gt; dict)</span> </span>&#123;</div><div class="line">		<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">		<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">		Set&lt;String&gt; unused = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line">		<span class="keyword">boolean</span> touched = <span class="keyword">false</span>;</div><div class="line">		Map&lt;Integer, Set&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;Integer, Set&lt;Integer&gt;&gt;();</div><div class="line">		<span class="keyword">for</span> (String dic : dict) &#123;</div><div class="line">			<span class="keyword">if</span> (!s.contains(dic)) &#123;</div><div class="line">				unused.add(dic);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		dict.removeAll(unused);</div><div class="line"></div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</div><div class="line">			<span class="keyword">for</span> (String sub : dict) &#123;</div><div class="line">				String subTmp = s.substring(i);</div><div class="line">				<span class="keyword">int</span> start = i;</div><div class="line">				<span class="keyword">while</span> (subTmp.contains(sub)) &#123;</div><div class="line">					<span class="keyword">int</span> index = subTmp.indexOf(sub);</div><div class="line">					<span class="keyword">if</span> (map.containsKey(start + index)) &#123;</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125; <span class="keyword">else</span> &#123;</div><div class="line">						map.put(start + index, <span class="keyword">new</span> HashSet&lt;Integer&gt;());</div><div class="line">						map.get(start + index)</div><div class="line">								.add(start + index + sub.length());</div><div class="line">					&#125;</div><div class="line">					subTmp = subTmp.substring(index + sub.length());</div><div class="line">					start = start + index + sub.length();</div><div class="line">					<span class="keyword">if</span> (start &gt;= s.length()) &#123;</div><div class="line">						touched = <span class="keyword">true</span>;</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (!touched) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">return</span> wbreak(s, s.length(), map, <span class="number">0</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function">ArrayList&lt;String&gt; <span class="title">wbreak</span><span class="params">(String s, <span class="keyword">int</span> length,</span></span></div><div class="line">			Map&lt;Integer, Set&lt;Integer&gt;&gt; map, <span class="keyword">int</span> x) &#123;</div><div class="line">		<span class="keyword">if</span> (!map.containsKey(x)) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		&#125;</div><div class="line">		ArrayList&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> index : map.get(x)) &#123;</div><div class="line">			String subString = s.substring(x, index);</div><div class="line">			<span class="keyword">if</span> (index &gt;= length) &#123;</div><div class="line">				results.add(subString);</div><div class="line">			&#125; <span class="keyword">else</span> &#123;</div><div class="line">				ArrayList&lt;String&gt; subResults = wbreak(s, length, map, index);</div><div class="line">				<span class="keyword">if</span> (subResults.isEmpty()) &#123;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125; <span class="keyword">else</span> &#123;</div><div class="line">					<span class="keyword">for</span> (String subResult : subResults) &#123;</div><div class="line">						String result = subString + <span class="string">" "</span> + subResult;</div><div class="line">						results.add(result);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> results;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2017,7 +2017,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2025,7 +2025,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -2034,7 +2034,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

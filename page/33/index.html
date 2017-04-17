@@ -302,6 +302,155 @@
             
               
                 
+                <a class="post-title-link" href="/2012/09/19/Linux引导流程解析02/" itemprop="url">
+                  Linux引导流程解析02
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2012-09-19T23:35:19+08:00" content="2012-09-19">
+              2012-09-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2012/09/19/Linux引导流程解析02/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2012/09/19/Linux引导流程解析02/" class="cy_cmt_count" data-xid="2012/09/19/Linux引导流程解析02/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2012/09/19/Linux引导流程解析02/" class="leancloud_visitors" data-flag-title="Linux引导流程解析02">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1. 查看排除#的行，grep -v(排除匹配) “^#” /etc/inittab | more</p>
+<p>2.man inittab，inittab文件剖析，在inittab中，所有条目采取以下格式：</p>
+<p><span style="color: #000000;"> <strong>   id：runlevels：action：process</strong></span></p>
+<p><span style="color: #000000;">    <strong>id：</strong>标识符，一般为两位数字或字母</span></p>
+<p><span style="color: #000000;">    <strong>runlevels：</strong>指定运行级别，可以指定多个</span></p>
+<p><span style="color: #000000;">   <strong>action：</strong>指定运行状态</span></p>
+<p><span style="color: #000000;">   <strong>process：</strong>指定要运行的脚本/命令</span></p>
+<p>3. action常用常用取值：</p>
+<p><span style="color: #000000;"><strong>    initdefault：</strong>指定系统缺省启动的运行级别</span></p>
+<p><span style="color: #000000;"><strong>    sysinit：</strong>系统启动执行process中指定的命令</span></p>
+<p><span style="color: #000000;"><strong>    wait：</strong>执行process中指定的命令，并等其结束在运行其他命令</span></p>
+<p><span style="color: #000000;"><strong>    once：</strong>执行process中指定的命令，不等待其结束</span></p>
+<p><span style="color: #000000;"><strong>    ctrlaltdel：</strong>按下Ctrl+Alt+Del时执行process指定的命令</span></p>
+<p>4.设置自启动程序</p>
+<p><span style="color: #000000;"><strong>    ln -s </strong></span> 生成软链接</p>
+<p><strong><span style="color: #000000;">    chkconfig ：</span></strong>chkconfig –levels 2345 mysqld on；chkconfig –list mysqld</p>
+<p><strong><span style="color: #000000;">    ntsysv：</span></strong>ntsysv –level 3</p>
+<p>5. dmesg：dmesg | grep eth0</p>
+<p>6.日志存放路径：/var/log；常用的是messages</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2012/09/18/Linux引导流程解析01/" itemprop="url">
                   Linux引导流程解析01
                 </a>
@@ -1722,149 +1871,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2012/09/04/Linux应用与发展（下）/" itemprop="url">
-                  Linux应用与发展（下）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2012-09-04T23:44:55+08:00" content="2012-09-04">
-              2012-09-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2012/09/04/Linux应用与发展（下）/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2012/09/04/Linux应用与发展（下）/" class="cy_cmt_count" data-xid="2012/09/04/Linux应用与发展（下）/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2012/09/04/Linux应用与发展（下）/" class="leancloud_visitors" data-flag-title="Linux应用与发展（下）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.Linux系统结构</p>
-<p>图形界面                 Shell命令                   系统调用<br>用户————&gt;应用层———-&gt;Shell层—————&gt;内核层-&gt;硬件</p>
-<p>2.X Window 是个协议，类似于TCP/IP</p>
-<p>1）独立于操作系统；可以不安装，挂了!=Linux挂了，可以换，安装多个</p>
-<p>2）网络特性；</p>
-<p>3）原代码免费。</p>
-<p>3. Linux应用领域</p>
-<p>1）电子政务</p>
-<p>2）网络应用 基于LAMP的网站论坛及B/S架构应用；基于Linux的负载均衡和集群；基于Linux的防火墙及代理服务器</p>
-<p>3）嵌入式应用 生物特征识别系统；智能卡系统；掌上电脑、手机、信息家电；路由器、机顶盒、数码相机、mp4</p>
-<p>4）科学运算 5）办公应用（OpenOffice）6）娱乐应用等</p>
-<p>4. 搭建学习环境，<span style="color: #ff0000;">选择命令行方式学习！！！</span></p>
-<p>留意系统的提示信息；尝试自己检查或实验以找到答案</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1910,7 +1916,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1918,7 +1924,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1927,7 +1933,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

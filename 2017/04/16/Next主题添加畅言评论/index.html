@@ -1,0 +1,903 @@
+<!doctype html>
+
+
+
+  
+
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<script src="https://use.fontawesome.com/f4fcbffa46.js"></script>
+<!--<link href="http://resource.qn.jerkybible.com/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />-->
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="hexo,next,畅言,评论," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+为什么要增加畅言评论之前一直在用多说评论，但是多说就要关闭了，就是在2017年6月1日。所以必须在这之前改用新的评论系统，不然的话博客就要不能评论了（然而并没有什么人给我评论）。然后就是选择用什么评论系统了，也没有什么可参考，随便选了一个。
+至于为什么要自己添加，因为我的Next版本很旧了，但是自己做过很多改动不想更新到最新版本。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Next主题添加畅言评论">
+<meta property="og:url" content="http://blog.jerkybible.com/2017/04/16/Next主题添加畅言评论/index.html">
+<meta property="og:site_name" content="行走的轮子">
+<meta property="og:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+为什么要增加畅言评论之前一直在用多说评论，但是多说就要关闭了，就是在2017年6月1日。所以必须在这之前改用新的评论系统，不然的话博客就要不能评论了（然而并没有什么人给我评论）。然后就是选择用什么评论系统了，也没有什么可参考，随便选了一个。
+至于为什么要自己添加，因为我的Next版本很旧了，但是自己做过很多改动不想更新到最新版本。">
+<meta property="og:image" content="http://image.qn.jerkybible.com/blog/duoshuo_stop.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://image.qn.jerkybible.com/blog/duoshuo_export.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://image.qn.jerkybible.com/blog/duoshuo_import.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:updated_time" content="2017-04-16T11:35:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Next主题添加畅言评论">
+<meta name="twitter:description" content="版权声明：本文为博主原创文章，转载请注明出处，谢谢!
+
+为什么要增加畅言评论之前一直在用多说评论，但是多说就要关闭了，就是在2017年6月1日。所以必须在这之前改用新的评论系统，不然的话博客就要不能评论了（然而并没有什么人给我评论）。然后就是选择用什么评论系统了，也没有什么可参考，随便选了一个。
+至于为什么要自己添加，因为我的Next版本很旧了，但是自己做过很多改动不想更新到最新版本。">
+<meta name="twitter:image" content="http://image.qn.jerkybible.com/blog/duoshuo_stop.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    },
+    algolia: {
+          applicationID: 'TQAF9AT4MZ',
+          apiKey: '91f27cce56682c2525b0f9fbb867111a',
+          indexName: 'hexoblog',
+          hits: {"per_page":10},
+          labels: {"input_placeholder":"搜索...","hits_empty":"未发现与 「${query}」相关的内容","hits_stats":"${hits} 条相关条目，使用了 ${time} 毫秒"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://blog.jerkybible.com/2017/04/16/Next主题添加畅言评论/"/>
+
+  <title> Next主题添加畅言评论 | 行走的轮子 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0dec9769c21972aef79776299d7801d0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行走的轮子</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">戒急用忍</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-visited">
+          <a href="/visited" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            到此一游
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Next主题添加畅言评论
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-16T19:22:03+08:00" content="2017-04-16">
+              2017-04-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/博客/" itemprop="url" rel="index">
+                    <span itemprop="name">博客</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/博客/主题/" itemprop="url" rel="index">
+                    <span itemprop="name">主题</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/博客/主题/评论/" itemprop="url" rel="index">
+                    <span itemprop="name">评论</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2017/04/16/Next主题添加畅言评论/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/04/16/Next主题添加畅言评论/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/04/16/Next主题添加畅言评论/" class="leancloud_visitors" data-flag-title="Next主题添加畅言评论">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<h2 id="为什么要增加畅言评论"><a href="#为什么要增加畅言评论" class="headerlink" title="为什么要增加畅言评论"></a>为什么要增加畅言评论</h2><p>之前一直在用<a href="http://duoshuo.com/" target="_blank" rel="external">多说评论</a>，但是多说就要关闭了，就是在2017年6月1日。所以必须在这之前改用新的评论系统，不然的话博客就要不能评论了（然而并没有什么人给我评论）。然后就是选择用什么评论系统了，也没有什么可参考，随便选了一个。<br><img src="http://image.qn.jerkybible.com/blog/duoshuo_stop.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>至于为什么要自己添加，因为我的Next版本很旧了，但是自己做过很多改动不想更新到最新版本。<br><a id="more"></a></p>
+<h2 id="增加畅言评论步骤"><a href="#增加畅言评论步骤" class="headerlink" title="增加畅言评论步骤"></a>增加畅言评论步骤</h2><p>首先要说明的是我的Next主题版本是5.0.1，可能和大家的不一样。</p>
+<p>打开<code>laylout/_macro/post.swig</code>，找到下面的代码，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;% elseif theme.disqus_shortname %&#125;</div><div class="line">            &lt;span <span class="class"><span class="keyword">class</span></span>=<span class="string">"post-comments-count"</span>&gt;</div><div class="line">              &amp;nbsp; | &amp;nbsp;</div><div class="line">              <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&#123;&#123; url_for(post.path) &#125;&#125;#comments"</span> <span class="attr">itemprop</span>=<span class="string">"discussionUrl"</span>&gt;</span></span></div><div class="line">                <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-comments-count disqus-comment-count"</span> <span class="attr">data-disqus-identifier</span>=<span class="string">"&#123;&#123; post.path &#125;&#125;"</span> <span class="attr">itemprop</span>=<span class="string">"commentsCount"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">            &lt;<span class="regexp">/span&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在这段代码下边添加：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&#123;% elseif theme.changyan.enable and theme.changyan.appid and theme.changyan.appkey %&#125;</div><div class="line">            &lt;span class="post-comments-count"&gt;</div><div class="line">              &amp;nbsp; | &amp;nbsp;</div><div class="line">            &#123;% if is_post() %&#125;</div><div class="line">              &lt;a href="&#123;&#123; url_for(post.path) &#125;&#125;#SOHUCS" itemprop="discussionUrl"&gt;</div><div class="line">                &lt;span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="&#123;&#123; post.path &#125;&#125;" itemprop="commentsCount"&gt;&lt;/span&gt;</div><div class="line">              &lt;/a&gt;</div><div class="line">            &#123;% else %&#125;</div><div class="line">              &lt;a href="&#123;&#123; url_for(post.path) &#125;&#125;#SOHUCS" itemprop="discussionUrl"&gt;</div><div class="line">                &lt;span id="url::&#123;&#123; post.permalink &#125;&#125;" class="cy_cmt_count" data-xid="&#123;&#123; post.path &#125;&#125;" itemprop="commentsCount" &gt;&lt;/span&gt;</div><div class="line">              &lt;/a&gt;</div><div class="line">            &#123;% endif %&#125;</div></pre></td></tr></table></figure></p>
+<p>打开<code>layout\_partials\comments.swig</code>，找到下面的代码，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;% elseif theme.disqus_shortname %&#125;</div><div class="line">     &lt;div id=<span class="string">"disqus_thread"</span>&gt;</div><div class="line">       <span class="xml"><span class="tag">&lt;<span class="name">noscript</span>&gt;</span></span></div><div class="line">         Please enable JavaScript to view the</div><div class="line">         <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"//disqus.com/?ref_noscript"</span>&gt;</span>comments powered by Disqus.<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line">       <span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></div><div class="line">     &lt;<span class="regexp">/div&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在这段代码下边添加：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;% elseif theme.changyan.enable and theme.changyan.appid and theme.changyan.appkey %&#125;</div><div class="line">       &lt;div id=<span class="string">"SOHUCS"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">       &#123;% <span class="keyword">if</span> is_home() %&#125;</div><div class="line">         &lt;script id=<span class="string">"cy_cmt_num"</span> src=<span class="string">"https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=&#123;&#123;theme.changyan.appid&#125;&#125;"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">       &#123;% <span class="keyword">else</span> %&#125;</div><div class="line">         &lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">         (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">           <span class="keyword">var</span> appid = <span class="string">'&#123;&#123;theme.changyan.appid&#125;&#125;'</span>;</div><div class="line">           <span class="keyword">var</span> conf = <span class="string">'&#123;&#123;theme.changyan.appkey&#125;&#125;'</span>;</div><div class="line">           <span class="keyword">var</span> width = <span class="built_in">window</span>.innerWidth || <span class="built_in">document</span>.documentElement.clientWidth;</div><div class="line">           <span class="keyword">if</span> (width &lt; <span class="number">960</span>) &#123;</div><div class="line">           <span class="built_in">window</span>.document.write(<span class="string">'&lt;script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id='</span> + appid + <span class="string">'&amp;conf='</span> + conf + <span class="string">'"&gt;&lt;\/script&gt;'</span>); &#125; <span class="keyword">else</span> &#123; <span class="keyword">var</span> loadJs=<span class="function"><span class="keyword">function</span>(<span class="params">d,a</span>)</span>&#123;<span class="keyword">var</span> c=<span class="built_in">document</span>.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>]||<span class="built_in">document</span>.head||<span class="built_in">document</span>.documentElement;<span class="keyword">var</span> b=<span class="built_in">document</span>.createElement(<span class="string">"script"</span>);b.setAttribute(<span class="string">"type"</span>,<span class="string">"text/javascript"</span>);b.setAttribute(<span class="string">"charset"</span>,<span class="string">"UTF-8"</span>);b.setAttribute(<span class="string">"src"</span>,d);<span class="keyword">if</span>(<span class="keyword">typeof</span> a===<span class="string">"function"</span>)&#123;<span class="keyword">if</span>(<span class="built_in">window</span>.attachEvent)&#123;b.onreadystatechange=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">var</span> e=b.readyState;<span class="keyword">if</span>(e===<span class="string">"loaded"</span>||e===<span class="string">"complete"</span>)&#123;b.onreadystatechange=<span class="literal">null</span>;a()&#125;&#125;&#125;<span class="keyword">else</span>&#123;b.onload=a&#125;&#125;c.appendChild(b)&#125;;loadJs(<span class="string">"https://changyan.sohu.com/upload/changyan.js"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">           <span class="built_in">window</span>.changyan.api.config(&#123;appid:appid,conf:conf&#125;)&#125;);</div><div class="line">          &#125;</div><div class="line">        &#125;)();</div><div class="line">       <span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">       &lt;script type=<span class="string">"text/javascript"</span> src=<span class="string">"https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line">     &#123;% endif %&#125;</div></pre></td></tr></table></figure></p>
+<p>最后在<code>_config.yml</code>文件用添加下面脚本，appid和appkey是注册畅言时候提供的。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># changyan</div><div class="line">	changyan:</div><div class="line">  	enable: true</div><div class="line">  	appid: ********</div><div class="line">  	appkey: ****************************************</div></pre></td></tr></table></figure></p>
+<p>###　将多说评论导入畅言评论</p>
+<p>首先将多说评论导出，见下图。<br><img src="http://image.qn.jerkybible.com/blog/duoshuo_export.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>然后将多说导出的评论导入到畅言中去，见下图。<br><img src="http://image.qn.jerkybible.com/blog/duoshuo_import.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag">#hexo</a>
+          
+            <a href="/tags/next/" rel="tag">#next</a>
+          
+            <a href="/tags/畅言/" rel="tag">#畅言</a>
+          
+            <a href="/tags/评论/" rel="tag">#评论</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/18/LeetCode-514-Freedom-Trail/" rel="next" title="LeetCode 514. Freedom Trail">
+                <i class="fa fa-chevron-left"></i> LeetCode 514. Freedom Trail
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+        <div id="SOHUCS"></div>
+        
+          <script type="text/javascript">
+          (function(){
+            var appid = 'cysUqRAW5';
+            var conf = 'prod_a4118e6673dbaa520b0006627a6dfa06';
+            var width = window.innerWidth || document.documentElement.clientWidth;
+            if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+            window.changyan.api.config({appid:appid,conf:conf})});
+           }
+         })();
+        </script>
+        <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+      
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Jerky Lu" />
+          <p class="site-author-name" itemprop="name">Jerky Lu</p>
+          <p class="site-description motion-element" itemprop="description">戒急用忍</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/luzheqi1987" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jerkybible" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lqcode.com/" title="李琼写文章的地方" target="_blank">李琼写文章的地方</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wiredtiger.org/" title="落影流年" target="_blank">落影流年</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://koihik.github.io/" title="Koihik's Blog" target="_blank">Koihik's Blog</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要增加畅言评论"><span class="nav-number">1.</span> <span class="nav-text">为什么要增加畅言评论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加畅言评论步骤"><span class="nav-number">2.</span> <span class="nav-text">增加畅言评论步骤</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jerky Lu</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="http://resource.qn.jerkybible.com/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("ikggGroaejtGnK5kN7meiyXz-gzGzoHsz", "xE9HyNGqt0oKWPxB4mz6HScq");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+  
+  
+    
+
+  
+  
+  
+  <link rel="stylesheet" href="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="http://resource.qn.jerkybible.com/blog/vendors/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script type="text/javascript" src="/js/src/algolia.js?v=5.0.1"></script>
+
+
+
+  
+
+</body>
+</html>

@@ -302,6 +302,244 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/" itemprop="url">
+                  [转]Spring4新特性——Groovy Bean定义DSL
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-06T04:06:56+08:00" content="2015-04-06">
+              2015-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/" class="cy_cmt_count" data-xid="2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/" class="leancloud_visitors" data-flag-title="[转]Spring4新特性——Groovy Bean定义DSL">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原文地址 <a href="http://jinnianshilongnian.iteye.com/blog/1991830" target="_blank" rel="external">http://jinnianshilongnian.iteye.com/blog/1991830</a></p>
+<p><a href="/2015/04/06/[转]Spring4新特性——泛型限定式依赖注入/">Spring4新特性——泛型限定式依赖注入</a><br><a href="/2015/04/06/[转]Spring4新特性——核心容器的其他改进/">Spring4新特性——核心容器的其他改进</a><br><a href="/2015/04/06/[转]Spring4新特性——Web开发的增强/">Spring4新特性——Web开发的增强</a><br><a href="/2015/04/06/[转]Spring4新特性——Groovy Bean定义DSL/">Spring4新特性——Groovy Bean定义DSL</a><br><a href="/2015/04/06/[转]Spring4新特性——注解、脚本、任务、MVC等其他特性改进/">Spring4新特性——注解、脚本、任务、MVC等其他特性改进</a><br><a href="/2015/04/06/[转]Spring4新特性——JSR310日期时间API的支持/">Spring4新特性——JSR310日期时间API的支持</a><br><a href="/2015/04/06/[转]Spring4新特性——更好的Java泛型操作API/">Spring4新特性——更好的Java泛型操作API</a><br><a href="/2015/04/06/[转]Spring4新特性——集成Bean Validation 1.1(JSR-349">Spring4新特性——集成Bean Validation 1.1(JSR-349)到SpringMVC</a>到SpringMVC/)</p>
+<p>Spring4支持使用Groovy DSL来进行Bean定义配置，其类似于XML，不过因为是Groovy DSL，可以实现任何复杂的语法配置，但是对于配置，我们需要那么复杂吗？本着学习的态度试用了下其Groovy DSL定义Bean，其主要缺点：<br>1、DSL语法规则不足，需要其后续维护；<br>2、编辑器的代码补全需要跟进，否则没有代码补全，写这个很痛苦；<br>3、出错提示不友好，排错难；<br>4、当前对于一些配置还是需要XML的支持，所以还不是100%的纯Groovy DSL；<br>5、目前对整个Spring生态支持还是不够的，比如Web，需要观望。</p>
+<p>其优点就是其本质是Groovy脚本，所以可以做非常复杂的配置，如果以上问题能够解决，其也是一个不错的选择。在Groovy中的话使用这种配置感觉不会有什么问题，但是在纯Java开发环境下也是有它，给我的感觉是这个功能其目的是去推广它的groovy。比较怀疑它的动机。</p>
+<p>接下来我们来看看Spring配置的发展：<br>Spring 2时代是XML风格配置  可以参考《跟我学Spring3》的前几章<br>Spring 3时代引入注解风格配置  可以参考《跟我学Spring3》的第12章<br>Spring 4时代引入Groovy DSL风格来配置 后续讲解</p>
+<p>一、对比<br>对于我来说，没有哪个好/坏，只有适用不适用；开发方便不方便。接下来我们来看一下各种类型的配置吧：<br>XML风格配置<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;/&gt;<br>&lt;bean class=&quot;org.springframework.validation.beanvalidation.MethodValidationPostProcessor&quot;&gt;<br>    &lt;property name=&quot;validator&quot; ref=&quot;validator&quot;/&gt;<br>&lt;/bean&gt;<br>&lt;mvc:annotation-driven validator=&quot;validator&quot;/&gt;  </p>
+<p>&lt;bean id=&quot;validator&quot; class=&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;&gt;<br>    &lt;property name=&quot;providerClass&quot; value=&quot;org.hibernate.validator.HibernateValidator&quot;/&gt;<br>    &lt;property name=&quot;validationMessageSource&quot; ref=&quot;messageSource&quot;/&gt;<br>&lt;/bean&gt;<br>[/java]<br>注解风格配置<br>[java]<br>@Configuration<br>@EnableWebMvc<br>@ComponentScan(basePackages = &quot;com.sishuok.spring4&quot;)<br>public class MvcConfiguration extends WebMvcConfigurationSupport {<br>    @Override<br>    protected Validator getValidator() {<br>        LocalValidatorFactoryBean localValidatorFactoryBean =<br>                new LocalValidatorFactoryBean();<br>        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);<br>        localValidatorFactoryBean.setValidationMessageSource(messageSource());<br>        return localValidatorFactoryBean;<br>    }<br>}<br>[/java]<br>Groovy DSL风格配置<br>[java]<br>import org.hibernate.validator.HibernateValidator<br>import org.springframework.context.support.ReloadableResourceBundleMessageSource<br>import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean  </p>
+<p>beans {<br>    xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;<br>    xmlns mvc: &quot;<a href="http://www.springframework.org/schema/mvc&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/mvc&amp;quot</a>;  </p>
+<pre><code>context.&apos;component-scan&apos;(&apos;base-package&apos;: &amp;quot;com,sishuok.spring4&amp;quot;)  
+mvc.&apos;annotation-driven&apos;(&apos;validator&apos;: &amp;quot;validator&amp;quot;)  
+
+validator(LocalValidatorFactoryBean) {  
+    providerClass = HibernateValidator.class  
+    validationMessageSource = ref(&amp;quot;messageSource&amp;quot;)  
+}  
+</code></pre><p>}<br>[/java]<br>因为Spring4 webmvc没有提供用于Web环境的Groovy DSL实现的WebApplicationContext，所以为了在web环境使用，单独写了一个WebGenricGroovyApplicationContext，可以到源码中查找。</p>
+<p>可以看到，它们之前差别不是特别大；以上只提取了部分配置，完整的配置可以参考我的github：spring4-showcase</p>
+<p>对于注解风格的配置，如果在Servlet3容器中使用的话，可以借助WebApplicationInitializer实现无配置：<br>[java]<br>public class AppInitializer implements WebApplicationInitializer {  </p>
+<pre><code>@Override  
+public void onStartup(javax.servlet.ServletContext sc) throws ServletException {  
+</code></pre><p>//        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();<br>//        rootContext.register(AppConfig.class);<br>//        sc.addListener(new ContextLoaderListener(rootContext));  </p>
+<pre><code>    //2、springmvc上下文  
+    AnnotationConfigWebApplicationContext springMvcContext = new AnnotationConfigWebApplicationContext();  
+    springMvcContext.register(MvcConfiguration.class);  
+
+    //3、DispatcherServlet  
+    DispatcherServlet dispatcherServlet = new DispatcherServlet(springMvcContext);  
+    ServletRegistration.Dynamic dynamic = sc.addServlet(&amp;quot;dispatcherServlet&amp;quot;, dispatcherServlet);  
+    dynamic.setLoadOnStartup(1);  
+    dynamic.addMapping(&amp;quot;/&amp;quot;);  
+
+    //4、CharacterEncodingFilter  
+    FilterRegistration filterRegistration =  
+            sc.addFilter(&amp;quot;characterEncodingFilter&amp;quot;, CharacterEncodingFilter.class);  
+    filterRegistration.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), false, &amp;quot;/*&amp;quot;);  
+
+}  
+</code></pre><p>}<br>[/java]<br>到底好还是不好，需要根据自己项目大小等一些因素来衡量。对于Servlet3可以参考我github的示例：servlet3-showcase  </p>
+<p>对于Groovy风格配置，如果语法足够丰富、Spring内部支持完善，且编辑器支持也非常好的话，也是不错的选择。</p>
+<p>二、Groovy Bean定义<br>接下来我们来看下groovy DSL的具体使用吧：<br>1、安装环境<br>[java]<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;<br>    &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;<br>    &lt;version&gt;${groovy.version}&lt;/version&gt;<br>&lt;/dependency&gt;<br>[/java]<br>我使用的groovy版本是2.2.1</p>
+<p>2、相关组件类<br>此处使用Spring Framework官网的hello world，可以前往<a href="http://projects.spring.io/spring-framework/" target="_blank" rel="external">http://projects.spring.io/spring-framework/</a> 主页查看 </p>
+<p>3、Groovy Bean定义配置文件<br>[java]<br>import com.sishuok.spring4.xml.MessageServiceImpl<br>import com.sishuok.spring4.xml.MessagePrinter  </p>
+<p>beans {<br>    messageService(MessageServiceImpl) {//名字(类型)<br>        message = &quot;hello&quot;  //注入的属性<br>    }  </p>
+<pre><code>messagePrinter(MessagePrinter, messageService) //名字（类型，构造器参数列表）  
+</code></pre><p>}<br>[/java]<br>从此处可以看到 如果仅仅是简单的Bean定义，确实比XML简洁。</p>
+<p>4、测试<br>如果不测试环境可以这样测试：<br>[java]<br>public class XmlGroovyBeanDefinitionTest1 {<br>    @Test<br>    public void test() {<br>        ApplicationContext ctx = new GenericGroovyApplicationContext(&quot;classpath:spring-config-xml.groovy&quot;);<br>        MessagePrinter messagePrinter = (MessagePrinter) ctx.getBean(&quot;messagePrinter&quot;);<br>        messagePrinter.printMessage();<br>    }<br>}<br>[/java]<br>使用GenericGroovyApplicationContext加载groovy配置文件。 </p>
+<p>如果想集成到Spring Test中，可以这样：<br>[java]<br>@RunWith(SpringJUnit4ClassRunner.class)<br>@ContextConfiguration(locations = &quot;classpath:spring-config-xml.groovy&quot;, loader = GenericGroovyContextLoader.class)<br>public class XmlGroovyBeanDefinitionTest2 {  </p>
+<pre><code>@Autowired  
+private MessagePrinter messagePrinter;  
+
+@Test  
+public void test() {  
+    messagePrinter.printMessage();  
+}  
+</code></pre><p>}<br>[/java]<br>此处需要定义我们自己的bean loader，即从groovy配置文件加载：<br>[java]<br>public class GenericGroovyContextLoader extends AbstractGenericContextLoader {  </p>
+<pre><code>@Override  
+protected String getResourceSuffix() {  
+    throw new UnsupportedOperationException(  
+            &amp;quot;GenericGroovyContextLoader does not support the getResourceSuffix() method&amp;quot;);  
+}  
+@Override  
+protected BeanDefinitionReader createBeanDefinitionReader(GenericApplicationContext context) {  
+    return new GroovyBeanDefinitionReader(context);  
+}  
+</code></pre><p>}<br>[/java]<br>使用GroovyBeanDefinitionReader来加载groovy配置文件。  </p>
+<p>到此基本的使用就结束了，还算是比较简洁，但是我们已经注意到了，在纯Java环境做测试还是比较麻烦的。 比如没有给我们写好相关的测试支撑类。另外大家可以前往Spring的github看看在groovy中的单元测试：GroovyBeanDefinitionReaderTests.groovy</p>
+<p>再看一下我们使用注解方式呢：<br>[java]<br>@Component<br>public class MessageServiceImpl implements MessageService {<br>    @Autowired<br>    @Qualifier(&quot;message&quot;)<br>    private String message;<br>    ……<br>}<br>[/java]<br>[java]<br>@Component<br>public class MessagePrinter {<br>    private MessageService messageService;<br>    @Autowired<br>    public MessagePrinter(MessageService messageService) {<br>        this.messageService = messageService;<br>    }<br>……<br>}<br>[/java]<br>此处省略无关代码，需要的话直接去github查看 。点击前往 </p>
+<p>Groovy配置文件：</p>
+<p>[java]<br>beans {<br>    xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;    //导入命名空间  </p>
+<pre><code>context.&apos;component-scan&apos;(&apos;base-package&apos;: &amp;quot;com.sishuok.spring4&amp;quot;) {  
+    &apos;exclude-filter&apos;(&apos;type&apos;: &amp;quot;aspectj&amp;quot;, &apos;expression&apos;: &amp;quot;com.sishuok.spring4.xml.*&amp;quot;)  
+}  
+
+message(String, &amp;quot;hello&amp;quot;) {}  
+</code></pre><p>}<br>[/java]<br>在该配置文件中支持导入xml命名空间， 其中context.’component-scan’部分等价于XML中的：<br>[java]<br>&lt;context:component-scan base-package=&quot;com.sishuok.spring4&quot;&gt;<br>    &lt;context:exclude-filter type=&quot;aspectj&quot; expression=&quot;com.sishuok.spring4.xml.*&quot;/&gt;<br>&lt;/context:component-scan&gt; [/java]<br> 从这里可以看出，其还没能完全从XML风格配置中走出来，不是纯Groovy DSL。</p>
+<p>测试方式和之前的一样就不重复了，可以查看XmlGroovyBeanDefinitionTest2.java。</p>
+<p>三、Groovy Bean定义 DSL语法</p>
+<p>到目前为止，基本的helloworld就搞定了；接下来看看Groovy DSL都支持哪些配置吧：<br>创建Bean</p>
+<p>构造器<br>[java]<br>validator(LocalValidatorFactoryBean) { //名字（类型）<br>    providerClass = HibernateValidator.class  //属性=值<br>    validationMessageSource = ref(&quot;messageSource&quot;) //属性 = 引用，当然也支持如 validationMessageSource=messageSource 但是这种方式缺点是messageSource必须在validator之前声明<br>}[/java]<br>静态工厂方法<br>[java]<br>def bean = factory(StaticFactory) {<br>    prop = 1<br>}<br>bean.factoryMethod = &quot;getInstance&quot;  [/java]<br>或者<br>[java]<br>bean(StaticFactory) { bean -&gt;<br>    bean.factoryMethod = &quot;getInstance&quot;<br>    prop = 1<br>}  [/java]</p>
+<p>实例工厂方法<br>[java]<br>beanFactory(Factory)<br>bean(beanFactory : &quot;newInstance&quot;, &quot;args&quot;) {<br>    prop = 1<br>} [/java]<br>或者<br>[java]<br>beanFactory(Factory)<br>bean(&quot;bean&quot;){bean -&gt;<br>    bean.factoryBean=&quot;beanFactory&quot;<br>    bean.factoryMethod=&quot;newInstance&quot;<br>    prop = 1<br>}[/java]  </p>
+<p>依赖注入</p>
+<p>属性注入<br>[java]<br>beanName(BeanClass) { //名字（类型）<br>    str = &quot;123&quot; // 常量直接注入<br>    bean = ref(&quot;bean&quot;) //属性 = 引用 ref(&quot;bean&quot;, true) 这样的话是引用父容器的<br>    beans = [bean1, bean2] //数组/集合<br>    props = [key1:&quot;value1&quot;, key2:&quot;value2&quot;] // Properties / Map<br>}  [/java]</p>
+<p>构造器注入<br>[java]<br>bean(Bean, &quot;args1&quot;, &quot;args2&quot;)<br>[/java]<br>静态工厂注入/实例工厂注入，请参考创建bean部分</p>
+<p>匿名内部Bean<br>[java]<br>outer(OuterBean) {<br>   prop = 1<br>   inner =  { InnerBean bean -&gt;  //匿名内部Bean<br>                          prop =2<br>            }<br>}[/java]<br>[java]<br>outer(OuterBean) {<br>   prop = 1<br>   inner =  { bean -&gt;  //匿名内部Bean 通过实例工厂方法创建<br>                          bean.factoryBean = &quot;innerBean&quot;<br>                          bean.factoryMethod = &quot;create&quot;<br>                          prop = 2<br>            }<br>} [/java]<br>单例/非单例/作用域<br>[java]<br>singletonBean(Bean1) { bean -&gt;<br>    bean.singleton = true<br>}<br>nonSingletonBean(Bean1) { bean -&gt;<br>    bean.singleton = false<br>}<br>prototypeBean(Bean1) { bean -&gt;<br>    bean.scope = &quot;prototype&quot;<br>}<br>[/java]<br>其中bean可以理解为xml中的<bean> 标签，即bean定义。</bean></p>
+<p>父子Bean<br>[java]<br>parent(Bean1){ bean -&gt;<br>    bean.’abstract’ = true //抽象的<br>    prop = 123<br>}<br>child { bean -&gt;<br>    bean.parent = parent //指定父bean<br>}<br>[/java] </p>
+<p>命名空间<br>[java]<br>xmlns aop:&quot;<a href="http://www.springframework.org/schema/aop&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/aop&amp;quot</a>;<br>myAspect(MyAspect)<br>aop {<br>    config(&quot;proxy-target-class&quot;:true) {<br>        aspect( id:&quot;test&quot;,ref:&quot;myAspect&quot; ) {<br>            before method:&quot;before&quot;, pointcut: &quot;execution(void com.sishuok.spring4..<em>.</em>(..))&quot;<br>        }<br>    }<br>} [/java]<br>以上是AOP的，可以自己推到其他相关的配置； </p>
+<p>[java]<br>xmlns context: &quot;<a href="http://www.springframework.org/schema/context&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/context&amp;quot</a>;<br>context.’component-scan’(‘base-package’: &quot;com.sishuok.spring4&quot;) {<br>    ‘exclude-filter’(‘type’: &quot;aspectj&quot;, ‘expression’: &quot;com.sishuok.spring4.xml.*&quot;)<br>} [/java]<br>以上是component-scan，之前介绍过了。</p>
+<p>[java]<br>xmlns aop:&quot;<a href="http://www.springframework.org/schema/aop&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/aop&amp;quot</a>;<br>scopedList(ArrayList) { bean -&gt;<br>    bean.scope = &quot;haha&quot;<br>    aop.’scoped-proxy’()<br>} [/java]<br> 等价于<br>[java]<br>&lt;bean id=&quot;scopedList&quot; class=&quot;java.util.ArrayList&quot; scope=&quot;haha&quot;&gt;<br>    &lt;aop:scoped-proxy/&gt;<br>&lt;/bean&gt;  [/java]</p>
+<p>[java]<br>xmlns util:&quot;<a href="http://www.springframework.org/schema/util&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/util&amp;quot</a>;<br>util.list(id : ‘list’) {<br>    value 1<br>    value 2<br>}  [/java]<br>等价于XML：<br>[java]<br>&lt;util:list id=&quot;list&quot;&gt;<br>    &lt;value&gt;1&lt;/value&gt;<br>    &lt;value&gt;2&lt;/value&gt;<br>&lt;/util:list&gt;<br> [/java]<br>[java]<br>xmlns util:&quot;<a href="http://www.springframework.org/schema/util&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/util&amp;quot</a>;<br>util.map(id : ‘map’) {<br>    entry(key : 1, value :1)<br>    entry(‘key-ref’ : &quot;messageService&quot;, ‘value-ref’ : &quot;messageService&quot;)<br>}[/java]<br> 等价于<br>[java]<br>&lt;util:map id=&quot;map&quot;&gt;<br>    &lt;entry key=&quot;1&quot; value=&quot;1&quot;/&gt;<br>    &lt;entry key-ref=&quot;messageService&quot; value-ref=&quot;messageService&quot;/&gt;<br>&lt;/util:map&gt;<br>[/java]<br>引入其他配置文件<br>[java]<br>importBeans &quot;classpath:org/springframework/context/groovy/test.xml&quot;<br>[/java]<br>当然也能引入XML的。 </p>
+<p>对于DSL新的更新大家可以关注：GroovyBeanDefinitionReaderTests.groovy，本文也是根据其编写的。</p>
+<p>再来看看groovy bean定义的另一个好处：<br>我们可以直接在groovy bean定义文件中声明类，然后使用<br>[java]<br>@Controller<br>def class GroovyController {<br>    @RequestMapping(&quot;/groovy&quot;)<br>    @ResponseBody<br>    public String hello() {<br>        return &quot;hello&quot;;<br>    }<br>}  </p>
+<p>beans {  </p>
+<pre><code>groovyController(GroovyController)  
+</code></pre><p>}<br>[/java]<br> 另一种Spring很早就支持的方式是引入外部groovy文件，如：<br>[java]<br>xmlns lang: &quot;<a href="http://www.springframework.org/schema/lang&amp;quot" target="_blank" rel="external">http://www.springframework.org/schema/lang&amp;quot</a>;<br>lang.’groovy’(id: ‘groovyController2’, ‘script-source’: ‘classpath:com/sishuok/spring4/controller/GroovyController2.groovy’)<br>[/java]<br>使用其lang命名空间引入外部脚本文件。 </p>
+<p>到此，Groovy Bean定义DSL就介绍完了，其没有什么特别之处，只是换了种写法而已，我认为目前试试即可，还不能用到真实环境。</p>
+<p>示例代码：<br><a href="https://github.com/zhangkaitao/spring4-showcase" target="_blank" rel="external">https://github.com/zhangkaitao/spring4-showcase</a><br><a href="https://github.com/zhangkaitao/servlet3-showcase" target="_blank" rel="external">https://github.com/zhangkaitao/servlet3-showcase</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/06/[转]Spring4新特性——Web开发的增强/" itemprop="url">
                   [转]Spring4新特性——Web开发的增强
                 </a>
@@ -1786,169 +2024,6 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" itemprop="url">
-                  [转]第一章 Web MVC简介 —— 跟开涛学SpringMVC
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-04-03T06:12:55+08:00" content="2015-04-03">
-              2015-04-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" class="cy_cmt_count" data-xid="2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/04/03/[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC/" class="leancloud_visitors" data-flag-title="[转]第一章 Web MVC简介 —— 跟开涛学SpringMVC">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>私塾在线学习网原创内容（<a href="http://sishuok.com）" target="_blank" rel="external">http://sishuok.com）</a><br>原创内容，转载请注明私塾在线【<a href="http://sishuok.com/forum/blogPost/list/5050.html】" target="_blank" rel="external">http://sishuok.com/forum/blogPost/list/5050.html】</a></p>
-<p>Web MVC简介<br>1.1、Web开发中的请求-响应模型：<br><img src="http://sishuok.com/forum/upload/2012/7/1/2fc5edc55fa262fddccecc1816f5ff7b__1.JPG" alt=""><br>在Web世界里，具体步骤如下：<br>1、  Web浏览器（如IE）发起请求，如访问<a href="http://sishuok.com" target="_blank" rel="external">http://sishuok.com</a><br>2、  Web服务器（如Tomcat）接收请求，处理请求（比如用户新增，则将把用户保存一下），最后产生响应（一般为html）。<br>3、web服务器处理完成后，返回内容给web客户端（一般就是我们的浏览器），客户端对接收的内容进行处理（如web浏览器将会对接收到的html内容进行渲染以展示给客户）。</p>
-<p>因此，在Web世界里：<br>都是Web客户端发起请求，Web服务器接收、处理并产生响应。<br>一般Web服务器是不能主动通知Web客户端更新内容。虽然现在有些技术如服务器推（如Comet）、还有现在的HTML5 websocket可以实现Web服务器主动通知Web客户端。<br>到此我们了解了在web开发时的请求/响应模型，接下来我们看一下标准的MVC模型是什么。</p>
-<p>1.2、标准MVC模型概述<br>MVC模型：是一种架构型的模式，本身不引入新功能，只是帮助我们将开发的结构组织的更加合理，使展示与模型分离、流程控制逻辑、业务逻辑调用与展示逻辑分离。如图1-2<br><img src="http://sishuok.com/forum/upload/2012/7/1/a633b31a42f0224c9bf66cd3cc886e04__2.JPG" alt=""><br>图1-2</p>
-<p>首先让我们了解下MVC（Model-View-Controller）三元组的概念：</p>
-<p><strong>Model（模型）</strong>：数据模型，提供要展示的数据，因此包含数据和行为，可以认为是领域模型或JavaBean组件（包含数据和行为），不过现在一般都分离开来：Value Object（数据） 和 服务层（行为）。也就是模型提供了模型数据查询和模型数据的状态更新等功能，包括数据和业务。 </p>
-<p><strong>View（视图）</strong>：负责进行模型的展示，一般就是我们见到的用户界面，客户想看到的东西。 </p>
-<p><strong>Controller（控制器）</strong>：接收用户请求，委托给模型进行处理（状态改变），处理完毕后把返回的模型数据返回给视图，由视图负责展示。 也就是说控制器做了个调度员的工作，。 </p>
-<p>从图1-1我们还看到，在标准的MVC中模型能主动推数据给视图进行更新（观察者设计模式，在模型上注册视图，当模型更新时自动更新视图），但在Web开发中模型是无法主动推给视图（无法主动更新用户界面），因为在Web开发是请求-响应模型。 </p>
-<p>那接下来我们看一下在Web里MVC是什么样子，我们称其为 Web MVC 来区别标准的MVC。<br>1.3、Web MVC概述</p>
-<p>模型-视图-控制器概念和标准MVC概念一样，请参考1.2，我们再看一下Web MVC标准架构，如图1-3：<br><img src="http://sishuok.com/forum/upload/2012/7/1/baa1df353ed98b79231b535bc1f73dea__3.JPG" alt=""><br>如图1-3，在Web MVC模式下，模型无法主动推数据给视图，如果用户想要视图更新，需要再发送一次请求（即请求-响应模型）。<br>概念差不多了，我们接下来了解下Web端开发的发展历程，和使用代码来演示一下Web MVC是如何实现的，还有为什么要使用MVC这个模式呢？</p>
-<p>1.4、Web端开发发展历程<br>此处我们只是简单的叙述比较核心的历程，如图1-4<br><img src="http://sishuok.com/forum/upload/2012/7/1/41f193e4f961be27d511789df2ee7680__4.JPG" alt=""><br>图1-4</p>
-<p>1.4.1、<strong>CGI</strong>：（Common Gateway Interface）公共网关接口，一种在web服务端使用的脚本技术，使用C或Perl语言编写，用于接收web用户请求并处理，最后动态产生响应给用户，但每次请求将产生一个进程，重量级。<br>1.4.2、<strong>Servlet</strong>：一种JavaEE web组件技术，是一种在服务器端执行的web组件，用于接收web用户请求并处理，最后动态产生响应给用户。但每次请求只产生一个线程（而且有线程池），轻量级。而且能利用许多JavaEE技术（如JDBC等）。本质就是在java代码里面 输出 html流。但表现逻辑、控制逻辑、业务逻辑调用混杂。如图1-5<br><img src="http://sishuok.com/forum/upload/2012/7/1/799db5c79c85cb59b68b915916f8dddc__5.JPG" alt=""><br>图1-5<br>如图1-5，这种做法是绝对不可取的，控制逻辑、表现代码、业务逻辑对象调用混杂在一起，最大的问题是直接在Java代码里面输出Html，这样前端开发人员无法进行页面风格等的设计与修改，即使修改也是很麻烦，因此实际项目这种做法不可取。</p>
-<p>1.4.3、<strong>JSP</strong>：（Java Server Page）：一种在服务器端执行的web组件，是一种运行在标准的HTML页面中嵌入脚本语言（现在只支持Java）的模板页面技术。本质就是在html代码中嵌入java代码。JSP最终还是会被编译为Servlet，只不过比纯Servlet开发页面更简单、方便。但表现逻辑、控制逻辑、业务逻辑调用还是混杂。如图1-6<br><img src="http://sishuok.com/forum/upload/2012/7/1/7486df5510b6068a360d8f0c6bbb706c__6.JPG" alt=""><br>图1-6<br>如图1-6，这种做法也是绝对不可取的，控制逻辑、表现代码、业务逻辑对象调用混杂在一起，但比直接在servlet里输出html要好一点，前端开发人员可以进行简单的页面风格等的设计与修改（但如果嵌入的java脚本太多也是很难修改的），因此实际项目这种做法不可取。<br><img src="http://sishuok.com/forum/upload/2012/7/1/c59e61daa2ed98f75aab1ae3397fb235__7.JPG" alt=""><br>JSP本质还是Servlet，最终在运行时会生成一个Servlet（如tomcat，将在tomcat\work\Catalina\web应用名\org\apache\jsp下生成），但这种使得写html简单点，但仍是控制逻辑、表现代码、业务逻辑对象调用混杂在一起。</p>
-<p>1.4.4、<strong>Model1</strong>：可以认为是JSP的增强版，可以认为是jsp+javabean如图1-7<br>特点：使用<jsp:usebean>标准动作，自动将请求参数封装为JavaBean组件；还必须使用java脚本执行控制逻辑。<br><img src="http://sishuok.com/forum/upload/2012/7/1/c25b9ce9064a37ab93ffe02711b3ecc7__8.JPG" alt=""><br>图1-7</jsp:usebean></p>
-<p>此处我们可以看出，使用<jsp:usebean>标准动作可以简化javabean的获取/创建，及将请求参数封装到javabean，再看一下Model1架构，如图1-8。<br><img src="http://sishuok.com/forum/upload/2012/7/1/d3b5b2ec88706fff7ef4b98d110837d1__9.JPG" alt=""><br>图1-8 Model1架构<br>Model1架构中，JSP负责控制逻辑、表现逻辑、业务对象（javabean）的调用，只是比纯JSP简化了获取请求参数和封装请求参数。同样是不好的，在项目中应该严禁使用（或最多再demo里使用）。<br>1.4.5、<strong>Model2</strong>：在JavaEE世界里，它可以认为就是Web MVC模型<br>Model2架构其实可以认为就是我们所说的Web MVC模型，只是控制器采用Servlet、模型采用JavaBean、视图采用JSP，如图1-9<br><img src="http://sishuok.com/forum/upload/2012/7/1/a6b7b2ca293e610a7a2b32e47a16d718__10.JPG" alt=""><br>图1-9 Model2架构<br>具体代码事例如下：<br><img src="http://sishuok.com/forum/upload/2012/7/1/254a61cd5c20f1e8f0e1012f02cdaa31__11.JPG" alt=""><br><img src="http://sishuok.com/forum/upload/2012/7/1/0ec4c098750790295eaad2f1b3a4dc82__12.JPG" alt=""><br>从Model2架构可以看出，视图和模型分离了，控制逻辑和展示逻辑分离了。</jsp:usebean></p>
-<p>但我们也看到严重的缺点：</p>
-<p>1．  1、控制器：<br>1．1．1、控制逻辑可能比较复杂，其实我们可以按照规约，如请求参数submitFlag=toAdd，我们其实可以直接调用toAdd方法，来简化控制逻辑；而且每个模块基本需要一个控制器，造成控制逻辑可能很复杂；<br>1．1．2、请求参数到模型的封装比较麻烦，如果能交给框架来做这件事情，我们可以从中得到解放；<br>1．1．3、选择下一个视图，严重依赖Servlet API，这样很难或基本不可能更换视图；<br>1．1．4、给视图传输要展示的模型数据，使用Servlet API，更换视图技术也要一起更换，很麻烦。 </p>
-<p>1.2、模型：<br>1．2．1、此处模型使用JavaBean，可能造成JavaBean组件类很庞大，一般现在项目都是采用三层架构，而不采用JavaBean。<br><img src="http://sishuok.com/forum/upload/2012/7/1/1570f54f6a52301d8ea58fe8fa9efb29__14.JPG" alt=""><br>1.3、视图<br>1．3．1、现在被绑定在JSP，很难更换视图，比如Velocity、FreeMarker；比如我要支持Excel、PDF视图等等。<br>1.4.5、<strong>服务到工作者</strong>：Front Controller + Application Controller + Page Controller + Context<br>即，前端控制器+应用控制器+页面控制器（也有称其为动作）+上下文，也是Web MVC，只是责任更加明确，详情请参考《核心J2EE设计模式》和《企业应用架构模式》如图1-10：<br><img src="http://sishuok.com/forum/upload/2012/7/1/e7fae17e52bb3664d0d3f4ea8db7ae55__15.JPG" alt=""><br>图1-10<br>运行流程如下：<br><img src="http://sishuok.com/forum/upload/2012/7/1/925c5ff2cc8613c898b05a4817db1f56__16.JPG" alt=""><br>职责：<br><strong>Front Controller</strong>：前端控制器，负责为表现层提供统一访问点，从而避免Model2中出现的重复的控制逻辑（由前端控制器统一回调相应的功能方法，如前边的根据submitFlag=login转调login方法）；并且可以为多个请求提供共用的逻辑（如准备上下文等等），将选择具体视图和具体的功能处理（如login里边封装请求参数到模型，并调用业务逻辑对象）分离。<br><strong>Application Controller</strong>：应用控制器，前端控制器分离选择具体视图和具体的功能处理之后，需要有人来管理，应用控制器就是用来选择具体视图技术（视图的管理）和具体的功能处理（页面控制器/命令对象/动作管理），一种策略设计模式的应用，可以很容易的切换视图/页面控制器，相互不产生影响。<br><strong>Page Controller(Command)</strong>：页面控制器/动作/处理器：功能处理代码，收集参数、封装参数到模型，转调业务对象处理模型，返回逻辑视图名交给前端控制器（和具体的视图技术解耦），由前端控制器委托给应用控制器选择具体的视图来展示，可以是命令设计模式的实现。页面控制器也被称为处理器或动作。<br><strong>Context</strong>：上下文，还记得Model2中为视图准备要展示的模型数据吗，我们直接放在request中（Servlet API相关），有了上下文之后，我们就可以将相关数据放置在上下文，从而与协议无关（如Servlet API）的访问/设置模型数据，一般通过ThreadLocal模式实现。 </p>
-<p>到此，我们回顾了整个web开发架构的发展历程，可能不同的web层框架在细节处理方面不同，但的目的是一样的：<br>干净的web表现层：<br>    模型和视图的分离；<br>控制器中的控制逻辑与功能处理分离（收集并封装参数到模型对象、业务对象调用）；<br>控制器中的视图选择与具体视图技术分离。<br>轻薄的web表现层：<br>    做的事情越少越好，薄薄的，不应该包含无关代码；<br>       只负责收集并组织参数到模型对象，启动业务对象的调用；<br>       控制器只返回逻辑视图名并由相应的应用控制器来选择具体使用的视图策略；<br>       尽量少使用框架特定API，保证容易测试。</p>
-<p>到此我们了解Web MVC的发展历程，接下来让我们了解下Spring MVC到底是什么、架构及来个HelloWorld了解下具体怎么使用吧。<br>本章具体代码请参考 springmvc-chapter1工程。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1994,7 +2069,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2002,7 +2077,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -2011,7 +2086,7 @@ public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

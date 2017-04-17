@@ -302,6 +302,157 @@
             
               
                 
+                <a class="post-title-link" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="url">
+                  Spring MVC 之 @RequestMapping（2）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-04T09:03:25+08:00" content="2015-06-04">
+              2015-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2015/06/04/Spring MVC 之 RequestMapping（2）/" class="cy_cmt_count" data-xid="2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/04/Spring MVC 之 RequestMapping（2）/" class="leancloud_visitors" data-flag-title="Spring MVC 之 @RequestMapping（2）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>一、从头开始</p>
+<p>   SpringMvc会通过DispatcherServlet来处理所有的请求，展开这个方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">protected void doDispatch(HttpServletRequest request, HttpServletResponse response) &#123;</div><div class="line">        HttpServletRequest processedRequest = request;</div><div class="line">        HandlerExecutionChain mappedHandler = null;</div><div class="line">        AsyncExecutionChain asyncChain = AsyncExecutionChain.getForCurrentRequest(request);</div><div class="line">        try &#123;</div><div class="line">            ModelAndView mv = null;</div><div class="line">            Exception dispatchException = null;</div><div class="line">            try &#123;</div><div class="line">                processedRequest = checkMultipart(request);</div><div class="line">                // 确定当前请求的处理器（HandlerExecutionChain 包含Handler和Interceptor列表）</div><div class="line">                mappedHandler = getHandler(processedRequest, false);</div><div class="line">                if (mappedHandler == null || mappedHandler.getHandler() == null) &#123;</div><div class="line">                    noHandlerFound(processedRequest, response);//404异常</div><div class="line">                    return;</div><div class="line">                &#125;</div><div class="line">                // 确定当前请求的处理器适配器</div><div class="line">                HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());</div><div class="line">                //......省略诸多代码......</div><div class="line">                // 调用处理处理器方法，返回ModelAndView对象</div><div class="line">                mv = ha.handle(processedRequest, response, mappedHandler.getHandler());</div><div class="line">            &#125;//处理返回结果</div><div class="line">        processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>  下面展开getHandler是怎么做的：
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/02/Spring MVC 之 RequestMapping（1）/" itemprop="url">
                   Spring MVC 之 @RequestMapping（1）
                 </a>
@@ -1715,157 +1866,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-09T10:22:48+08:00" content="2015-05-09">
-              2015-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" class="cy_cmt_count" data-xid="2015/05/09/Spring 使用简单Demo进行源码调试（二）/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<p>接上一篇文章 <a href="http://blog.jerkybible.com/2015/05/08/Spring 使用简单Demo进行源码调试（一）/">Spring 使用简单Demo进行源码调试（一）</a></p>
-<p>在运行到下面语句<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ctx = <span class="keyword">new</span> ClassPathXmlApplicationContext(&amp;quot;bean.xml&amp;quot;);<span class="comment">// 读取bean.xml中的内容</span></div></pre></td></tr></table></figure></p>
-<p>该构造函数首先进入下面ClassPathXmlApplicationContext类中这段代码。代码中configLocations为我们的配置文件，及[bean.xml]；refresh表示是否刷新，这里为true，表示刷新配置；parent表示上级上下文，这里为null表示没有上级上下文。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * 使用上一级上下文创建新的ClassPathXmlApplicationContext,</div><div class="line">	 * 从XML中加载定义</div><div class="line">	 * <span class="doctag">@param</span> configLocations 资源地址列表</div><div class="line">	 * <span class="doctag">@param</span> refresh 是否刷新上下文,</div><div class="line">	 * <span class="doctag">@param</span> parent 上一级上下文</div><div class="line">	 */</span></div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ClassPathXmlApplicationContext</span><span class="params">(String[] configLocations, <span class="keyword">boolean</span> refresh, ApplicationContext parent)</span></div><div class="line">			<span class="keyword">throws</span> BeansException </span>&#123;			</div><div class="line">		<span class="comment">//parent = null;</span></div><div class="line">		<span class="comment">//refresh= true;</span></div><div class="line">		<span class="comment">//configLocations=[bean.xml];</span></div><div class="line">		<span class="keyword">super</span>(parent);</div><div class="line">		setConfigLocations(configLocations);</div><div class="line">		<span class="keyword">if</span> (refresh) &#123;</div><div class="line">			refresh();</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/09/Spring 使用简单Demo进行源码调试（二）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1911,7 +1911,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">344</span>
+              <span class="site-state-item-count">345</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1919,7 +1919,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -1928,7 +1928,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
