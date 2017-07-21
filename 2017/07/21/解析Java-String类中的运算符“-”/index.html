@@ -97,8 +97,8 @@
 <meta property="og:image" content="http://image.qn.jerkybible.com/blog/String_HelloWorld.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://image.qn.jerkybible.com/blog/String%E6%B3%A8%E9%87%8A.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://image.qn.jerkybible.com/blog/StringComplex1.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:image" content="http://image.qn.jerkybible.com/blog/StringComplex1.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:updated_time" content="2017-07-21T12:52:51.000Z">
+<meta property="og:image" content="http://image.qn.jerkybible.com/blog/StringComplex2.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:updated_time" content="2017-07-21T12:57:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解析Java String类中的运算符“+”">
 <meta name="twitter:description" content="String简要说明大家都知道Java中String是不可变类。也就是说如果有一个String初始化的值位”Hello”，如果把它赋值为”Hello World!”，那么不是在原内存地址上修改数据，而是重新生成了一个新对象并重新指向这个对象。而在Java虚拟机中，字符串是直接放在常量池中的，而且关于String比较相关的题目很多，这篇文章不做详细描述。
@@ -399,7 +399,7 @@
 <p>可以看到不同类型相加产生的字符串和都是字符串相加产生的新字符串是不一样的。</p>
 <p>然后看一个循环的例子。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">       String str = <span class="string">""</span>;</div><div class="line">       <span class="keyword">for</span>(<span class="keyword">char</span> i = <span class="string">'a'</span>; i &lt;= <span class="string">'z'</span>; i++)</div><div class="line">       &#123;</div><div class="line">           str += i;</div><div class="line">       &#125;</div><div class="line">       System.out.println(str);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>编译后的结果如下。</p>
-<p><img src="http://image.qn.jerkybible.com/blog/StringComplex1.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p><img src="http://image.qn.jerkybible.com/blog/StringComplex2.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
 <h2 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h2><p>String的<code>+</code>被Java进行了特殊处理，在运算过程中会使用<code>StringBuilder</code>或者<code>StringBuffer</code>代替求和。而具体会生成几个字符串也要看求和的数据类型。另外需要强调的是，本文的例子中所有的字符串均没有被提前生成。</p>
 
       
