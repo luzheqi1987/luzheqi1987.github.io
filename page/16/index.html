@@ -302,6 +302,171 @@
             
               
                 
+                <a class="post-title-link" href="/2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="url">
+                  练习2.21-练习2.35
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-01-20T20:10:00+08:00" content="2014-01-20">
+              2014-01-20
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2014/01/20/2014-01-20-练习2.21-练习2.35/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/" class="cy_cmt_count" data-xid="2014/01/20/2014-01-20-练习2.21-练习2.35/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2014/01/20/2014-01-20-练习2.21-练习2.35/" class="leancloud_visitors" data-flag-title="练习2.21-练习2.35">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/20/2014-01-20-练习2.21-练习2.35/'>练习2.21-练习2.35</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>1.练习2.21</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (square-list items)</div><div class="line">  (if (null? items)</div><div class="line">      &apos;()</div><div class="line">      (cons (square (car items)) (square-list (cdr items)))))</div><div class="line"></div><div class="line">(define (square-list items)</div><div class="line">  (map (lambda (x) (square x)) items))</div></pre></td></tr></table></figure>
+<p>2.练习2.22<br>3.练习2.23</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">(define (for-each f items)</div><div class="line">  (define (iter f items)</div><div class="line">    (if (null? items)</div><div class="line">	true</div><div class="line">	(begin</div><div class="line">	  (f (car items))</div><div class="line">	  (iter f (cdr items)))))</div><div class="line">  (iter f items))</div></pre></td></tr></table></figure>
+<p>4.练习2.24<br>5.练习2.25</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(car (cdr (car (cdr (cdr (list 1 3 (list 5 7) 9))))))</div><div class="line"></div><div class="line">(car (car (list (list 7))))</div><div class="line"></div><div class="line">(car (cdr (car (cdr (car (cdr (car (cdr (car (cdr (car (cdr (list 1 (list 2 (list 3 (list 4 (list 5 (list 6 7))))))))))))))))))</div></pre></td></tr></table></figure>
+<p>6.练习2.26</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(1 2 3 4 5 6)</div><div class="line">((1 2 3) 4 5 6)</div><div class="line">((1 2 3) ( 4 5 6))</div></pre></td></tr></table></figure>
+<p>7.练习2.27</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">(define (deep-reverse items)</div><div class="line">  (define (reverse-iter tmpitems result)</div><div class="line">    (if (null? tmpitems)</div><div class="line">	result</div><div class="line">	(reverse-iter (cdr tmpitems)</div><div class="line">		      (cons (if (number? (car tmpitems))</div><div class="line">				(car tmpitems)</div><div class="line">				(reverse-iter (car tmpitems) &apos;()))</div><div class="line">			    result))))</div><div class="line">  (reverse-iter items &apos;()))</div></pre></td></tr></table></figure>
+<p>8.练习2.28</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (fringe trees)</div><div class="line">  (cond ((null? trees) &apos;())</div><div class="line">	((not (pair? trees)) (list trees))</div><div class="line">	(else (append (fringe (car trees)) (fringe (cdr trees))))))</div></pre></td></tr></table></figure>
+<p>9.练习2.29</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">(define (make-mobile left right)</div><div class="line">  (list left right))</div><div class="line"></div><div class="line">(define (make-branch length structure)</div><div class="line">  (list length structure))</div><div class="line"></div><div class="line">(define (left-branch _mobile)</div><div class="line">  (car _mobile))</div><div class="line"></div><div class="line">(define (right-branch _mobile)</div><div class="line">  (car (cdr _mobile)))</div><div class="line"></div><div class="line">(define (branch-length _branch)</div><div class="line">  (car _branch))</div><div class="line"></div><div class="line">(define (branch-structure _branch)</div><div class="line">  (car (cdr _branch)))</div><div class="line"></div><div class="line">(define (total-weigh _mobile)</div><div class="line">  (if (not (pair? _mobile))</div><div class="line">      _mobile</div><div class="line">      (+ (total-weigh (branch-structure (left-branch _mobile)))</div><div class="line">	 (total-weigh (branch-structure (right-branch _mobile))))))</div><div class="line"></div><div class="line">(define (balance-weight _mobile)</div><div class="line">  (define (iter _mobile result)</div><div class="line">    (if (not (pair? _mobile))</div><div class="line">      true</div><div class="line">      (and result</div><div class="line">	   (= (* (branch-length (left-branch _mobile))</div><div class="line">		 (total-weigh (branch-structure (left-branch _mobile))))</div><div class="line">	      (* (branch-length (right-branch _mobile))</div><div class="line">		 (total-weigh (branch-structure (right-branch _mobile)))))</div><div class="line">	   (balance-weight (branch-structure (left-branch _mobile)))</div><div class="line">	   (balance-weight (branch-structure (right-branch _mobile))))))</div><div class="line">  (iter _mobile true))</div></pre></td></tr></table></figure>
+<p>10.练习2.30</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(define (square-tree tree)</div><div class="line">  (cond ((null? tree) &apos;())</div><div class="line">	((not (pair? tree)) (square tree))</div><div class="line">	(else (cons (square-tree (car tree))</div><div class="line">		    (square-tree (cdr tree))))))</div><div class="line"></div><div class="line">(define (square-tree tree)</div><div class="line">  (map (lambda (sub-tree)</div><div class="line">	 (if (pair? sub-tree)</div><div class="line">	     (square-tree sub-tree)</div><div class="line">	     (square sub-tree)))</div><div class="line">       tree))</div></pre></td></tr></table></figure>
+<p>11.练习2.31</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(define (tree-map f tree)</div><div class="line">  (map (lambda (sub-tree)</div><div class="line">	 (if (pair? sub-tree)</div><div class="line">	     (tree-map f sub-tree)</div><div class="line">	     (f sub-tree)))</div><div class="line">       tree))</div></pre></td></tr></table></figure>
+<p>12.练习2.32</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```plain</div><div class="line">(define (subsets s)</div><div class="line">  (if (null? s)</div><div class="line">      (list &apos;())</div><div class="line">      (let ((rest (subsets (cdr s))))</div><div class="line">	(append rest (map (lambda (x) (cons (car s) x)) rest)))))</div></pre></td></tr></table></figure>
+<p>13.练习2.33</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(define (map p sequence)</div><div class="line">  (accumulate (lambda (x y)</div><div class="line">		(cons (p x) y))</div><div class="line">	      &apos;()</div><div class="line">	      sequence))</div><div class="line"></div><div class="line">(define (append seq1 seq2)</div><div class="line">  (accumulate cons seq2 seq1))</div><div class="line"></div><div class="line">(define (length sequence)</div><div class="line">  (accumulate (lambda (x y) (+ 1 y)) 0 sequence))</div></pre></td></tr></table></figure>
+<p>14.练习2.34</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(define (horner-eval x coefficient-sequence)</div><div class="line">  (accumulate (lambda (this-coeff higher-terms) (+ this-coeff (* x higher-terms)))</div><div class="line">	      0</div><div class="line">	      coefficient-sequence))</div></pre></td></tr></table></figure>
+<p>15.练习2.35</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">(define (count-leaves tree)</div><div class="line">    (accumulate +</div><div class="line">                0</div><div class="line">                (map (lambda (sub-tree)</div><div class="line">                         (if (pair? sub-tree)        </div><div class="line">                             (count-leaves sub-tree)   </div><div class="line">                             1))                        </div><div class="line">                     tree)))</div><div class="line"></div><div class="line">(define (count-leaves t)</div><div class="line">  (accumulate (lambda (x y) (if (not (pair? x))</div><div class="line">				(+ x y)</div><div class="line">				(+ (count-leaves x)</div><div class="line">				   y)))</div><div class="line">	      0</div><div class="line">	      (map (lambda (x) (if (not (pair? x))</div><div class="line">				   1</div><div class="line">				   x))</div><div class="line">		   (append (filter (lambda (x) (pair? x)) t)</div><div class="line">			   (filter (lambda (x) (not (pair? x))) t)))))</div></pre></td></tr></table></figure>
+<p>```</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/01/20/2014-01-20-练习1.23-练习1.30/" itemprop="url">
                   练习1.23-练习1.30
                 </a>
@@ -1645,153 +1810,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/01/08/2014-01-08-练习1.18-练习1.22/" itemprop="url">
-                  练习1.18-练习1.22
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-01-08T21:33:00+08:00" content="2014-01-08">
-              2014-01-08
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2014/01/08/2014-01-08-练习1.18-练习1.22/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2014/01/08/2014-01-08-练习1.18-练习1.22/" class="cy_cmt_count" data-xid="2014/01/08/2014-01-08-练习1.18-练习1.22/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2014/01/08/2014-01-08-练习1.18-练习1.22/" class="leancloud_visitors" data-flag-title="练习1.18-练习1.22">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2014/01/08/2014-01-08-练习1.18-练习1.22/</p><p>访问原文「<a href='http://blog.jerkybible.com/2014/01/08/2014-01-08-练习1.18-练习1.22/'>练习1.18-练习1.22</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>1.练习1.18</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">(define (*-iter a b n)</div><div class="line">  (cond ((= n 0) a)</div><div class="line">	((even? n) (*-iter a (double b) (halve n)))</div><div class="line">	(else (*-iter (+ a b) b (- n 1)))))</div><div class="line"></div><div class="line">(define (* b n)</div><div class="line">  (*-iter 0 b n))</div></pre></td></tr></table></figure>
-<p>Lisp真是强大啊，连 *-iter这种函数名也可以使用！！！<br>2.练习1.19</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p=p2+q2</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">q=q2+2pq</div></pre></td></tr></table></figure>
-<p>完整的函数如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">(define (next-p p q)</div><div class="line">  (+ (square p) (square q)))</div><div class="line"></div><div class="line">(define (next-q p q)</div><div class="line">  (+ (square q) (* 2 (* p q))))</div><div class="line"></div><div class="line">(define (fib-iter a b p q count)</div><div class="line">  (cond ((= 0 count) b)</div><div class="line">	((even? count) (fib-iter a</div><div class="line">				 b</div><div class="line">				 (next-p p q)</div><div class="line">				 (next-q p q)</div><div class="line">				 (/ count 2)))</div><div class="line">	(else (fib-iter (+ (* b q) (* a q) (* a p))</div><div class="line">			(+ (* b p) (* a q))</div><div class="line">			p</div><div class="line">			q</div><div class="line">			(- count 1)))))</div></pre></td></tr></table></figure>
-<p>3.练习1.20</p>
-<p>应用序4次,第一次算,但是gcd( 2 0)不算,if判断后就直接返回a,下面不会执行;<br>正则序18次,<br>正则代换后,则第n层的a b两个参数对应的remainder的次数分别为a(n), b(n),<br>则: a(n) = b(n-1);b(n)=a(n-1)+b(n-1)+1;a(0)=0,b(0)=0<br>总共5层,由于每层的if判断进行了计算,再加上最后一层的a是计算了的,所以最后的结果是:b(0)+b(1)+b(2)+b(3)+b(4)+a(4)=18<br>按照我的理解：<br>这道题使用正则序展开的时候会先展开gcd，展开的函数中会有多个remiander函数；使用应用序展开时，会先计算remainder，然后才会展开gcd。<br>看了很多别人的答案，对于正则序的展开并不是很清楚，我一开始认为也是5次，后来发现不对，我现在的想法是，在if的时候求值，在其他地方正常展开。<br>4.练习1.21<br>199，1999，7<br>5.练习1.22<br>这道题中，我将(runtime)函数，改为(real-time-clock);<br>计算结果如下：<br>1000的时间消耗为1；<br>10000的时间消耗为2；<br>100000的时间消耗为3；<br>1000000的时间消耗为8；<br>10000000的时间消耗为24。<br>可一看到，在1000-100000之间的时间的增长阶小于根10，而从100000到10000000之间的时间增长阶与根10相似。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1837,7 +1855,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1854,7 +1872,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

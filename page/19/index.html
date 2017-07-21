@@ -302,6 +302,177 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" itemprop="url">
+                  CODE 138. Linked List Cycle
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-11-24T16:07:00+08:00" content="2013-11-24">
+              2013-11-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" class="cy_cmt_count" data-xid="2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/" class="leancloud_visitors" data-flag-title="CODE 138. Linked List Cycle">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/24/2013-11-24-CODE 138 Linked List Cycle/'>CODE 138. Linked List Cycle</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a linked list, determine if it has a cycle in it.<br>Follow up:<br>Can you solve it without using extra space?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">     <span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">     <span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">     <span class="keyword">if</span>(<span class="keyword">null</span> == head)&#123;</div><div class="line">         <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     &#125;</div><div class="line"> 	ListNode first = head;</div><div class="line"> 	ListNode second = head;</div><div class="line"> 	<span class="keyword">while</span>(first.next != <span class="keyword">null</span> &amp;&amp; first.next.next !=<span class="keyword">null</span>)&#123;</div><div class="line"> 		<span class="keyword">if</span>(first.next.equals(second) || first.next.next.equals(second))&#123;</div><div class="line"> 			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"> 		&#125;</div><div class="line"> 		first = first.next.next;</div><div class="line"> 		second = second.next;</div><div class="line"> 	&#125;</div><div class="line"> 	<span class="keyword">if</span>(first.next != <span class="keyword">null</span> &amp;&amp; first.next.equals(second))&#123;</div><div class="line"> 		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"> 	&#125;</div><div class="line"> 	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/24/2013-11-24-CODE 137 Word Break II/" itemprop="url">
                   CODE 137. Word Break II
                 </a>
@@ -1848,177 +2019,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/" itemprop="url">
-                  CODE 41. Reverse Linked List II
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-11-17T14:46:00+08:00" content="2013-11-17">
-              2013-11-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/" class="cy_cmt_count" data-xid="2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/" class="leancloud_visitors" data-flag-title="CODE 41. Reverse Linked List II">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/11/17/2013-11-17-CODE 41 Reverse Linked List II/'>CODE 41. Reverse Linked List II</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Reverse a linked list from position m to n. Do it in-place and in one-pass.<br>For example:<br>Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code>, m =<br> 2 and n = 4,<br>return <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</code>.<br>Note:<br>Given m, n satisfy the following condition:<br>1 ≤ m ≤ n ≤ length of list.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseBetween</span><span class="params">(ListNode head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">	<span class="comment">// IMPORTANT: Please reset any member data you declared, as</span></div><div class="line">	<span class="comment">// the same Solution instance will be reused for each test case.</span></div><div class="line">	ListNode tmpHead = head;</div><div class="line">	Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();</div><div class="line">	<span class="keyword">int</span> number = <span class="number">1</span>;</div><div class="line">	<span class="keyword">if</span> (tmpHead != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">while</span> (tmpHead != <span class="keyword">null</span> &amp;&amp; number &lt; m) &#123;</div><div class="line">			tmpHead = tmpHead.next;</div><div class="line">			number++;</div><div class="line">		&#125;</div><div class="line">		ListNode tmp = tmpHead;</div><div class="line">		<span class="keyword">while</span> (tmp != <span class="keyword">null</span> &amp;&amp; number &lt;= n) &#123;</div><div class="line">			stack.push(tmp.val);</div><div class="line">			tmp = tmp.next;</div><div class="line">			number++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (number &gt; n) &#123;</div><div class="line">			<span class="keyword">while</span> (!stack.isEmpty()) &#123;</div><div class="line">				tmpHead.val = stack.pop();</div><div class="line">				tmpHead = tmpHead.next;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2064,7 +2064,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2081,7 +2081,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

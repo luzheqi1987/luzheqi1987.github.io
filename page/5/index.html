@@ -302,6 +302,159 @@
             
               
                 
+                <a class="post-title-link" href="/2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="url">
+                  Spring MVC 之 View，ViewResolver
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-06-06T11:35:14+08:00" content="2015-06-06">
+              2015-06-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2015/06/06/Spring MVC 之 View，ViewResolver/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2015/06/06/Spring MVC 之 View，ViewResolver/" class="cy_cmt_count" data-xid="2015/06/06/Spring MVC 之 View，ViewResolver/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2015/06/06/Spring MVC 之 View，ViewResolver/" class="leancloud_visitors" data-flag-title="Spring MVC 之 View，ViewResolver">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<!-- indicate-the-source -->
+<p>一、概念理解</p>
+<p>View —View接口表示一个响应给用户的视图，例如jsp文件，pdf文件，html文件等，它的定义如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">View</span> </span>&#123;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，其值为响应状态码</span></div><div class="line">    String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() + &amp;quot;.responseStatus&amp;quot;;</div><div class="line">    <span class="comment">//HttpServletRequest中的属性名，前一篇文章用到了该变量，它的对应值是请求路径中的变量，及@PathVariable</span></div><div class="line">    <span class="comment">//注解的变量</span></div><div class="line">    String PATH_VARIABLES = View.class.getName() + &amp;quot;.pathVariables&amp;quot;;</div><div class="line">    <span class="comment">//该视图的ContentType</span></div><div class="line">    <span class="function">String <span class="title">getContentType</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//渲染该视图</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">render</span><span class="params">(Map&amp;lt;String, ?&amp;gt; model, HttpServletRequest request, HttpServletResponse response)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   该接口只有两个方法定义，分别表明该视图的ContentType和如何被渲染。Spring中提供了丰富的视图支持，几乎包含所有你想得到的，并且Spring的视图拓展性很好，你可以轻松实现自己的视图。</p>
+<p>ViewResolver — ViewResolver接口定义了如何通过view 名称来解析对应View实例的行为，它的定义相当简单：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ViewResolver</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function">View <span class="title">resolveViewName</span><span class="params">(String viewName, Locale locale)</span> <span class="keyword">throws</span> Exception</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>该接口只有一个方法，通过view name 解析出View。同样Spring提供了丰富的ViewResolver实现用来解析不同的View：<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/06/06/Spring MVC 之 View，ViewResolver/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/04/Spring MVC 之 RequestMapping（2）/" itemprop="url">
                   Spring MVC 之 @RequestMapping（2）
                 </a>
@@ -1715,157 +1868,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="url">
-                  Spring 使用简单Demo进行源码调试（三）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-05-11T02:45:38+08:00" content="2015-05-11">
-              2015-05-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Spring/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" class="cy_cmt_count" data-xid="2015/05/11/Spring 使用简单Demo进行源码调试（三）/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/" class="leancloud_visitors" data-flag-title="Spring 使用简单Demo进行源码调试（三）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<p>接上篇日志<a href="http://blog.jerkybible.com/2015/05/09/Spring 使用简单Demo进行源码调试（二）/">Spring 使用简单Demo进行源码调试（二）</a>继续。</p>
-<p>上篇提到了主要的初始化函数refresh，函数源码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">refresh</span><span class="params">()</span> <span class="keyword">throws</span> BeansException, IllegalStateException </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.startupShutdownMonitor) &#123;</div><div class="line">            <span class="comment">// 为了刷新准备上下文</span></div><div class="line">            prepareRefresh();</div><div class="line"></div><div class="line">            <span class="comment">// 利用子类完成内部bean factory的刷新</span></div><div class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line"></div><div class="line">            <span class="comment">// 使用本地上下文准备bean factory</span></div><div class="line">            prepareBeanFactory(beanFactory);</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// 允许在上下文子类中完成bean factory后处理</span></div><div class="line">                postProcessBeanFactory(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 调用上下文注册的bean factory处理器</span></div><div class="line">                invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 注册拦截bean创建的bean处理器</span></div><div class="line">                registerBeanPostProcessors(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中消息源</span></div><div class="line">                initMessageSource();</div><div class="line"></div><div class="line">                <span class="comment">// 初始化上下文中的事件多播</span></div><div class="line">                initApplicationEventMulticaster();</div><div class="line"></div><div class="line">                <span class="comment">// 在特定上下文子类中初始化其他特殊bean</span></div><div class="line">                onRefresh();</div><div class="line"></div><div class="line">                <span class="comment">// 检查监听器bean并注册 </span></div><div class="line">                registerListeners();</div><div class="line"></div><div class="line">                <span class="comment">// 实例化所有剩余(non-lazy-init)单例</span></div><div class="line">                finishBeanFactoryInitialization(beanFactory);</div><div class="line"></div><div class="line">                <span class="comment">// 发布相应的事件</span></div><div class="line">                finishRefresh();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">catch</span> (BeansException ex) &#123;</div><div class="line">                logger.warn(&amp;quot;Exception encountered during context initialization - cancelling refresh attempt&amp;quot;, ex);</div><div class="line"></div><div class="line">                <span class="comment">// Destroy already created singletons to avoid dangling resources.</span></div><div class="line">                destroyBeans();</div><div class="line"></div><div class="line">                <span class="comment">// Reset 'active' flag.</span></div><div class="line">                cancelRefresh(ex);</div><div class="line"></div><div class="line">                <span class="comment">// Propagate exception to caller.</span></div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>先把prepareRefresh的代码贴出来。这段代码主要功能是初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</div><div class="line">	 * Prepare this context for refreshing, setting its startup date and</div><div class="line">	 * active flag as well as performing any initialization of property sources.</div><div class="line">	 */</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">prepareRefresh</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.startupDate = System.currentTimeMillis();</div><div class="line"></div><div class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>.activeMonitor) &#123;</div><div class="line">			<span class="keyword">this</span>.active = <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">			logger.info(&amp;quot;Refreshing &amp;quot; + <span class="keyword">this</span>);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="comment">// Initialize any placeholder property sources in the context environment</span></div><div class="line">		initPropertySources();</div><div class="line"></div><div class="line">		<span class="comment">// Validate that all properties marked as required are resolvable</span></div><div class="line">		<span class="comment">// see ConfigurablePropertyResolver#setRequiredProperties</span></div><div class="line">		getEnvironment().validateRequiredProperties();</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/05/11/Spring 使用简单Demo进行源码调试（三）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1911,7 +1913,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1928,7 +1930,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

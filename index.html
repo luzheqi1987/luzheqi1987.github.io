@@ -302,6 +302,143 @@
             
               
                 
+                <a class="post-title-link" href="/2017/07/21/解析Java-String类中的运算符“-”/" itemprop="url">
+                  解析Java String类中的运算符“+”
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-07-21T19:19:46+08:00" content="2017-07-21">
+              2017-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2017/07/21/解析Java-String类中的运算符“-”/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2017/07/21/解析Java-String类中的运算符“-”/" class="cy_cmt_count" data-xid="2017/07/21/解析Java-String类中的运算符“-”/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/07/21/解析Java-String类中的运算符“-”/" class="leancloud_visitors" data-flag-title="解析Java String类中的运算符“+”">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="String简要说明"><a href="#String简要说明" class="headerlink" title="String简要说明"></a>String简要说明</h2><p>大家都知道Java中String是不可变类。也就是说如果有一个String初始化的值位”Hello”，如果把它赋值为”Hello World!”，那么不是在原内存地址上修改数据，而是重新生成了一个新对象并重新指向这个对象。而在Java虚拟机中，字符串是直接放在常量池中的，而且关于String比较相关的题目很多，这篇文章不做详细描述。</p>
+<h2 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h2><p>下面的代码会生成几个String，先不要着急的往下看答案，自己想想。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String str = <span class="string">"Hello"</span> + <span class="string">"World"</span> + <span class="string">"!"</span>;</div></pre></td></tr></table></figure></p>
+<p>这个问题主要还是考察了Java虚拟机对String中”+”运算符的特殊处理，我们来看一下编译生成的class是什么样的。见下图。</p>
+<p><img src="http://image.qn.jerkybible.com/blog/String_HelloWorld.png?watermark/1/image/aHR0cDovL2ltYWdlLnFuLmplcmt5YmlibGUuY29tL3NodWl5aW4xLnBuZw==/dissolve/50/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>看到<code>String HelloWorld!</code>是不是很惊讶，是的，这段代码只生成了一个字符串。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/07/21/解析Java-String类中的运算符“-”/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/04/16/Next主题添加畅言评论/" itemprop="url">
                   Next主题添加畅言评论
                 </a>
@@ -1755,164 +1892,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/" itemprop="url">
-                  LeetCode 508. Most Frequent Subtree Sum
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-08T23:02:36+08:00" content="2017-02-08">
-              2017-02-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/" class="cy_cmt_count" data-xid="2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/" class="leancloud_visitors" data-flag-title="LeetCode 508. Most Frequent Subtree Sum">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<!-- indicate-the-source -->
-<h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a>题目要求</h2><p>Given the root of a tree, you are asked to find the most frequent subtree sum. The subtree sum of a node is defined as the sum of all the node values formed by the subtree rooted at that node (including the node itself). So what is the most frequent subtree sum value? If there is a tie, return all the values with the highest frequency in any order.</p>
-<p><strong>Examples 1</strong><br>Input:</p>
-<blockquote>
-<p> 5<br>/  \<br>2   -3<br>return [2, -3, 4], since all the values happen only once, return all of them in any order.</p>
-</blockquote>
-<p><strong>Examples 2</strong><br>Input:</p>
-<blockquote>
-<p> 5<br>/  \<br>2   -5<br>return [2], since 2 happens twice, however -5 only occur once.</p>
-</blockquote>
-<h2 id="题意解析"><a href="#题意解析" class="headerlink" title="题意解析"></a>题意解析</h2><p>子树和的含义是指树中的一个节点所有子节点值得和（包含该节点）。一棵树每个节点都有子树和，找到存在数目最多的子树和。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/02/08/LeetCode-508-Most-Frequent-Subtree-Sum/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1958,7 +1937,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1975,7 +1954,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

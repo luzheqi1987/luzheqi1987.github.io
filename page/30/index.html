@@ -302,6 +302,198 @@
             
               
                 
+                <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/" itemprop="url">
+                  CODE 31. Binary Tree Level Order Traversal
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-09-20T18:08:00+08:00" content="2013-09-20">
+              2013-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/" class="cy_cmt_count" data-xid="2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/" class="leancloud_visitors" data-flag-title="CODE 31. Binary Tree Level Order Traversal">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/20/2013-09-20-CODE 31 Binary Tree Level Order Traversal/'>CODE 31. Binary Tree Level Order Traversal</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a binary tree, return the level order traversal of its nodes’ values. (ie, from left to right, level by level).<br>For example:<br>Given binary tree <code>{3,9,20,#,#,15,7}</code>,</p>
+<pre><code>  3
+ / \
+9  20
+  /  \
+ 15   7
+</code></pre><p>return its level order traversal as:</p>
+<pre><code>[
+  [3],
+  [9,20],
+  [15,7]
+]
+</code></pre><p>confused what <code>&quot;{1,#,2,3}&quot;</code> means? <a href="http://oj.leetcode.com/problems/binary-tree-level-order-traversal/#" target="_blank" rel="external">&gt;<br> read more on how binary tree is serialized on OJ.</a></p>
+<p>OJ’s Binary Tree Serialization:The serialization of a binary tree follows a level order traversal, where ‘#’ signifies a path terminator where no node exists below.<br>Here’s an example:</p>
+<pre><code>  1
+ / \
+2   3
+   /
+  4
+   \
+    5
+</code></pre><p>The above binary tree is serialized as <code>&quot;{1,2,3,#,#,4,#,#,5}&quot;</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;ArrayList&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();</div><div class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</div><div class="line">	ArrayList&lt;Integer&gt; layerVals = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	queue.offer(root);</div><div class="line">	<span class="keyword">int</span> layerNumber = <span class="number">1</span>;</div><div class="line">	<span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">		TreeNode node = queue.poll();</div><div class="line">		layerVals.add(node.val);</div><div class="line">		layerNumber--;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.left) &#123;</div><div class="line">			queue.offer(node.left);</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != node.right) &#123;</div><div class="line">			queue.offer(node.right);</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (layerNumber == <span class="number">0</span>) &#123;</div><div class="line">			layerNumber = queue.size();</div><div class="line">			ArrayList&lt;Integer&gt; layerValsCpy = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">			layerValsCpy.addAll(layerVals);</div><div class="line">			results.add(layerValsCpy);</div><div class="line">			layerVals.clear();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/20/2013-09-20-CODE 30 Binary Tree Zigzag Level Order Traversal/" itemprop="url">
                   CODE 30. Binary Tree Zigzag Level Order Traversal
                 </a>
@@ -1846,179 +2038,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/18/2013-09-18-CODE 21 Path Sum/" itemprop="url">
-                  未命名
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-18T23:16:00+08:00" content="2013-09-18">
-              2013-09-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2013/09/18/2013-09-18-CODE 21 Path Sum/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2013/09/18/2013-09-18-CODE 21 Path Sum/" class="cy_cmt_count" data-xid="2013/09/18/2013-09-18-CODE 21 Path Sum/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/18/2013-09-18-CODE 21 Path Sum/" class="leancloud_visitors" data-flag-title="">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/18/2013-09-18-CODE 21 Path Sum/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/18/2013-09-18-CODE 21 Path Sum/'></a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.<br>For example:<br>Given the below binary tree and <code>sum
- = 22</code>,                  5<br>                 / \<br>                4   8<br>               /   / \<br>              11  13  4<br>             /  \      \<br>            7    2      1</p>
-<p>return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum<br> is 22.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> dfs(root, <span class="number">0</span>, sum);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(TreeNode root, <span class="keyword">int</span> current, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">	<span class="keyword">if</span> (root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">if</span> (current + root.val == sum) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">boolean</span> is = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">if</span> (root.left != <span class="keyword">null</span>) &#123;</div><div class="line">		is = dfs(root.left, current + root.val, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (is) &#123;</div><div class="line">		<span class="keyword">return</span> is;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (root.right != <span class="keyword">null</span>) &#123;</div><div class="line">		is = dfs(root.right, current + root.val, sum);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> is;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2064,7 +2083,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2081,7 +2100,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -302,6 +302,178 @@
             
               
                 
+                <a class="post-title-link" href="/2013/10/01/2013-10-01-CODE 54 Word Search/" itemprop="url">
+                  CODE 54. Word Search
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2013-10-01T22:42:00+08:00" content="2013-10-01">
+              2013-10-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+              
+                <a href="/2013/10/01/2013-10-01-CODE 54 Word Search/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://blog.jerkybible.com/2013/10/01/2013-10-01-CODE 54 Word Search/" class="cy_cmt_count" data-xid="2013/10/01/2013-10-01-CODE 54 Word Search/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+
+          
+          
+             <span id="/2013/10/01/2013-10-01-CODE 54 Word Search/" class="leancloud_visitors" data-flag-title="CODE 54. Word Search">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
+               <span class="post-meta-item-text">❤ </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
+</blockquote>
+<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/10/01/2013-10-01-CODE 54 Word Search/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/10/01/2013-10-01-CODE 54 Word Search/'>CODE 54. Word Search</a>」</p></blockquote></div>
+<script type="text/javascript">
+(function() {
+  Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+  }
+  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+    for(var i = this.length - 1; i >= 0; i--) {
+        if(this[i] && this[i].parentElement) {
+            this[i].parentElement.removeChild(this[i]);
+        }
+    }
+  }
+  var domain = document.domain;
+  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
+  if (white_list.indexOf(domain) >= 0) {
+    var elements = document.getElementsByClassName('source');
+    for(var i =0; i < elements.length; i++){
+        elements[i].style.display='none';
+    }
+  }
+})()
+</script>
+
+<p>Given a 2D board and a word, find if the word exists in the grid.The word can be constructed from letters of sequentially adjacent cell, where “adjacent” cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.<br>For example,<br>Given<strong>board</strong>=<br>    [<br>      [“ABCE”],<br>      [“SFCS”],<br>      [“ADEE”]<br>    ]</p>
+<p><strong>word</strong> = <code>&quot;ABCCED&quot;</code>, -&gt; returns<code>true</code>,<br><strong>word</strong> = <code>&quot;SEE&quot;</code>, -&gt; returns<code>true</code>,<br><strong>word</strong> = <code>&quot;ABCB&quot;</code>, -&gt; returns<code>false</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">exist</span><span class="params">(<span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == board || board.length &lt;= <span class="number">0</span>) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == word || <span class="string">""</span>.equals(word)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">int</span> rows = board.length;</div><div class="line">	<span class="keyword">int</span> cols = board[<span class="number">0</span>].length;</div><div class="line">	<span class="keyword">boolean</span>[][] walked = <span class="keyword">new</span> <span class="keyword">boolean</span>[rows][cols];</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</div><div class="line">			<span class="keyword">if</span> (checkExist(board, word, i, j, <span class="number">0</span>, walked)) &#123;</div><div class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">checkExist</span><span class="params">(<span class="keyword">char</span>[][] board, String word, <span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> index,</span></span></div><div class="line">		<span class="keyword">boolean</span>[][] walked) &#123;</div><div class="line">	<span class="keyword">boolean</span> existed = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">if</span> (board[i][j] == word.charAt(index) &amp;&amp; !walked[i][j]) &#123;</div><div class="line">		<span class="keyword">if</span> (index == word.length() - <span class="number">1</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> m = -<span class="number">1</span>; m &lt;= <span class="number">1</span>; m++) &#123;</div><div class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> n = -<span class="number">1</span>; n &lt;= <span class="number">1</span>; n++) &#123;</div><div class="line">				<span class="keyword">if</span> (Math.abs(n - m) != <span class="number">1</span> || i + m &lt; <span class="number">0</span></div><div class="line">						|| i + m &gt;= board.length || j + n &lt; <span class="number">0</span></div><div class="line">						|| j + n &gt;= board[<span class="number">0</span>].length || walked[m + i][n + j]) &#123;</div><div class="line">					<span class="keyword">continue</span>;</div><div class="line">				&#125;</div><div class="line">				walked[i][j] = <span class="keyword">true</span>;</div><div class="line">				existed = checkExist(board, word, m + i, n + j, index + <span class="number">1</span>,</div><div class="line">						walked);</div><div class="line">				walked[i][j] = <span class="keyword">false</span>;</div><div class="line">				<span class="keyword">if</span> (existed) &#123;</div><div class="line">					<span class="keyword">return</span> existed;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> existed;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/09/29/2013-09-29-CODE 50 Remove Duplicates from Sorted List II/" itemprop="url">
                   CODE 50. Remove Duplicates from Sorted List II
                 </a>
@@ -1826,191 +1998,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/09/21/2013-09-21-CODE 39 Submission Details/" itemprop="url">
-                  CODE 39. Submission Details
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2013-09-21T20:00:00+08:00" content="2013-09-21">
-              2013-09-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/LeetCode/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-              
-                <a href="/2013/09/21/2013-09-21-CODE 39 Submission Details/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://blog.jerkybible.com/2013/09/21/2013-09-21-CODE 39 Submission Details/" class="cy_cmt_count" data-xid="2013/09/21/2013-09-21-CODE 39 Submission Details/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-
-          
-          
-             <span id="/2013/09/21/2013-09-21-CODE 39 Submission Details/" class="leancloud_visitors" data-flag-title="CODE 39. Submission Details">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <!-- <span class="post-meta-item-text">阅读次数 </span> -->
-               <span class="post-meta-item-text">❤ </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>版权声明：本文为<a href="http://blog.jerkybible.com">博主</a>原创文章，<a href="http://blog.jerkybible.com">转载请注明出处</a>，谢谢!</p>
-</blockquote>
-<div class='source'><blockquote><p>版权声明：本文为博主原创文章，转载请注明出处：http://blog.jerkybible.com/2013/09/21/2013-09-21-CODE 39 Submission Details/</p><p>访问原文「<a href='http://blog.jerkybible.com/2013/09/21/2013-09-21-CODE 39 Submission Details/'>CODE 39. Submission Details</a>」</p></blockquote></div>
-<script type="text/javascript">
-(function() {
-  Element.prototype.remove = function() {
-    this.parentElement.removeChild(this);
-  }
-  NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
-    for(var i = this.length - 1; i >= 0; i--) {
-        if(this[i] && this[i].parentElement) {
-            this[i].parentElement.removeChild(this[i]);
-        }
-    }
-  }
-  var domain = document.domain;
-  var white_list = ['blog.jerkybible.com', 'jerkybible.com'];
-  if (white_list.indexOf(domain) >= 0) {
-    var elements = document.getElementsByClassName('source');
-    for(var i =0; i < elements.length; i++){
-        elements[i].style.display='none';
-    }
-  }
-})()
-</script>
-
-<p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>For example:<br>Given binary tree <code>{1,#,2,3}</code>,</p>
-<pre><code>1
- \
-  2
- /
-3
-</code></pre><p>return <code>[1,3,2]</code>.<br>Note: Recursive solution is trivial, could you do it iteratively?<br>confused what <code>&quot;{1,#,2,3}&quot;</code> means? <a href="http://oj.leetcode.com/problems/binary-tree-inorder-traversal/#" target="_blank" rel="external">&gt;<br> read more on how binary tree is serialized on OJ.</a></p>
-<p>OJ’s Binary Tree Serialization:The serialization of a binary tree follows a level order traversal, where ‘#’ signifies a path terminator where no node exists below.<br>Here’s an example:</p>
-<pre><code>  1
- / \
-2   3
-   /
-  4
-   \
-    5
-</code></pre><p>The above binary tree is serialized as <code>&quot;{1,2,3,#,#,4,#,#,5}&quot;</code>.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">	<span class="comment">// Start typing your Java solution below</span></div><div class="line">	<span class="comment">// DO NOT write main() function</span></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">null</span> == root) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	&#125;</div><div class="line">	ArrayList&lt;Integer&gt; inorder = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">	TreeNode node = root;</div><div class="line">	<span class="keyword">while</span> (!stack.isEmpty() || <span class="keyword">null</span> != node) &#123;</div><div class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> == node) &#123;</div><div class="line">			node = stack.pop();</div><div class="line">			inorder.add(node.val);</div><div class="line">			node = node.right;</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			stack.push(node);</div><div class="line">			node = node.left;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> inorder;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2056,7 +2043,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">345</span>
+              <span class="site-state-item-count">346</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -2073,7 +2060,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">62</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
